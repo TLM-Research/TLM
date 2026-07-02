@@ -12,11 +12,19 @@ These innovations have substantially improved price discovery, market efficiency
 
 However, one important aspect of user demand remains largely implicit:
 
-> **Time Preference.**
+> **Temporal Liquidity.**
 
 Users differ not only in how much they are willing to pay, but also in **when** they need execution and **how much delay they are willing to tolerate**.
 
-Temporal Liquidity Market (TLM) investigates how temporal preferences can become protocol-visible economic signals, enabling blockchain protocols to coordinate both **price** and **time** while preserving decentralized market principles.
+At a deeper level, these differences are not merely about delay tolerance. They reflect each transaction's **economic flexibility with respect to execution time**.
+
+We define **Temporal Liquidity** as:
+
+> **The economic flexibility of demand with respect to execution time.**
+
+Transactions exhibit different degrees of temporal liquidity. An arbitrage transaction may have very low temporal liquidity because its value deteriorates rapidly with delay, whereas a treasury transfer may possess high temporal liquidity because it can tolerate significant delay with little loss of utility.
+
+Temporal Liquidity Market (TLM) investigates how temporal liquidity can become a **protocol-visible economic signal**, enabling blockchain protocols to coordinate both **price** and **time** while preserving decentralized market principles.
 
 ---
 
