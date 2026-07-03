@@ -4,41 +4,49 @@
 
 ---
 
+## Start Here
+
+If you are new to the project, we recommend reading the documents in the following order:
+
+1. **Vision Statement** — Why temporal market design matters.
+2. **Foundation Statement** — The conceptual framework, principles, and research agenda of TLM.
+3. **Temporal Liquidity** — The foundational concept introduced by TLM.
+4. **Mechanism Proposals** *(future)* — Candidate protocol designs and implementation ideas.
+5. **Research Notes** — Ongoing observations, literature reviews, and evolving ideas.
+
+---
+
 ## Overview
 
-Ethereum has significantly advanced blockspace allocation through innovations such as EIP-1559, Proposer-Builder Separation (PBS), and Enshrined PBS (EIP-7732).
+Blockchain protocols have made significant advances in decentralized resource allocation through innovations such as EIP-1559, Proposer-Builder Separation (PBS), and Enshrined PBS (ePBS).
 
-These innovations have substantially improved price discovery, market efficiency, and decentralized block construction.
+These innovations have substantially improved price discovery, decentralized block construction, and protocol robustness.
 
 However, one important aspect of user demand remains largely implicit:
 
 > **Temporal Liquidity.**
 
-Users differ not only in how much they are willing to pay, but also in **when** they need execution and **how much delay they are willing to tolerate**.
+Users differ not only in how much they are willing to pay, but also in **when** they require execution and **how much delay they are willing to tolerate**.
 
-At a deeper level, these differences are not merely about delay tolerance. They reflect each transaction's **economic flexibility with respect to execution time**.
-
-We define **Temporal Liquidity** as:
+TLM defines **Temporal Liquidity** as:
 
 > **The economic flexibility of demand with respect to execution time.**
 
-Transactions exhibit different degrees of temporal liquidity. An arbitrage transaction may have very low temporal liquidity because its value deteriorates rapidly with delay, whereas a treasury transfer may possess high temporal liquidity because it can tolerate significant delay with little loss of utility.
-
-Temporal Liquidity Market (TLM) investigates how temporal liquidity can become a **protocol-visible economic signal**, enabling blockchain protocols to coordinate both **price** and **time** while preserving decentralized market principles.
+Temporal Liquidity Market (TLM) investigates how Temporal Liquidity can become a **protocol-visible economic signal**, enabling blockchain protocols to coordinate both **price** and **time** while preserving decentralized market principles.
 
 ---
 
-## Mission
+## Project Goals
 
-TLM is an open project exploring temporal market design for blockchain protocols.
+TLM explores how decentralized protocols can better represent, communicate, and coordinate temporal information while preserving:
 
-Our objectives are to:
+* Decentralization
+* Participant neutrality
+* Market efficiency
+* Protocol simplicity
+* Incentive compatibility
 
-* develop a conceptual framework for temporal market design;
-* study existing protocol designs and related research;
-* identify open problems and research directions;
-* explore candidate protocol mechanisms; and
-* encourage open discussion and collaboration.
+The project builds upon existing Ethereum protocol research rather than replacing it.
 
 ---
 
@@ -46,12 +54,13 @@ Our objectives are to:
 
 ```text
 docs/
-    Vision.md
-    Foundation.md
+    Vision-Statement.md
+    Foundation-Outline.md
+    Foundation-Statement.md
+    Temporal-Liquidity.md
     Architecture.md
-    Design_Principles.md
     Roadmap.md
-    Open_Questions.md
+    Open-Questions.md
 
 research_notes/
     Research journal and evolving ideas
@@ -63,34 +72,23 @@ simulations/
     Future prototypes and experiments
 
 archive/
-    Historical versions
+    Historical materials (future)
 ```
-
----
-
-## Start Here
-
-1. **Vision** — Why temporal market design matters.
-2. **Foundation** — Core principles and research framework.
-3. **Architecture** — High-level system design.
-4. **Open Questions** — Active research agenda.
-5. **Research Notes** — Ongoing observations and ideas.
-6. **Literature** — Reading notes on Ethereum protocol research and related work.
 
 ---
 
 ## Current Status
 
-**Stage:** Research Framework
+**Version:** TLM Public Release 1 (PR1)
 
-Current work focuses on:
+Current work focuses on establishing the conceptual foundations of temporal market design for blockchain protocols, including:
 
+* Temporal Liquidity
 * Ethereum fee markets
 * Proposer-Builder Separation (PBS)
-* Enshrined PBS (EIP-7732)
+* Enshrined PBS (ePBS)
 * Protocol economics
 * Builder optimization
-* Temporal market design
 * Mechanism design
 * Distributed systems
 
@@ -98,16 +96,20 @@ Current work focuses on:
 
 ## Research Philosophy
 
-TLM should be viewed as an evolving research framework rather than a completed protocol proposal.
+TLM is an open research framework rather than a completed protocol proposal.
 
-The project builds upon existing Ethereum research while investigating how temporal information can become a first-class economic signal for decentralized protocols.
+The project aims to establish a common conceptual foundation for temporal market design, encouraging rigorous discussion, experimentation, and collaboration.
 
-Individual mechanisms—including Temporal Liquidity Reserve (TLR) and future proposals—are intended as candidate implementations of this broader framework rather than final solutions.
+Specific protocol mechanisms—including Temporal Liquidity Reserve (TLR) and future proposals—should be viewed as candidate implementations of this broader framework rather than final solutions.
+
+---
+
+## Contributing
+
+Thoughtful discussion, constructive criticism, literature recommendations, and collaborative research are welcome.
 
 ---
 
 ## Guiding Question
 
-> **How should blockchain protocols represent, communicate, and coordinate users' temporal preferences while preserving decentralized market principles?**
-
-This repository is an invitation to explore that question.
+> **How should blockchain protocols represent, communicate, and coordinate Temporal Liquidity while preserving decentralized market principles?**
