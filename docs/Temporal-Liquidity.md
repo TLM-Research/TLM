@@ -1,30 +1,33 @@
 # Temporal Liquidity
 
+**Version:** 1.0
+**Release:** TLM Public Release 1 (PR1)
+**Status:** Public
+**Last Updated:** July 3, 2026
+
+---
+
 ## Definition
 
 **Temporal Liquidity** is the **economic flexibility of demand with respect to execution time**.
 
-It characterizes how a transaction's utility changes as its execution is delayed. Transactions with different objectives naturally exhibit different degrees of temporal liquidity.
+It characterizes how a transaction's utility changes as its execution is delayed. Transactions with different objectives naturally exhibit different degrees of Temporal Liquidity.
 
-Unlike traditional fee markets, which primarily capture a user's willingness to pay, Temporal Liquidity captures a user's willingness to wait.
+Unlike traditional fee markets, which primarily capture a user's willingness to pay, Temporal Liquidity captures a transaction's economic flexibility with respect to execution time.
 
 ---
 
 ## Motivation
 
-Ethereum has significantly improved blockspace allocation through protocol innovations such as EIP-1559, Proposer-Builder Separation (PBS), and Enshrined PBS (ePBS).
+Blockchain protocols have significantly advanced decentralized resource allocation through innovations such as EIP-1559, Proposer-Builder Separation (PBS), and Enshrined PBS (ePBS).
 
-These mechanisms enable efficient price discovery for scarce blockspace.
+These innovations have substantially improved price discovery, blockspace allocation, decentralized block construction, and protocol robustness.
 
-However, they largely assume that demand can be represented by a single economic dimension: **price**.
+However, current fee markets primarily coordinate demand through **price**.
 
-In reality, users differ not only in how much they are willing to pay, but also in **when** they require execution.
+In practice, users differ not only in **how much** they are willing to pay, but also in **when** they require execution.
 
-Examples include:
-
-* An arbitrage transaction that loses nearly all value if delayed by one block.
-* A decentralized exchange swap that can tolerate a short delay in exchange for lower fees.
-* A treasury transfer that remains valuable even after minutes or hours of delay.
+Some transactions lose nearly all value if delayed by a single block, while others can tolerate minutes or even hours of delay with little reduction in utility.
 
 These differences reveal another important economic characteristic of demand: **Temporal Liquidity**.
 
@@ -32,15 +35,15 @@ These differences reveal another important economic characteristic of demand: **
 
 ## Temporal Liquidity versus Time Preference
 
-The concept of **time preference** is well established in economics and generally refers to how individuals value present consumption relative to future consumption.
+**Time Preference** is a well-established concept in economics that describes how individuals value present benefits relative to future benefits.
 
-TLM adopts a different perspective.
+TLM adopts a protocol-oriented perspective.
 
-Rather than focusing on individual preferences in the abstract, it focuses on the **economic flexibility of individual transactions** within a decentralized execution market.
+Rather than modeling preferences in the abstract, TLM focuses on the **economic flexibility of individual transactions with respect to execution time**.
 
-Temporal Liquidity therefore provides a protocol-oriented abstraction that can be observed, represented, and coordinated during blockspace allocation.
+Time Preference motivates Temporal Liquidity, but the two concepts are not identical.
 
-Time preference motivates Temporal Liquidity, but the two concepts are not identical.
+Temporal Liquidity is intended as a protocol-level abstraction that can be represented, communicated, and coordinated within decentralized execution markets.
 
 ---
 
@@ -48,40 +51,40 @@ Time preference motivates Temporal Liquidity, but the two concepts are not ident
 
 | Transaction Type    | Temporal Liquidity |
 | ------------------- | ------------------ |
-| MEV arbitrage       | Very Low           |
+| MEV Arbitrage       | Very Low           |
 | Liquidation         | Low                |
-| DEX swap            | Medium             |
-| NFT mint            | Medium to High     |
-| Treasury transfer   | High               |
-| Periodic settlement | Very High          |
+| DEX Swap            | Medium             |
+| NFT Mint            | Medium to High     |
+| Treasury Transfer   | High               |
+| Periodic Settlement | Very High          |
 
-Transactions with low Temporal Liquidity require prompt execution because their value deteriorates rapidly over time.
+Transactions with **low Temporal Liquidity** require prompt execution because their value deteriorates rapidly over time.
 
-Transactions with high Temporal Liquidity can tolerate delay with relatively small reductions in utility.
+Transactions with **high Temporal Liquidity** can tolerate delay while preserving much of their economic utility.
 
 ---
 
 ## Protocol Perspective
 
-Current blockchain fee markets primarily coordinate demand through **price**.
+Today's blockchain fee markets primarily coordinate demand through **price**.
 
-TLM proposes that protocols may also coordinate demand through **Temporal Liquidity**.
+TLM investigates whether protocols can also coordinate demand through **Temporal Liquidity**.
 
-Rather than treating execution as an immediate-or-never decision, users may communicate richer temporal information that reflects their economic flexibility.
+Rather than treating execution as an immediate-or-never decision, users may communicate richer temporal information that reflects the economic flexibility of their transactions.
 
 The protocol does not seek to optimize users' utility directly.
 
-Instead, it provides market participants with mechanisms for expressing Temporal Liquidity while preserving decentralized incentives and participant neutrality.
+Instead, it provides decentralized market mechanisms through which participants may voluntarily express Temporal Liquidity while preserving participant neutrality, market incentives, and protocol simplicity.
 
 ---
 
 ## Protocol Representation
 
-Temporal Liquidity is an economic property.
+Temporal Liquidity is an **economic property**.
 
 Protocols require a concrete representation of that property.
 
-TLM investigates protocol-visible representations, including temporal preference curves and related abstractions, that allow users to communicate execution flexibility without sacrificing protocol simplicity or decentralization.
+TLM investigates protocol-visible representations—including Temporal Preference Curves and related abstractions—that allow transactions to communicate execution flexibility while remaining compatible with decentralized protocol design.
 
 The exact representation remains an active area of research.
 
@@ -89,14 +92,14 @@ The exact representation remains an active area of research.
 
 ## Research Questions
 
-The concept of Temporal Liquidity raises several open questions.
+Temporal Liquidity raises several open questions.
 
 * How should Temporal Liquidity be represented at the protocol level?
 * What temporal information should become protocol-visible?
-* How should protocols coordinate both price and Temporal Liquidity?
+* How should blockchain protocols coordinate both price and Temporal Liquidity?
 * How can richer temporal information improve builder optimization while preserving participant neutrality?
 * Can protocol-visible Temporal Liquidity reduce congestion, timing games, and other inefficiencies?
-* What new incentive or manipulation vectors arise when Temporal Liquidity becomes part of protocol design?
+* What new incentive or manipulation vectors emerge when Temporal Liquidity becomes part of protocol design?
 
 These questions form part of the broader TLM research agenda.
 
@@ -107,3 +110,13 @@ These questions form part of the broader TLM research agenda.
 Ethereum made **price** a protocol-visible economic signal through protocol-managed fee markets.
 
 Temporal Liquidity Market (TLM) investigates whether **Temporal Liquidity** can likewise become a protocol-visible economic signal, enabling blockchain protocols to coordinate both **price** and **time** while preserving decentralized market principles.
+
+---
+
+## Position within TLM
+
+Temporal Liquidity is the foundational concept of the Temporal Liquidity Market framework.
+
+It provides the economic basis for subsequent work on temporal preference representation, protocol-visible temporal information, builder optimization, and future mechanism proposals.
+
+This document establishes the conceptual foundation for the TLM project and serves as a reference for future public releases.
