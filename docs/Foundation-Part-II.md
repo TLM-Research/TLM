@@ -9,19 +9,31 @@
 
 ---
 
-# Part II — Conceptual Framework
+# Part II — Toward a Conceptual Framework
 
-Part I introduced the motivation for Temporal Liquidity Market (TLM) and established **Temporal Liquidity** as the central economic concept of the framework.
+The preceding sections introduced the motivation for Temporal Liquidity and positioned TLM within the broader evolution of Ethereum protocol economics.
 
-This part describes how TLM views decentralized execution markets, the responsibilities of blockchain protocols, and the conceptual principles that guide future protocol design.
+This part develops a conceptual framework for decentralized execution markets.
 
-Rather than prescribing specific mechanisms, this framework establishes the architectural principles upon which future mechanisms may be developed.
+Rather than proposing new protocol mechanisms directly, it seeks to identify the underlying economic variables participating in decentralized execution, investigate which variables are already represented by existing blockchain protocols, and explore how future protocol evolution may coordinate richer forms of economic information.
+
+This perspective builds upon ongoing advances in Ethereum fee markets, Proposer-Builder Separation (PBS), Enshrined PBS (ePBS), execution markets, and related protocol research.
+
+The objective is not to replace these developments, but to provide a common conceptual framework through which they may be understood collectively while motivating future research into Temporal Liquidity.
 
 ---
 
 # 5. Design Principles
 
-The TLM framework is guided by several fundamental principles.
+The rapid evolution of Ethereum protocol economics has produced numerous successful mechanisms addressing fee markets, decentralized block construction, execution markets, and protocol specialization.
+
+Although these mechanisms pursue different objectives, they share several common architectural principles.
+
+This section summarizes those principles.
+
+Rather than introducing entirely new design philosophies, TLM adopts and extends principles that have emerged throughout the evolution of Ethereum's protocol architecture.
+
+These principles provide the foundation upon which future research into Temporal Liquidity is developed.
 
 ## 5.1 Participant Neutrality
 
@@ -113,6 +125,14 @@ This methodology asks four sequential questions.
 4. **What protocol mechanisms could coordinate those variables while preserving decentralization?**
 
 This methodology separates the scientific question of **modeling the market** from the engineering question of **implementing protocol mechanisms**.
+
+The model-first methodology adopted by TLM reflects a broader trend within Ethereum research.
+
+Over time, protocol evolution has increasingly focused not only on designing mechanisms, but also on improving the underlying economic models through which decentralized execution is understood.
+
+Examples include the evolution of fee markets through EIP-1559, the specialization introduced by PBS, and the protocol-visible commitments emerging through ePBS.
+
+TLM extends this trajectory by investigating whether execution time itself should become part of the conceptual model of decentralized execution markets.
 
 ---
 
@@ -270,13 +290,15 @@ This distinction enables TLM to evolve as a long-term research framework while r
 
 # 7. Protocol-visible Economic Information
 
-The previous section introduced a model-first methodology for understanding decentralized execution markets. One consequence of this methodology is that protocol design should begin by identifying the economically meaningful variables participating in the market before proposing mechanisms to coordinate them.
+Building upon advances in Ethereum fee markets, PBS, ePBS, execution markets, and protocol market infrastructure, Ethereum has progressively incorporated economically meaningful information into protocol rules.
 
-This naturally raises an important question:
+Rather than centralizing decision making, these developments have improved decentralized coordination by making important economic information visible, standardized, and trustworthy.
 
-> **Which economic variables should become protocol-visible?**
+This observation motivates a broader research question:
 
-This section argues that Ethereum's evolution can be understood as a progressive expansion of protocol-visible economic information. TLM investigates whether **Temporal Liquidity** should become the next candidate economic variable in that evolution.
+> **Which economically meaningful variables should become protocol-visible as decentralized execution markets continue to evolve?**
+
+This section investigates that question through the concept of protocol-visible economic information and examines whether Temporal Liquidity represents another candidate economic variable within this continuing evolution.
 
 ---
 
@@ -435,6 +457,14 @@ The purpose of TLM is not to answer them prematurely, but to establish the conce
 
 # 8. Decentralized Temporal Coordination
 
+Several ongoing developments suggest that execution time is becoming an increasingly important dimension of blockchain protocol evolution.
+
+Research into execution latency, shorter slot times, future execution rights, Execution Tickets, Slot Auctions, builder specialization, and protocol timing all investigate different aspects of coordination across time.
+
+Although these efforts pursue distinct objectives, they collectively indicate that decentralized execution is evolving beyond the allocation of blockspace alone.
+
+TLM views these developments as motivation for studying execution time as an economically meaningful dimension of decentralized market coordination.
+
 The previous sections introduced a model-first methodology for decentralized execution markets and argued that blockchain protocols evolve by making economically meaningful information protocol-visible.
 
 This naturally leads to the next question:
@@ -491,29 +521,25 @@ The protocol therefore facilitates communication rather than prescribing outcome
 
 ## 8.3 From Spatial to Spatiotemporal Coordination
 
-Historically, blockchain protocols have focused on allocating scarce **blockspace**.
+### 8.3 From Spatial to Spatiotemporal Coordination
 
-Mechanisms such as EIP-1559 improved the efficiency of this spatial allocation by enabling more effective price discovery for limited execution capacity.
+Historically, blockchain protocols have focused primarily on the allocation of **scarce blockspace**.
 
-Ethereum's recent evolution suggests that protocol research is increasingly extending beyond the allocation of blockspace alone.
+Research surrounding **EIP-1559** substantially improved the efficiency of this spatial allocation by introducing protocol-level congestion pricing and more effective fee discovery. **Proposer-Builder Separation (PBS)** further evolved blockspace allocation through market specialization, enabling builders to optimize block construction while allowing proposers to focus on consensus. Ongoing work on **Enshrined PBS (ePBS)** continues this progression by incorporating builder commitments and settlement guarantees into protocol rules, strengthening decentralized market coordination.
 
-Research on ePBS introduces temporal separation between commitments, payload reveal, and execution validation.
+More recently, Ethereum research has begun exploring protocol designs that explicitly extend coordination across time. Examples include **Execution Tickets**, **Slot Auctions**, research into **shorter slot times**, execution latency, and future execution rights. Although these efforts pursue different objectives, they collectively suggest that execution time is becoming an increasingly important dimension of protocol evolution.
 
-Execution Tickets and Slot Auction proposals investigate mechanisms through which future execution opportunities themselves become economically meaningful protocol resources.
+This trend is not unique to Ethereum. Many emerging blockchain platforms emphasize lower execution latency, faster finality, and improved responsiveness as central architectural goals. Collectively, these developments indicate that execution time has become an increasingly important aspect of blockchain system design.
 
-Research into shorter slot times explores how execution latency influences protocol performance and user experience.
+From the perspective of this Foundation Statement, these developments may be understood as a gradual evolution from **spatial resource allocation** toward **spatiotemporal resource allocation**, where both blockspace and execution time become economically meaningful protocol resources.
 
-Meanwhile, many emerging blockchain platforms emphasize lower latency and faster finality as key competitive advantages.
+Importantly, TLM is not primarily concerned with making execution faster. Rather, it investigates how decentralized protocols may coordinate **heterogeneous economic preferences regarding execution time** while preserving neutrality, decentralization, and open market competition.
 
-Although these developments pursue different objectives, they share a common direction:
+This perspective provides a common conceptual framework through which otherwise independent developments—including fee market design, PBS, ePBS, execution rights, execution latency, and future protocol innovations—may be understood as part of a broader evolution in decentralized execution markets.
 
-> **Execution time is becoming an increasingly important dimension of blockchain protocol design.**
+Within this framework, **Temporal Liquidity** is proposed as a candidate economic variable describing the economic flexibility of demand with respect to execution time. The objective is not to prescribe a particular protocol mechanism, but to investigate whether richer temporal information may enable more expressive forms of decentralized market coordination.
 
-TLM views these developments as evidence that decentralized execution markets are gradually evolving from **spatial resource allocation** toward **spatiotemporal resource allocation**, in which both blockspace and execution time become economically meaningful resources requiring decentralized coordination.
-
-Importantly, TLM is not primarily concerned with making execution faster.
-
-Rather, it investigates how protocols may coordinate heterogeneous economic preferences regarding execution time while preserving decentralized market principles.
+Consequently, the transition from spatial to spatiotemporal coordination should be viewed not as a replacement for existing Ethereum research, but as a conceptual lens through which its continuing evolution may be interpreted and extended.
 
 ---
 
@@ -585,15 +611,16 @@ The broader methodology remains applicable to future protocol evolution.
 
 ## 8.7 Summary
 
-This section completes the conceptual framework established in Part II.
+This part has developed a conceptual framework for understanding decentralized execution markets.
 
-TLM proposes that protocol evolution should be understood as the progressive improvement of decentralized coordination rather than centralized optimization.
+Building upon the substantial progress made by the Ethereum research community in fee market design, Proposer-Builder Separation (PBS), Enshrined PBS (ePBS), execution markets, and ongoing protocol evolution, this Foundation Statement has proposed a model-first methodology for investigating decentralized coordination.
 
-Beginning with a model of decentralized execution markets, TLM identifies economically meaningful variables, investigates which should become protocol-visible, and explores how decentralized participants may coordinate using richer information.
+Within this framework, decentralized execution markets are understood by first identifying economically meaningful variables, then investigating which of those variables should become protocol-visible, and finally exploring how decentralized protocols may coordinate using richer economic information.
 
-Within this framework, Temporal Liquidity is not merely a mechanism for improving fee markets.
+Temporal Liquidity is proposed as one candidate economic variable describing the economic flexibility of demand with respect to execution time. Rather than prescribing a particular protocol mechanism, this framework investigates whether heterogeneous temporal preferences can be represented and coordinated while preserving decentralization, neutrality, simplicity, and open market competition.
 
-It is a candidate economic variable within a broader transition toward **spatiotemporal market design**, where both blockspace and execution time become first-class dimensions of decentralized resource allocation.
+More broadly, this Foundation Statement suggests that recent developments in Ethereum may be viewed as part of a continuing evolution from primarily **spatial resource allocation** toward **spatiotemporal market design**, in which both blockspace and execution time become economically meaningful dimensions of decentralized coordination.
 
-The remaining sections of the Foundation Statement build upon this conceptual framework to explore research directions, design implications, and future protocol evolution.
+The following part builds upon this conceptual framework by exploring the research directions that naturally emerge from this perspective.
+
 
