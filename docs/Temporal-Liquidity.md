@@ -2,121 +2,205 @@
 
 **Version:** 1.0
 **Release:** TLM Public Release 1 (PR1)
-**Status:** Public
-**Last Updated:** July 3, 2026
+**Status:** Public Draft
+**Last Updated:** July 2026
 
 ---
 
-## Definition
-
-**Temporal Liquidity** is the **economic flexibility of demand with respect to execution time**.
-
-It characterizes how a transaction's utility changes as its execution is delayed. Transactions with different objectives naturally exhibit different degrees of Temporal Liquidity.
-
-Unlike traditional fee markets, which primarily capture a user's willingness to pay, Temporal Liquidity captures a transaction's economic flexibility with respect to execution time.
-
----
+# Temporal Liquidity
 
 ## Motivation
 
-Blockchain protocols have significantly advanced decentralized resource allocation through innovations such as EIP-1559, Proposer-Builder Separation (PBS), and Enshrined PBS (ePBS).
+Blockchain protocols have made remarkable progress in improving decentralized execution markets.
 
-These innovations have substantially improved price discovery, blockspace allocation, decentralized block construction, and protocol robustness.
+Research on Ethereum fee markets, **EIP-1559**, **Proposer-Builder Separation (PBS)**, **Enshrined PBS (ePBS)**, Maximal Extractable Value (MEV), builder markets, execution latency, and future execution rights has significantly advanced our understanding of how scarce blockspace is allocated through decentralized market mechanisms.
 
-However, current fee markets primarily coordinate demand through **price**.
+These efforts have collectively demonstrated that transaction execution is not merely a technical scheduling problem. It is fundamentally an economic coordination problem.
 
-In practice, users differ not only in **how much** they are willing to pay, but also in **when** they require execution.
+One important aspect of demand, however, remains largely implicit:
 
-Some transactions lose nearly all value if delayed by a single block, while others can tolerate minutes or even hours of delay with little reduction in utility.
+> **How economically flexible is a transaction with respect to execution time?**
 
-These differences reveal another important economic characteristic of demand: **Temporal Liquidity**.
-
----
-
-## Temporal Liquidity versus Time Preference
-
-**Time Preference** is a well-established concept in economics that describes how individuals value present benefits relative to future benefits.
-
-TLM adopts a protocol-oriented perspective.
-
-Rather than modeling preferences in the abstract, TLM focuses on the **economic flexibility of individual transactions with respect to execution time**.
-
-Time Preference motivates Temporal Liquidity, but the two concepts are not identical.
-
-Temporal Liquidity is intended as a protocol-level abstraction that can be represented, communicated, and coordinated within decentralized execution markets.
+This document proposes **Temporal Liquidity** as a conceptual framework for studying this question.
 
 ---
 
-## Examples
+# Relationship to Existing Research
 
-| Transaction Type    | Temporal Liquidity |
-| ------------------- | ------------------ |
-| MEV Arbitrage       | Very Low           |
-| Liquidation         | Low                |
-| DEX Swap            | Medium             |
-| NFT Mint            | Medium to High     |
-| Treasury Transfer   | High               |
-| Periodic Settlement | Very High          |
+Temporal Liquidity should not be viewed as an alternative to existing Ethereum research.
 
-Transactions with **low Temporal Liquidity** require prompt execution because their value deteriorates rapidly over time.
+Rather, it builds upon a growing body of work in fee market design, protocol economics, execution markets, and decentralized coordination.
 
-Transactions with **high Temporal Liquidity** can tolerate delay while preserving much of their economic utility.
+Previous research has addressed important questions including:
 
----
+* efficient fee market design;
+* congestion pricing;
+* builder specialization through PBS;
+* protocol evolution through ePBS;
+* execution rights and future block markets;
+* execution latency and transaction inclusion;
+* empirical studies on the economic value of execution delay.
 
-## Protocol Perspective
+These contributions provide much of the motivation for Temporal Liquidity.
 
-Today's blockchain fee markets primarily coordinate demand through **price**.
+TLM asks a complementary question:
 
-TLM investigates whether protocols can also coordinate demand through **Temporal Liquidity**.
-
-Rather than treating execution as an immediate-or-never decision, users may communicate richer temporal information that reflects the economic flexibility of their transactions.
-
-The protocol does not seek to optimize users' utility directly.
-
-Instead, it provides decentralized market mechanisms through which participants may voluntarily express Temporal Liquidity while preserving participant neutrality, market incentives, and protocol simplicity.
+> **Should the economic flexibility of demand with respect to execution time itself become a protocol-visible economic variable?**
 
 ---
 
-## Protocol Representation
+# Definition
 
-Temporal Liquidity is an **economic property**.
+Temporal Liquidity is defined as:
 
-Protocols require a concrete representation of that property.
+> **The economic flexibility of demand with respect to execution time.**
 
-TLM investigates protocol-visible representations—including Temporal Preference Curves and related abstractions—that allow transactions to communicate execution flexibility while remaining compatible with decentralized protocol design.
+More precisely, it describes how the economic value of executing a transaction changes as execution is delayed.
 
-The exact representation remains an active area of research.
+Transactions differ not only in how much they are willing to pay for execution, but also in how sensitive they are to execution timing.
 
----
+Some transactions lose value almost immediately when delayed.
 
-## Research Questions
+Others remain economically valuable over much longer periods.
 
-Temporal Liquidity raises several open questions.
+Temporal Liquidity provides a conceptual language for describing these differences.
 
-* How should Temporal Liquidity be represented at the protocol level?
-* What temporal information should become protocol-visible?
-* How should blockchain protocols coordinate both price and Temporal Liquidity?
-* How can richer temporal information improve builder optimization while preserving participant neutrality?
-* Can protocol-visible Temporal Liquidity reduce congestion, timing games, and other inefficiencies?
-* What new incentive or manipulation vectors emerge when Temporal Liquidity becomes part of protocol design?
+Importantly, Temporal Liquidity is an **economic property**, not a protocol mechanism.
 
-These questions form part of the broader TLM research agenda.
+It exists independently of how blockchain protocols choose to represent or coordinate it.
 
 ---
 
-## Guiding Principle
+# Examples
 
-Ethereum made **price** a protocol-visible economic signal through protocol-managed fee markets.
+Different applications naturally exhibit different levels of Temporal Liquidity.
 
-Temporal Liquidity Market (TLM) investigates whether **Temporal Liquidity** can likewise become a protocol-visible economic signal, enabling blockchain protocols to coordinate both **price** and **time** while preserving decentralized market principles.
+### Arbitrage
+
+An arbitrage transaction often derives value from temporary price discrepancies.
+
+Its value may disappear after a single block.
+
+Such transactions exhibit **low Temporal Liquidity** because their economic value declines rapidly with execution delay.
 
 ---
 
-## Position within TLM
+### Liquidations
 
-Temporal Liquidity is the foundational concept of the Temporal Liquidity Market framework.
+Liquidation opportunities frequently involve direct competition among participants.
 
-It provides the economic basis for subsequent work on temporal preference representation, protocol-visible temporal information, builder optimization, and future mechanism proposals.
+Execution timing significantly influences expected value.
 
-This document establishes the conceptual foundation for the TLM project and serves as a reference for future public releases.
+These transactions similarly exhibit relatively low Temporal Liquidity.
+
+---
+
+### Decentralized Exchange Swaps
+
+Many swaps remain economically valuable after modest execution delays, particularly when users are willing to trade execution speed for lower transaction cost.
+
+These transactions often possess moderate Temporal Liquidity.
+
+---
+
+### Rollup Batch Submission
+
+Rollups typically optimize throughput and cost across many transactions.
+
+Execution often remains economically valuable over a broader execution window.
+
+These transactions may therefore exhibit relatively high Temporal Liquidity.
+
+---
+
+### Treasury Transfers
+
+Treasury operations frequently prioritize reliability over immediate execution.
+
+Execution delays of several minutes or even longer may have little economic consequence.
+
+Such transactions generally possess high Temporal Liquidity.
+
+---
+
+These examples illustrate that execution timing is not uniformly important.
+
+Different applications naturally exhibit different temporal characteristics.
+
+---
+
+# Why Temporal Liquidity Matters
+
+Current blockchain fee markets primarily coordinate demand through **price**.
+
+However, economic demand contains additional dimensions beyond willingness to pay.
+
+Execution time represents one such dimension.
+
+Meanwhile, Ethereum protocol research increasingly explores execution across time through developments including:
+
+* Enshrined PBS;
+* Execution Tickets;
+* Slot Auctions;
+* shorter slot times;
+* builder optimization;
+* execution market design.
+
+These developments suggest that execution time is becoming an increasingly important aspect of blockchain protocol evolution.
+
+Temporal Liquidity provides one possible economic framework for understanding this broader trend.
+
+Rather than treating execution time solely as a performance metric, it treats execution time as an economically meaningful property of decentralized demand.
+
+---
+
+# Relationship to Protocol Mechanisms
+
+Temporal Liquidity should be carefully distinguished from protocol mechanisms.
+
+Temporal Liquidity is **not**:
+
+* a temporal queue;
+* Execution Tickets;
+* Slot Auctions;
+* Temporal Liquidity Reserve (TLR);
+* adaptive pricing mechanisms;
+* any specific transaction format.
+
+Instead, these should be viewed as potential mechanisms through which Temporal Liquidity might eventually be represented or coordinated.
+
+The economic concept exists independently of any particular implementation.
+
+This distinction separates economic theory from protocol engineering and allows multiple mechanisms to be evaluated within a common conceptual framework.
+
+---
+
+# Research Directions
+
+Temporal Liquidity raises numerous research questions.
+
+Examples include:
+
+* How should Temporal Liquidity be represented?
+* Can Temporal Liquidity be measured empirically?
+* Which temporal information should become protocol-visible?
+* How should builders utilize temporal information?
+* Can richer temporal coordination improve market efficiency?
+* How should privacy and strategic behavior be balanced against greater expressiveness?
+* Can decentralized execution markets coordinate heterogeneous temporal preferences without increasing centralization?
+
+These questions remain intentionally open.
+
+TLM proposes a framework for investigating them rather than prescribing immediate answers.
+
+---
+
+# Summary
+
+Temporal Liquidity is proposed as an economic property describing the flexibility of demand with respect to execution time.
+
+Rather than prescribing any particular protocol mechanism, it provides a conceptual foundation for investigating how decentralized execution markets may represent, communicate, and coordinate heterogeneous temporal preferences.
+
+As Ethereum continues to evolve through advances in fee markets, PBS, ePBS, execution markets, and future protocol innovations, Temporal Liquidity offers one possible framework for understanding execution time as an economically meaningful dimension of decentralized market design.
+
+**Temporal Liquidity plays a role analogous to price elasticity: it characterizes how economic demand responds to flexibility in execution time rather than changes in price.**
