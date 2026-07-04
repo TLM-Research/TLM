@@ -11,8 +11,6 @@
 
 ## A Vision for Temporal Market Design in Blockchain Protocols
 
-### Background
-
 ## Background
 
 Ethereum has become one of the world's most active platforms for research in decentralized protocol economics.
