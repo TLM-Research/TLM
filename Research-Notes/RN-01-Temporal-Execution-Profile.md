@@ -8,7 +8,7 @@
 
 **Status:** Public Draft
 
-**Version:** 0.1
+**Version:** 0.2
 
 **Date:** July 2026
 
@@ -34,6 +34,8 @@ Rather than proposing another auction, scheduler, or queueing mechanism, this no
 
 # Abstract
 
+Blockchain execution markets have steadily evolved through better pricing and allocation mechanisms. This note explores a complementary question: can blockchain execution markets also evolve by allowing applications to communicate richer transaction execution preferences?
+
 Blockchain applications increasingly exhibit heterogeneous execution requirements.
 
 Some transactions derive value only from immediate execution. Others remain valuable across much broader execution windows. Current blockchain fee markets primarily communicate willingness to pay through a small number of fee parameters, leaving much of an application's temporal execution preference implicit.
@@ -44,7 +46,7 @@ A TEP provides a richer way for applications to communicate transaction executio
 
 The objective is not to propose a new fee mechanism, but to investigate whether richer protocol-visible execution preferences may enable future blockchain execution markets to better match heterogeneous application demand with heterogeneous execution options.
 
-Ethereum serves as the primary case study because of its mature execution market and active protocol research. The underlying concepts are intended to apply more broadly to decentralized execution systems.
+Ethereum serves as the primary case study because of its mature execution market and active protocol research. The underlying concepts are intended to apply more broadly to decentralized execution systems and thus warrant parallel studies in other Layer-1 eco-systems.
 
 ---
 
@@ -391,6 +393,7 @@ The central hypothesis of this work is intentionally modest:
 
 > Better communication of transaction execution preferences may enable better blockchain execution markets.
 
+While this note focuses on Ethereum, the broader research question is independent of any single blockchain architecture. We hope this work encourages parallel studies across other Layer-1 ecosystems, where different execution models, consensus mechanisms, and application communities may reveal new insights into temporal execution markets. Comparative studies across blockchain platforms may ultimately prove as valuable as the mechanisms proposed within any individual ecosystem. Ultimately, we hope Temporal Execution Profiles evolve into a common vocabulary for discussing transaction execution preferences across blockchain ecosystems, enabling researchers to compare execution markets using a shared conceptual framework while exploring different protocol realizations
 ---
 
 # Research Philosophy
