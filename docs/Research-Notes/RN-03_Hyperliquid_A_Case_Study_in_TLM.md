@@ -188,6 +188,14 @@ high-volume application traffic.
 
 This establishes an observed relationship:
 
+Higher Fee Bid
+        │
+        ▼
+Higher Inclusion Priority
+        │
+        ▼
+Lower Expected Delay
+
 \[
 \text{higher fee bid} \longrightarrow
 \text{higher inclusion priority} \longrightarrow
