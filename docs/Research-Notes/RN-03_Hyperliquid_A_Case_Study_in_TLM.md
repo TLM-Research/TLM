@@ -192,12 +192,10 @@ Higher Fee Bid
 
         │
         ▼
-
 Higher Inclusion Priority
 
         │
         ▼
-
 Lower Expected Delay
 
 Equivalently, lower fees are normally associated with a willingness to accept longer and less certain waiting times.
