@@ -200,12 +200,6 @@ Higher Inclusion Priority
 
 Lower Expected Delay
 
-\[
-\text{higher fee bid} \longrightarrow
-\text{higher inclusion priority} \longrightarrow
-\text{lower expected delay}
-\]
-
 Equivalently, lower fees are normally associated with a willingness to accept longer and less certain waiting times.
 
 That relationship is real within the current spot fee market, but it should not be treated as a physical law of blockchain execution. It arises from a mechanism in which transactions reveal demand individually, after arrival, and compete for scarce near-term blockspace. The mechanism largely interprets willingness to pay as urgency.
