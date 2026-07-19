@@ -397,10 +397,11 @@ define it.
    handling of orders, cancellations, trades, and liquidations,
    price-time priority, and reported order-processing throughput.
 
-2. Yinhong Zhao, “Quantifying the Loss from Blockchain Network Delay:
-   Evidence from Ethereum,” SSRN, revised 2024. Cited for the structural
-   auction model linking transaction-fee bidding to users' time
-   preferences and for the economic interpretation of delay cost.
+2. Yinhong Zhao, “The Cost of Delay: Evidence from the Ethereum Transaction
+   Fee Market." SSRN Working Paper No. 4436697. Posted May 14, 2023. Last
+   revised June 15, 2026. Cited for the structural auction model linking
+   transaction-fee bidding to users' time preferences and for the economic
+   interpretation of delay cost.
 
 3. Yulin Liu, Yuxuan Lu, Kartik Nayak, Fan Zhang, Luyao Zhang, and Yinhong
    Zhao, “Empirical Analysis of EIP-1559: Transaction Fees, Waiting Time,
