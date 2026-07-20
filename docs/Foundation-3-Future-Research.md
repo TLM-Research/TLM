@@ -41,7 +41,7 @@ A useful research framework must name the observations that would weaken or inva
 
 # 14. Relationship to the Research Notes
 
-The Foundation establishes the agenda; the Research Notes investigate individual questions in depth, which keeps the Foundation stable while the notes evolve. Current and planned notes include RN-001 (temporal information), RN-002 (protocol-visible temporal abstraction), RN-03 (the Hyperliquid case study of multidimensional temporal demand), and further empirical notes on measuring temporal flexibility, builder-scheduling simulations, and candidate mechanisms.
+The Foundation establishes the agenda; the Research Notes investigate individual questions in depth, which keeps the Foundation stable while the notes evolve. Current and planned notes include RN-01 (temporal information), RN-02 (protocol-visible temporal abstraction), RN-03 (the Hyperliquid case study of multidimensional temporal demand), and further empirical notes on measuring temporal flexibility, builder-scheduling simulations, and candidate mechanisms.
 
 ---
 
