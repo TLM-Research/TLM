@@ -38,7 +38,7 @@ TLM's ambition is to found the analogous field for decentralized execution — *
 
 Model-first does not forbid concrete mechanisms; it *orders* them. A candidate mechanism is most valuable as an **existence proof** — a demonstration that the design problem is solvable in principle, offered as one point in the space rather than as the answer. Such candidates live in dated Research Notes, where they establish feasibility (and authorship) without turning the program into advocacy for a single design.
 
-A well-posed problem *and* one constructive result is far more credible than either alone: the problem shows the work matters; the existence proof shows it is not hopeless. TLM's own origin includes such a candidate — a network-level reserve for incentivizing diversified temporal demand and its supply-side allocation — which is developed in the Research Notes as a feasibility demonstration, not as the program's thesis.
+A well-posed problem *and* one constructive result is far more credible than either alone: the problem shows the work matters; the existence proof shows it is not hopeless. TLM's own work includes such a candidate, developed privately as a feasibility demonstration rather than presented as the program's thesis, and introduced publicly only once the problem it addresses is sufficiently established.
 
 ## The invitation
 
