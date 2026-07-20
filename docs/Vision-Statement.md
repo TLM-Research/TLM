@@ -2,145 +2,118 @@
 
 ## Vision Statement
 
-**Version:** 1.0
-**Release:** TLM Public Release 1 (PR1)
-**Status:** Public
+**Version:** 1.3 (Draft)
+**Release:** TLM Public Release 2 (PR2)
+**Status:** Public Draft
 **Last Updated:** July 2026
 
 ---
 
 ## A Vision for Temporal Market Design in Blockchain Protocols
 
-## Background
+# Background
 
-Ethereum has become one of the world's most active platforms for research in decentralized protocol economics.
+Ethereum has transformed blockchain protocol economics through innovations such as EIP-1559, Proposer-Builder Separation (PBS), and Enshrined PBS (ePBS). These developments demonstrate that protocol design can improve decentralized coordination by making economically meaningful information visible through simple, deterministic protocol rules.
 
-Over the past several years, the Ethereum research community has advanced blockspace allocation through innovations such as **EIP-1559**, **Proposer-Builder Separation (PBS)**, and the ongoing development of **Enshrined PBS (ePBS)**. These efforts have significantly improved fee market efficiency, block construction, protocol robustness, and decentralized market coordination.
+Temporal Liquidity Market (TLM) asks whether decentralized execution markets can benefit from making economically meaningful temporal characteristics of demand, in addition to price, visible through protocol-defined abstractions.
 
-At the same time, ongoing research into **Execution Tickets**, **Slot Auctions**, execution latency, and future protocol architecture reflects a growing interest in how blockchain protocols coordinate execution not only across blockspace, but increasingly across time.
-
-Temporal Liquidity Market (TLM) is motivated by this broader evolution.
-
-Rather than proposing an alternative direction, TLM seeks to build upon these developments by investigating whether **Temporal Liquidity**—the economic flexibility of demand with respect to execution time—should become another protocol-visible economic variable within future decentralized execution markets.
+Rather than replacing Ethereum's architecture, TLM explores the next stage of decentralized market design.
 
 ---
 
-## The Remaining Dimension
+# Beyond Price
 
-Despite these advances, today's blockchain protocols primarily coordinate demand through **price**.
+Today's execution markets primarily coordinate demand through price.
 
-However, users differ not only in how much they are willing to pay, but also in **when** they require execution.
+Execution demand also possesses temporal characteristics that influence resource allocation.
 
-An arbitrage transaction may lose nearly all of its value if delayed by a single block.
+**Temporal Liquidity** is intentionally used as an umbrella economic concept analogous to **market liquidity**.
 
-A decentralized exchange swap may willingly wait several blocks in exchange for lower transaction costs.
+Just as market liquidity encompasses multiple dimensions (depth, immediacy, resiliency, etc.), Temporal Liquidity encompasses the collection of economically meaningful temporal characteristics of execution demand that may influence decentralized market coordination.
 
-A treasury transfer may remain equally valuable after minutes or even hours.
+These characteristics may include:
 
-These differences reveal an important economic characteristic that today's fee markets only partially capture.
+- delay tolerance
+- predictability
+- execution priority
+- execution windows
+- continuity of demand
+- deadlines
+- other temporal properties
 
----
+Individual research notes may investigate individual dimensions without implying separate top-level concepts.
 
-## Temporal Liquidity
+The central question becomes:
 
-TLM introduces the concept of **Temporal Liquidity**.
-
-> **Temporal Liquidity is the economic flexibility of demand with respect to execution time.**
-
-Just as conventional liquidity reflects economic flexibility with respect to price, Temporal Liquidity reflects economic flexibility with respect to execution time.
-
-Transactions therefore differ not only in willingness to pay, but also in the amount of Temporal Liquidity they possess.
-
-Current blockchain protocols largely treat this information as implicit.
-
-TLM investigates whether Temporal Liquidity can become a **protocol-visible economic signal**.
+> Can simple, protocol-visible temporal abstractions improve decentralized coordination while preserving neutrality and simplicity?
 
 ---
 
-**Vision**
+# A Historical Perspective
 
-We envision future blockchain protocols that coordinate decentralized execution using richer protocol-visible economic information.
+Internet QoS demonstrated both the promise and the limitations of protocol-visible information.
 
-Just as Ethereum has progressively improved the coordination of price through fee markets, builder markets, and protocol commitments, TLM investigates whether **Temporal Liquidity** may extend decentralized coordination into the temporal dimension.
+Highly expressive reservation approaches (IntServ/RSVP) proved difficult to deploy at Internet scale, while lightweight traffic classifications (DiffServ) improved coordination within administrative domains but encountered strategic marking, incentive misalignment, and limited inter-domain trust.
 
-The long-term vision is not merely faster execution, but **more expressive decentralized execution markets**, where both blockspace and execution time become first-class dimensions of protocol coordination while preserving decentralization, neutrality, and open participation.
+Permissionless blockchains inherit similar challenges under stronger adversarial assumptions.
 
----
+However, blockchain protocols introduce cryptoeconomic tools—including staking, auctions, and mechanism design—that were largely unavailable during the evolution of Internet QoS.
 
-## Building Upon Ethereum
-
-TLM is not intended to replace Ethereum's existing protocol architecture.
-
-Instead, it builds upon the foundations established by:
-
-* EIP-1559
-* Proposer-Builder Separation (PBS)
-* Enshrined PBS (ePBS)
-* Future Ethereum protocol evolution
-
-TLM should therefore be viewed as a complementary research framework rather than an alternative fee market.
+TLM asks whether these new tools fundamentally change what protocol-visible abstractions can achieve.
 
 ---
 
-## Guiding Principles
+# Research Vision
 
-The project is guided by several principles.
+TLM investigates Temporal Liquidity as a new dimension of decentralized market design.
 
-* Preserve decentralized market incentives.
-* Preserve participant neutrality.
-* Make richer temporal information protocol-visible rather than protocol-controlled.
-* Keep protocol rules deterministic, transparent, and simple.
-* Build upon existing Ethereum protocol evolution.
-* Encourage positive-sum outcomes by increasing overall market participation and ecosystem efficiency.
+Its objective is to establish a conceptual framework for understanding, representing, and evaluating economically meaningful temporal characteristics of execution demand rather than prescribing a particular protocol mechanism.
 
 ---
 
-## Research Direction
+# Why Better Market Design Can Create Social Surplus
 
-TLM investigates questions including:
+TLM is not motivated by transferring value from one participant to another, nor by asking the network to sacrifice efficiency in order to accommodate patient users.
 
-* How should Temporal Liquidity be represented at the protocol level?
-* What temporal information should become protocol-visible?
-* How can builders utilize richer temporal information during block construction?
-* Can protocol-visible Temporal Liquidity improve congestion management and reduce timing inefficiencies?
-* How should future protocol mechanisms balance simplicity, efficiency, decentralization, and incentive compatibility?
+Instead, the central hypothesis is that existing execution markets cannot fully coordinate certain economically valuable transactions because they expose only a limited set of demand information—primarily price.
 
-The project does not assume that any particular mechanism represents the final solution.
+As a result, some execution demand remains **unrealized**, not because the network lacks capacity, but because the market lacks sufficient expressiveness to coordinate it efficiently.
 
-Instead, it provides an open framework for exploring temporal market design in blockchain protocols.
+By allowing participants to communicate simple, protocol-visible temporal characteristics of demand, an improved market design may enable execution opportunities that would otherwise never occur.
 
----
+The resulting social surplus comes from **unlocking previously unrealized demand through better coordination**, rather than redistributing value among existing participants.
 
-## Long-Term Goal
-
-Ethereum demonstrated that **price** can become a protocol-visible economic signal through protocol-managed fee markets.
-
-Temporal Liquidity Market (TLM) explores whether **Temporal Liquidity** can likewise become a protocol-visible economic signal, enabling blockchain protocols to coordinate both **price** and **time** while preserving decentralized market principles.
-
-The long-term objective is not merely to improve one fee mechanism, but to establish a broader framework for temporal market design that may contribute to the next generation of blockchain protocol economics.
+This distinction is fundamental to the TLM research program.
 
 ---
 
-## Relationship to Existing Research
+# Guiding Principles
 
-TLM is intended as a complementary research framework.
+- Build upon Ethereum's protocol evolution.
+- Preserve decentralization and participant neutrality.
+- Keep protocol rules simple, deterministic, and transparent.
+- Separate protocol-visible information from protocol control.
+- Increase overall social surplus rather than merely redistribute existing value.
+- Evaluate ideas under strategic, permissionless assumptions.
 
-It builds upon the substantial contributions of the Ethereum research community in fee market design, PBS, ePBS, execution markets, and decentralized mechanism design.
+---
 
-Rather than replacing these efforts, TLM seeks to provide a conceptual framework through which they may be understood collectively while exploring one additional economic dimension: **Temporal Liquidity**.
+# Open Research Questions
 
-The project welcomes collaboration, critique, and alternative approaches that contribute to the broader evolution of decentralized execution markets.
+- Which temporal characteristics belong within Temporal Liquidity?
+- Which should become protocol-visible?
+- How coarse should protocol-visible abstractions be?
+- Under what conditions does temporal information create social surplus?
+- How economically significant is temporally flexible demand?
+- Can cryptoeconomic mechanisms overcome historical limitations observed in Internet QoS?
+- Can protocol-visible temporal abstractions remain robust against strategic manipulation?
 
-## Conclusion
+---
 
-Blockchain protocols have made remarkable progress in the allocation of scarce blockspace through advances in fee market design, decentralized block construction, and protocol market infrastructure.
+# Conclusion
 
-As decentralized execution markets continue to evolve, execution time is becoming an increasingly important economic dimension. Research into execution latency, builder markets, future execution rights, and protocol coordination across time suggests that the next stage of protocol evolution may involve not only *where* execution occurs, but also *when* execution occurs.
+Ethereum demonstrated that protocol-visible economic information can improve decentralized coordination.
 
-Temporal Liquidity Market (TLM) proposes that this evolution should be studied through a broader conceptual framework.
+TLM extends that direction by asking whether **Temporal Liquidity**, understood as the collection of economically meaningful temporal characteristics of execution demand, can become another foundation for decentralized market design.
 
-Rather than viewing time merely as a performance metric, TLM investigates whether the **economic flexibility of demand with respect to execution time** should become a protocol-visible economic variable that enables richer forms of decentralized coordination.
-
-Our vision is not to prescribe a single protocol mechanism, nor to replace the remarkable work already undertaken by the Ethereum research community. Instead, we hope to contribute a common conceptual language through which future research in fee markets, PBS, execution markets, temporal coordination, and decentralized mechanism design can be understood, connected, and extended.
-
-**TLM envisions the evolution of blockchain protocols from blockspace markets toward spatiotemporal execution markets.**
+The project advances this as an open research agenda rather than a predetermined conclusion.
