@@ -1,0 +1,23 @@
+
+# internal reviewer critique — keep local, not public
+*_review.md
+*@review*
+_Corpus-Review-Summary.md
+
+# working drafts — keep local, publish only canonical files
+*_v[0-9]*.md
+*_PR[0-9]*.md
+*_revision*.md
+*_old*
+*_2026.md
+
+# local-only: drafts, reviews, archived previous versions
+archive/
+*_review.md
+*@*
+_Corpus-Review-Summary.md
+*_v[0-9]*.md
+*_PR[0-9]*.md
+*_revision*.md
+*_2026.md
+*.v[0-9]*.md

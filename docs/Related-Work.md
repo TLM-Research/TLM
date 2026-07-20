@@ -1,186 +1,211 @@
+
 # Related Work
 
-**Version:** 1.0
-**Release:** TLM Public Release 1 (PR1)
+**Version:** 2.0
+**Release:** TLM Public Release 1 (Draft Revision)
 **Status:** Living Document
 
 ---
 
-# Related Work
+# Purpose
 
-Temporal Liquidity Market (TLM) is built upon the remarkable progress made by the Ethereum research community over the past several years.
+Temporal Liquidity Market (TLM) is not intended as another isolated Ethereum proposal.
 
-Rather than replacing existing protocol proposals, TLM seeks to provide a conceptual framework through which many of these developments can be understood, connected, and extended.
+Instead, it sits at the intersection of several mature research disciplines that have studied how scarce resources are allocated under heterogeneous demand.
 
-This document summarizes major areas of related work and explains how they relate to the goals of TLM.
+Ethereum provides the motivating application, but the intellectual foundations of TLM extend well beyond blockchain.
 
-It is intended as a living literature map rather than a comprehensive bibliography.
+This document organizes the literature by research community rather than by protocol feature.
 
 ---
 
-# 1. Ethereum Fee Markets
+# 1. Distributed Systems and Scheduling
 
-## Motivation
+Long before blockchain, distributed systems researchers recognized that execution timing is itself a resource.
 
-Ethereum's fee market has evolved substantially from first-price auctions toward more efficient and predictable market mechanisms.
+Research in:
 
-Perhaps the most significant milestone is **EIP-1559**, which introduced protocol-level congestion pricing through the Base Fee mechanism.
+- real-time scheduling,
+- deadline scheduling,
+- slack and laxity,
+- queueing systems,
+- operating systems,
 
-Subsequent economic analyses—particularly those by **Tim Roughgarden** and collaborators—have significantly advanced the understanding of blockchain fee markets, auction design, incentive compatibility, and market efficiency.
+demonstrates that different jobs possess different temporal characteristics.
 
 ## Relationship to TLM
 
-TLM builds directly upon this body of work.
+TLM inherits the observation that execution timing has economic and computational significance.
 
-Where EIP-1559 improves **price discovery**, TLM investigates whether decentralized execution markets should also coordinate another economic dimension:
+Its research question differs, however:
 
-**execution time.**
+> **What temporal information should decentralized participants communicate before scarce execution opportunities are allocated?**
 
-Temporal Liquidity should therefore be viewed as complementary to existing fee-market research rather than an alternative to it.
+Rather than importing scheduling policies directly into blockchain, TLM investigates whether decentralized execution markets require new abstractions for representing temporal demand.
 
 ---
 
-# 2. Proposer-Builder Separation (PBS)
+# 2. Network Resource Allocation
 
-## Motivation
+Network protocols have long explored whether applications should communicate richer information about their traffic.
 
-PBS represents a major architectural evolution within Ethereum.
+Representative themes include:
 
-Rather than requiring validators to perform increasingly sophisticated block construction, PBS introduces specialization by separating block construction from block proposal.
+- congestion control,
+- Quality of Service (QoS),
+- IntServ and RSVP,
+- DiffServ,
+- deadline-aware networking,
+- network utility maximization.
 
-Builders compete through market mechanisms while proposers remain focused on consensus responsibilities.
-
-This separation improves scalability while preserving decentralized competition.
+These systems illustrate both the benefits and costs of exposing application-level information to network infrastructure.
 
 ## Relationship to TLM
 
-TLM assumes PBS as an important foundation rather than a competing architecture.
+This literature provides an important caution as well as inspiration.
 
-The specialization introduced by PBS provides an environment within which richer temporal coordination may eventually emerge.
+TLM does not assume that more protocol-visible information is always better.
 
-TLM investigates how builders might utilize additional protocol-visible economic information without changing the fundamental separation introduced by PBS.
+Instead it asks:
+
+- Which temporal information is economically meaningful?
+- Which information should remain private?
+- What level of expressiveness preserves scalability and decentralization?
 
 ---
 
-# 3. Enshrined PBS (ePBS)
+# 3. Mechanism Design and Market Design
 
-## Motivation
+Mechanism design studies how strategic participants communicate information before resources are allocated.
 
-Enshrined PBS continues the evolution of Ethereum's execution markets by incorporating builder commitments directly into protocol rules.
-
-Research by **Barnabé Monnot** and other Ethereum researchers has emphasized the role of the protocol as market infrastructure, reducing reliance on trusted intermediaries while strengthening decentralized coordination.
-
-ePBS also introduces temporal separation between commitment, payload reveal, execution validation, and settlement.
+Auction theory, revelation mechanisms, incentive compatibility, and market design all investigate the relationship between information, incentives, and efficient allocation.
 
 ## Relationship to TLM
 
-ePBS demonstrates that protocol evolution increasingly involves coordinating information across time.
+TLM builds upon this tradition by asking whether **temporal information** should become part of the protocol-visible message space.
 
-TLM views this as an important architectural direction.
+This shifts attention from purely price-based communication toward richer—but carefully constrained—expressions of demand.
 
-Rather than focusing solely on commitment timing, TLM investigates whether **Temporal Liquidity** itself may become protocol-visible economic information within future protocol evolution.
+Truthful revelation of temporal preferences remains an open research question rather than an assumption.
+
+### Transaction Fee Mechanism Design (Roughgarden)
+
+The most direct formal anchor is Tim Roughgarden's framework for **transaction fee mechanism design** (Roughgarden, 2021; JACM 2024; and the 2020 economic analysis of EIP-1559). Stated in its terms, TLM is a proposal to enlarge the **message space** of the fee mechanism — from a scalar bid to a structured object that also carries temporal characteristics — which makes Roughgarden's framework the natural home for evaluating it.
+
+Three elements transfer directly:
+
+- **Incentive-compatibility vocabulary.** Roughgarden evaluates mechanisms against dominant-strategy incentive compatibility (DSIC), myopic miner incentive compatibility (MMIC), and off-chain-agreement (OCA) proofness. TLM's core concern — that revealing temporal flexibility invites extraction — is precisely the question of whether a temporally augmented mechanism remains DSIC and OCA-proof. This gives the "truthful revelation" open question above an exact formal statement.
+- **Evaluation criteria.** He proves EIP-1559 is DSIC (outside demand spikes), MMIC, and OCA-proof. These are the yardstick against which any future TLM mechanism should be measured, and they supply the evaluation criteria the Foundation Statement calls for.
+- **Impossibility as discipline.** His results show these guarantees are already in tension for a one-dimensional fee. Enlarging the message space with temporal information can make simultaneous DSIC / MMIC / OCA-proofness harder rather than easier — the formal counterpart to the caution (from the networking literature above) that more protocol-visible information is not automatically beneficial.
+
+In this framing, TLM is a **multidimensional transaction fee mechanism**: extending fee-market design from pricing one resource (blockspace, by willingness-to-pay) to coordinating a demand vector that also expresses when and in what order execution is wanted. This connects TLM's *execution priority* dimension to Roughgarden's analysis of tips and block-producer incentives — where ordering is exactly where MMIC and OCA-proofness bind, and where an ordering side-market such as Arbitrum's Timeboost (§5) tends toward centralization. Roughgarden's line is complementary to TLM (it evaluates mechanisms; TLM proposes what to coordinate), not competing.
 
 ---
 
-# 4. Execution Rights and Future Block Markets
+# 4. Financial Economics and Time-Differentiated Demand
 
-## Motivation
+Many economic systems already coordinate heterogeneous temporal preferences.
 
-Current Ethereum research explores several mechanisms that extend coordination beyond the current block.
+Examples include:
 
-These include proposals such as:
+- congestion pricing,
+- peak-load pricing,
+- electricity demand response,
+- interruptible-load contracts,
+- cloud spot and preemptible computing markets.
 
-* Execution Tickets
-* Slot Auctions
-* Future execution rights
-* Research into shorter slot times and execution latency
-
-Although these proposals pursue different objectives, they all recognize that execution opportunities extend beyond a single block.
+These markets demonstrate that users frequently exchange temporal flexibility for economic benefit.
 
 ## Relationship to TLM
 
-TLM views these developments as evidence that execution time is becoming an increasingly important aspect of protocol design.
+Temporal Liquidity is conceptually closest to these markets.
 
-Rather than studying these mechanisms individually, TLM provides a conceptual framework in which they may all be interpreted as different approaches to coordinating execution across time.
+Rather than introducing a new economic principle, TLM investigates how similar ideas may apply within decentralized execution markets while respecting blockchain-specific constraints.
 
 ---
 
-# 5. MEV and Execution Markets
+# 5. Ethereum Execution Markets
 
-## Motivation
+Ethereum provides the primary motivating environment for TLM.
 
-Research surrounding Maximal Extractable Value (MEV), Flashbots, private order flow, builder markets, and execution optimization has fundamentally changed our understanding of blockchain execution.
+Relevant work includes:
 
-Execution is no longer viewed as simple transaction ordering but as a sophisticated decentralized marketplace.
+- EIP-1559 and transaction fee markets,
+- PBS and builder specialization,
+- ePBS,
+- MEV and execution markets,
+- execution rights and future block markets,
+- intents and richer order expression,
+- account abstraction,
+- time-based transaction ordering and latency auctions (e.g., Arbitrum Timeboost),
+- empirical studies of execution delay.
 
 ## Relationship to TLM
 
-TLM assumes the existence of execution markets and does not attempt to eliminate MEV.
+TLM complements these developments by stepping back one level.
 
-Instead, it investigates whether richer temporal information may improve coordination within existing decentralized execution markets while preserving market competition.
+Rather than proposing another execution mechanism, it asks:
 
----
+> **What economically meaningful temporal information should applications communicate before execution opportunities are allocated?**
 
-# 6. Economic Value of Delay
+Existing Ethereum research explores increasingly sophisticated execution mechanisms.
 
-## Motivation
+TLM focuses on the economic information those mechanisms may eventually coordinate.
 
-Several recent studies have investigated the economic value associated with execution delay.
+### Time as Execution Priority: Arbitrum Timeboost
 
-This includes empirical work examining how transaction value changes as execution is delayed and how users express urgency through transaction fees and tips.
+Arbitrum's **Timeboost** is the closest existing instance of pricing *time itself* as a protocol-visible execution variable. In each round, a sealed-bid second-price auction sells control of an "express lane"; the winning controller is sequenced immediately, while all other transactions receive a fixed artificial delay (200 ms) before sequencing. Priority is therefore not merely willingness-to-pay — it is literally a **time advantage**, i.e. sensitivity of execution value to intra-slot ordering position.
 
-These studies demonstrate that execution delay already possesses measurable economic significance.
+Timeboost is directly relevant to TLM in two opposite ways, and both should be carried honestly:
 
-## Relationship to TLM
+- **Validation.** Capponi & Zhu (2026), *Auctioning Time to Mitigate Latency Races: Theory and Evidence from Blockchains*, argue that auctioning a time advantage can **reduce the wasteful latency arms race** (deadweight spending on colocation and faster hardware). This is a concrete, cited instance of temporal coordination creating social surplus by removing waste rather than redistributing value — the strongest available empirical support for TLM's positive-sum hypothesis. It also establishes that intra-slot ordering is an economically meaningful temporal characteristic of demand, distinct from delay-tolerance across slots.
+- **Caution.** Independent empirical analysis of Timeboost (*The Express Lane to Spam and Centralization*, arXiv:2509.22143) reports that the express lane drove spam and centralization, with a sophisticated controller dominating the lane. This is a live instance of the central risk in TLM's threat model: exposing a protocol-visible temporal variable can advantage the participants best able to exploit it. Timeboost thus demonstrates both that time-as-priority is real and valuable, and that naive coordination of it can centralize.
 
-TLM builds upon this empirical observation.
-
-Rather than asking whether delay has economic value, TLM asks whether the **economic flexibility of demand with respect to execution time** should itself become a protocol-visible economic variable.
-
-In this sense, empirical studies of delay provide supporting evidence for the motivation behind Temporal Liquidity.
+Note the two references are distinct: Capponi & Zhu is the theory-and-evidence paper; the "Express Lane to Spam and Centralization" analysis is by a separate group. TLM treats Timeboost as a **mechanism instance** that prices one temporal characteristic (execution priority); the framework's concern is the underlying demand characteristic and its representation, not the specific auction.
 
 ---
 
-# 7. Mechanism Design and Market Design
+# 6. Position of TLM
 
-## Motivation
+The contribution of TLM is not another scheduler, auction, or fee mechanism.
 
-Blockchain protocols increasingly draw upon ideas from mechanism design, auction theory, market microstructure, and distributed systems.
+Its proposed contribution is a conceptual framework connecting ideas that have historically evolved in separate research communities.
 
-These disciplines provide theoretical foundations for understanding decentralized coordination under strategic behavior.
-
-## Relationship to TLM
-
-TLM should be viewed as an extension of this broader research tradition.
-
-Its contribution is not a replacement for existing mechanism design, but a conceptual framework for investigating whether temporal information represents another economically meaningful variable for decentralized market coordination.
-
----
-
-# 8. Position of TLM
-
-The preceding work has collectively transformed Ethereum into an increasingly sophisticated decentralized execution market.
-
-TLM seeks to build upon this evolution by introducing a model-first methodology for decentralized execution markets.
-
-Rather than beginning with protocol mechanisms, TLM begins by modeling the underlying economic system, identifying economically meaningful variables, investigating which variables should become protocol-visible, and then exploring mechanisms that coordinate those variables.
-
-Within this framework, **Temporal Liquidity** is proposed as a candidate economic variable describing the economic flexibility of demand with respect to execution time.
-
-TLM therefore complements existing research in fee markets, PBS, ePBS, execution markets, and mechanism design while providing a broader conceptual framework through which these developments may be understood collectively.
+| Research Area | Traditional Question | TLM Perspective |
+|---------------|----------------------|-----------------|
+| Distributed Systems | Which job should run first? | What temporal information should jobs communicate? |
+| Network QoS | Which flows deserve priority? | Which temporal preferences belong in the protocol? |
+| Mechanism Design | What messages should agents send? | Which temporal information is economically meaningful? |
+| Financial Economics | How do markets value flexibility over time? | Can decentralized execution markets coordinate that flexibility? |
+| Ethereum | How should execution markets allocate blockspace? | Should protocol-visible temporal information become part of that allocation? |
 
 ---
 
-# Future Updates
+# Positioning
 
-This document is intentionally incomplete.
+TLM should therefore be viewed neither as a replacement for Ethereum research nor as a direct extension of any single discipline.
 
-Future versions will include:
+Instead, it is an interdisciplinary research program positioned at the intersection of:
 
-* Formal references and bibliography.
-* Links to Ethereum Improvement Proposals (EIPs).
-* Academic papers and technical reports.
-* Empirical studies related to execution timing.
-* Additional work contributed by the Ethereum research community.
+- distributed systems,
+- network resource allocation,
+- mechanism design,
+- financial economics,
+- blockchain protocol research.
 
-As TLM evolves, this document will continue to serve as a living map of the research landscape and an acknowledgment of the work upon which TLM is built.
+Ethereum serves as the motivating application through which these ideas can be investigated, evaluated, and potentially translated into future protocol mechanisms.
+
+---
+
+# Future Work
+
+Future revisions of this document will include:
+
+- formal academic citations,
+- Ethereum Improvement Proposals (EIPs),
+- primary papers from each discipline,
+- complementary versus competing approaches,
+- annotated bibliography,
+- historical timeline of related ideas.
+
+This document is intended to remain the canonical literature map for the TLM project.
