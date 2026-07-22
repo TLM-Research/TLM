@@ -1,121 +1,95 @@
 # Temporal Liquidity Market (TLM)
 
-## A Research Framework for Spatiotemporal Market Design in Ethereum
+**A research program in temporal market design for decentralized execution.**
 
-Temporal Liquidity Market (TLM) is an open research project investigating how blockchain protocols can coordinate not only **price**, but also **time**.
+Temporal Liquidity Market (TLM) is an open research project investigating whether decentralized execution markets should coordinate not only **price**, but also the economically meaningful **temporal characteristics of demand** — *when*, *in what order*, and *how predictably* execution is needed.
 
-The project explores **Temporal Liquidity**—the economic flexibility of demand with respect to execution time—and studies how this information may become protocol-visible while preserving decentralization, neutrality, and market efficiency.
-
-Rather than proposing a single mechanism, TLM develops a conceptual framework for understanding decentralized execution markets and for exploring future protocol evolution.
+It is deliberately **model-first**: it defines and measures the economic object before proposing any mechanism. In market-design terms, TLM designs the market's information layer; it is not itself a market mechanism.
 
 ---
 
-## Motivation
+## The question
 
-Ethereum has significantly advanced decentralized market design through innovations such as:
+Ethereum has repeatedly improved decentralized coordination by making an economically meaningful variable protocol-visible — congestion through **EIP-1559**, block construction through **PBS** and **ePBS**. Each step coordinated **price** better. TLM asks the prior question:
 
-* **EIP-1559**, improving fee market efficiency and congestion pricing.
-* **Proposer-Builder Separation (PBS)**, introducing specialization in block construction.
-* **Enshrined PBS (ePBS)**, bringing builder commitments and settlement guarantees into protocol rules.
-* Ongoing research into **Execution Tickets**, **Slot Auctions**, and other proposals that extend coordination across time.
-
-Together, these developments demonstrate an important architectural trend:
-
-> **Ethereum is progressively making economically meaningful information protocol-visible in order to improve decentralized coordination.**
-
-TLM investigates whether **Temporal Liquidity** should become another protocol-visible economic variable within this broader evolution.
+> **Should decentralized execution markets coordinate only price, or also the economically meaningful temporal characteristics of demand?**
 
 ---
 
 ## Temporal Liquidity
 
-Traditional fee markets primarily coordinate demand through price.
+**Temporal Liquidity** is used as an *umbrella* concept — analogous to **market liquidity**, which is itself a family of properties (depth, immediacy, resiliency) rather than a single quantity:
 
-However, transactions also differ in their flexibility with respect to execution time.
+> **Temporal Liquidity is the collection of economically meaningful temporal characteristics of execution demand.**
 
-Some transactions require immediate execution.
+Its dimensions, by temporal granularity:
 
-Others are willing to wait in exchange for lower cost.
+- **execution priority** — sensitivity to ordering *within* a slot
+- **delay tolerance**, **execution windows**, **deadlines** — across slots
+- **predictability**, **continuity** — across a stream of demand
 
-Still others have complex execution preferences spanning multiple blocks.
-
-TLM defines **Temporal Liquidity** as:
-
-> **The economic flexibility of demand with respect to execution time.**
-
-Rather than treating execution time solely as a performance metric, TLM studies execution time as an economic resource that may participate in decentralized market coordination.
+The canonical exposition — the market-liquidity analogy, the deadline-versus-decay structure, and worked examples — lives in [`docs/Temporal-Liquidity.md`](docs/Temporal-Liquidity.md).
 
 ---
 
-## Research Philosophy
+## Positioning — exchange designer, not exchange
 
-TLM adopts a **model-first methodology**.
-
-Instead of beginning with protocol mechanisms, it first models decentralized execution markets, identifies economically meaningful variables, investigates which variables should become protocol-visible, and then explores mechanisms that coordinate those variables.
-
-This separation between:
-
-* economic concepts,
-* protocol representations, and
-* protocol mechanisms
-
-allows multiple implementation approaches to be evaluated within a common conceptual framework.
+TLM's contribution is deliberately *upstream* of any auction. It defines the temporal commodity and the information a market makes visible, and states the constraints — neutrality, extraction-resistance, simplicity, incentive-compatibility — that any mechanism coordinating this demand must satisfy. The clearing mechanism is left to the actors who live in it (builders, proposers, searchers) and to the mechanism- and auction-design community. See [`docs/TLM-Positioning.md`](docs/TLM-Positioning.md).
 
 ---
 
-## Research Directions
+## Model-first methodology
 
-Current research includes:
-
-* Temporal Liquidity as an economic variable
-* Protocol-visible economic information
-* Decentralized temporal coordination
-* Mechanism design for temporal execution markets
-* Builder optimization across time
-* Spatiotemporal resource allocation
-* Measurement and evaluation of Temporal Liquidity
-* Implications for future Ethereum protocol evolution
-
-The project remains mechanism-neutral and welcomes alternative implementations and competing approaches.
+1. Model the market's economically meaningful variables.
+2. Determine which are already protocol-visible.
+3. Investigate which additional variables merit protocol-visible representation.
+4. Only then design and evaluate mechanisms — separating **concept**, **representation**, and **mechanism**.
 
 ---
 
-## Relationship to Existing Research
+## An interdisciplinary program
 
-TLM builds upon the remarkable progress made by the Ethereum research community.
+TLM sits at the intersection of four mature literatures and aims to *inherit their results* rather than restate their questions:
 
-Its foundations draw inspiration from research on Ethereum fee markets, EIP-1559, PBS, ePBS, MEV, execution market design, and ongoing work on future protocol evolution.
+- **Financial economics** — liquidity as a multidimensional property; the cost of time.
+- **Mechanism & market design** — TLM as a *multidimensional transaction fee mechanism*, evaluated under DSIC / MMIC / OCA-proofness.
+- **Networking & QoS** — the IntServ/DiffServ lesson; coarse, stateless descriptors.
+- **Empirical execution-timing economics** — the cost of delay; time-as-priority (Arbitrum Timeboost).
 
-TLM should therefore be viewed as a complementary research framework rather than a replacement for existing protocol proposals.
-
-One of its primary goals is to provide a common conceptual language through which these developments can be understood, compared, and extended.
+The full literature map is in [`docs/Related-Work.md`](docs/Related-Work.md).
 
 ---
 
-## Repository Structure
+## Repository map
 
 ```text
 docs/
-    Vision-Statement.md
-    Foundation-Statement.md
-    Temporal-Liquidity.md
-    Related-Work.md
-
-research/
-    Notes
-    Mechanisms
-    Simulations
-
-archive/
-    Historical drafts
+    Vision-Statement.md          — the umbrella concept and guiding principles
+    TLM_Research_Overview.md     — outward-facing research invitation
+    TLM-Positioning.md           — where TLM's contribution lies
+    Foundation-Outline.md        — structure of the Foundation Statement
+    Foundation-1-Introduction.md — Part I: introduction & the concept
+    Foundation-2-Framework.md    — Part II: principles & model-first methodology
+    Foundation-3-Future-Research.md — Part III: research agenda & falsifiability
+    Temporal-Liquidity.md        — canonical concept exposition
+    Related-Work.md              — interdisciplinary literature map
+    Research-Notes/
+        RN-01 — Temporal Execution Profiles (transaction-level representation)
+        RN-02 — Protocol-visible Temporal Abstraction
+        RN-03 — Hyperliquid: A Case Study in Temporal Liquidity
 ```
+
+---
+
+## Where to start
+
+- **New here?** Read the [Research Overview](docs/TLM_Research_Overview.md).
+- **Want the concept?** [Temporal Liquidity](docs/Temporal-Liquidity.md).
+- **Want the framework?** The Foundation Statement — [Part I](docs/Foundation-1-Introduction.md) · [Part II](docs/Foundation-2-Framework.md) · [Part III](docs/Foundation-3-Future-Research.md).
+- **Want the evidence?** [RN-03: Hyperliquid](docs/Research-Notes/RN-03_Hyperliquid_A_Case_Study_in_Temporal_Liquidity.md).
 
 ---
 
 ## Contributing
 
-TLM is an open research project.
-
-Contributions, discussion, critiques, and alternative perspectives are welcome.
-
-The long-term objective is to advance the understanding of decentralized execution markets through collaborative research spanning distributed systems, economics, cryptography, mechanism design, and blockchain protocol engineering.
+TLM is an open research project. Critique, discussion, and alternative or competing approaches are welcome — especially from distributed systems, networking, mechanism and market design, and financial economics. The primary question is not whether a particular mechanism should be adopted, but whether **protocol-visible temporal characteristics of demand** are a worthwhile direction for decentralized execution markets — and, if so, what the right abstraction and the binding impossibilities are.
