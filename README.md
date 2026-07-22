@@ -4,7 +4,7 @@
 
 Temporal Liquidity Market (TLM) is an open research project investigating whether decentralized execution markets should coordinate not only **price**, but also the economically meaningful **temporal characteristics of demand** — *when*, *in what order*, and *how predictably* execution is needed.
 
-It is deliberately **model-first**: it defines and measures the economic object before proposing any mechanism. In market-design terms, TLM designs the market's information layer; it is not itself a market mechanism.
+It is **model-first**: concepts, representations, and evaluation criteria come first. But that is the *first phase*, not the whole program — **market-mechanism design is an explicit second phase**, in which the project develops and evaluates candidate mechanisms that coordinate Temporal Liquidity.
 
 ---
 
@@ -34,16 +34,18 @@ The canonical exposition — the market-liquidity analogy, the deadline-versus-d
 
 ## Positioning — exchange designer, not exchange
 
-TLM's contribution is deliberately *upstream* of any auction. It defines the temporal commodity and the information a market makes visible, and states the constraints — neutrality, extraction-resistance, simplicity, incentive-compatibility — that any mechanism coordinating this demand must satisfy. The clearing mechanism is left to the actors who live in it (builders, proposers, searchers) and to the mechanism- and auction-design community. See [`docs/TLM-Positioning.md`](docs/TLM-Positioning.md).
+TLM begins *upstream* of any auction: it defines the temporal commodity, the information a market makes visible, and the constraints — neutrality, extraction-resistance, simplicity, incentive-compatibility — that any mechanism must satisfy. It then builds on that foundation toward **candidate market mechanisms**, evaluated against those constraints and developed within the project — while actively welcoming competing and complementary mechanism proposals from the builder, proposer, and auction- and mechanism-design community. See [`docs/TLM-Positioning.md`](docs/TLM-Positioning.md).
 
 ---
 
-## Model-first methodology
+## Approach — model-first foundations, then market mechanisms
 
 1. Model the market's economically meaningful variables.
 2. Determine which are already protocol-visible.
 3. Investigate which additional variables merit protocol-visible representation.
-4. Only then design and evaluate mechanisms — separating **concept**, **representation**, and **mechanism**.
+4. Design and evaluate **market mechanisms** that coordinate them — separating **concept**, **representation**, and **mechanism**.
+
+Steps 1–3 are the current, model-first phase; step 4 — **market-mechanism design** — is the project's planned next phase, developed in-project and open to contributions and competing proposals from the community.
 
 ---
 
