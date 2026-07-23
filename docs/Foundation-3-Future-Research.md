@@ -9,7 +9,7 @@ Part III closes the Foundation by turning the framework into a research program:
 
 # 9. Mechanism Design Space
 
-The central contribution of TLM is the conceptual framework, not any single mechanism. Future mechanisms — temporal queues, execution windows, adaptive pricing, reserve-based designs, multi-horizon markets, and others — are candidate points in a design space, to be compared against the common evaluation criteria stated in Part II (§9) rather than judged in isolation. Because the criteria attach to the framework and not to any one design, multiple candidates can be evaluated without redefining the underlying concept of Temporal Liquidity.
+The central contribution of TLM is the conceptual framework, not any single mechanism. Future mechanisms — temporal queues, execution windows, adaptive pricing, reserve-based designs, multi-horizon markets, and others — are candidate points in a design space, to be compared against the common evaluation criteria stated in Part II (§9) rather than judged in isolation. This design space already has at least one worked proposal: the tiered urgency-based fee mechanism of Kiayias, Koutsoupias, Lazos & Panagiotakos (2023) — an IOG/Cardano research design, not (as far as we know) a deployed one — which coordinates a single temporal dimension and which TLM treats as the urgency-axis precedent it generalizes. Because the criteria attach to the framework and not to any one design, multiple candidates can be evaluated without redefining the underlying concept of Temporal Liquidity.
 
 ---
 

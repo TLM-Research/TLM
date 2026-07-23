@@ -140,6 +140,8 @@ Surplus can arise through two complementary channels:
 - **Unlocking suppressed demand** — allowing participants to communicate simple, protocol-visible temporal characteristics may enable execution opportunities that would otherwise never occur.
 - **Removing coordination waste** — making a temporal characteristic explicit can dampen destructive competition for it. The latency arms race is the clearest example: participants currently spend real resources racing for ordering advantage, and coordinating time-as-priority can convert part of that deadweight loss into surplus (Capponi & Zhu, 2026).
 
+There is already formal support for the first channel. Kiayias, Koutsoupias, Lazos & Panagiotakos (2023) show that a *tiered* fee mechanism, pricing by urgency, keeps low-urgency transactions cheap and admits a more diverse set of transactions than EIP-1559 — without necessarily sacrificing revenue. That is, in effect, the *urgency dimension* of Temporal Liquidity worked out as a mechanism; TLM generalizes it across the full set of temporal characteristics. Their result also sharpens the distinction below: the revenue-neutrality runs through price discrimination (a redistribution channel), while the *inclusion of diverse demand* is the created surplus.
+
 In both cases the resulting social surplus comes from **better coordination**, rather than redistributing value among existing participants.
 
 This distinction is fundamental to the TLM research program.
@@ -186,6 +188,7 @@ The project advances this as an open research agenda rather than a predetermined
 - Zhao, Y. *The Cost of Delay: Evidence from the Ethereum Transaction Fee Market.* Working paper, SSRN abstract 4436697 (updated 15 June 2026).
 - Liu, Y., Lu, Y., Nayak, K., Zhang, F., Zhang, L. & Zhao, Y. (2022). *Empirical Analysis of EIP-1559: Transaction Fees, User Experience, and Security.* Proceedings of the 2022 ACM SIGSAC Conference on Computer and Communications Security (CCS '22), 2099–2113. arXiv:2201.05574.
 - Roughgarden, T. (2021). *Transaction Fee Mechanism Design.* arXiv:2106.01340; Journal of the ACM (2024). See also Roughgarden (2020), *Transaction Fee Mechanism Design for the Ethereum Blockchain: An Economic Analysis of EIP-1559.*
+- Kiayias, A., Koutsoupias, E., Lazos, P. & Panagiotakos, G. (2023). *Tiered Mechanisms for Blockchain Transaction Fees.* arXiv:2304.06014; in *Mathematical Research for Blockchain Economy* (Springer, 2024).
 - Buterin, V., Conner, E., Dudley, R., Slipper, M., Norden, I. & Bakhta, A. (2019). *EIP-1559: Fee Market Change for ETH 1.0 Chain.* Ethereum Improvement Proposals. eips.ethereum.org/EIPS/eip-1559.
 - *Proposer-Builder Separation (PBS).* Ethereum protocol roadmap; Flashbots MEV-Boost.
 - *EIP-7732: Enshrined Proposer-Builder Separation (ePBS).* Ethereum Improvement Proposals. eips.ethereum.org/EIPS/eip-7732.

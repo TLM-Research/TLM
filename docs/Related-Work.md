@@ -100,6 +100,12 @@ Three elements transfer directly:
 
 In this framing, TLM is a **multidimensional transaction fee mechanism**: extending fee-market design from pricing one resource (blockspace, by willingness-to-pay) to coordinating a demand vector that also expresses when and in what order execution is wanted. This connects TLM's *execution priority* dimension to Roughgarden's analysis of tips and block-producer incentives — where ordering is exactly where MMIC and OCA-proofness bind, and where an ordering side-market such as Arbitrum's Timeboost (§5) tends toward centralization. Roughgarden's line is complementary to TLM (it evaluates mechanisms; TLM proposes what to coordinate), not competing.
 
+### TFM impossibility and the cryptographic escape hatch (Chung & Shi)
+
+The second pillar of formal TFM theory is Chung & Shi, *Foundations of Transaction Fee Mechanism Design* (ePrint 2021/1474; SODA 2023). Their central result is an **impossibility**: under contention, no fee mechanism can jointly satisfy user incentive-compatibility (UIC), miner incentive-compatibility (MIC), and side-contract-proofness (SCP, i.e. resistance to miner–user collusion) for any coalition size c ≥ 1; and any mechanism incentive-compatible against miner–user coalitions must have *zero* miner revenue. This sharpens the "impossibility as discipline" point above and — because it is centered on **collusion / side-contracts** — bears directly on TLM's extraction concern: enlarging the message space with temporal information only makes these joint guarantees harder.
+
+Crucially for TLM's answer to that problem, Shi, Chung & Wu, *What Can Cryptography Do for Decentralized Mechanism Design?* (ITCS 2023; arXiv:2209.14462), show that **cryptography** (commitments, MPC, trusted hardware) can *circumvent* several of these plain-model impossibilities, enabling mechanisms that are otherwise unattainable. This is the closest prior work to TLM's own extraction-resistance thesis — making disclosure safe with cryptography so a richer, temporally expressive mechanism becomes feasible. TLM inherits this line directly: the impossibility results bound what a plain temporal mechanism can achieve, and the cryptographic results are the template for escaping those bounds.
+
 ---
 
 # 4. Financial Economics and Time-Differentiated Demand
@@ -162,6 +168,18 @@ Timeboost is directly relevant to TLM in two opposite ways, and both should be c
 - **Caution.** Independent empirical analysis of Timeboost (*The Express Lane to Spam and Centralization*, arXiv:2509.22143) reports that the express lane drove spam and centralization, with a sophisticated controller dominating the lane. This is a live instance of the central risk in TLM's threat model: exposing a protocol-visible temporal variable can advantage the participants best able to exploit it. Timeboost thus demonstrates both that time-as-priority is real and valuable, and that naive coordination of it can centralize.
 
 Note the two references are distinct: Capponi & Zhu is the theory-and-evidence paper; the "Express Lane to Spam and Centralization" analysis is by a separate group. TLM treats Timeboost as a **mechanism instance** that prices one temporal characteristic (execution priority); the framework's concern is the underlying demand characteristic and its representation, not the specific auction.
+
+### Tiered / urgency-differentiated fees: the closest formal precedent
+
+Kiayias, Koutsoupias, Lazos & Panagiotakos, *Tiered Mechanisms for Blockchain Transaction Fees* (arXiv:2304.06014, 2023; Springer, 2024), is the closest existing formalization of TLM's core intuition. They model blockchain traffic diversity, argue that EIP-1559 is **not inclusive**, and give a tiered pricing mechanism that keeps prices low for **low-urgency** transactions — admitting a more diverse set of transaction types — while showing that revenue need not fall, because the lower low-urgency prices can be covered from high-urgency ones through the mechanism's price-discrimination ability.
+
+In TLM's language this is a **mechanism for a single temporal dimension — urgency (delay-tolerance)**: effectively a worked "Phase 2" instance of the TLM thesis on one axis. TLM credits it as prior art and builds on it in three ways.
+
+- **From one axis to the umbrella.** Their tiering prices urgency; Temporal Liquidity is the umbrella over *several* temporal characteristics — predictability, execution priority, execution windows, continuity — of which urgency/delay-tolerance is one. TLM's contribution is the multidimensional object, and the model-first framing that precedes any single mechanism.
+- **Creation vs redistribution, made precise.** Their revenue-neutrality runs through *price discrimination* (high-urgency covering low-urgency) — a redistribution channel — while the *inclusivity / diverse traffic entering* is created surplus. TLM leads with the creation claim and acknowledges the discrimination channel; their result is useful evidence that the two coexist.
+- **Extraction-resistance (the key gap).** Their analysis covers incentive-compatibility around price, inclusion, revenue, and off-chain-agreement collusion (OCA-proofness), but not the attack surface created by the *observability* of the disclosed urgency — front-running / MEV, or collusion around the visible tier. (Their remark that users choose from a menu "without revealing their value" is the revelation-principle sense — not shielding the choice from adversarial observation in the mempool.) That surface grows with the *expressiveness* of the disclosure, so it is more acute for TLM's richer, multidimensional signals than for coarse price-based tiers — which is exactly why TLM makes extraction-resistance a first-class constraint rather than a downstream concern.
+
+TLM therefore positions this work not as a competitor but as the formal urgency-axis foundation it generalizes — and a natural point of collaboration.
 
 ---
 
