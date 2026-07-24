@@ -2,8 +2,8 @@
 
 # Research Overview (PR3)
 
-**Release:** TLM Public Release 3
-**Status:** Public Draft — research outreach
+**Release:** TLM Public Release 3  
+**Status:** Public Draft — research outreach  
 **Last Updated:** July 2026
 
 ---
