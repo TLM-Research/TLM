@@ -23,37 +23,37 @@ Temporal Liquidity Market (TLM) is an open research program investigating that q
 ## The idea, in one figure
 
 ```text
-                Today's execution market
+                 Today's execution market
 
-        ┌────────────────────────────────┐
-        │           User demand          │
-        │   Price               ✓visible │
-        │   Temporal structure  ✗implicit│
-        └───────────────┬────────────────┘
-                        │  (compressed into one scalar fee, after arrival)
-                        ▼
-                Resource allocation ──► Blockspace
+        +--------------------------------------+
+        |             User demand              |
+        |   Price               [x] visible    |
+        |   Temporal structure  [ ] implicit   |
+        +------------------+-------------------+
+                           |  (compressed into one scalar fee, after arrival)
+                           v
+                 Resource allocation --> Blockspace
 
 
-                Temporal Liquidity Market
+                 Temporal Liquidity Market
 
-        ┌────────────────────────────────┐
-        │          User demand           │
-        │  Price                         │
-        │  Temporal Liquidity (umbrella):│
-        │    • execution priority        │  intra-slot (ordering)
-        │    • delay tolerance           │  inter-slot
-        │    • execution window/deadline │
-        │    • predictability            │  stream-level
-        │    • continuity                │
-        └───────────────┬────────────────┘
-                        │  simple, protocol-neutral, extraction-resistant?
-                        ▼
-             Richer market coordination
-                        │
-        Previously unrealized mutually-beneficial executions
-                        │
-                 Social surplus?  (falsifiable hypothesis)
+        +--------------------------------------+
+        |             User demand              |
+        |   Price                              |
+        |   Temporal Liquidity (umbrella):     |
+        |     - execution priority             |   intra-slot (ordering)
+        |     - delay tolerance                |   inter-slot
+        |     - execution window / deadline    |
+        |     - predictability                 |   stream-level
+        |     - continuity                     |
+        +------------------+-------------------+
+                           |  simple, protocol-neutral, extraction-resistant?
+                           v
+              Richer market coordination
+                           |
+           Previously unrealized mutually-beneficial executions
+                           |
+               Social surplus?  (falsifiable hypothesis)
 ```
 
 ---
