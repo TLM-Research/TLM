@@ -136,17 +136,31 @@ This is an invitation to critique, not a proposal for adoption. I would especial
 ## References
 
 [1] Buterin, V., Conner, E., Dudley, R., Slipper, M., Norden, I. & Bakhta, A. *EIP-1559: Fee Market Change for ETH 1.0 Chain.* Ethereum Improvement Proposals, 2019.
+
 [2] *Proposer–Builder Separation.* Ethereum protocol roadmap; Flashbots MEV-Boost.
+
 [3] *EIP-7732: Enshrined Proposer–Builder Separation (ePBS).* Ethereum Improvement Proposals.
+
 [4] Kyle, A. S. "Continuous Auctions and Insider Trading." *Econometrica* 53(6), 1985. (Market depth / liquidity dimensions.)
+
 [5] Amihud, Y. & Mendelson, H. "Asset Pricing and the Bid–Ask Spread." *Journal of Financial Economics* 17(2), 1986.
+
 [6] Zhao, Y. *The Cost of Delay: Evidence from the Ethereum Transaction Fee Market.* SSRN Working Paper 4436697 (rev. 15 June 2026).
+
 [7] Roughgarden, T. *Transaction Fee Mechanism Design.* arXiv:2106.01340; *Journal of the ACM*, 2024.
+
 [8] Braden, R., Clark, D. & Shenker, S. *Integrated Services in the Internet Architecture (IntServ).* RFC 1633, 1994.
+
 [9] Blake, S. et al. *An Architecture for Differentiated Services (DiffServ).* RFC 2475, 1998.
+
 [10] Stoica, I., Shenker, S. & Zhang, H. "Core-Stateless Fair Queueing: Achieving Approximately Fair Bandwidth Allocations in High-Speed Networks." *ACM SIGCOMM*, 1998.
+
 [11] Saltzer, J. H., Reed, D. P. & Clark, D. D. "End-to-End Arguments in System Design." *ACM TOCS* 2(4), 1984.
+
 [12] Liu, Y., Lu, Y., Nayak, K., Zhang, F., Zhang, L. & Zhao, Y. "Empirical Analysis of EIP-1559: Transaction Fees, Waiting Time, and Consensus Security." *ACM CCS*, 2022.
+
 [13] Capponi, A. & Zhu, B. *Auctioning Time to Mitigate Latency Races: Theory and Evidence from Blockchains.* SSRN Working Paper, 2026.
+
 [14] *The Express Lane to Spam and Centralization: An Empirical Analysis of Arbitrum's Timeboost.* arXiv:2509.22143.
+
 [15] Kiayias, A., Koutsoupias, E., Lazos, P. & Panagiotakos, G. *Tiered Mechanisms for Blockchain Transaction Fees.* arXiv:2304.06014, 2023; *Mathematical Research for Blockchain Economy* (Springer), 2024.
