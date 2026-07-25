@@ -4,7 +4,7 @@ title: "Hyperliquid: A Case Study in Temporal Liquidity"
 version: "0.5"
 status: "Public Draft of Research Note"
 program: "Temporal Liquidity Market (TLM)"
-date: "July 2026"
+date: "July 24, 2026"
 ---
 
 # RN-03 v0.5
