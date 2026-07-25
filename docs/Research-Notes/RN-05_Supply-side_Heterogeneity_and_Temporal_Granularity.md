@@ -23,7 +23,7 @@ date: "July 23, 2026"
 
 ## Abstract
 
-The TLM corpus to date is demand-side. Temporal Liquidity names the temporal characteristics of demand; the Temporal Execution Profile (RN-01) and Temporal Demand Profile (RN-02) represent them. Supply appears only briefly — RN-01 §5.2 observes that execution providers possess heterogeneous capabilities — and is not developed.
+The TLM notes to date are demand-side. Temporal Liquidity names the temporal characteristics of demand; the Temporal Execution Profile (RN-01) and Temporal Demand Profile (RN-02) represent them. Supply appears only briefly — RN-01 §5.2 observes that execution providers possess heterogeneous capabilities — and is not developed.
 
 This note takes up that gap. If demand is temporally heterogeneous, the question is whether *supply* should be too: whether a single undifferentiated execution service is the right architecture, or whether a family of differentiated services, distinguished by temporal granularity, better matches heterogeneous demand.
 
@@ -41,7 +41,7 @@ The Foundation Statement asks how decentralized execution markets should represe
 
 RN-01 §5.2 states the observation without pursuing it: execution providers possess heterogeneous capabilities, while current fee markets primarily optimize immediate inclusion using scalar bids, so today's market effectively offers one dominant service — *execute as soon as possible*.
 
-A single service is coherent only if demand is temporally homogeneous. The corpus argues at length that it is not. RN-03 identifies at least two independent axes and shows demand occupying multiple cells of their cross-product. If demand is multidimensional and supply offers one service, the mismatch is structural.
+A single service is coherent only if demand is temporally homogeneous. These notes argue at length that it is not. RN-03 identifies at least two independent axes and shows demand occupying multiple cells of their cross-product. If demand is multidimensional and supply offers one service, the mismatch is structural.
 
 ---
 
@@ -181,7 +181,7 @@ Two properties make the combination distinctive; it does not reduce to any singl
 
 *A caveat that keeps the frame honest.* The three axes are not of the same kind. Time and class structure the *ordering commitment*; the state-access axis structures *which orderings matter* — it is an equivalence (commuting transactions), not a coordinate. "Cube" is a multiplexing lens for locating value, not a claim that all three axes carry ordering semantics.
 
-**Where the value is, read off the axes.** The framework makes the value proposition legible. The **class** axis is where heterogeneous demand is matched to heterogeneous service (RN-04). The **state** axis is where parallelism and throughput are won (the RN-04 / Monad workload-shaping hypothesis: classification increases available parallelism *before* scheduling). The **time** axis is where extraction is bounded (interior freedom confines reordering within a quantum). A single-service, single-ordered-stream architecture collapses all three axes to one point — which is precisely the mismatch this corpus argues against, now stated as a loss of multiplexing gain on three independent axes.
+**Where the value is, read off the axes.** The framework makes the value proposition legible. The **class** axis is where heterogeneous demand is matched to heterogeneous service (RN-04). The **state** axis is where parallelism and throughput are won (the workload-shaping hypothesis: classification increases available parallelism *before* scheduling — see RN-04 §7, and RN-06 for the full Monad analysis). The **time** axis is where extraction is bounded (interior freedom confines reordering within a quantum). A single-service, single-ordered-stream architecture collapses all three axes to one point — the mismatch these notes argue against, now stated as a loss of multiplexing gain on three independent axes.
 
 ---
 
@@ -224,7 +224,7 @@ Quanta are a representational convention. Builders and proposers use them to exp
 
 Quanta remain outside consensus, but commitments are explicit, backed by cost or stake, and verified against realised behaviour.
 
-*Assessment.* Most consistent with the corpus. RN-02 §6 already argues self-declared temporal information is insufficient because a costless declaration is trivially gamed, and that credibility should rest on realised behaviour plus a cost or stake binding making over-claiming self-penalising. Applying this to granularity is a direct extension. It obtains differentiation without paying for sub-slot consensus.
+*Assessment.* Most consistent with the other notes. RN-02 §6 already argues self-declared temporal information is insufficient because a costless declaration is trivially gamed, and that credibility should rest on realised behaviour plus a cost or stake binding making over-claiming self-penalising. Applying this to granularity is a direct extension. It obtains differentiation without paying for sub-slot consensus.
 
 *This note treats Option B as the leading candidate*, noting it inherits RN-02 §6's open questions and lands in territory occupied by preconfirmation research (§7).
 

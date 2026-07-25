@@ -11,7 +11,7 @@ Part II is the intellectual core of the Foundation. It sets out the principles t
 
 ## 5.1 Participant and protocol neutrality
 
-The protocol should treat participants symmetrically and remain neutral across applications. Where temporal characteristics are priced differently, the differentiation must be across the *characteristic* (a public, deterministic rule, as the EIP-1559 base fee is a deterministic function of congestion), never across *identity*. Neutral-but-differentiated is the load-bearing property: horizons or urgency classes may be priced differently; participants may not.
+The protocol should treat participants symmetrically and remain neutral across applications. Where temporal characteristics are priced differently, the differentiation must be across the *characteristic* (a public, deterministic rule, as the EIP-1559 base fee is a deterministic function of congestion), never across *identity*. Neutral-but-differentiated is the essential property: horizons or urgency classes may be priced differently; participants may not.
 
 ## 5.2 Information before decisions — a bounded claim
 

@@ -20,6 +20,19 @@ Temporal Liquidity Market (TLM) is an open research program investigating that q
 
 ---
 
+## The problem is not hypothetical: applications already pay to escape it
+
+The most latency-sensitive applications on Ethereum have repeatedly chosen to leave it. dYdX rebuilt as a sovereign Cosmos app-chain; Hyperliquid launched its own L1; Aevo moved matching off-chain [16]. Each gave up Ethereum's security, deepest liquidity, and composability — a steep price — to obtain two things the general-purpose market could not offer: **throughput** for continuous order flow, and **control over ordering and extraction** (deterministic sequencing, front-running resistance).
+
+Read as revealed preference, these exits are evidence that temporal demand — *when, in what order, and how predictably* execution happens — is economically first-order and currently unpriced. Two consequences follow:
+
+- **Scaling addresses only half of it.** A high-performance, EVM-equivalent chain such as Monad [17] removes the *throughput* reason to leave — but not the *ordering-and-extraction* reason. The residual driver is temporal and extraction control.
+- **That residual is exactly what a general-purpose market could address without sacrificing neutrality.** The cost of leaving it unpriced is **ecosystem fragmentation**: a chain's highest-value flow migrating to sovereign venues.
+
+TLM asks whether that dimension can be made part of the market — coarsely, neutrally, and extraction-resistantly — so this flow can be *served in-protocol rather than by exit*. The question below is therefore not academic: it is a diagnosis of value the current market is already losing.
+
+---
+
 ## The idea, in one figure
 
 ```text
@@ -105,6 +118,14 @@ TLM is not about redistributing value or asking the network to subsidize patient
 
 ---
 
+## From framework to mechanism: the supply-side horizon
+
+The model is the first phase, not the destination; its purpose is to make the missing dimension precise enough that mechanism design can begin. Once the temporal characteristics of demand are named and measured, the gaps in a scalar fee market become concrete — and so does a supply-side agenda: how a transaction-fee mechanism might *price and coordinate* temporal demand, generalizing single-axis results such as tiered fees [15] beyond urgency and exploring windowed auctions and time-based reserves. These are protocol-level (EIP-scale) questions, not application features.
+
+Two properties make this agenda tractable rather than speculative. Its constituency is already visible: the latency-sensitive applications that today exit to sovereign chains [16] are precisely the users a temporally-aware mechanism would serve. And it is neutral to where it is first built — a high-performance general-purpose chain can prototype such a mechanism, and Ethereum can adopt what proves out — so the work advances the broader ecosystem rather than any single venue. The mechanisms themselves remain open research; the contribution offered here is the framework that identifies what is missing and who needs it.
+
+---
+
 ## Open problems I think are worth attacking
 
 Stated as hard problems, not a wish list — these are where I would most value collaboration:
@@ -164,3 +185,7 @@ This is an invitation to critique, not a proposal for adoption. I would especial
 [14] *The Express Lane to Spam and Centralization: An Empirical Analysis of Arbitrum's Timeboost.* arXiv:2509.22143.
 
 [15] Kiayias, A., Koutsoupias, E., Lazos, P. & Panagiotakos, G. *Tiered Mechanisms for Blockchain Transaction Fees.* arXiv:2304.06014, 2023; *Mathematical Research for Blockchain Economy* (Springer), 2024.
+
+[16] Application-sovereignty exits: dYdX, *Announcing dYdX Chain* (migration from Ethereum/StarkEx to a Cosmos app-chain, 2023); Hyperliquid (sovereign L1 perpetuals DEX); Aevo (off-chain matching with on-chain settlement).
+
+[17] Monad — high-performance, EVM-equivalent Layer-1 (asynchronous/parallel execution, MonadBFT, MonadDB). https://docs.monad.xyz

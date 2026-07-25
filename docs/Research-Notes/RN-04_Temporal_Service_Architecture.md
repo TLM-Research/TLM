@@ -2,7 +2,7 @@
 id: RN-04
 title: "Temporal Execution Services: A Multi-Class Execution Architecture for Ethereum"
 version: "0.2"
-status: "@draft — internal; Monad/Hyperliquid facts pending verification before public release"
+status: "Public draft — research note, offered in good faith for comment"
 program: "Temporal Liquidity Market (TLM)"
 date: "July 23, 2026"
 ---
@@ -68,7 +68,7 @@ Two structural notes. **Best-Effort is the undeclared default** — participatio
 
 # 3. Completing the Two-Sided Market
 
-The corpus now has all three layers of a market design, and RN-04 is the missing supply side:
+The TLM notes now have all three layers of a market design, and RN-04 is the missing supply side:
 
 ```
 Demand side (RN-01/RN-02):  applications describe temporal demand
@@ -137,15 +137,17 @@ Both outcomes are plausible: batch semantics and FIFO-within-class remove some e
 
 # 6. Case Study I — Hyperliquid: Extraction-Resistance by Architecture
 
-*(Companion to RN-03, which studied Hyperliquid's demand side; here we study its supply-side answer. Vendor-sourced specifics pending verification.)*
+*(Companion to RN-03, which studied Hyperliquid's demand side; here we study its supply-side answer. Specifics verified July 2026 against Hyperliquid documentation [9].)*
 
 ## 6.1 What Hyperliquid does
 
-Hyperliquid structurally removes each window in which front-running normally operates: **no public mempool** (order flow routes directly to validators — kills the visibility window); **HyperBFT with ~200ms blocks and single-block deterministic finality** (a trade settles in the block it is placed — kills the time window); **no fee-priority bidding — pure price-time priority / FIFO** (kills the fee channel for ordering discretion); **protocol-native liquidations** (the clearinghouse liquidates internally — internalizes an adversarial workload, eliminating keeper gas wars); and **mark-price triggers from a median of external venues** (externalizes the reference truth against local-book manipulation) [9].
+Hyperliquid structurally removes each window in which front-running normally operates: **no public mempool** (order flow routes directly to validators — kills the visibility window); **HyperBFT with ~200ms blocks and single-block deterministic finality** (a trade settles in the block it is placed — kills the time window); **price-time priority (FIFO within a price) with no gas auction for order placement** (removing the *classical* gas-bidding channel for ordering discretion — though Hyperliquid has since added a priority-fee option; see §6.2); **protocol-native liquidations** (the clearinghouse liquidates internally — internalizes an adversarial workload, eliminating keeper gas wars); and **mark-price triggers from a median of external venues** (externalizes the reference truth against local-book manipulation) [9].
 
 ## 6.2 The critical reading: priority is re-denominated, not eliminated
 
-"Front-running cannot happen" is too strong — and the way it fails is the lesson. With the fee channel closed and FIFO in force, *arrival time* is the only route to priority, so competition migrates from gas bids to **latency**: colocation, network engineering, speed — the classical HFT equilibrium, and precisely the wasteful latency race of Capponi & Zhu [11]. And "no public mempool" does not make flow invisible; it makes it visible *only to a small validator set* — trust relocated, not removed.
+"Front-running cannot happen" is too strong — and the way it fails is the lesson. Under price-time priority, *arrival time* becomes the dominant route to priority, so competition migrates from gas bids to **latency**: colocation, network engineering, speed — the classical HFT equilibrium, and precisely the wasteful latency race of Capponi & Zhu [11]. And "no public mempool" does not make flow invisible; it makes it visible *only to a small validator set* — trust relocated, not removed.
+
+The point has since been confirmed from an unexpected direction: **Hyperliquid has itself introduced a priority-fee mechanism** — pay HYPE for execution priority — re-opening a *priced* route to priority alongside FIFO, designed to be exchange-aware (add-liquidity-only orders still process FIFO) rather than a naive gas auction [9]. That even the purest "prohibit" architecture re-introduced a priced priority channel is strong evidence for the thesis: the execution-priority dimension is not removed, only re-denominated.
 
 > **The execution-priority dimension cannot be designed away. A system only chooses the currency in which priority is allocated — and therefore who its rent-seekers are.**
 
@@ -157,11 +159,11 @@ Three regimes now run in production:
 | **Price** | Arbitrum Timeboost | explicit auction | spam & centralization [10] |
 | **Prohibit** | Hyperliquid FIFO | physical latency | colocation arms race; centralization |
 
-No regime escapes the dimension. This comparison becomes visible only once execution priority is named as a demand characteristic — it is a product of the TLM framing itself.
+No regime escapes the dimension — and Hyperliquid's recent addition of a priority-fee option moves it from pure **Prohibit** toward a **Prohibit/Permit hybrid**, which is itself the clearest confirmation that the dimension cannot be designed away. This comparison becomes visible only once execution priority is named as a demand characteristic — it is a product of the TLM framing itself.
 
 ## 6.3 A third family of extraction-resistance
 
-The corpus already carried two answers to the disclosure problem: **cryptographic** (hide the information until it is unexploitable — encrypted mempools, commit-reveal; the Shi–Chung–Wu line [5]) and **economic** (make misuse unprofitable — stake, verification, collusion-proofness). Hyperliquid demonstrates the third: **architectural** — remove the structural windows themselves. The families are complementary, and *service classes are the natural unit at which to mix them*.
+These notes already carried two answers to the disclosure problem: **cryptographic** (hide the information until it is unexploitable — encrypted mempools, commit-reveal; the Shi–Chung–Wu line [5]) and **economic** (make misuse unprofitable — stake, verification, collusion-proofness). Hyperliquid demonstrates the third: **architectural** — remove the structural windows themselves. The families are complementary, and *service classes are the natural unit at which to mix them*.
 
 ## 6.4 What the architecture costs
 
@@ -173,42 +175,17 @@ That question has a concrete affirmative answer for one class — §8.
 
 ---
 
-# 7. Case Study II — Monad: The Workload-Shaping Hypothesis
+# 7. Case Study II — Monad (summary; full analysis in RN-06)
 
-*(Facts pending verification against Monad documentation [12, 13].)*
+Monad is a high-performance, EVM-equivalent L1 that accelerates the layers *below* the transaction market — MonadBFT consensus, RaptorCast networking, optimistic parallel execution, MonadDB storage — while preserving Ethereum's semantics: one ordered stream, executed faster, committed in the original order. It is therefore **complementary substrate** to TLM, not a competitor: Monad asks *how to compute the ordered result faster*, TLM asks *whether every transaction should receive the same execution service at all*. A Continuous State service (§8) can run a Monad-class engine inside it — TLM selects the service; an engine like Monad accelerates execution within it.
 
-## 7.1 Where Monad sits
+One TLM claim belongs here because it bears directly on execution engines like Monad's:
 
-Monad improves nearly every layer *below* the transaction market — consensus (MonadBFT), networking (RaptorCast), execution (asynchronous pipelining, optimistic parallel execution), storage (MonadDB), VM (JIT compilation) — while deliberately preserving Ethereum's semantics: one linearly ordered transaction stream, executed faster, with results committed in the original order.
+> **Workload-shaping hypothesis.** Classifying demand into temporal services *before* scheduling increases the parallelism available to any execution engine and reduces contention — regardless of which engine runs inside each service.
 
-Monad asks: *how do we compute the ordered result faster?*
-TLM asks: *should every transaction receive the same execution service at all?*
+Monad discovers parallelism *after* ordering (optimistic execution, validated afterward); temporal classification instead changes the *workload presented to it*, removing cross-class conflicts by construction rather than discovering them optimistically. The hypothesis is quantifiable — replay a transaction mix through (a) one ordered stream and (b) temporally classified streams, and measure state-access conflict rate and achievable parallel speedup.
 
-```
-Application
-   ↓
-Temporal demand  →  service selection      ← TLM (above the market)
-   ↓
-Transaction ordering
-   ↓
-Execution engine                            ← Monad (below the market)
-   ↓
-Storage / Consensus
-```
-
-Different layers; complementary, not competing. A Continuous State service could *use* a Monad-class engine inside it: **TLM selects the service; an engine like Monad accelerates execution within it.** Service-to-engine need not be one-to-one.
-
-## 7.2 The workload-shaping hypothesis (headline contribution)
-
-Monad discovers parallelism *after* ordering — optimistic execution against one ordered stream, validating dependencies afterward. TLM can act *before* ordering:
-
-> **Classifying demand into temporal services before scheduling increases the parallelism available to any execution engine and reduces contention — regardless of which engine runs inside each service.**
-
-In database terms: Monad improves the **concurrency-control algorithm**; temporal classification changes the **workload presented to it**. Separating a high-rate, conflict-heavy continuous stream (own state domain, own cadence) from spot traffic removes cross-class conflicts *by construction* rather than discovering them optimistically.
-
-This is a systems-performance argument for temporal classification that is **independent of the economic argument** — and it is quantifiable:
-
-> **Proposed experiment (simulator headline).** Replay a historical or synthetic transaction mix through (a) one ordered stream and (b) temporally classified streams; measure state-access conflict rates and achievable parallel speedup under an optimistic-execution model. A material difference validates the hypothesis; none falsifies it.
+**For the full Monad analysis** — motivation, the verified architecture, the OS→networking (control/data-plane) framing, the application-roster and app-chain-exit arguments, the limits, and the first-adopter case — see **RN-06, *Monad Through the Temporal-Liquidity Lens.***
 
 ---
 
@@ -295,7 +272,7 @@ Ethereum does not need to become a uniformly faster blockchain. It may instead e
 [6] Kiayias, A., Koutsoupias, E., Lazos, P. & Panagiotakos, G. *Tiered Mechanisms for Blockchain Transaction Fees.* arXiv:2304.06014, 2023; Springer 2024.
 [7] Braden, R., Clark, D. & Shenker, S. *Integrated Services in the Internet Architecture.* RFC 1633, 1994.
 [8] Blake, S. et al. *An Architecture for Differentiated Services.* RFC 2475, 1998. See also Stoica, Shenker & Zhang, *Core-Stateless Fair Queueing,* SIGCOMM 1998.
-[9] Hyperliquid documentation (About; HyperCore; Order Book). *Vendor-sourced; specifics (validator set, routing, FIFO tie-breaking, liquidation precompiles, mark-price composition) pending verification.*
+[9] Hyperliquid documentation (HyperCore; Order Book; Priority Fees; Robust Price Indices). *Verified July 2026: fully on-chain CLOB with price-time / FIFO matching; HyperBFT (HotStuff-family) one-block deterministic finality ~0.2s; no gas for order placement; protocol-native clearinghouse liquidations; oracle = weighted median of major CEX spot prices; a priority-fee mechanism has since been added (exchange-aware — add-liquidity-only orders remain FIFO).*
 [10] *The Express Lane to Spam and Centralization: An Empirical Analysis of Arbitrum's Timeboost.* arXiv:2509.22143.
 [11] Capponi, A. & Zhu, B. *Auctioning Time to Mitigate Latency Races.* SSRN 6240079, 2026.
 [12] Monad documentation. https://docs.monad.xyz/ *(pending verification).*

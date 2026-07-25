@@ -300,7 +300,7 @@ Individual mechanisms are expected to evolve as the research progresses.
 
 # 9. Conclusion
 
-Blockchain execution markets have made remarkable progress in improving pricing and execution allocation.
+Blockchain execution markets have made substantial progress in improving pricing and execution allocation.
 
 This note explores another complementary direction.
 

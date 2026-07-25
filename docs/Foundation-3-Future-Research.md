@@ -29,7 +29,7 @@ The Foundation intentionally avoids prescribing Ethereum's roadmap; it offers a 
 
 # 12. Non-goals
 
-TLM is **not** a new consensus protocol, a replacement for PBS or EIP-1559, a proposal for a single mandatory mechanism, an attempt to maximize execution speed, or a complete execution-market solution. These non-goals are load-bearing — they prevent the most common misreadings — and are echoed in the Part I scope so that a reader of any single document encounters them.
+TLM is **not** a new consensus protocol, a replacement for PBS or EIP-1559, a proposal for a single mandatory mechanism, an attempt to maximize execution speed, or a complete execution-market solution. These non-goals are essential — they prevent the most common misreadings — and are echoed in the Part I scope so that a reader of any single document encounters them.
 
 ---
 
