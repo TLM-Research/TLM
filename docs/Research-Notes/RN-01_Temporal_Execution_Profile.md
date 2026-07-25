@@ -7,7 +7,7 @@
 **Project:** Temporal Liquidity Market (TLM)\
 **Status:** Public Draft\
 **Version:** 0.3 (Complete Draft)\
-**Date:** July 2026
+**Date:** July 24, 2026
 
 ------------------------------------------------------------------------
 

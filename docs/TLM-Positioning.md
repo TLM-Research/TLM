@@ -1,7 +1,7 @@
 # TLM Positioning — Exchange Designer, Not Exchange
 
 **Status:** Public Draft — positioning statement (reusable as outreach preamble)
-**Last Updated:** July 2026
+**Last Updated:** July 24, 2026
 
 ---
 

@@ -4,7 +4,7 @@ title: "Temporal Execution Services: A Multi-Class Execution Architecture for Et
 version: "0.2"
 status: "Public draft — research note, offered in good faith for comment"
 program: "Temporal Liquidity Market (TLM)"
-date: "July 23, 2026"
+date: "July 24, 2026"
 ---
 
 # RN-04: Temporal Execution Services

@@ -5,7 +5,7 @@
 **Version:** 1.4 (Draft)
 **Release:** TLM Public Release 2 (PR2)
 **Status:** Public Draft
-**Last Updated:** July 2026
+**Last Updated:** July 24, 2026
 
 ---
 

@@ -4,7 +4,7 @@
 
 **Release:** TLM Public Release 3  
 **Status:** Public Draft — research outreach  
-**Last Updated:** July 2026
+**Last Updated:** July 24, 2026
 
 ---
 

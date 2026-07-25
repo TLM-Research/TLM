@@ -4,7 +4,7 @@ title: "Supply-side Heterogeneity and Temporal Granularity: A Quantum Lattice fo
 version: "0.3"
 status: "Draft — Internal Research Note"
 program: "Temporal Liquidity Market (TLM)"
-date: "July 23, 2026"
+date: "July 24, 2026"
 ---
 
 # RN-05 v0.3
@@ -17,7 +17,7 @@ date: "July 23, 2026"
 **Research Note RN-05**
 **Version:** 0.3
 **Status:** Draft
-**Date:** July 23, 2026
+**Date:** July 24, 2026
 
 ---
 
