@@ -78,7 +78,7 @@ Together with the latency-race evidence discussed below, these results give TLM 
 
 # Time as Execution Priority
 
-Execution priority illustrates why these characteristics are genuinely *temporal* rather than merely restatements of willingness-to-pay.
+Execution priority illustrates why these characteristics are *temporal* rather than merely restatements of willingness-to-pay.
 
 Arbitrum's **Timeboost** makes the point concretely: it auctions control of an "express lane," and the winner is sequenced immediately while all other transactions incur a fixed artificial delay before sequencing. Here priority *is* time — a latency advantage — and the underlying demand characteristic is the sensitivity of a transaction's value to its ordering position within a slot.
 
@@ -119,11 +119,11 @@ Its objective is to establish a conceptual framework for understanding, represen
 
 TLM is, formally, a proposal to enrich the **message space** of Ethereum's transaction fee mechanism — from a scalar bid (fee/tip) to a structured object that also carries temporal characteristics. Tim Roughgarden's framework for transaction fee mechanism design (Roughgarden, 2021) is therefore the natural formal home for evaluating it, and it contributes three things TLM needs.
 
-- **A vocabulary for truthful revelation.** Roughgarden evaluates fee mechanisms against dominant-strategy incentive compatibility (DSIC), myopic miner incentive compatibility (MMIC), and off-chain-agreement (OCA) proofness. TLM's central worry — that revealing temporal flexibility invites extraction — is precisely the question of whether a temporally augmented mechanism remains DSIC and OCA-proof. Roughgarden gives that worry an exact statement.
+- **A vocabulary for truthful revelation.** Roughgarden evaluates fee mechanisms against dominant-strategy incentive compatibility (DSIC), myopic miner incentive compatibility (MMIC), and off-chain-agreement (OCA) proofness. TLM's central worry — that revealing temporal flexibility invites extraction — is the question of whether a temporally augmented mechanism remains DSIC and OCA-proof. Roughgarden gives that worry an exact statement.
 - **Ready-made evaluation criteria.** He shows EIP-1559 is DSIC (outside demand spikes), MMIC, and OCA-proof. Any TLM mechanism should be held to the same standard; these are the yardstick the framework's evaluation agenda calls for.
-- **A discipline on optimism.** His impossibility results show these guarantees are already in tension for a *one-dimensional* fee. Enlarging the message space with temporal information can make simultaneous DSIC / MMIC / OCA-proofness harder, not easier — the formal counterpart to the caution that "more protocol-visible information is not automatically better," and a map of exactly which trade-offs to expect.
+- **A discipline on optimism.** His impossibility results show these guarantees are already in tension for a *one-dimensional* fee. Enlarging the message space with temporal information can make simultaneous DSIC / MMIC / OCA-proofness harder, not easier — the formal counterpart to the caution that "more protocol-visible information is not automatically better," and a map of which trade-offs to expect.
 
-Seen this way, TLM is a **multidimensional transaction fee mechanism**: extending fee-market design from pricing one resource (blockspace, by willingness-to-pay) to coordinating a demand vector that also expresses *when* and *in what order* execution is wanted. Execution priority connects directly to Roughgarden's treatment of tips and block-producer incentives, where ordering is exactly where MMIC and OCA-proofness bite — which is also why an ordering side-market such as Timeboost tends toward centralization.
+Seen this way, TLM is a **multidimensional transaction fee mechanism**: extending fee-market design from pricing one resource (blockspace, by willingness-to-pay) to coordinating a demand vector that also expresses *when* and *in what order* execution is wanted. Execution priority connects directly to Roughgarden's treatment of tips and block-producer incentives, where ordering is where MMIC and OCA-proofness bite — which is also why an ordering side-market such as Timeboost tends toward centralization.
 
 ---
 

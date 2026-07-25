@@ -84,7 +84,7 @@ Supply side (RN-04):        the protocol offers temporal execution
                             semantics; one settlement layer
 ```
 
-The economic-layer precedent already exists: Kiayias, Koutsoupias, Lazos & Panagiotakos's tiered fee mechanism prices urgency classes and shows inclusivity need not sacrifice revenue [6]. Their tiers are the *fee-side* of exactly this architecture — differentiated pricing without differentiated execution semantics. RN-04 supplies the execution-side counterpart, and inherits their caution (§5.1).
+The economic-layer precedent already exists: Kiayias, Koutsoupias, Lazos & Panagiotakos's tiered fee mechanism prices urgency classes and shows inclusivity need not sacrifice revenue [6]. Their tiers are the *fee-side* of this architecture — differentiated pricing without differentiated execution semantics. RN-04 supplies the execution-side counterpart, and inherits their caution (§5.1).
 
 ---
 
@@ -145,7 +145,7 @@ Hyperliquid structurally removes each window in which front-running normally ope
 
 ## 6.2 The critical reading: priority is re-denominated, not eliminated
 
-"Front-running cannot happen" is too strong — and the way it fails is the lesson. Under price-time priority, *arrival time* becomes the dominant route to priority, so competition migrates from gas bids to **latency**: colocation, network engineering, speed — the classical HFT equilibrium, and precisely the wasteful latency race of Capponi & Zhu [11]. And "no public mempool" does not make flow invisible; it makes it visible *only to a small validator set* — trust relocated, not removed.
+"Front-running cannot happen" is too strong — and the way it fails is the lesson. Under price-time priority, *arrival time* becomes the dominant route to priority, so competition migrates from gas bids to **latency**: colocation, network engineering, speed — the classical HFT equilibrium, and the wasteful latency race of Capponi & Zhu [11]. And "no public mempool" does not make flow invisible; it makes it visible *only to a small validator set* — trust relocated, not removed.
 
 The point has since been confirmed from an unexpected direction: **Hyperliquid has itself introduced a priority-fee mechanism** — pay HYPE for execution priority — re-opening a *priced* route to priority alongside FIFO, designed to be exchange-aware (add-liquidity-only orders still process FIFO) rather than a naive gas auction [9]. That even the purest "prohibit" architecture re-introduced a priced priority channel is strong evidence for the thesis: the execution-priority dimension is not removed, only re-denominated.
 
@@ -167,7 +167,7 @@ These notes already carried two answers to the disclosure problem: **cryptograph
 
 ## 6.4 What the architecture costs
 
-Hyperliquid pays in **decentralization and neutrality budget**: order flow trusted to a small validator committee; FIFO's latency competition concentrating geography and capital; sub-second BFT finality over a small set trading off open participation; an oracle dependency in the protocol core. A purpose-built venue may rationally pay these costs. Ethereum's constraint set is exactly what refuses to pay them — so the productive question is:
+Hyperliquid pays in **decentralization and neutrality budget**: order flow trusted to a small validator committee; FIFO's latency competition concentrating geography and capital; sub-second BFT finality over a small set trading off open participation; an oracle dependency in the protocol core. A purpose-built venue may rationally pay these costs. Ethereum's constraint set is what refuses to pay them — so the productive question is:
 
 > **Which of Hyperliquid's architectural moves can be imported *per service class*, at what decentralization cost — and which windows must instead be closed cryptographically or economically?**
 

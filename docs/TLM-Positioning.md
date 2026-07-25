@@ -18,7 +18,7 @@ Temporal Liquidity Market (TLM) is a research program in **temporal market desig
 
 **Phase 2 — market mechanisms.** Building on that foundation, TLM develops and evaluates **candidate market mechanisms** that coordinate this demand against the Phase-1 constraints — while actively welcoming competing and complementary proposals from the mechanism-design, market-design, builder, and proposer communities.
 
-What TLM is *not* is a live trading venue or a market participant. It sits in the market **designer's** seat, which is exactly why the ordering matters: the commodity and its rules are defined before the mechanism that clears them.
+What TLM is *not* is a live trading venue or a market participant. It sits in the market **designer's** seat, which is why the ordering matters: the commodity and its rules are defined before the mechanism that clears them.
 
 ## The analogy: we design exchanges; we are not an exchange
 

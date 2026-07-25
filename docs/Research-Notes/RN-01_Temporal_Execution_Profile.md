@@ -179,7 +179,7 @@ Returning to the examples introduced earlier,
 | Treasury Settlement | Execute before market close |
 | Oracle / NAV Update | Execute before the next reporting cycle |
 
-These applications clearly possess different Temporal Execution Profiles.
+These applications possess different Temporal Execution Profiles.
 
 However, today's blockchain fee market observes only a limited portion of those profiles.
 
@@ -235,7 +235,7 @@ These examples are intended only to illustrate the concept.
 
 The broader objective is to allow execution markets to better match heterogeneous application demand with heterogeneous execution options.
 
-Rather than simply redistributing existing demand, richer execution options may expand the economically serviceable market for both applications and execution providers.
+Rather than merely redistributing existing demand, richer execution options may expand the economically serviceable market for both applications and execution providers.
 
 This shifts the discussion from competition over a single execution service toward a market capable of supporting differentiated execution services.
 

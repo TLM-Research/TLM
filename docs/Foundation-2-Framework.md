@@ -70,7 +70,7 @@ Future mechanisms should be judged against common criteria rather than in isolat
 
 # 10. The Counter-Thesis and the Central Question
 
-Making more information protocol-visible does **not** automatically improve markets. The information-economics literature shows the opposite can hold — public information can destroy gains from trade (Hirshleifer; Milgrom–Stokey) — and in an adversarial mempool, revealing a temporal characteristic early is exactly what exposes it to extraction. Additional information may improve coordination, but it may also reduce privacy, increase strategic behavior, concentrate the market, or add protocol complexity. The framework therefore does not ask "how much temporal information can we expose," but:
+Making more information protocol-visible does **not** automatically improve markets. The information-economics literature shows the opposite can hold — public information can destroy gains from trade (Hirshleifer; Milgrom–Stokey) — and in an adversarial mempool, revealing a temporal characteristic early is what exposes it to extraction. Additional information may improve coordination, but it may also reduce privacy, increase strategic behavior, concentrate the market, or add protocol complexity. The framework therefore does not ask "how much temporal information can we expose," but:
 
 > **Which economically meaningful temporal information should become protocol-visible, under what guarantees, and with what tradeoffs?**
 
