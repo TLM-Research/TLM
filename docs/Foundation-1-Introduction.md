@@ -2,6 +2,7 @@
 
 **Version:** 1.2
 **Status:** Public Draft
+**Last Updated:** July 24, 2026
 
 # 0. Abstract
 

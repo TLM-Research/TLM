@@ -4,6 +4,7 @@
 **Version:** 2.1 (umbrella realignment)
 **Release:** TLM Public Release (Draft Revision)
 **Status:** Public Draft
+**Last Updated:** July 24, 2026
 
 > This note is the **canonical exposition** of Temporal Liquidity. The Foundation Statement states the one-sentence definition; this note owns the analogy, the dimensions, the deadline-versus-decay structure, the declared-versus-observed distinction, and the worked examples. Other documents reference it rather than restating them.
 

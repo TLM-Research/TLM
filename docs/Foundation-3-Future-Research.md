@@ -2,6 +2,7 @@
 
 **Version:** 1.2
 **Status:** Public Draft
+**Last Updated:** July 24, 2026
 
 Part III closes the Foundation by turning the framework into a research program: a mechanism-design *space* (not a mechanism), an agenda for *measuring* Temporal Liquidity, explicit non-goals, and the conditions under which the program could be confirmed, refined, or rejected. Its posture is to begin the discussion, not conclude it.
 
