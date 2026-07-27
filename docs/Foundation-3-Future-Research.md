@@ -1,4 +1,4 @@
-# Foundation Statement — Part III: Future Research
+# Foundation Statement - Part III: Future Research
 
 **Version:** 1.2
 **Status:** Public Draft
@@ -10,15 +10,15 @@ Part III closes the Foundation by turning the framework into a research program:
 
 # 9. Mechanism Design Space
 
-The central contribution of TLM is the conceptual framework, not any single mechanism. Future mechanisms — temporal queues, execution windows, adaptive pricing, reserve-based designs, multi-horizon markets, and others — are candidate points in a design space, to be compared against the common evaluation criteria stated in Part II (§9) rather than judged in isolation. This design space already has at least one worked proposal: the tiered urgency-based fee mechanism of Kiayias, Koutsoupias, Lazos & Panagiotakos (2023) — an IOG/Cardano research design, not (as far as we know) a deployed one — which coordinates a single temporal dimension and which TLM treats as the urgency-axis precedent it generalizes. Because the criteria attach to the framework and not to any one design, multiple candidates can be evaluated without redefining the underlying concept of Temporal Liquidity.
+The central contribution of TLM is the conceptual framework, not any single mechanism. Future mechanisms - temporal queues, execution windows, adaptive pricing, reserve-based designs, multi-horizon markets, and others - are candidate points in a design space, to be compared against the common evaluation criteria stated in Part II (sec. 9) rather than judged in isolation. This design space already has at least one worked proposal: the tiered urgency-based fee mechanism of Kiayias, Koutsoupias, Lazos & Panagiotakos (2023) - an IOG/Cardano research design, not (as far as we know) a deployed one - which coordinates a single temporal dimension and which TLM treats as the urgency-axis precedent it generalizes. Because the criteria attach to the framework and not to any one design, multiple candidates can be evaluated without redefining the underlying concept of Temporal Liquidity.
 
 ---
 
 # 10. Measuring Temporal Liquidity
 
-A central research direction is whether Temporal Liquidity — and its individual dimensions (delay tolerance, predictability, execution priority, continuity) — can be measured empirically. This is best viewed as an **identification problem**, not a data-collection problem: observed fees reveal behavior *under today's mechanism*, not the latent temporal characteristics of demand, so inferring the underlying value-versus-delay structure is a causal-inference problem (endogeneity, selection, strategic bidding), not merely a matter of gathering traces.
+A central research direction is whether Temporal Liquidity - and its individual dimensions (delay tolerance, predictability, execution priority, continuity) - can be measured empirically. This is best viewed as an **identification problem**, not a data-collection problem: observed fees reveal behavior *under today's mechanism*, not the latent temporal characteristics of demand, so inferring the underlying value-versus-delay structure is a causal-inference problem (endogeneity, selection, strategic bidding), not merely a matter of gathering traces.
 
-The methodology has direct precedents worth inheriting — the estimation of the *value of time* in transportation economics and of *demand elasticity* in electricity markets both recover latent temporal preferences from behavior, and the `Related-Work` document collects these. Candidate approaches include revealed-preference analysis, natural experiments, agent-based simulation, and controlled protocol experiments. Candidate datasets include public mempool traces, transaction-inclusion delays, MEV-Boost relay data, rollup sequencing data, and application-specific execution histories. The objective is not to collect data for its own sake, but to determine whether temporally flexible demand exists in economically meaningful quantities — the minimal empirical test the whole program rests on.
+The methodology has direct precedents worth inheriting - the estimation of the *value of time* in transportation economics and of *demand elasticity* in electricity markets both recover latent temporal preferences from behavior, and the `Related-Work` document collects these. Candidate approaches include revealed-preference analysis, natural experiments, agent-based simulation, and controlled protocol experiments. Candidate datasets include public mempool traces, transaction-inclusion delays, MEV-Boost relay data, rollup sequencing data, and application-specific execution histories. The objective is not to collect data for its own sake, but to determine whether temporally flexible demand exists in economically meaningful quantities - the minimal empirical test the whole program rests on.
 
 ---
 
@@ -30,7 +30,7 @@ The Foundation intentionally avoids prescribing Ethereum's roadmap; it offers a 
 
 # 12. Non-goals
 
-TLM is **not** a new consensus protocol, a replacement for PBS or EIP-1559, a proposal for a single mandatory mechanism, an attempt to maximize execution speed, or a complete execution-market solution. These non-goals are essential — they prevent the most common misreadings — and are echoed in the Part I scope so that a reader of any single document encounters them.
+TLM is **not** a new consensus protocol, a replacement for PBS or EIP-1559, a proposal for a single mandatory mechanism, an attempt to maximize execution speed, or a complete execution-market solution. These non-goals are essential - they prevent the most common misreadings - and are echoed in the Part I scope so that a reader of any single document encounters them.
 
 ---
 
@@ -48,4 +48,4 @@ The Foundation establishes the agenda; the Research Notes investigate individual
 
 # 15. Conclusion
 
-Temporal Liquidity is proposed as an umbrella for the economically meaningful temporal characteristics of execution demand — delay tolerance, predictability, execution priority, execution windows and deadlines, and continuity. The Foundation deliberately stops short of prescribing mechanisms; instead it establishes a conceptual framework, identifies research questions, proposes evaluation criteria, and defines the conditions under which the framework may ultimately be confirmed, refined, or rejected. In that sense it is intended not as the conclusion of the TLM project, but as the beginning of a broader research program.
+Temporal Liquidity is proposed as an umbrella for the economically meaningful temporal characteristics of execution demand - delay tolerance, predictability, execution priority, execution windows and deadlines, and continuity. The Foundation deliberately stops short of prescribing mechanisms; instead it establishes a conceptual framework, identifies research questions, proposes evaluation criteria, and defines the conditions under which the framework may ultimately be confirmed, refined, or rejected. In that sense it is intended not as the conclusion of the TLM project, but as the beginning of a broader research program.

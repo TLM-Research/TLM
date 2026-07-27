@@ -251,7 +251,7 @@ EIP-1559 significantly improved fee predictability and price discovery.
 
 Proposer-Builder Separation (PBS) introduced supply-side specialization, improving execution efficiency.
 
-Current research—including Enshrined PBS (ePBS), execution tickets, slot auctions, and related proposals—continues this evolution by investigating improved allocation mechanisms.
+Current research - including Enshrined PBS (ePBS), execution tickets, slot auctions, and related proposals - continues this evolution by investigating improved allocation mechanisms.
 
 This research note investigates a complementary direction.
 
