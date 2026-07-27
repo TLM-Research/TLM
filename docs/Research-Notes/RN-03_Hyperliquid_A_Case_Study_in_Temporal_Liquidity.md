@@ -1,21 +1,21 @@
 ---
 id: RN-03
 title: "Hyperliquid: A Case Study in Temporal Liquidity"
-version: "0.5"
+version: "0.6"
 status: "Public Draft of Research Note"
 program: "Temporal Liquidity Market (TLM)"
-date: "July 24, 2026"
+date: "July 27, 2026"
 ---
 
-# RN-03 v0.5
+# RN-03 v0.6
 
 # Hyperliquid: A Case Study in Temporal Liquidity
 
 **Temporal Liquidity Market (TLM) Research Program**
 **Research Note RN-03**
-**Version:** 0.5
-**Status:** Internal Research Note
-**Date:** July 2026
+**Version:** 0.6
+**Status:** Public Draft of Research Note
+**Date:** July 27, 2026
 
 ---
 
@@ -107,7 +107,19 @@ The TLM hypothesis is not central scheduling. It is that limited, credible tempo
 
 ---
 
-## 6. Hyperliquid as Motivation, Not Proof
+## 6. The Hyperliquid System, and Why It Is Motivation Rather Than Proof
+
+### 6.1 The system: HyperCore and HyperEVM
+
+Hyperliquid runs two execution environments on one HyperBFT consensus (a HotStuff-family protocol with one-block finality), so the case study rests on a concrete architecture rather than an abstraction [1, 3, 14].
+
+**HyperCore** is a purpose-built Rust engine that runs the exchange itself: fully on-chain perpetual and spot order books, matching by **price-time priority**, margining (isolated, cross, and portfolio), liquidations, and mark-price computation. Order placement pays no gas, and matching happens inside consensus, so there is no public mempool to front-run. The **mark price** combines the order book with an oracle that each validator computes as a weighted median of major centralized-exchange prices, which externalizes the reference price against local-book manipulation. Most **liquidations** are routed to the order book for open competition rather than to privileged keepers. Each of these is a supply-side mechanism analyzed in RN-04 §6; here they matter because they expose the temporal characteristics this note studies — continuous quote streams, ordering-sensitive fills, and bursty, delay-intolerant liquidation events.
+
+**HyperEVM** is a general-purpose EVM environment sharing the same state and consensus. It reaches HyperCore through two native lanes: **read precompiles** that return HyperCore state (positions, balances, oracle prices) atomically as of the EVM block, and a **CoreWriter** system contract through which EVM contracts send actions — orders, transfers — into HyperCore. One detail is directly temporal: CoreWriter order actions are **deliberately delayed a few seconds on-chain**, so that routing through the EVM confers no latency advantage over the native order path [14]. The protocol is managing execution *timing* to remove an ordering edge — a concrete instance of the theme in §4 that execution priority must be governed, not left to whoever is fastest.
+
+Two differentiated execution environments thus share one consensus and settlement base. That pattern — differentiated execution without duplicated consensus — is the precursor RN-08 and RN-09 generalize as Virtual Chains.
+
+### 6.2 Motivation, not proof
 
 Hyperliquid demonstrates that blockchain execution demand can exhibit sustained continuity, partial aggregate predictability, acute execution-priority sensitivity, low-latency requirements, and bursty exceptional events. Within the umbrella, these are dimensions of Temporal Liquidity.
 
@@ -165,10 +177,13 @@ Hyperliquid exposes execution demand that price alone describes poorly: a sustai
 [11] Buterin, V., Conner, E., Dudley, R., Slipper, M., Norden, I. & Bakhta, A. *EIP-1559: Fee Market Change for ETH 1.0 Chain.* Ethereum Improvement Proposals, 2019. https://eips.ethereum.org/EIPS/eip-1559
 [12] Roughgarden, T. *Transaction Fee Mechanism Design.* arXiv:2106.01340; *Journal of the ACM,* 2024. (DSIC / MMIC / OCA-proofness framework.)
 [13] Albers, J. "Level 4 Order Book Data from the Hyperliquid Exchange." SSRN Working Paper No. 6465720, 2026.
+[14] Hyperliquid. "Interacting with HyperCore" (HyperEVM read precompiles, CoreWriter system contract, CoreWriter action delay) and "Oracle." *Hyperliquid Documentation.* https://hyperliquid.gitbook.io/hyperliquid-docs/for-developers/hyperevm/interacting-with-hypercore *(verified July 2026).*
 
 ---
 
 ## Revision Note
+
+**Version 0.6** — expands the case study with the actual system (§6.1): **HyperCore** (Rust exchange engine — on-chain order books, price-time priority, margining, liquidations, oracle mark price) and **HyperEVM** (read precompiles + the CoreWriter system contract, with CoreWriter's deliberate few-second delay noted as a temporal mechanism); frames the two-execution-environments-under-one-consensus pattern as the RN-08/RN-09 Virtual Chains precursor; adds reference [14]. Keeps the demand-side, "motivation not proof" discipline.
 
 **Version 0.5** — builds on the lean structure of v0.2 and deliberately does *not* adopt v0.3/v0.4's extended exchange-architecture comparison (dYdX, Injective, Solana CLOBs), which broadened scope beyond this note's motivating purpose. Changes from v0.2:
 
