@@ -1,13 +1,13 @@
 ---
 id: RN-08
-title: "Modern Blockchains Through the Lens of TLM: Common Components, Differentiated Features, and the Case for Decoupling Execution from Control"
+title: "Modern Blockchains Through the Lens of TLM in a 3-layer Architecture: Common Components, Differentiated Features, and the Case for Decoupling Execution from Control"
 version: v0.4 (merged - v0.3 narrative + full depth of the original draft; definitive)
 status: "Public draft, offered in good faith for comment"
 program: "Temporal Liquidity Market (TLM)"
 date: July 27, 2026
 ---
 
-# RN-08 - Modern Blockchains Through the Lens of TLM
+# RN-08 - Modern Blockchains Through the Lens of TLM in a 3-layer Architecture
 
 ## Abstract
 
@@ -85,10 +85,14 @@ These are **commodity** for our purpose: every chain has them, and differences h
 
 ### 5.1 Ethereum - the neutral settlement base
 
-Ethereum's contribution is not execution speed; it is a widely shared, credibly-neutral settlement layer with proof-of-stake validation, general-purpose execution, open EIP governance, a deep composable ecosystem, and EIP-1559. It separates consensus and execution conceptually, but mainnet presents one broadly uniform execution service: transactions consume gas and compete for inclusion, with a base fee tied to utilization and priority tips influencing order. Time enters only indirectly - nonces constrain per-account order, deadlines live inside contracts, low priority fees weakly imply patience - so there is no protocol abstraction for allocating *future* execution capacity. All three layers are fused, and Ethereum's differentiated strength sits at the consensus/settlement layer, not execution.
+Ethereum's contribution is not execution speed; it is a widely shared, credibly-neutral settlement layer with proof-of-stake validation, general-purpose (sequential) EVM execution, open EIP governance, a deep composable ecosystem, and EIP-1559. It separates consensus and execution conceptually, but mainnet presents one broadly uniform execution service: transactions consume gas and compete for inclusion in the next block, with a base fee that adjusts to congestion and a priority fee (tip) that buys earlier inclusion.
 
-  **Strength:** the strongest neutral settlement foundation and the richest context for generalized fee-mechanism research.
-  **Limit through the lens of TLM:** it does not expose a native market for execution across future time; its fee market prices current congestion, not structured temporal demand.
+A user's temporal levers are only indirect. A higher tip buys *immediacy* - sooner inclusion - but expresses nothing about later, scheduled, or reserved execution. A contract can enforce a *deadline* (a transaction reverts if included after some block or timestamp), but that only invalidates late execution; it does not tell the protocol how to schedule the transaction before then. An account's *nonce* fixes the order of that account's own transactions (replay protection and per-sender sequencing), which is not a scheduling preference at all. There is no protocol abstraction for allocating future execution capacity - windows, reservations, patient queues, or demand streams.
+
+All three layers are fused, and Ethereum's differentiated strength sits at the consensus/settlement layer, not execution.
+
+**Strength:** the strongest neutral settlement foundation and the richest context for generalized fee-mechanism research.
+**Limit through this lens:** it prices current block congestion, not structured temporal demand, and exposes no native market for execution across future time.
 
 ### 5.2 Aptos - the programmable parallel data plane
 
@@ -121,15 +125,15 @@ State commitment and consensus
 **Concurrency is not temporal liquidity.** The two are orthogonal. Parallelism asks whether transactions can execute simultaneously without breaking deterministic semantics; temporal liquidity asks how far a demand can move across execution time and keep its value. A state-heavy settlement transaction may be safely delayed thirty blocks (high temporal liquidity) yet conflict with many others once it runs (low parallelism); thousands of independent urgent payments may be the reverse.
 
 | Dimension | Core question |
-|---|---|
+|-----------|---------------|
 | Execution parallelism | Can these transactions execute concurrently? |
-| Temporal liquidity | Can this demand move to another execution time? |
+| Temporal liquidity    | Can this demand move to another execution time? |
 
 A complete scheduler uses both. This yields a two-level optimization: (1) **temporal allocation** - move flexible demand away from congested periods or into reserved windows; (2) **parallel-execution optimization** - within each selected window, exploit concurrency and manage conflicts. Move's typed, resource-oriented state may *help estimate* conflicts when forming windows (declared/inferred state access, module relationships, historical conflict rates), but TLM should not depend on perfect static prediction - Block-STM exists precisely because conflicts are discovered dynamically.
 
 **Stream-aware demand.** Aptos, like most chains, receives individual transactions; TLM adds a persistent demand abstraction - a payment app expecting recurring volume for an hour, an oracle announcing periodic updates, a game reserving capacity around an event, a settlement process willing to run anytime within a window. A stream profile can be a capacity envelope or reservation commitment, with concrete execution objects arriving later.
 
-**As a host:** Aptos already treats execution as a sophisticated systems problem, and is freer to innovate without strict EVM behavioral compatibility. That makes it the cleanest programmable data plane to prototype a temporal control engine over. Its limit through the lens: the parallel executor does not by itself create a market for future windows, stream persistence, urgency classes, or reservations. Put strategically: *Aptos extracts concurrency from a selected order; TLM extracts scheduling flexibility from demand across time.*
+**As a host:** Aptos already treats execution as a sophisticated systems problem, and is freer to innovate without strict EVM behavioral compatibility. That makes it the cleanest programmable data plane to prototype a temporal control engine over. Its limit through the lens of TLM: the parallel executor does not by itself create a market for future windows, stream persistence, urgency classes, or reservations. Put strategically: *Aptos extracts concurrency from a selected order; TLM extracts scheduling flexibility from demand across time.*
 
 ### 5.3 Monad - the EVM-compatible performance host
 
