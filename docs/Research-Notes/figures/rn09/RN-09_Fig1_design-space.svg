@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 800" font-family="Helvetica, Arial, sans-serif">
+  <rect x="0" y="0" width="1160" height="800" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="40" y="42" font-size="22" font-weight="700" fill="#1a1a1a">Four ways to run many chains — and where chain virtualization sits</text>
+  <text x="40" y="66" font-size="14" fill="#555">RN-09, Figure 1. Security can be shared and execution can be sovereign; shared state under sovereign execution is the property only virtualization takes as its substrate.</text>
+
+  <!-- Column geometry: label 40-190; A 190-422; B 422-654; C 654-886; D 886-1118 -->
+  <!-- Highlight column D background -->
+  <rect x="886" y="92" width="232" height="614" fill="#EAF7F0"/>
+  <rect x="886" y="92" width="232" height="614" fill="none" stroke="#1F9E6E" stroke-width="2"/>
+
+  <!-- Header bands -->
+  <rect x="190" y="92" width="232" height="48" fill="#7A5CA6"/>
+  <rect x="422" y="92" width="232" height="48" fill="#C63A86"/>
+  <rect x="654" y="92" width="232" height="48" fill="#2E7CD6"/>
+  <rect x="886" y="92" width="232" height="48" fill="#1F9E6E"/>
+
+  <text x="306" y="114" font-size="15" font-weight="700" fill="#fff" text-anchor="middle">Cosmos</text>
+  <text x="306" y="132" font-size="11.5" fill="#f0e9f7" text-anchor="middle">sovereign app-chains</text>
+  <text x="538" y="114" font-size="15" font-weight="700" fill="#fff" text-anchor="middle">Polkadot</text>
+  <text x="538" y="132" font-size="11.5" fill="#fbe6f1" text-anchor="middle">parachains + coretime</text>
+  <text x="770" y="114" font-size="15" font-weight="700" fill="#fff" text-anchor="middle">L2 Rollups</text>
+  <text x="770" y="132" font-size="11.5" fill="#e3eefb" text-anchor="middle">settle to L1</text>
+  <text x="1002" y="114" font-size="15" font-weight="700" fill="#fff" text-anchor="middle">Chain Virtualization</text>
+  <text x="1002" y="132" font-size="11.5" fill="#e6f5ee" text-anchor="middle">TLM — this note</text>
+
+  <!-- Row backgrounds (alternating), rows at y:140,234,328,422,516,610 height 94 -->
+  <rect x="40" y="140" width="1078" height="94" fill="#fafafa"/>
+  <rect x="40" y="328" width="1078" height="94" fill="#fafafa"/>
+  <rect x="40" y="516" width="1078" height="94" fill="#fafafa"/>
+
+  <!-- Grid lines -->
+  <g stroke="#e2e2e2" stroke-width="1">
+    <line x1="40" y1="140" x2="1118" y2="140"/>
+    <line x1="40" y1="234" x2="1118" y2="234"/>
+    <line x1="40" y1="328" x2="1118" y2="328"/>
+    <line x1="40" y1="422" x2="1118" y2="422"/>
+    <line x1="40" y1="516" x2="1118" y2="516"/>
+    <line x1="40" y1="610" x2="886" y2="610"/>
+    <line x1="40" y1="706" x2="1118" y2="706"/>
+    <line x1="190" y1="92" x2="190" y2="706"/>
+    <line x1="422" y1="140" x2="422" y2="706"/>
+    <line x1="654" y1="140" x2="654" y2="706"/>
+  </g>
+
+  <!-- Axis labels (left column) -->
+  <g font-size="13" font-weight="700" fill="#333">
+    <text x="52" y="192">Consensus &amp;</text><text x="52" y="208">security</text>
+    <text x="52" y="286">State &amp;</text><text x="52" y="302">liquidity</text>
+    <text x="52" y="380">Cross-chain</text><text x="52" y="396">composability</text>
+    <text x="52" y="474">Sovereignty</text><text x="52" y="490">(token / gov)</text>
+    <text x="52" y="568">How a chain</text><text x="52" y="584">is created</text>
+    <text x="52" y="662">Best fit</text><text x="52" y="678">(when to use)</text>
+  </g>
+
+  <!-- CELLS -->
+  <g font-size="12.5" fill="#2a2a2a">
+    <!-- Row 1: Consensus & security -->
+    <text x="202" y="176">Own validator set —</text><text x="202" y="193">each chain</text><text x="202" y="210">self-secures</text>
+    <text x="434" y="176">Shared, from the</text><text x="434" y="193">relay chain</text>
+    <text x="666" y="176">Shared settlement +</text><text x="666" y="193">data availability;</text><text x="666" y="210">own prover</text>
+    <text x="898" y="176" font-weight="600">Shared consensus +</text><text x="898" y="193" font-weight="600">settlement</text>
+
+    <!-- Row 2: State & liquidity -->
+    <text x="202" y="278">Siloed per chain</text>
+    <text x="434" y="278">Siloed per parachain</text>
+    <text x="666" y="278">Siloed, bridged to L1</text><text x="666" y="295">(70+ rollups)</text>
+    <text x="898" y="278" font-weight="600">Shared / unified</text>
+
+    <!-- Row 3: Composability -->
+    <text x="202" y="372">Async — IBC</text><text x="202" y="389">message-passing</text>
+    <text x="434" y="372">Async — XCM</text><text x="434" y="389">message-passing</text>
+    <text x="666" y="372">Async bridging;</text><text x="666" y="389">shared sequencing</text><text x="666" y="406">emerging</text>
+    <text x="898" y="372" font-weight="600">Atomic</text><text x="898" y="389" font-weight="600">(shared state)</text>
+
+    <!-- Row 4: Sovereignty -->
+    <text x="202" y="466">Full — own token,</text><text x="202" y="483">gov, monetary policy</text>
+    <text x="434" y="466">Full — own token</text><text x="434" y="483">and governance</text>
+    <text x="666" y="466">Own execution,</text><text x="666" y="483">token, governance</text>
+    <text x="898" y="466" font-weight="600">Virtualized in</text><text x="898" y="483" font-weight="600">software (own token</text><text x="898" y="500" font-weight="600">optional)</text>
+
+    <!-- Row 5: How created -->
+    <text x="202" y="560">Build &amp; run a</text><text x="202" y="577">full chain</text>
+    <text x="434" y="560">Build a chain,</text><text x="434" y="577">buy coretime</text>
+    <text x="666" y="560">Deploy a chain +</text><text x="666" y="577">contracts, run a</text><text x="666" y="594">sequencer</text>
+    <text x="898" y="560" font-weight="600">Software-defined by</text><text x="898" y="577" font-weight="600">the host control</text><text x="898" y="594" font-weight="600">plane</text>
+
+    <!-- Row 6: Best fit -->
+    <text x="202" y="654">Needs own consensus</text><text x="202" y="671">or monetary</text><text x="202" y="688">sovereignty</text>
+    <text x="434" y="654">Many chains want</text><text x="434" y="671">one security root</text>
+    <text x="666" y="654">Scale execution off</text><text x="666" y="671">the host's budget</text>
+    <text x="898" y="654" font-weight="600">Differentiation +</text><text x="898" y="671" font-weight="600">shared state on a</text><text x="898" y="688" font-weight="600">fast L1</text>
+  </g>
+
+  <!-- Spectrum bar -->
+  <defs>
+    <linearGradient id="spec" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#7A5CA6"/>
+      <stop offset="0.4" stop-color="#C63A86"/>
+      <stop offset="0.72" stop-color="#2E7CD6"/>
+      <stop offset="1" stop-color="#1F9E6E"/>
+    </linearGradient>
+  </defs>
+  <rect x="190" y="726" width="928" height="8" rx="4" fill="url(#spec)"/>
+  <text x="190" y="754" font-size="12.5" fill="#555">◄ more sovereign · security bootstrapped per chain · fragmented state</text>
+  <text x="1118" y="754" font-size="12.5" fill="#555" text-anchor="end">shared security &amp; state · composable ►</text>
+
+  <!-- Footnote -->
+  <text x="40" y="784" font-size="12" fill="#888" font-style="italic">Conceptual placement. The mechanism for chain virtualization — how a domain is marked, scheduled, isolated, and enforced — is not yet defined (RN-09 §7).</text>
+</svg>
