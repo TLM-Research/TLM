@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 380" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="ax" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L7,3 L0,6 z" fill="#3a4a5a"/>
+    </marker>
+  </defs>
+  <rect width="720" height="380" fill="#ffffff"/>
+
+  <!-- LEFT: current protocol view -->
+  <text x="185" y="46" font-size="15" text-anchor="middle" fill="#1a2332" font-weight="bold">Current protocol view</text>
+  <text x="185" y="66" font-size="12" text-anchor="middle" fill="#5b6b7a" font-style="italic">one fee, one preferred slot</text>
+  <!-- axes -->
+  <g stroke="#3a4a5a" stroke-width="1.5" marker-end="url(#ax)">
+    <line x1="70" y1="290" x2="70" y2="95"/>
+    <line x1="70" y1="290" x2="315" y2="290"/>
+  </g>
+  <text x="52" y="150" font-size="12" fill="#3a4a5a" transform="rotate(-90 52 150)" text-anchor="middle">Fee</text>
+  <text x="190" y="315" font-size="12" fill="#3a4a5a" text-anchor="middle">Blockchain Time</text>
+  <!-- single point -->
+  <circle cx="115" cy="140" r="7" fill="#b5462b"/>
+  <line x1="115" y1="140" x2="115" y2="290" stroke="#b5462b" stroke-width="1" stroke-dasharray="3 3"/>
+
+  <!-- divider -->
+  <line x1="360" y1="70" x2="360" y2="300" stroke="#d5dde6" stroke-width="1.2"/>
+
+  <!-- RIGHT: temporal execution profile -->
+  <text x="535" y="46" font-size="15" text-anchor="middle" fill="#1a2332" font-weight="bold">Temporal Execution Profile</text>
+  <text x="535" y="66" font-size="12" text-anchor="middle" fill="#5b6b7a" font-style="italic">value across acceptable execution opportunities</text>
+  <g stroke="#3a4a5a" stroke-width="1.5" marker-end="url(#ax)">
+    <line x1="420" y1="290" x2="420" y2="95"/>
+    <line x1="420" y1="290" x2="690" y2="290"/>
+  </g>
+  <text x="402" y="150" font-size="12" fill="#3a4a5a" transform="rotate(-90 402 150)" text-anchor="middle">Fee</text>
+  <text x="550" y="315" font-size="12" fill="#3a4a5a" text-anchor="middle">Blockchain Time</text>
+  <!-- decaying value curve -->
+  <path d="M460,120 C520,150 590,215 660,255" fill="none" stroke="#8a5a12" stroke-width="1.4" stroke-dasharray="4 4"/>
+  <g fill="#c99a3b" stroke="#8a5a12" stroke-width="1">
+    <circle cx="460" cy="120" r="6.5"/>
+    <circle cx="510" cy="150" r="6.5"/>
+    <circle cx="565" cy="195" r="6.5"/>
+    <circle cx="620" cy="235" r="6.5"/>
+    <circle cx="665" cy="258" r="6.5"/>
+  </g>
+
+  <text x="360" y="360" font-size="12.5" text-anchor="middle" fill="#5b6b7a" font-style="italic">Figure 2. From a single execution point to a structured profile over Blockchain Time.</text>
+</svg>

@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 620" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="a3" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L7,3 L0,6 z" fill="#3a4a5a"/>
+    </marker>
+  </defs>
+  <rect width="700" height="620" fill="#ffffff"/>
+
+  <!-- PHYSICAL WORLD -->
+  <rect x="40" y="30" width="620" height="150" rx="10" fill="#f1f7f2" stroke="#bcd7c0" stroke-width="1.3"/>
+  <text x="350" y="56" font-size="14" text-anchor="middle" fill="#3f7a4b" font-weight="bold" letter-spacing="1">PHYSICAL WORLD &#8212; Physical Time</text>
+  <g font-size="12.5" fill="#1a2332" text-anchor="middle">
+    <rect x="70" y="72" width="96" height="34" rx="5" fill="#ffffff" stroke="#7a9a80"/><text x="118" y="94">Business Logic</text>
+    <rect x="182" y="72" width="80" height="34" rx="5" fill="#ffffff" stroke="#7a9a80"/><text x="222" y="94">Oracle</text>
+    <rect x="278" y="72" width="80" height="34" rx="5" fill="#ffffff" stroke="#7a9a80"/><text x="318" y="94">DEX</text>
+    <rect x="374" y="72" width="104" height="34" rx="5" fill="#ffffff" stroke="#7a9a80"/><text x="426" y="94">Liquidation</text>
+    <rect x="494" y="72" width="96" height="34" rx="5" fill="#ffffff" stroke="#7a9a80"/><text x="542" y="94">Treasury</text>
+  </g>
+  <!-- TEP -->
+  <rect x="210" y="126" width="280" height="42" rx="8" fill="#fbf3e2" stroke="#c99a3b" stroke-width="1.8"/>
+  <text x="350" y="145" font-size="14" text-anchor="middle" fill="#8a5a12" font-weight="bold">Temporal Execution Profile (TEP)</text>
+  <text x="350" y="161" font-size="11" text-anchor="middle" fill="#8a5a12">demand-side expression of execution preferences</text>
+
+  <line x1="350" y1="180" x2="350" y2="212" stroke="#3a4a5a" stroke-width="1.8" marker-end="url(#a3)"/>
+
+  <!-- TLM coordination -->
+  <rect x="40" y="220" width="620" height="132" rx="10" fill="#eef2fb" stroke="#8ea0d6" stroke-width="1.6"/>
+  <text x="350" y="248" font-size="15" text-anchor="middle" fill="#2f3f78" font-weight="bold" letter-spacing="1">TEMPORAL LIQUIDITY MARKET (TLM)</text>
+  <text x="350" y="270" font-size="12" text-anchor="middle" fill="#3a55a8" font-style="italic">economic coordination between Physical Time and Blockchain Time</text>
+  <g font-size="12" fill="#2f3f78" text-anchor="middle">
+    <rect x="72" y="292" width="104" height="40" rx="5" fill="#ffffff" stroke="#8ea0d6"/><text x="124" y="316">Protocol Rules</text>
+    <rect x="188" y="292" width="94" height="40" rx="5" fill="#ffffff" stroke="#8ea0d6"/><text x="235" y="316">Builders</text>
+    <rect x="294" y="292" width="100" height="40" rx="5" fill="#ffffff" stroke="#8ea0d6"/><text x="344" y="316">Validators</text>
+    <rect x="406" y="292" width="100" height="40" rx="5" fill="#ffffff" stroke="#8ea0d6"/><text x="456" y="316">Proposers</text>
+    <rect x="518" y="292" width="110" height="40" rx="5" fill="#ffffff" stroke="#8ea0d6"/><text x="573" y="311">Execution</text><text x="573" y="325">Mechanisms</text>
+  </g>
+
+  <line x1="350" y1="352" x2="350" y2="384" stroke="#3a4a5a" stroke-width="1.8" marker-end="url(#a3)"/>
+
+  <!-- BLOCKCHAIN WORLD -->
+  <rect x="40" y="392" width="620" height="150" rx="10" fill="#eef2fb" stroke="#c3cdea" stroke-width="1.3"/>
+  <text x="350" y="418" font-size="14" text-anchor="middle" fill="#3a55a8" font-weight="bold" letter-spacing="1">BLOCKCHAIN WORLD &#8212; Blockchain Time</text>
+  <g font-size="11.5" fill="#5b6b7a" text-anchor="middle">
+    <text x="94" y="444">Slot 100</text><text x="206" y="444">Slot 101</text><text x="318" y="444">Slot 102</text><text x="430" y="444">Slot 103</text><text x="542" y="444">Slot 104</text>
+  </g>
+  <g font-size="12" fill="#1a2332" text-anchor="middle">
+    <rect x="58" y="454" width="72" height="66" rx="5" fill="#ffffff" stroke="#5f77c0"/><text x="94" y="480">Tx A</text><text x="94" y="502">Tx E</text>
+    <rect x="170" y="454" width="72" height="66" rx="5" fill="#ffffff" stroke="#5f77c0"/><text x="206" y="480">Tx B</text><text x="206" y="502">Tx F</text>
+    <rect x="282" y="454" width="72" height="66" rx="5" fill="#f6f7f9" stroke="#c3cdea"/><text x="318" y="491" fill="#9aa7b4">empty</text>
+    <rect x="394" y="454" width="72" height="66" rx="5" fill="#ffffff" stroke="#5f77c0"/><text x="430" y="480">Tx C</text><text x="430" y="502">Tx G</text>
+    <rect x="506" y="454" width="72" height="66" rx="5" fill="#ffffff" stroke="#5f77c0"/><text x="542" y="480">Tx D</text><text x="542" y="502">Tx H</text>
+  </g>
+
+  <line x1="350" y1="542" x2="350" y2="572" stroke="#3a4a5a" stroke-width="1.8" marker-end="url(#a3)"/>
+  <text x="350" y="592" font-size="13" text-anchor="middle" fill="#3f7a4b" font-weight="bold">Execution outcome experienced in the physical world</text>
+  <text x="350" y="612" font-size="12" text-anchor="middle" fill="#5b6b7a" font-style="italic">Figure 3. The layered TLM architecture: Physical Time &#8594; TEP &#8594; TLM &#8594; Blockchain Time.</text>
+</svg>
