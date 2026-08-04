@@ -21,3 +21,9 @@ _Corpus-Review-Summary.md
 *_revision*.md
 *_2026.md
 *.v[0-9]*.md
+
+# FUSE mount + editor artifacts (never commit)
+.fuse_hidden*
+*~
+\#*\#
+.\#*

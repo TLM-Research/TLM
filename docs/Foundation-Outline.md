@@ -6,7 +6,7 @@
 **Version:** 2.0
 **Release:** TLM Public Release 1 (Draft Revision)
 **Status:** Public
-**Last Updated:** July 24, 2026
+**Last Updated:** August 2, 2026
 
 ---
 
@@ -20,7 +20,7 @@ Rather than proposing mechanisms, it defines the conceptual framework within whi
 
 # Organization
 
-## Part I — Foundations
+## Part I - Foundations
 
 0. Abstract
 
@@ -51,7 +51,7 @@ Rather than proposing mechanisms, it defines the conceptual framework within whi
 
 ---
 
-## Part II — Principles
+## Part II - Principles
 
 6. Design Principles
 
@@ -73,7 +73,7 @@ Rather than proposing mechanisms, it defines the conceptual framework within whi
 
 ---
 
-## Part III — Research Directions
+## Part III - Research Directions
 
 11. Builder Optimization
 
@@ -92,7 +92,7 @@ Rather than proposing mechanisms, it defines the conceptual framework within whi
 
 ---
 
-## Part IV — Future
+## Part IV - Future
 
 16. Research Agenda
 
@@ -120,15 +120,15 @@ Rather than proposing mechanisms, it defines the conceptual framework within whi
 
 ```
 Vision Statement
-        │
-        ▼
+        |
+        v
 Research Overview
-        │
-        ▼
+        |
+        v
 Foundation Statement
-        │
- ┌──────┼───────────┬────────────┐
- ▼      ▼           ▼            ▼
+        |
+ +------+-----------+------------+
+ v      v           v            v
 Temporal Related    Research     Mechanism
 Liquidity Work      Notes        Proposals
 ```
