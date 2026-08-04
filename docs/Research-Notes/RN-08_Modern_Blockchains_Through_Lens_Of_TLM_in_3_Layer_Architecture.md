@@ -4,7 +4,7 @@ title: "Modern Blockchains Through the Lens of TLM in a 3-layer Architecture: Co
 version: v0.4 (merged - v0.3 narrative + full depth of the original draft; definitive)
 status: "Public draft, offered in good faith for comment"
 program: "Temporal Liquidity Market (TLM)"
-date: July 27, 2026
+date: August 2, 2026
 ---
 
 # RN-08 - Modern Blockchains Through the Lens of TLM in a 3-layer Architecture
