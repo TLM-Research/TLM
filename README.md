@@ -40,7 +40,7 @@ Naming the variable is the demand side. Coordinating it requires a supply side a
 
 - **Demand** — the economic object is not the transaction but the *project*: a long-lived source of execution demand with a temporal profile — a perpetual exchange, an oracle network, a payment network, a rollup, a game world (RN-01, RN-03, RN-10).
 - **Supply** — capacity per unit of blockchain time is roughly uniform, but demand is not; temporal liquidity is supplied when patient demand releases its claim on a contended quantum for time-sensitive work to use, and how that supply is organized — differentiated service classes over a sub-slot granularity — is developed in RN-04 and RN-05.
-- **Price** — the two sides meet in a *term structure of block-fee-rates*, which RN-11 identifies as the dual of the underlying allocation problem (RN-10, RN-11).
+- **Price** — the two sides meet in a *term structure of block-fee-rates*, which RN-11 develops by analogy to the bond market: bootstrapped from future-slot instruments, with the allocation problem's dual as its efficiency benchmark (RN-10, RN-11).
 
 Seen this way (RN-10), a blockchain is less a transaction-processing engine than an **execution-capital market** that finances a diverse ecosystem of projects by allocating capacity across time — and a market in temporal liquidity is what makes that allocation expressible.
 
@@ -100,7 +100,7 @@ docs/
         RN-08 — Modern Blockchains and Host Candidacy (comparative survey)
         RN-09 — Chain Virtualization (diversified project types on a shared fast L1)
         RN-10 — Temporal Liquidity and the Blockchain Economy (the execution-capital market)
-        RN-11 — The Execution-Capital Allocation Problem (the block-fee-rate curve as its dual)
+        RN-11 — Execution-Capital Allocation + the Block-Fee-Rate Term Structure (allocation LP as the efficient benchmark; market curve bootstrapped from future-slot instruments)
 ```
 
 ---
@@ -111,7 +111,7 @@ docs/
 - **Want the concept?** [Temporal Liquidity](docs/Temporal-Liquidity.md).
 - **Want the framework?** The Foundation Statement — [Part I](docs/Foundation-1-Introduction.md) · [Part II](docs/Foundation-2-Framework.md) · [Part III](docs/Foundation-3-Future-Research.md).
 - **Want the evidence?** [RN-03: Hyperliquid](docs/Research-Notes/RN-03_Hyperliquid_A_Case_Study_in_Temporal_Liquidity.md).
-- **Want the market view?** [RN-10: Temporal Liquidity and the Blockchain Economy](docs/Research-Notes/RN-10_Blockchain_Economy_TLM_Lens_v0.3.md).
+- **Want the market view?** [RN-10: Temporal Liquidity and the Blockchain Economy](docs/Research-Notes/RN-10_Temporal_Liquidity_and_the_Blockchain_Economy.md).
 
 ---
 
