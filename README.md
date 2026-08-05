@@ -4,6 +4,8 @@
 
 Temporal Liquidity Market (TLM) is an open research project investigating whether decentralized execution markets should coordinate not only **price**, but also the economically meaningful **temporal characteristics of demand** — *when*, *in what order*, and *how predictably* execution is needed.
 
+The name carries two contributions. **Temporal Liquidity** is a first-degree, protocol-visible variable, alongside price: the timing structure of demand that a scalar fee compresses away. **Market** is what coordinating that variable creates — a *two-sided* market, with demand that needs execution at a particular time or order (takers) on one side, and the supply of execution capacity across blockchain time, including flexibility that patient demand can release (suppliers), on the other. TLM studies both the variable and the market that clears it.
+
 It is **model-first**: concepts, representations, and evaluation criteria come first. But that is the *first phase*, not the whole program — **market-mechanism design is an explicit second phase**, in which the project develops and evaluates candidate mechanisms that coordinate Temporal Liquidity.
 
 ---
@@ -29,6 +31,18 @@ Its dimensions, by temporal granularity:
 - **predictability**, **continuity** — across a stream of demand
 
 The canonical exposition — the market-liquidity analogy, the deadline-versus-decay structure, and worked examples — lives in [`docs/Temporal-Liquidity.md`](docs/Temporal-Liquidity.md).
+
+---
+
+## The two sides of the market
+
+Naming the variable is the demand side. Coordinating it requires a supply side and a price, and the research notes develop both:
+
+- **Demand** — the economic object is not the transaction but the *project*: a long-lived source of execution demand with a temporal profile — a perpetual exchange, an oracle network, a payment network, a rollup, a game world (RN-01, RN-03, RN-10).
+- **Supply** — execution capacity is heterogeneous across blockchain time, and patient demand can itself release flexibility for others to use (RN-04, RN-05).
+- **Price** — the two sides meet in a *term structure of block-fee-rates*, which RN-11 identifies as the dual of the underlying allocation problem (RN-10, RN-11).
+
+Seen this way (RN-10), a blockchain is less a transaction-processing engine than an **execution-capital market** that finances a diverse ecosystem of projects by allocating capacity across time — and a market in temporal liquidity is what makes that allocation expressible.
 
 ---
 
@@ -67,7 +81,7 @@ The full literature map is in [`docs/Related-Work.md`](docs/Related-Work.md).
 ```text
 docs/
     Vision-Statement.md          — the umbrella concept and guiding principles
-    TLM_Research_Overview.md     — outward-facing research invitation
+    TLM-Research-Overview.md     — outward-facing research invitation
     TLM-Positioning.md           — where TLM's contribution lies
     Foundation-Outline.md        — structure of the Foundation Statement
     Foundation-1-Introduction.md — Part I: introduction & the concept
@@ -78,17 +92,26 @@ docs/
     Research-Notes/
         RN-01 — Temporal Execution Profiles (transaction-level representation)
         RN-02 — Protocol-visible Temporal Abstraction
-        RN-03 — Hyperliquid: A Case Study in Temporal Liquidity
+        RN-03 — Hyperliquid: A Case Study in Temporal Demand
+        RN-04 — Temporal Service Architecture (service classes)
+        RN-05 — Supply-side Heterogeneity and Temporal Granularity (the supply side)
+        RN-06 — Monad Through the Temporal-Liquidity Lens (host analysis)
+        RN-07 — Layered Control Architecture for Temporal Liquidity
+        RN-08 — Modern Blockchains and Host Candidacy (comparative survey)
+        RN-09 — Chain Virtualization (diversified project types on a shared fast L1)
+        RN-10 — Temporal Liquidity and the Blockchain Economy (the execution-capital market)
+        RN-11 — The Execution-Capital Allocation Problem (the block-fee-rate curve as its dual)
 ```
 
 ---
 
 ## Where to start
 
-- **New here?** Read the [Research Overview](docs/TLM_Research_Overview.md).
+- **New here?** Read the [Research Overview](docs/TLM-Research-Overview.md).
 - **Want the concept?** [Temporal Liquidity](docs/Temporal-Liquidity.md).
 - **Want the framework?** The Foundation Statement — [Part I](docs/Foundation-1-Introduction.md) · [Part II](docs/Foundation-2-Framework.md) · [Part III](docs/Foundation-3-Future-Research.md).
 - **Want the evidence?** [RN-03: Hyperliquid](docs/Research-Notes/RN-03_Hyperliquid_A_Case_Study_in_Temporal_Liquidity.md).
+- **Want the market view?** [RN-10: Temporal Liquidity and the Blockchain Economy](docs/Research-Notes/RN-10_Blockchain_Economy_TLM_Lens_v0.3.md).
 
 ---
 
