@@ -1,13 +1,16 @@
 ---
 id: RN-11
-title: "The Execution-Capital Allocation Problem and the Block-Fee-Rate Term Structure"
+title: "The Temporal Liquidity Market: A Formal Foundation"
+subtitle: "The execution-capital allocation problem and the term structure of block-fee-rates"
 version: v0.2 (adds the term-structure analysis; RN-12 folded in)
 status: "Public draft. The formal center of the TLM program; stated, not solved."
 program: "Temporal Liquidity Market (TLM)"
 date: August 4, 2026
 ---
 
-# RN-11 The Execution-Capital Allocation Problem and the Block-Fee-Rate Term Structure
+# RN-11 — The Temporal Liquidity Market: A Formal Foundation
+
+*The execution-capital allocation problem and the term structure of block-fee-rates.*
 
 ## Abstract
 
