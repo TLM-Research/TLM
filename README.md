@@ -1,6 +1,6 @@
 # Temporal Liquidity Market (TLM)
 
-**A research program in temporal market design for decentralized execution.**
+**An open research program on temporal liquidity and its role in blockchain protocols.**
 
 Temporal Liquidity Market (TLM) is an open research project investigating whether decentralized execution markets should coordinate not only **price**, but also the economically meaningful **temporal characteristics of demand** — *when*, *in what order*, and *how predictably* execution is needed.
 
