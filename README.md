@@ -39,7 +39,7 @@ The canonical exposition — the market-liquidity analogy, the deadline-versus-d
 Naming the variable is the demand side. Coordinating it requires a supply side and a price, and the research notes develop both:
 
 - **Demand** — the economic object is not the transaction but the *project*: a long-lived source of execution demand with a temporal profile — a perpetual exchange, an oracle network, a payment network, a rollup, a game world (RN-01, RN-03, RN-10).
-- **Supply** — execution capacity is heterogeneous across blockchain time, and patient demand can itself release flexibility for others to use (RN-04, RN-05).
+- **Supply** — capacity per unit of blockchain time is roughly uniform, but demand is not; temporal liquidity is supplied when patient demand releases its claim on a contended quantum for time-sensitive work to use, and how that supply is organized — differentiated service classes over a sub-slot granularity — is developed in RN-04 and RN-05.
 - **Price** — the two sides meet in a *term structure of block-fee-rates*, which RN-11 identifies as the dual of the underlying allocation problem (RN-10, RN-11).
 
 Seen this way (RN-10), a blockchain is less a transaction-processing engine than an **execution-capital market** that finances a diverse ecosystem of projects by allocating capacity across time — and a market in temporal liquidity is what makes that allocation expressible.

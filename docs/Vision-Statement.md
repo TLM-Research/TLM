@@ -2,10 +2,10 @@
 
 ## Vision Statement
 
-**Version:** 1.4 (Draft)
+**Version:** 1.5 (Draft)
 **Release:** TLM Public Release 2 (PR2)
 **Status:** Public Draft
-**Last Updated:** July 24, 2026
+**Last Updated:** August 4, 2026
 
 ---
 
@@ -15,7 +15,9 @@
 
 Ethereum has transformed blockchain protocol economics through innovations such as EIP-1559 (Buterin et al., 2019), Proposer-Builder Separation (PBS), and Enshrined PBS (ePBS; EIP-7732). These developments demonstrate that protocol design can improve decentralized coordination by making economically meaningful information visible through simple, deterministic protocol rules.
 
-Temporal Liquidity Market (TLM) asks whether decentralized execution markets can benefit from making economically meaningful temporal characteristics of demand, in addition to price, visible through protocol-defined abstractions.
+Temporal Liquidity Market (TLM) asks whether decentralized execution markets can benefit from making economically meaningful temporal characteristics of demand, in addition to price, visible through protocol-defined abstractions - and, more than that, whether coordinating them constitutes a **market**.
+
+The name is the thesis: the *M* is for Market. Temporal Liquidity names a demand variable; the market is the two-sided system that coordinates it - demand that needs particular timing on one side, the supply of execution capacity across blockchain time on the other, meeting at a price for time. Naming the variable is the first half of the program; the market that clears it is the second.
 
 Rather than replacing Ethereum's architecture, TLM explores the next stage of decentralized market design.
 
@@ -61,6 +63,18 @@ Individual research notes may investigate individual dimensions without implying
 The central question becomes:
 
 > Can simple, protocol-visible temporal abstractions improve decentralized coordination while preserving neutrality and simplicity?
+
+---
+
+# From a Variable to a Market
+
+Naming a variable is not yet a market. Temporal Liquidity describes **demand**; a market also needs a **supply** side and a **price**. The program develops both, which is why it is named a *market*, not only a variable.
+
+- **Demand.** The object that carries a temporal profile is the *project* - a perpetual exchange, an oracle network, a payment network, a rollup, a game world - not the isolated transaction (RN-01, RN-03, RN-10). These are the takers of temporal liquidity: they need execution at a particular time or order and will pay for it.
+- **Supply.** Capacity per unit of blockchain time is roughly uniform; demand is not, so contention concentrates at particular quanta. Temporal liquidity is supplied when patient, loosely-bound work releases its claim on a contended quantum for time-sensitive work to use. How that supply is organized - differentiated temporal service classes over a sub-slot "quantum" granularity - is developed in RN-04 and RN-05.
+- **Price.** The two sides meet in a **term structure of block-fee-rates** - a price of execution by time - which RN-11 identifies as the dual of the underlying allocation problem (RN-10, RN-11).
+
+Seen this way (RN-10), a blockchain is less a transaction-processing engine than an **execution-capital market** that finances a diverse ecosystem of projects by allocating capacity across time. Making Temporal Liquidity protocol-visible is what lets that market express and price the temporal side of demand, rather than compressing it into a single fee after arrival. The demand-side chapters below define the variable; the supply side, the price, and the allocation problem are developed in RN-04, RN-05, RN-10, and RN-11.
 
 ---
 

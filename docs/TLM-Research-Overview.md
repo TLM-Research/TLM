@@ -1,10 +1,10 @@
 # Temporal Liquidity Market (TLM)
 
-# Research Overview (PR3)
+# Research Overview (PR4)
 
-**Release:** TLM Public Release 3  
+**Release:** TLM Public Release 4  
 **Status:** Public Draft - research outreach  
-**Last Updated:** July 24, 2026
+**Last Updated:** August 4, 2026
 
 ---
 
@@ -16,7 +16,7 @@ These mechanisms coordinate one economic variable exceptionally well: **price**.
 
 > **Should decentralized execution markets coordinate only price, or also the economically meaningful *temporal* characteristics of demand?**
 
-Temporal Liquidity Market (TLM) is an open research program investigating that question. It is deliberately **model-first**: it defines and measures the economic object before designing any mechanism.
+Temporal Liquidity Market (TLM) is an open research program investigating that question. The name states the thesis: the answer is not only a new variable but a **market** - the *M* is for Market. Making the temporal characteristics of demand visible is the first half; the second is the two-sided market that coordinates them - demand that needs particular timing (takers) meeting the supply of execution capacity across blockchain time, including flexibility patient demand can release (suppliers), and clearing into a price for time. TLM is deliberately **model-first**: it defines and measures that economic object before designing any mechanism.
 
 ---
 
@@ -48,25 +48,29 @@ TLM asks whether that dimension can be made part of the market - coarsely, neutr
                  Resource allocation --> Blockspace
 
 
-                 Temporal Liquidity Market
+                 Temporal Liquidity Market  (two-sided)
 
-        +--------------------------------------+
-        |             User demand              |
-        |   Price                              |
-        |   Temporal Liquidity (umbrella):     |
-        |     - execution priority             |   intra-slot (ordering)
-        |     - delay tolerance                |   inter-slot
-        |     - execution window / deadline    |
-        |     - predictability                 |   stream-level
-        |     - continuity                     |
-        +------------------+-------------------+
-                           |  simple, protocol-neutral, extraction-resistant?
-                           v
-              Richer market coordination
-                           |
-           Previously unrealized mutually-beneficial executions
-                           |
-               Social surplus?  (falsifiable hypothesis)
+   DEMAND  (takers)                        SUPPLY  (providers)
+   +----------------------------+          +----------------------------+
+   |  Price                     |          |  Capacity per unit of      |
+   |  Temporal Liquidity:       |          |    block time (uniform)    |
+   |   - execution priority     | intra    |  Flexibility released by   |
+   |   - delay tolerance        | inter    |    patient demand          |
+   |   - window / deadline      |          |  Heterogeneous providers   |
+   |   - predictability         | stream   |    (RN-04, RN-05)          |
+   |   - continuity             |          |                            |
+   +-------------+--------------+          +--------------+-------------+
+                 |                                        |
+                 +-------------------+--------------------+
+                                     v
+                   Price of time:  term structure of
+                     block-fee-rates      (RN-10, RN-11)
+                                     |
+                  simple, protocol-neutral, extraction-resistant?
+                                     |
+            Previously unrealized mutually-beneficial executions
+                                     |
+                      Social surplus?   (falsifiable hypothesis)
 ```
 
 ---
@@ -122,6 +126,8 @@ TLM is not about redistributing value or asking the network to subsidize patient
 
 The model is the first phase, not the destination; its purpose is to make the missing dimension precise enough that mechanism design can begin. Once the temporal characteristics of demand are named and measured, the gaps in a scalar fee market become concrete - and so does a supply-side agenda: how a transaction-fee mechanism might *price and coordinate* temporal demand, generalizing single-axis results such as tiered fees [15] beyond urgency and exploring windowed auctions and time-based reserves. These are protocol-level (EIP-scale) questions, not application features.
 
+Framed as a market, this is its supply side. Naming Temporal Liquidity defines the demand a market would express; a market also needs a supply side - execution capacity that is heterogeneous across blockchain time, plus the flexibility patient demand can release - and a price where the two meet. Later notes develop that price as a *term structure of block-fee-rates*, which the allocation-problem note identifies as the dual of the coordination problem it solves. Seen at this scale, a blockchain reads less as a transaction-processing engine than as an execution-capital market that finances a diverse set of projects by allocating capacity across time. This is why the program is a temporal-liquidity *market*, not only a temporal variable.
+
 Two properties make this agenda tractable rather than speculative. Its constituency is already visible: the latency-sensitive applications that today exit to sovereign chains [16] are the users a temporally-aware mechanism would serve. And it is neutral to where it is first built - a high-performance general-purpose chain can prototype such a mechanism, and Ethereum can adopt what proves out - so the work advances the broader ecosystem rather than any single venue. The mechanisms themselves remain open research; the contribution offered here is the framework that identifies what is missing and who needs it.
 
 ---
@@ -142,7 +148,7 @@ Stated as hard problems, not a wish list - these are where I would most value co
 1. **Vision Statement** - the umbrella concept and guiding principles.
 2. **Foundation Statement (I-III)** - conceptual framework, evaluation criteria, falsifiability.
 3. **Related Work** - the inherited results from each discipline above.
-4. **Research Notes** - focused investigations (e.g. RN-03, a cited Hyperliquid case study of multidimensional temporal demand).
+4. **Research Notes (RN-01 - RN-11)** - focused investigations spanning both sides of the market: the transaction-level representation (RN-01, RN-02), a Hyperliquid case study of multidimensional temporal demand (RN-03), the service architecture and supply-side granularity (RN-04, RN-05), host analyses and candidacy (RN-06, RN-08), the layered control architecture (RN-07), chain virtualization (RN-09), and the market view - the blockchain economy and the execution-capital allocation problem whose dual is the block-fee-rate curve (RN-10, RN-11).
 
 ---
 
