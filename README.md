@@ -100,7 +100,7 @@ docs/
         RN-08 — Modern Blockchains and Host Candidacy (comparative survey)
         RN-09 — Chain Virtualization (diversified project types on a shared fast L1)
         RN-10 — Temporal Liquidity and the Blockchain Economy (the execution-capital market)
-        RN-11 — Execution-Capital Allocation + the Block-Fee-Rate Term Structure (allocation LP as the efficient benchmark; market curve bootstrapped from future-slot instruments)
+        RN-11 — The Temporal Liquidity Market: A Formal Foundation (the execution-capital allocation problem; the term structure of block-fee-rates via the bond-market mapping)
 ```
 
 ---
