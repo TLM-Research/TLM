@@ -41,7 +41,7 @@ Two adjacent fields have faced similar tensions, and their solutions are instruc
 
 This is an invitation to critique, not a proposal for adoption. The sharpest open questions sit exactly where these fields meet the blockchain constraint: what temporal abstraction is expressive enough to coordinate yet coarse and private enough to resist extraction; whether a temporally augmented fee mechanism can stay incentive-compatible under known transaction-fee-mechanism impossibilities; and when a decentralized market's price of time would match the efficient one.
 
-I would especially value feedback from researchers in **networking and distributed systems**, in **mechanism and market design**, and in **quantitative finance**. The full development lives in the Vision and Foundation statements, the Related Work survey, and the Research Notes.
+I would especially value feedback from researchers in **networking and distributed systems**, in **mechanism and market design**, and in **quantitative finance**. The full development lives in our Vision and Foundation statements, the Related Work survey, and eleven research notes (RN-01 through RN-11), with mechanism-design notes upcoming.
 
 **Repository:** https://github.com/TLM-Research
 
