@@ -1,51 +1,73 @@
 # Foundation Statement - Part III: Future Research
 
-**Version:** 1.2
+**Version:** 1.3
 **Status:** Public Draft
-**Last Updated:** July 24, 2026
+**Last Updated:** August 6, 2026
 
-Part III closes the Foundation by turning the framework into a research program: a mechanism-design *space* (not a mechanism), an agenda for *measuring* Temporal Liquidity, explicit non-goals, and the conditions under which the program could be confirmed, refined, or rejected. Its posture is to begin the discussion, not conclude it.
-
----
-
-# 9. Mechanism Design Space
-
-The central contribution of TLM is the conceptual framework, not any single mechanism. Future mechanisms - temporal queues, execution windows, adaptive pricing, reserve-based designs, multi-horizon markets, and others - are candidate points in a design space, to be compared against the common evaluation criteria stated in Part II (sec. 9) rather than judged in isolation. This design space already has at least one worked proposal: the tiered urgency-based fee mechanism of Kiayias, Koutsoupias, Lazos & Panagiotakos (2023) - an IOG/Cardano research design, not (as far as we know) a deployed one - which coordinates a single temporal dimension and which TLM treats as the urgency-axis precedent it generalizes. Because the criteria attach to the framework and not to any one design, multiple candidates can be evaluated without redefining the underlying concept of Temporal Liquidity.
+Part III closes the Foundation by turning the framework into a research program: the market that gives the program its name, a mechanism-design *space* (not a mechanism), an agenda for *measuring* Temporal Liquidity, explicit non-goals, and the conditions under which the program could be confirmed, refined, or rejected. Its posture is to begin the discussion, not conclude it.
 
 ---
 
-# 10. Measuring Temporal Liquidity
+# 9. The Temporal Liquidity Market
 
-A central research direction is whether Temporal Liquidity - and its individual dimensions (delay tolerance, predictability, execution priority, continuity) - can be measured empirically. This is best viewed as an **identification problem**, not a data-collection problem: observed fees reveal behavior *under today's mechanism*, not the latent temporal characteristics of demand, so inferring the underlying value-versus-delay structure is a causal-inference problem (endogeneity, selection, strategic bidding), not merely a matter of gathering traces.
+Naming the temporal characteristics of demand is only the first half of the program; the second is the **market** - the *M* in TLM. Once those characteristics are made protocol-visible variables, the question becomes how to coordinate them, and the direction TLM pursues is a two-sided market for **temporal liquidity**: impatient execution demand that needs particular timing *takes* it, and patient, flexible demand *provides* it, the two clearing into a *price of time*.
+
+Read at that scale, a blockchain is less a transaction-processing engine than an **execution-capital market** - one that allocates execution capacity across time and finances a diverse set of projects, including the timing-sensitive ones that today leave for sovereign chains. The price of time takes the form of a **term structure of block-fee-rates**, constructed by analogy to the bond market and made mutually consistent under no-arbitrage, with the allocation problem's dual as a welfare benchmark against which the market curve can be judged. The economics of this market are developed in RN-10, and its formal foundation - the term structure and the execution-capital allocation problem - in RN-11. Designing the protocol and market mechanism that would clear it is the subject of the design space below and of the upcoming mechanism-design notes.
+
+---
+
+# 10. Mechanism Design Space
+
+The central contribution of TLM is the conceptual framework and the market it defines, not any single mechanism. Future mechanisms - temporal queues, execution windows, adaptive pricing, reserve-based designs, multi-horizon markets, future-slot instruments, and others - are candidate points in a design space, to be compared against the common evaluation criteria stated in Part II (sec. 9) rather than judged in isolation. This design space already has worked reference points: the tiered urgency-based fee mechanism of Kiayias, Koutsoupias, Lazos & Panagiotakos (2023) - an IOG/Cardano research design, not (as far as we know) a deployed one - which coordinates a single temporal dimension and which TLM treats as the urgency-axis precedent it generalizes; and, within the program, a first candidate two-sided clearing mechanism to be developed in the mechanism-design notes (RN-12 onward). Because the criteria attach to the framework and not to any one design, multiple candidates can be evaluated without redefining the underlying concept of temporal liquidity.
+
+---
+
+# 11. Measuring Temporal Liquidity
+
+A central research direction is whether the temporal characteristics of demand - and their individual dimensions (delay tolerance, predictability, execution priority, continuity) - can be measured empirically. This is best viewed as an **identification problem**, not a data-collection problem: observed fees reveal behavior *under today's mechanism*, not the latent temporal characteristics of demand, so inferring the underlying value-versus-delay structure is a causal-inference problem (endogeneity, selection, strategic bidding), not merely a matter of gathering traces.
 
 The methodology has direct precedents worth inheriting - the estimation of the *value of time* in transportation economics and of *demand elasticity* in electricity markets both recover latent temporal preferences from behavior, and the `Related-Work` document collects these. Candidate approaches include revealed-preference analysis, natural experiments, agent-based simulation, and controlled protocol experiments. Candidate datasets include public mempool traces, transaction-inclusion delays, MEV-Boost relay data, rollup sequencing data, and application-specific execution histories. The objective is not to collect data for its own sake, but to determine whether temporally flexible demand exists in economically meaningful quantities - the minimal empirical test the whole program rests on.
 
 ---
 
-# 11. Protocol Evolution
+# 12. Protocol Evolution
 
-The Foundation intentionally avoids prescribing Ethereum's roadmap; it offers a lens through which future evolution may be interpreted. It is nonetheless worth naming the architectural developments that would make protocol-visible temporal information *cheap to add*, since they bound what is practical: ePBS commitment slots and inclusion lists (which create places to attach or honor forward commitments), blob-style multidimensional fee pricing (which shows a new protocol-visible resource dimension can be introduced), and extended proposer lookahead (which is what would let anyone credibly speak for future slots). Temporal Liquidity is one candidate direction that such developments could support, not a predetermined destination.
+The Foundation intentionally avoids prescribing Ethereum's roadmap; it offers a lens through which future evolution may be interpreted. It is nonetheless worth naming the architectural developments that would make protocol-visible temporal information *cheap to add*, since they bound what is practical: ePBS commitment slots and inclusion lists (which create places to attach or honor forward commitments), blob-style multidimensional fee pricing (which shows a new protocol-visible resource dimension can be introduced), and extended proposer lookahead (which is what would let anyone credibly speak for future slots). A market for temporal liquidity is one candidate direction that such developments could support, not a predetermined destination.
 
 ---
 
-# 12. Non-goals
+# 13. Non-goals
 
 TLM is **not** a new consensus protocol, a replacement for PBS or EIP-1559, a proposal for a single mandatory mechanism, an attempt to maximize execution speed, or a complete execution-market solution. These non-goals are essential - they prevent the most common misreadings - and are echoed in the Part I scope so that a reader of any single document encounters them.
 
 ---
 
-# 13. Falsifiability
+# 14. Falsifiability
 
 A useful research framework must name the observations that would weaken or invalidate its central hypothesis. For TLM these include: empirical evidence that temporally flexible demand is economically negligible; an inability to identify useful temporal information from observable behavior; protocol-visible temporal information consistently reducing welfare or decentralization; and no measurable scheduling benefit despite richer temporal information. None is an expected outcome, but stating them establishes that TLM makes testable claims rather than unfalsifiable assertions.
 
 ---
 
-# 14. Relationship to the Research Notes
+# 15. Relationship to the Research Notes
 
-The Foundation establishes the agenda; the Research Notes investigate individual questions in depth, which keeps the Foundation stable while the notes evolve. Current and planned notes include RN-01 (temporal information), RN-02 (protocol-visible temporal abstraction), RN-03 (the Hyperliquid case study of multidimensional temporal demand), and further empirical notes on measuring temporal flexibility, builder-scheduling simulations, and candidate mechanisms.
+The Foundation establishes the agenda; the Research Notes investigate individual questions in depth, which keeps the Foundation stable while the notes evolve. The eleven notes to date span both sides of the market and the market itself:
+
+- **RN-01 - Temporal Execution Profile.** The transaction-level representation of temporal demand.
+- **RN-02 - Protocol-visible Temporal Abstraction.** How temporal characteristics can be made visible to the protocol, and the declared-versus-verified distinction.
+- **RN-03 - Hyperliquid: A Case Study in Temporal Liquidity.** An application study of multidimensional temporal demand.
+- **RN-04 - Temporal Execution Services.** A multi-class execution architecture for Ethereum - the service and supply side.
+- **RN-05 - Supply-side Heterogeneity and Temporal Granularity.** A quantum lattice for blockspace: sub-slot granularity and heterogeneous supply.
+- **RN-06 - Monad Through the Temporal-Liquidity Lens.** A host analysis - motivation, novelty, and limits.
+- **RN-07 - A Layered Control Architecture for Temporal Liquidity.** Multi-timescale, reducible control for blockchain execution markets.
+- **RN-08 - Modern Blockchains Through the Lens of TLM.** A three-layer architecture, and the case for decoupling execution from control.
+- **RN-09 - Chain Virtualization.** A conceptual frame for diversified project types on a shared fast L1.
+- **RN-10 - The Economics of the Temporal Liquidity Market.** How TLM expands the blockchain economy: the blockchain as an execution-capital market (with a companion follow-up research-questions note).
+- **RN-11 - The Temporal Liquidity Market: A Formal Foundation.** The term structure of block-fee-rates, and the execution-capital allocation problem and its dual.
+
+Mechanism-design notes are upcoming, beginning with **RN-12** on the protocol and market design that would clear the market.
 
 ---
 
-# 15. Conclusion
+# 16. Conclusion
 
-Temporal Liquidity is proposed as an umbrella for the economically meaningful temporal characteristics of execution demand - delay tolerance, predictability, execution priority, execution windows and deadlines, and continuity. The Foundation deliberately stops short of prescribing mechanisms; instead it establishes a conceptual framework, identifies research questions, proposes evaluation criteria, and defines the conditions under which the framework may ultimately be confirmed, refined, or rejected. In that sense it is intended not as the conclusion of the TLM project, but as the beginning of a broader research program.
+The Foundation began by naming the economically meaningful *temporal characteristics* of execution demand - delay tolerance, predictability, execution priority, execution windows and deadlines, and continuity - and arguing that a scalar fee throws them away. But the thesis is not one more variable; it is a **market**. The *M* in TLM is the point: a **Temporal Liquidity Market** in which impatient demand takes temporal liquidity and patient, flexible demand provides it, clearing into a *price of time* - a term structure of block-fee-rates - so that a blockchain can economically support a wider, more diverse set of projects and, with them, a larger economy. The Foundation establishes the conceptual framework, identifies the research questions, proposes the evaluation criteria, and defines the conditions under which the program may be confirmed, refined, or rejected. It is intended not as the conclusion of the TLM project, but as the beginning of a broader research program - one that has since carried through to the economics of the market (RN-10) and its formal foundation (RN-11), with the protocol and market design that would realize it next.

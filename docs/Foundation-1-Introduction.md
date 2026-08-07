@@ -10,7 +10,7 @@ Ethereum has transformed decentralized execution through innovations such as EIP
 
 Temporal Liquidity Market (TLM) asks whether another dimension of demand deserves similar study: the economically meaningful **temporal characteristics** of execution demand - how much timing, ordering, and predictability matter, beyond willingness to pay.
 
-Rather than proposing a new protocol mechanism, this Foundation Statement introduces **Temporal Liquidity** as a conceptual framework for studying these characteristics. Its purpose is to investigate whether some of this temporal information should become a protocol-visible economic variable, and whether exposing it could improve decentralized coordination while preserving neutrality, decentralization, and open competition.
+Rather than proposing a new protocol mechanism, this Foundation Statement introduces a conceptual framework for studying these **temporal characteristics** - and the market for the temporal liquidity they define. Its purpose is to investigate whether some of this temporal information should become a protocol-visible economic variable, and whether exposing it could improve decentralized coordination while preserving neutrality, decentralization, and open competition.
 
 The usefulness of the framework is ultimately an empirical question, to be evaluated through analysis, simulation, and future mechanism research.
 
@@ -36,13 +36,13 @@ That temporal preferences are currently *implicit* does **not** by itself imply 
 
 ------------------------------------------------------------------------
 
-# 2. Temporal Liquidity
+# 2. Temporal Characteristics and Temporal Liquidity
 
-This Foundation Statement adopts the term **Temporal Liquidity** as an *umbrella* for the temporal structure of demand:
+This Foundation Statement adopts the **temporal characteristics of demand** as an *umbrella* for the temporal structure of demand:
 
-> **Temporal Liquidity is the collection of economically meaningful temporal characteristics of execution demand.**
+> **The temporal characteristics of demand are the collection of economically meaningful temporal properties of execution demand.**
 
-Its dimensions are **execution priority**, **delay tolerance**, **execution windows and deadlines**, **predictability**, and **continuity**. Temporal Liquidity is an **economic property, not a protocol mechanism** - independent of any transaction format, pricing rule, or scheduling algorithm - and it is distinct from any particular *representation* of it (descriptor, curve, profile); both representation and mechanism are intentionally left to later research.
+Their dimensions are **execution priority**, **delay tolerance**, **execution windows and deadlines**, **predictability**, and **continuity**. A demand's **temporal liquidity** is the flexibility these characteristics amount to - how far its execution can be moved in time without losing value - and it is the object a market prices, supplied by the patient and taken by the impatient. Both are **economic properties, not protocol mechanisms** - independent of any transaction format, pricing rule, or scheduling algorithm - and distinct from any particular *representation* of them (descriptor, curve, profile); both representation and mechanism are intentionally left to later research.
 
 The concept note **[Temporal Liquidity](./Temporal-Liquidity.md)** is the canonical exposition: it develops the market-liquidity analogy, the granularity ordering of the dimensions, the deadline-versus-decay structure of delay tolerance, the declared-versus-observed distinction, and the worked examples. This section states only the definition the rest of the Foundation relies on; the elaboration is not repeated here.
 

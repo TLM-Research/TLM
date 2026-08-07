@@ -4,7 +4,7 @@
 **Status:** Public Draft
 **Last Updated:** July 24, 2026
 
-Part II is the intellectual core of the Foundation. It sets out the principles that discipline the inquiry and the model-first methodology that orders it. It proposes no mechanism; it establishes how any future mechanism will be reasoned about. Throughout, **Temporal Liquidity** is the umbrella concept defined in Part I sec. 2 and elaborated in the [Temporal Liquidity](./Temporal-Liquidity.md) note.
+Part II is the intellectual core of the Foundation. It sets out the principles that discipline the inquiry and the model-first methodology that orders it. It proposes no mechanism; it establishes how any future mechanism will be reasoned about. Throughout, the **temporal characteristics of demand** are the umbrella defined in Part I sec. 2 and elaborated in the [Temporal Liquidity](./Temporal-Liquidity.md) note, and **temporal liquidity** is the market resource they define.
 
 ---
 

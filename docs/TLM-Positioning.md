@@ -11,7 +11,7 @@ Temporal Liquidity Market (TLM) is a research program in **temporal market desig
 
 **Phase 1 - foundations (model-first).** TLM's first work is upstream of any auction:
 
-- **Define the object** - Temporal Liquidity, the collection of economically meaningful temporal characteristics of execution demand, precise enough to be measured.
+- **Define the object** - the temporal characteristics of demand, the collection of economically meaningful temporal properties of execution demand, precise enough to be measured.
 - **Establish the information model** - which temporal characteristics could become protocol-visible, and how.
 - **State the constraints** - neutrality, extraction-resistance, simplicity, incentive-compatibility, and decentralization - that *any* mechanism coordinating this demand must satisfy.
 - **Measure that the demand is real** - through empirical work (e.g. the Hyperliquid case study and the economics of delay).

@@ -2,10 +2,10 @@
 
 ## Vision Statement
 
-**Version:** 1.5 (Draft)
+**Version:** 1.6 (Draft)
 **Release:** TLM Public Release 2 (PR2)
 **Status:** Public Draft
-**Last Updated:** August 4, 2026
+**Last Updated:** August 6, 2026
 
 ---
 
@@ -17,7 +17,7 @@ Ethereum has transformed blockchain protocol economics through innovations such 
 
 Temporal Liquidity Market (TLM) asks whether decentralized execution markets can benefit from making economically meaningful temporal characteristics of demand, in addition to price, visible through protocol-defined abstractions - and, more than that, whether coordinating them constitutes a **market**.
 
-The name is the thesis: the *M* is for Market. Temporal Liquidity names a demand variable; the market is the two-sided system that coordinates it - demand that needs particular timing on one side, the supply of execution capacity across blockchain time on the other, meeting at a price for time. Naming the variable is the first half of the program; the market that clears it is the second.
+The name is the thesis: the *M* is for Market. The temporal characteristics of demand are the new variable, and temporal liquidity is what a market would coordinate: demand that needs particular timing on one side, the supply of flexible execution capacity across blockchain time on the other, meeting at a price for time. Naming the variable is the first half of the program; the market that clears it is the second.
 
 Rather than replacing Ethereum's architecture, TLM explores the next stage of decentralized market design.
 
@@ -29,14 +29,14 @@ Today's execution markets primarily coordinate demand through price.
 
 Execution demand also possesses temporal characteristics that influence resource allocation.
 
-**Temporal Liquidity** is intentionally used as an umbrella economic concept analogous to **market liquidity**.
+The **temporal characteristics of demand** are the properties a scalar fee leaves out - how execution value depends on *when*, in *what order*, and *how predictably* a transaction or stream is served. They are used here as an umbrella, a family of related-but-distinct properties, much as **market liquidity** is a family of properties (depth, immediacy, resiliency) rather than a single quantity.
 
-Just as market liquidity is not a single quantity but a family of related properties (depth, immediacy, resiliency, and so on), Temporal Liquidity refers to the collection of economically meaningful temporal characteristics of execution demand that may influence decentralized market coordination.
+A demand's **temporal liquidity** is the flexibility these characteristics amount to: how far its execution can be moved in time without losing value. That flexibility is the object a market prices - supplied by patient, flexible demand and taken by impatient demand, just as market liquidity is immediacy priced by patience. The characteristics describe the demand; temporal liquidity is what a two-sided market coordinates.
 
 Two clarifications keep the analogy precise:
 
-- Temporal Liquidity characterizes **demand** (the properties of transactions and streams), whereas market liquidity characterizes a **market or asset**. The parallel is structural - both are umbrellas - not literal.
-- Unlike market liquidity's dimensions, which tend to co-move as facets of a single underlying property, the temporal characteristics below may be **largely independent**. Temporal Liquidity is therefore best understood as a *category* of related-but-distinct properties rather than a single multidimensional measure.
+- The temporal characteristics characterize **demand** (the properties of transactions and streams), whereas market liquidity characterizes a **market or asset**. The parallel is structural, not literal.
+- Unlike market liquidity's dimensions, which tend to co-move as facets of a single underlying property, the temporal characteristics below may be **largely independent** - a *category* of related-but-distinct properties rather than a single multidimensional measure.
 
 These characteristics may include:
 
@@ -68,13 +68,13 @@ The central question becomes:
 
 # From a Variable to a Market
 
-Naming a variable is not yet a market. Temporal Liquidity describes **demand**; a market also needs a **supply** side and a **price**. The program develops both, which is why it is named a *market*, not only a variable.
+Naming a variable is not yet a market. The temporal characteristics describe **demand**; a market for temporal liquidity also needs a **supply** side and a **price**. The program develops both, which is why it is named a *market*, not only a variable.
 
 - **Demand.** The object that carries a temporal profile is the *project* - a perpetual exchange, an oracle network, a payment network, a rollup, a game world - not the isolated transaction (RN-01, RN-03, RN-10). These are the takers of temporal liquidity: they need execution at a particular time or order and will pay for it.
 - **Supply.** Capacity per unit of blockchain time is roughly uniform; demand is not, so contention concentrates at particular quanta. Temporal liquidity is supplied when patient, loosely-bound work releases its claim on a contended quantum for time-sensitive work to use. How that supply is organized - differentiated temporal service classes over a sub-slot "quantum" granularity - is developed in RN-04 and RN-05.
 - **Price.** The two sides meet in a **term structure of block-fee-rates** - a price of execution by future slot - which RN-11 develops by analogy to the bond market: bootstrapped from future-slot instruments, with the allocation problem's dual as its efficiency benchmark (RN-10, RN-11).
 
-Seen this way (RN-10), a blockchain is less a transaction-processing engine than an **execution-capital market** that finances a diverse ecosystem of projects by allocating capacity across time. Making Temporal Liquidity protocol-visible is what lets that market express and price the temporal side of demand, rather than compressing it into a single fee after arrival. The demand-side chapters below define the variable; the supply side, the price, and the allocation problem are developed in RN-04, RN-05, RN-10, and RN-11.
+Seen this way (RN-10), a blockchain is less a transaction-processing engine than an **execution-capital market** that finances a diverse ecosystem of projects by allocating capacity across time. Making the temporal characteristics protocol-visible is what lets that market express and price the temporal side of demand, rather than compressing it into a single fee after arrival. The demand-side chapters below define the variable; the supply side, the price, and the allocation problem are developed in RN-04, RN-05, RN-10, and RN-11.
 
 ---
 
@@ -96,7 +96,7 @@ Execution priority illustrates why these characteristics are *temporal* rather t
 
 Arbitrum's **Timeboost** makes the point concretely: it auctions control of an "express lane," and the winner is sequenced immediately while all other transactions incur a fixed artificial delay before sequencing. Here priority *is* time - a latency advantage - and the underlying demand characteristic is the sensitivity of a transaction's value to its ordering position within a slot.
 
-TLM draws a deliberate line here. The **demand characteristic** (how much a transaction values being earlier in the sequence) belongs to Temporal Liquidity. The **auction that prices it** is a *mechanism*, one instantiation on a later rung of the concept -> representation -> mechanism ladder. Timeboost is thus a mechanism instance, not the concept itself; conflating the two would collapse execution priority back into price, since in Timeboost priority is literally purchased.
+TLM draws a deliberate line here. The **demand characteristic** (how much a transaction values being earlier in the sequence) belongs to the temporal characteristics of demand. The **auction that prices it** is a *mechanism*, one instantiation on a later rung of the concept -> representation -> mechanism ladder. Timeboost is thus a mechanism instance, not the concept itself; conflating the two would collapse execution priority back into price, since in Timeboost priority is literally purchased.
 
 Timeboost is instructive in two opposite directions, and TLM carries both:
 
@@ -123,7 +123,7 @@ TLM asks whether these new tools fundamentally change what protocol-visible abst
 
 # Research Vision
 
-TLM investigates Temporal Liquidity as a new dimension of decentralized market design.
+TLM investigates the temporal characteristics of demand, and the market for temporal liquidity they define, as a new dimension of decentralized market design.
 
 Its objective is to establish a conceptual framework for understanding, representing, and evaluating economically meaningful temporal characteristics of execution demand rather than prescribing a particular protocol mechanism.
 
@@ -154,7 +154,7 @@ Surplus can arise through two complementary channels:
 - **Unlocking suppressed demand** - allowing participants to communicate simple, protocol-visible temporal characteristics may enable execution opportunities that would otherwise never occur.
 - **Removing coordination waste** - making a temporal characteristic explicit can dampen destructive competition for it. The latency arms race is the clearest example: participants currently spend real resources racing for ordering advantage, and coordinating time-as-priority can convert part of that deadweight loss into surplus (Capponi & Zhu, 2026).
 
-There is already formal support for the first channel. Kiayias, Koutsoupias, Lazos & Panagiotakos (2023) show that a *tiered* fee mechanism, pricing by urgency, keeps low-urgency transactions cheap and admits a more diverse set of transactions than EIP-1559 - without necessarily sacrificing revenue. That is, in effect, the *urgency dimension* of Temporal Liquidity worked out as a mechanism; TLM generalizes it across the full set of temporal characteristics. Their result also sharpens the distinction below: the revenue-neutrality runs through price discrimination (a redistribution channel), while the *inclusion of diverse demand* is the created surplus.
+There is already formal support for the first channel. Kiayias, Koutsoupias, Lazos & Panagiotakos (2023) show that a *tiered* fee mechanism, pricing by urgency, keeps low-urgency transactions cheap and admits a more diverse set of transactions than EIP-1559 - without necessarily sacrificing revenue. That is, in effect, the *urgency dimension* of the temporal characteristics worked out as a mechanism; TLM generalizes it across the full set of temporal characteristics. Their result also sharpens the distinction below: the revenue-neutrality runs through price discrimination (a redistribution channel), while the *inclusion of diverse demand* is the created surplus.
 
 In both cases the resulting social surplus comes from **better coordination**, rather than redistributing value among existing participants.
 
@@ -176,7 +176,7 @@ This distinction is fundamental to the TLM research program.
 
 # Open Research Questions
 
-- Which temporal characteristics belong within Temporal Liquidity?
+- Which temporal characteristics of demand are economically meaningful enough to model?
 - Which should become protocol-visible?
 - How coarse should protocol-visible abstractions be?
 - How should declared preferences and observed (verifiable) properties be treated differently?
@@ -191,7 +191,7 @@ This distinction is fundamental to the TLM research program.
 
 Ethereum demonstrated that protocol-visible economic information can improve decentralized coordination.
 
-TLM extends that direction by asking whether **Temporal Liquidity**, understood as the collection of economically meaningful temporal characteristics of execution demand, can become another foundation for decentralized market design.
+TLM extends that direction by asking whether the **temporal characteristics of demand** - and a market for the temporal liquidity they define - can become another foundation for decentralized market design.
 
 The project advances this as an open research agenda rather than a predetermined conclusion.
 

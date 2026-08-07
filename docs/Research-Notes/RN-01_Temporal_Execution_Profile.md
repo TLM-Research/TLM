@@ -115,7 +115,7 @@ produced within slots, and execution ordering inside blocks.
 Different Layer-1 systems may realize Blockchain Time differently while
 serving the same conceptual role.
 
-**Figure 1:** `figures/rn01/fig1_tlm_architecture_v0_3.svg`
+![Figure 1 - Physical Time and Blockchain Time, the two temporal domains TLM coordinates](figures/rn01/fig1_two_temporal_domains.svg)
 
 The Temporal Liquidity Market economically coordinates these two
 temporal domains.
