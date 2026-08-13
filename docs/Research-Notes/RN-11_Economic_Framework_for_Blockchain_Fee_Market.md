@@ -1,14 +1,14 @@
 ---
 id: RN-11
-title: "The Temporal Liquidity Market: A Formal Foundation"
+title: "An Economic Framework for a Blockchain Fee Market with Temporal Liquidity"
 subtitle: "The block-fee-rate term structure and the execution-capital allocation problem"
-version: v0.3
+version: v0.4 (reframes Part I around the coin-denominated term structure: a positioning section anticipating the commodity view, a numeraire/own-rate section defining the discount factor B, a section reading the fee as an abstraction over base-fee/tips/MEV, and the curve construction with temporal liquidity as the storability dial. Part II carries surgical fixes only -- the full primal-dual with both multiplier families (sec. 6), flow rather than scalar conservation (sec. 7), softened width/kappa claims and tau's epistemic status (sec. 5) -- and the reference list is normalized.)
 status: "Public draft. The formal center of the TLM program; stated, not solved."
 program: "Temporal Liquidity Market (TLM)"
-date: August 5, 2026
+date: August 12, 2026
 ---
 
-# RN-11 -- The Temporal Liquidity Market: A Formal Foundation
+# RN-11 -- An Economic Framework for a Blockchain Fee Market with Temporal Liquidity
 
 ## Abstract
 
@@ -42,78 +42,137 @@ One caveat kept in view throughout: the relation between the shadow-price benchm
 
 ---
 
+## Positioning: blockspace between commodity and money
+
+A natural first reaction treats blockspace as a perishable commodity. Each slot's capacity is used-or-lost, like electricity from a generator or an idle CPU cycle, so the intuition runs that its forward market must be a commodity-forward -- prices set by expected future scarcity, with no bond-like term structure and no link between spot and forward beyond expectation. If that were the whole story, the fixed-income reading of Part I would be a category error.
+
+It is not the whole story, and the commodity reading is the wrong default, for two reasons. First, the object priced is the fee, denominated in the chain's own coin, and the coin is a storable, reinvestable numeraire with its own rate of return (sec. 0.5). Second, a non-storable service can still be linked across time by substitution on the demand side: work that tolerates the drift between wall-clock relevance and block execution can move across slots, and that movement is an intertemporal arbitrage a pure commodity lacks. Temporal liquidity is the name for that substitution, and providing it frictionlessly is the mechanism's purpose.
+
+So blockspace sits between two limits. With no substitution mechanism it is a commodity -- a free-floating forward curve. In the limit of abundant, frictionless substitution it is money -- a fully arbitrage-linked term structure, money being the perfectly shiftable good whose curve is bond-like for that reason. Real blockspace lies between, and where it lies is not a fixed fact but an outcome of market design. **The purpose of the temporal liquidity market is to move it toward the money limit.**
+
+This is the economic foundation the note builds, and it has two levels, as economics does. At the **macro** level -- the multi-slot economy -- the objects are the block-fee term structure, aggregate execution-capital demand read at the level of projects, the capital value of the network and its own-rate, and temporal liquidity as the intertemporal link (Part I). At the **micro** level -- the per-quantum market -- the objects are congestion prices, the two-sided clearing of temporal position, incentives, and microstructure (Part II). Part I is the macro term structure; Part II is the micro allocation whose dual values capacity; the mechanism connecting them is RN-12, and the capacity limits within which both operate are RN-13. Read this way, the note is the price-and-allocation foundation of a blockchain economy, and the reframed Part I below is its macro half.
+
+## 0.5 Numeraire, own-rate, and the discount factor B
+
+Everything is denominated in the native coin -- ETH on Ethereum, APT on Aptos. Fees, MEV, issuance, and staking rewards are all in-coin; a dollar view is derived, through the coin/USD forward, and carries exchange-rate risk. The term structure of Part I is therefore a term structure in the coin, and its discount factor is the coin's own discount factor, not a dollar rate.
+
+Two quantities must be separated, because the fixed-income analogy tends to collapse them. The **rental rate** is the fee per unit of deployed capacity per period -- the block-fee-rate, the price of the service. The **discount rate** B is the price of the coin across time -- what compounds. The fee is the rental rate; B is a separate object, and compounding lives in B, not in the fee.
+
+At the theoretic, mechanism-independent level B is the coin's **own-rate**: the yield the aggregate fee stream throws off on the capital that produces it. In steady state, with aggregate real fee income R on a capital value P and growth g,
+
+```text
+B  =  R / P  +  g ,
+```
+
+so B is a fixed point -- endogenous to the very fee stream it discounts. This is the formal content of "blockspace is capital and the fee is its yield." B is the aggregate rental *yield* (fee income relative to capital value), a rate, not the per-unit fee.
+
+B is not the staking yield, and the difference matters. Observed staking yield mixes three things: the real fee-and-MEV income (B's numerator), protocol issuance (a monetary transfer among holders, not real income), and the specifics of the staking mechanism. Strip issuance and the mechanism and the remaining fee-derived yield is the theoretic B; staking yield is its observable, issuance-inflated proxy, and carries slashing and liquid-staking risk besides. For the theoretic term structure this note analyzes -- the fee the protocol pays out for blockspace -- B is the fee-yield, and staking is one institutional way it is realized, still in the native coin.
+
+Two consequences. First, over a single slot B is approximately 1: a few-percent annual rate over twelve seconds is negligible, so intra-slot the discount is inert and the rental/congestion price is the whole story -- the own-rate matters only across the multi-slot horizon this part prices. Second, the principal-bearing instrument is the claim on the aggregate fee stream: staked coin, plus the deflation the base-fee burn confers on all holders, is the equity-like claim on the network's blockspace income, and its capital value P is where "principal" lives (sec. 2.3). The real income has two channels worth keeping straight -- base-fee burn accrues to all holders as scarcity, tips and MEV accrue to stakers -- and B's numerator is their sum.
+
+The own-rate of a good measured in units of itself is Keynes's own-rate of interest [23]; the non-storability treatment (sec. 3, App. B) draws on the theory of storage and convenience yield [24] and on forward-curve models for non-storable commodities [25].
+
+## 0.6 What "the fee" means: an abstraction over base fee, tips, and MEV
+
+The "fee" this note prices is not the current Ethereum fee. Today the price of execution is fragmented and partly hidden: a base fee that is burned and prices congestion, a priority tip that goes to the proposer and prices inclusion within a block, and MEV captured off-protocol by builders and searchers that prices ordering and extraction -- plus payments through private order flow that never surface as a fee. A term structure needs a single, protocol-visible price of execution across time; today's composite is not that.
+
+So the fee here is an abstraction, and the note is written for a future protocol in which that price is made clean and visible. Each of today's fragments must be re-examined and enhanced under the temporal-liquidity design, and each maps to a piece of the object:
+
+- the **base fee** generalizes to the per-quantum congestion price -- the near end of the curve, priced across quanta rather than as one block-level number;
+- the **priority tip** is replaced: the private tip-to-builder for intra-block position becomes the cleared advancement payment that flows to the flexible supplier who yields position, not to the builder (RN-12);
+- **MEV** is split: inter-quantum ordering value is surfaced as a public, cleared temporal price -- part of the fee curve -- while intra-quantum extraction is suppressed or randomized (RN-12).
+
+Cleaning the fee into one price is not a side matter; it is a precondition for a well-behaved curve, and it is part of the same friction-reduction as demand-side substitution (positioning, sec. 0.5). A fragmented, partly-hidden price is a commodity-market friction; a unified, protocol-visible price is one of the things that moves the curve toward the money limit. The instruments of Part I are defined on this cleaned fee, and where they say "fee rate" they mean this unified temporal price, not the current base-fee-plus-tip.
+
+---
+
 # Part I -- The block-fee-rate term structure
 
-Part I continues RN-10's reading of execution capacity as a term structure. It is the market object: a fee curve along time, constructed the way an interest-rate curve is. The construction is standard fixed income (App. B); what is new is the mapping to the fee market, the observation that today only the front is priced, and the reading of the fee swap and swaption as the instruments through which the two camps of temporal liquidity would trade.
+Part I is the macro half of the foundation: the fee curve along time, in the native coin, read as a term structure. The construction is standard fixed income (App. B); what is new is the mapping to a fee market, the observation that today only the front is priced, and the reading of the curve as a bond-like object whose link across maturities is enforced by demand-side substitution rather than storage. The bond mathematics is the backbone; non-storability enters as one bounded caveat (sec. 3), not as a reason to abandon the reading.
 
-## 1. The block-fee-rate is a rate: mapping the bond market to the fee market
+## 1. The block-fee-rate is a rental rate
 
-The block-fee-rate at quantum t is the **yield on execution capital deployed at t**. Capacity that is supplied and used earns that rate; capacity left idle earns nothing, as money not lent earns no interest -- the deployed-versus-undeployed distinction of RN-10 sec. 4, and the p(t) = 0-on-slack condition of the allocation dual (sec. 6), seen from the supply side. The term structure is the schedule of these rates across future quanta: what execution delivered at t costs today.
+The block-fee-rate at quantum t is the **rental rate on execution capital**: the fee earned for one period of deployed capacity. The capital is the network itself -- a durable, productive asset that throws off execution capacity each slot the way a machine throws off output, and that persists because time is endogenous (the protocol produces the next slot). A slot's capacity is one period's service flow of that capital: used-or-lost within the slot, but the network that produces it endures. Capacity deployed earns the rental; capacity idle earns nothing, as an unrented machine earns nothing -- the deployed-versus-undeployed distinction of RN-10 sec. 4, and the p(t) = 0-on-slack condition of the allocation dual (sec. 6), seen from the supply side.
 
-The analogy holds at the level of the underlying asset, and this corrects a tempting error. Execution is not a perishable good. **The capital is the network itself** -- a durable, productive asset that throws off execution capacity each slot the way a machine throws off output, and that persists, regenerating identically because time is endogenous (the protocol produces the next slot). A slot's capacity is one period's *service flow* of that capital: used-or-lost within the slot, but the network that produces it endures. The fee is what the network earns for that service; spoken from the network owner's side -- validators, stakers, or the holder of a transferable claim on capacity -- it is the return on capital. So the block-fee-rate is the rental rate (the fee per period of deployed capacity), the term structure is the schedule of forward rental rates, and **principal is present**: the capital value of the network's fee stream, the present value of the rates it will earn. Idle capacity forgoes that period's return without destroying the capital, as capital not lent forgoes interest without being consumed. RN-10's name for the object, execution *capital*, is the accurate one -- the network is what holds it.
+Two rates, kept apart (sec. 0.5). The **rental rate** is the fee -- the price of the service each period. The **discount rate** B is the coin's own-rate -- what compounds. The bond analogy transfers to the discounting (B is a genuine interest rate on the storable coin) but not to the rental: the service is not stored and rolled, so the fee does not compound. **Principal is present** all the same -- the capital value of the network's fee stream, the present value at B of the rentals it will earn, and the object a transferable claim on capacity (sec. 2.3) carries. Calling the object execution *capital* is accurate; the fee is its rental, B its discount, and the network is what holds the principal.
 
-The mapping is worth setting out on its own, because the empty rows are the finding.
+The mapping is worth setting out, because the empty rows are the finding.
 
 | Rates market | Fee-market counterpart | In today's fee market |
 |---|---|---|
-| Overnight / spot rate | Spot inclusion: base fee + priority tip | Exists (EIP-1559) |
-| Zero-coupon bond (one future date) | Future-slot fee: a ticket for execution at quantum t | Missing; early forms in preconfirmations and execution tickets [7] |
-| Yield curve / term structure | Block-fee-rate curve across future quanta | Missing -- only the spot point is priced |
-| Forward rate | Forward block-fee-rate f(0,t) | Missing -- no future-dated prices to imply it |
-| Coupon bond + principal | Durable capacity claim: periodic yield + capital (resale) value | Missing; nascent in validator rights, reserved leases |
-| Fixed-for-floating swap | Fee swap over N quanta, marked to market | Missing |
-| Swaption | Option to enter a fee swap at a preset rate | Missing |
-| Callable / express-lane | Callable allocation; ordering right | Partial (Timeboost [8]) |
+| Overnight / spot rate | Spot inclusion: the cleaned unit fee now (sec. 0.6) | Exists (as base fee + tip) |
+| Zero / one-date claim | Future-slot fee: delivery of execution at one quantum t | Missing; early forms in preconfirmations and execution tickets [7] |
+| Yield curve / term structure | Block-fee-rate curve across future quanta | Missing -- only the front is priced |
+| Forward rate | Forward block-fee-rate f(0,t) | Missing |
+| Coupon claim + principal | Durable capacity claim: periodic rental + capital value | Missing; nascent in validator rights, reserved leases |
+| Fixed-for-floating swap | Fee swap over N quanta, cash-settled in coin | Missing |
+| Swaption | Option to enter a fee swap | Missing |
+| Money discount factor | B(0,t): the coin's own-rate discount (sec. 0.5) | Implicit (staking as its proxy) |
 | Idle cash earns 0 | Undeployed capacity earns 0 | Inherent (durable capital) |
 
-What the mapping reveals is structural: today's fee market prices only the front of the curve. It has an instantaneous spot rate and no curve. Every future-dated instrument -- the zero, the forward, the term structure, the swap -- is absent, so participants cannot see, price, or hedge the cost of execution at a future quantum. A project that needs a slot next week has no way to buy or price it today; it can only bid at the spot when the moment arrives.
+One row needs care, and it is the reviewer's fair point turned into a definition. A future-slot claim (row 2) is the **forward delivery price of a dated service**, F_g(0,t) -- what you pay today for execution at t -- not a zero-coupon *bond*, which would pay one unit of the coin at t. The two coincide only if the service is conflated with the numeraire. Keep three objects distinct: the money discount B(0,t) (sec. 0.5), the spot service price S_g(t), and the forward service price F_g(0,t). The bootstrap (sec. 3) uses B to discount coin cash flows and the traded forwards to fix the service curve; it does not derive F_g from B, and it does not treat a delivery price as a discount factor.
 
-This is the mapping's contribution: the bond market's completed instrument set is a checklist of what a temporally complete fee market would need, and the empty rows are the design agenda -- candidate protocol primitives, most naturally EIPs, introduced in the order the bootstrap needs them: the future-slot ticket first (the zeros anchor the curve), then the swap (hedging and the long end), then the swaption (convexity). Because each proposed primitive has a mature analog whose economics, no-arbitrage constraints, and failure modes are known (App. B), a future-slot fee proposal can be evaluated against an established theory rather than designed ad hoc.
+The mapping's contribution is unchanged: today's fee market has a front and no curve, and the empty rows are the design agenda -- the future-slot ticket first (it anchors the curve), then the swap (the long end and hedging), then the swaption (convexity), each with a mature analog whose economics and failure modes are known (App. B).
 
 ## 2. The instrument space
 
-The observed curve is bootstrapped from the prices of traded instruments. Their fee-market counterparts:
+The curve is bootstrapped from traded instruments, all defined on the cleaned fee (sec. 0.6).
 
-### 2.1 Spot inclusion -- the instantaneous spot rate
+### 2.1 Spot service price S_g(t)
 
-The price of execution now: base fee plus priority tip for next-block inclusion. It is the front of the curve and already observable on-chain.
+The price of execution now -- the cleaned unit fee for immediate inclusion. It is the front of the curve and the one point observable today.
 
-### 2.2 The future-slot fee -- the zero-coupon claim
+### 2.2 The future-slot fee -- the forward delivery price
 
-A claim bought at time 0 that delivers one unit of execution (one unit of gas, or of reserved capacity) at a single future quantum t. Its price P(0, t) is the **zero-coupon block-fee-rate** to maturity t -- the price today of execution delivered at t -- and the curve t -> P(0, t) is the term structure in its purest form. The protocol primitive that makes it trade is a **future-slot auction / transaction ticket** (in the family of execution tickets and preconfirmations [7]); its clearing price is P(0, t). This is the primary instrument to specify, most likely as an EIP, because the zero-coupon curve is what everything else bootstraps against.
+A claim bought at 0 that delivers one unit of execution at a single future quantum t. Its price is F_g(0,t), the **forward service price** to t -- not a zero-coupon bond price (sec. 1). The curve t -> F_g(0,t) is the term structure in its purest form, and the primitive that makes it trade is a future-slot auction or transaction ticket (in the family of execution tickets and preconfirmations [7]). This is the primary instrument to specify, most likely as an EIP, because the forward curve is what everything else bootstraps against.
 
-### 2.3 The coupon bond -- the durable capacity claim
+### 2.3 The durable capacity claim -- where principal lives
 
-A coupon bond pays periodic coupons -- interest at a rate x% on its principal -- plus the principal at maturity. Its counterpart is a **durable, transferable claim on execution capacity**: each period the capacity it entitles is deployed and earns fees, and those fees are the coupon. The coupon rate is a fee yield -- a claim with capital value P that earns a fee f each period yields x% = f / P -- so **interest, in the bond, is fee, in the chain**: the block-fee-rate is the rate at which deployed execution capital pays, exactly as a coupon is the rate at which lent principal pays. The principal is the claim's capital value, the present value of the fees it will earn (sec. 1). This is where principal lives -- a validator's block-production right, a long-lived reserved-capacity lease. Transferability is what turns a single-use ticket into a principal-bearing claim (sec. 7). For *constructing the curve*, though, this instrument is redundant: its price is implied by the zeros and the swap, so the bootstrap (sec. 3) needs only those.
+A transferable, ownership-bearing claim on execution capacity: each period the capacity it entitles is deployed and earns the rental, and the claim carries a capital value equal to the present value at B of those rentals (sec. 1). This is the principal-bearing instrument -- a validator's block-production right, a long-lived reserved-capacity lease, staked coin as the aggregate case (sec. 0.5). A complete definition must state who owes performance, the exercise rule, and the priority against ordinary demand; these are required and open (sec. 8). For constructing the curve it is redundant -- its price is implied by the forwards and the swap -- so the bootstrap needs only those.
 
-### 2.4 The fee swap -- the workhorse, and it is two-sided
+### 2.4 The fee swap -- cash-settled, two-sided, and the basis it carries
 
-The instrument a real project would demand, and the one where the two camps of temporal liquidity (sec. 7) meet as counterparties. Over a horizon of N quanta, a fixed-for-floating swap on a capacity notional Q per quantum exchanges a fixed per-quantum rate F for the realized floating rate p(t): only the difference (p(t) - F)·Q is settled each quantum, the notional is never delivered, and the position is marked to market against the current forward curve.
+Over N quanta, a fixed-for-floating swap on a capacity notional Q exchanges a fixed per-quantum rate F for the realized floating rate p(t): only the difference (p(t) - F)*Q is settled each quantum, in coin, marked to market; no notional is delivered. The **fixed-rate payer** buys cost certainty (a rollup, oracle, or market maker hedging its execution cost); the **floating-rate payer** warehouses fee-rate risk for the fixed premium (a validator, searcher, or capacity provider). These are two sides of the second temporal axis: where the spot temporal-liquidity trade (sec. 7) moves *position* between a patient and an urgent party, the swap moves *rate risk* between a predictability-seeking and a risk-bearing party.
 
-**The swap has two sides, and they are the two camps.** The **fixed-rate payer** buys cost certainty -- it pays F and receives p(t), so a congestion spike in the realized rate is offset; this is demand that values predictability, hedging its execution cost (a rollup, an oracle, a market maker with continuous demand). The **floating-rate payer** takes the other side -- receiving F, paying p(t) -- warehousing fee-rate risk for the fixed premium; this is supply that can bear the variability (a validator, searcher, or capacity provider). Fixed-for-floating and floating-for-fixed are the two camps in one instrument: one locks its cost, the other is paid to absorb the swing. Where the spot temporal-liquidity trade (sec. 7) moves *position* between a patient and an urgent party, the swap moves *rate risk* between a predictability-seeking and a risk-bearing party -- the same two-sided structure on the second temporal axis.
+One qualification the reviewer's reading supplies, and it is worth keeping. The swap is a **cash-settled financial** claim on the fee index; the physical temporal-liquidity trade is a claim on an actual execution position. They are linked but not identical, and the wedge between them -- the **basis** between paying the fee index and securing execution -- is itself a temporal-liquidity risk premium, not a nuisance to assume away. A project that hedges its fee cost with a swap has not thereby secured its execution: it has hedged the price and kept the quantity risk. The two camps meet in the swap on the price axis and in the spot trade on the position axis, and the basis connects them.
 
-The **par fee-swap rate** F*(N) is the fixed rate giving the swap zero value at inception,
+The par fee-swap rate F*(N) is the fixed rate giving the swap zero value at inception,
 
 ```text
-F*(N) = ( sum_{t=1..N} D(0,t) * f(0,t) )  /  ( sum_{t=1..N} D(0,t) )
+F*(N) = ( sum_{t=1..N} B(0,t) * f(0,t) )  /  ( sum_{t=1..N} B(0,t) )
 ```
 
-with f(0,t) the forward block-fee-rate to t and D(0,t) a discount factor. Observing F*(N) across horizons pins the curve at the long end, as swap rates do in the fixed-income swap curve [1] (App. B).
+with f(0,t) the forward block-fee-rate to t and B(0,t) the coin discount factor (sec. 0.5). Observing F*(N) across horizons pins the long end, as swap rates do in the fixed-income swap curve [1] (App. B).
 
 ### 2.5 The swaption -- the option to enter a swap
 
-A **swaption** is the right, not the obligation, to enter a fee swap at a preset fixed rate over a future window. It prices the *volatility* of the fee curve rather than its level: a project with contingent demand -- unsure whether it will commit, and so whether it will need to lock its cost -- buys the right to strike a swap later instead of committing now. It is the convexity instrument the mapping predicts, extending the framework to a volatility surface and letting a project hedge the *possibility* of future congestion rather than a known exposure. Callable allocations (RN-10 grade-3 flexibility) and ordering rights such as Timeboost's express lane [8] are the other options on the rate. How a swaption is realized as a protocol mechanism -- what it means to hold, price, and exercise an option on a future on-chain fee swap -- is left to RN-12; here it is noted as the instrument the term-structure reading predicts, and as one the two camps could use to trade the *option* on future flexibility, not only flexibility itself.
+The right, not the obligation, to enter a fee swap at a preset rate over a future window. It prices the volatility of the curve rather than its level: a project with contingent demand buys the right to lock its cost later instead of committing now. It is the convexity instrument, extending the framework to a volatility surface. Its realization as a protocol mechanism is left to RN-12.
 
-## 3. Bootstrapping the observed curve
+## 3. Constructing the curve, and the storability dial
 
-Given the instrument prices, construct the forward block-fee-rate curve f(0,t) under no-arbitrage -- absence of arbitrage is equivalent to a positive linear pricing functional [4] (App. B):
+Given the instrument prices, the forward curve f(0,t) is built by the chaining fixed income uses -- and the chaining is definitional, holding for any dated good, storable or not. Writing Total(0,0,t) for the accumulation to t,
 
-1. **Front:** the spot (sec. 2.1) fixes f(0,0).
-2. **Zeros:** each future-slot price P(0,t) (sec. 2.2) fixes the delivery price at t; with a discounting convention this yields D(0,t) and the forward f(0,t) at each traded maturity.
-3. **Long end / gaps:** par fee-swap rates F*(N) (sec. 2.4) constrain discount-weighted averages of the forwards over [1,N], filling maturities where zeros are illiquid -- the standard bill-then-swap bootstrap [1].
-4. **Interpolation** across untraded quanta completes the curve; its dynamics are a forward-rate model in the sense of Heath-Jarrow-Morton [3], and swaption prices would calibrate its volatility.
+```text
+Total(0, 0, T+1)  =  Total(0, 0, T)  *  Forward(0, T, T+1) ,
+```
 
-The curve so built is whatever the two-sided auction of demand and supply prints, made mutually consistent by no-arbitrage -- not the output of a chosen objective. Part II asks what that curve prices, and whether the price is efficient.
+so the forward is the ratio the observed curve implies, and the bootstrap is: the spot fixes the front; each future-slot price F_g(0,t) fixes the delivery price at t; par fee-swap rates F*(N) pin the long end and fill illiquid maturities (the bill-then-swap bootstrap [1]); interpolation completes untraded quanta; swaption prices calibrate the volatility (App. B). B(0,t) discounts the coin legs throughout.
+
+What differs from the bond market is not the chaining but what enforces the link between the curve and today's spot. For a storable asset, supply-side storage enforces it by arbitrage. Execution is not storable slot to slot, so that channel is absent -- the reviewer's point, correct as far as it goes. But a second channel is present that a pure commodity lacks: **demand-side substitution**. Work that tolerates drift moves across slots, and that movement bounds how far adjacent forwards can separate, by the switching cost of flexible demand. Temporal liquidity is that channel, and it makes the spot-forward link real though bounded.
+
+So the strength of the link is a dial, not a fact:
+
+```text
+flexible demand -> 0      free-floating commodity curve (expected scarcity only)
+flexible demand -> large  money-like curve (fully arbitrage-linked)
+in between                bond-like in denomination and chaining, with bounded
+                          expected-scarcity structure (event spikes, humps) that
+                          flexible demand shaves but does not erase
+```
+
+Money is the frictionless limit of this dial, not a different kind of object; blockspace priced in its own coin, with a substitution mechanism, moves toward it. This is the sense in which the term structure is bond-like: the coin numeraire and the chaining give the backbone, and temporal liquidity supplies the enforcement that storage supplies for money. Non-storability is not a wall; it is the friction the mechanism (RN-12) exists to reduce, and the degree of bondness the curve reaches is a measurable outcome of how complete that market is.
+
+Two honesties the construction must carry. The curve is identified only on the **marketed subspace** -- the maturities and classes that actually trade; untraded maturities are interpolated, a modeling choice, not a no-arbitrage consequence, as in a thin money market. And different quanta or service classes are not perfectly substitutable (state access, finality, priority differ), so the market is incomplete and the curve unique only up to that incompleteness. Closing the gap -- making enough instruments trade, and making flexible demand deep enough to link maturities -- is what the mechanism is for. The curve so built is what the two-sided market prints, made consistent by no-arbitrage on the marketed subspace; Part II asks what that curve prices, and whether the price is efficient.
 
 ---
 
@@ -146,7 +205,7 @@ The value to project i of executing, at quantum t, a unit of work that arrived a
 v_i(s, t) = V_i(s) * phi_i( t - tau_i(s) )
 ```
 
-**Arrival and target are separate.** Measuring decay from arrival would assume work becomes relevant when it becomes submittable, and that fails for the class RN-10 sec. 7 is built around: a mint opening at a published block, a scheduled expiry, a funding settlement can all be submitted long before they are relevant, so tau is known far in advance while the work stays immovable. Decay against tau holds *foreseeable* and *tightly bound* at once; a single-index form cannot. The argument of phi is the drift RN-10 sec. 7 names: **`t - tau` is `T_block - T_wall` on the lattice**, and phi is the tolerance for it. phi is defined on all integers, because for target-bound work executing *early* destroys value as surely as late -- an oracle update before its event is worthless; setting tau_i(s) = s recovers ordinary work relevant as soon as it exists.
+**Arrival and target are separate.** Measuring decay from arrival would assume work becomes relevant when it becomes submittable, and that fails for the class RN-10 sec. 7 is built around: a mint opening at a published block, a scheduled expiry, a funding settlement can all be submitted long before they are relevant, so tau is known far in advance while the work stays immovable. Decay against tau holds *foreseeable* and *tightly bound* at once; a single-index form cannot. The argument of phi is the drift RN-10 sec. 7 names: **`t - tau` is `T_block - T_wall` on the lattice**, and phi is the tolerance for it. phi is defined on all integers, because for target-bound work executing *early* destroys value as surely as late -- an oracle update before its event is worthless; setting tau_i(s) = s recovers ordinary work relevant as soon as it exists. tau is a demand type, not a quantity the protocol observes: for scheduled work (a published mint, an expiry) it is protocol-verifiable, but for triggered work (a liquidation, an arbitrage) it is private and revealed only when the trigger fires, so the mechanism elicits behavior against tau rather than reading tau directly, and the equality `t - tau = T_block - T_wall` holds in the model, not as a value the allocator can measure.
 
 **Decay shapes are not one family.** phi is declared per unit of work and takes many shapes, each a different demand: a step (a hard deadline), an exponential (a constant hazard of irrelevance), a linear ramp, a plateau-then-cliff; periodic or multi-window value (an oracle updating on a schedule, or work with several acceptable windows), where phi has several peaks and is not monotone, so a quantum farther from the main peak can be worth more than a nearer one; two-sided shapes for target-bound work; and event-driven (option-like) value that is near zero until a state omega occurs and then large and short-lived -- the liquidation case. The shape, not just a single deadline, is what the mechanism must cope with, and it is *declared* while A is largely *observed* (RN-02). **This is why a scalar fee cannot represent demand: it sees one number, and phi is a function.**
 
@@ -162,7 +221,7 @@ A consequence for trading: because the value is joint, the cost of reassigning o
 
 The tuple **ECDF_i = (A_i, tau_i, V_i, phi_i)** recovers the umbrella dimensions (Vision; RN-01) as properties of phi, tau, and A: delay tolerance is how slowly phi decays; the deadline is the smallest d with phi_i(d) = 0; the decay rate is phi's shape; binding tightness is phi's width; duration and intensity are the support and magnitude of A; predictability is the forecastability of A and tau.
 
-**Binding tightness, formally.** Fix a tolerance alpha in (0,1). The tolerance width W_i(alpha) = |{ d : phi_i(d) >= alpha }| counts the quanta over which the work keeps at least alpha of its value -- a single interval when phi_i is single-peaked, a union of intervals when it is not, but always the full set of quanta to which the work may be reassigned without dropping below alpha, so the statistic needs no monotonicity assumption. The two camps of RN-10 sec. 7 are a threshold on width: fixing kappa, work is tight-binding (a taker) when W_i(alpha) <= kappa and loose-binding (a supplier) when W_i(alpha) > kappa. Tightness is a property of phi, predictability a property of the joint law of (A_i, tau_i); the two axes are independent, which is why all four cells of RN-10 sec. 7.3 are non-empty, and the partition applies to executions, not participants -- one project may emit W = 1 liquidation work and W = 10^4 batch work. kappa is not free: its natural scale is the autocorrelation length of the price p(t), so work is tight-binding when it cannot outlast a congestion episode, which makes the partition and the price a joint fixed point. Loosely bound work supplies liquidity at t when the price to move it, p(t) - p(t+k), exceeds the value it loses, V_i·(phi_i(t - tau_i) - phi_i(t + k - tau_i)); tight binding makes the loss large for even small k, so tightly bound work pays at essentially any price.
+**Binding tightness, formally.** Fix a tolerance alpha in (0,1). The tolerance width W_i(alpha) = |{ d : phi_i(d) >= alpha }| counts the quanta over which the work keeps at least alpha of its value -- a single interval when phi_i is single-peaked, a union of intervals when it is not, but always the full set of quanta to which the work may be reassigned without dropping below alpha, so the statistic needs no monotonicity assumption. The two camps of RN-10 sec. 7 are a threshold on width: fixing kappa, work is tight-binding (a taker) when W_i(alpha) <= kappa and loose-binding (a supplier) when W_i(alpha) > kappa. Tightness is a property of phi, predictability a property of the joint law of (A_i, tau_i); the two axes are independent, which is why all four cells of RN-10 sec. 7.3 are non-empty, and the partition applies to executions, not participants -- one project may emit W = 1 liquidation work and W = 10^4 batch work. A caveat on the width statistic and on kappa. W(alpha) is a coarse, first-order summary of temporal flexibility -- the *duration* of demand, in the sense bond duration summarizes rate sensitivity -- and like duration it discards the location, asymmetry, and value scale of the admissible set, which the full phi carries. The partition by kappa is therefore a first-order cut, not a sufficient statistic: two jobs of equal width but disjoint or asymmetric windows are not interchangeable, and where the cut is close the mechanism should fall back to phi. A natural conjecture -- not established here -- sets kappa's scale to the autocorrelation length of the price p(t), so work is tight-binding when it cannot outlast a congestion episode, which would make the partition and the price a joint fixed point; whether that fixed point exists is open. Loosely bound work supplies liquidity at t when the price to move it, p(t) - p(t+k), exceeds the value it loses, V_i·(phi_i(t - tau_i) - phi_i(t + k - tau_i)); tight binding makes that loss large for even small k, so tightly bound work pays a premium up to the value at stake V_i -- large, but bounded by V_i, not unbounded.
 
 ## 6. The allocation problem and its dual
 
@@ -181,7 +240,15 @@ The objective is **temporal economic throughput** (TET), defined in RN-08 and ad
 
 A word on causality, and on why a slot and a quantum behave differently here. A block is built once per slot, at the build deadline, when the builder already holds every transaction that arrived during the slot. Causality therefore bites at the **slot** level: work committed in slot N cannot appear in a block for an earlier slot, which is what x_i(s, t) = 0 for t < s enforces when s and t index slots. **Within** a slot it need not. Because the builder builds once with the whole slot in hand, the intra-slot quanta are positions it assigns, not arrival times it must respect -- it can place work that arrived late in the slot at an early quantum. That intra-slot freedom is not a causality gap but the builder's ordering power itself, and there is no consensus-established order finer than the slot for it to violate (the concurrent antichain of RN-12 sec. 6). So intra-slot placement is governed by the mechanism -- a FIFO baseline on commitment order, priced advancement, or leaving intra-quantum order concurrent and unsold (RN-12) -- not by causality; and s should be read at whatever resolution consensus actually records the commitment, since finer than that the protocol is assigning order, not enforcing it.
 
-**The dual.** Attach a multiplier p(t) >= 0 to each capacity constraint. At an optimum, complementary slackness gives p(t) > 0 only where capacity binds, and a unit of work arriving at s executes at the quantum t maximizing v_i(s, t) - p(t). Read v_i(s, t) - p(t) as a **surplus** -- the value of executing the unit at t minus the price of the capacity it uses there -- so each unit goes to its highest-surplus quantum and executes only if that surplus is non-negative: a congested quantum (high p(t)) takes only work whose value there beats the price, while flexible work drifts to the cheap ones. (Two faces of one problem: finding the prices p(t) is a minimization -- the dual, pricing capacity as low as possible while still covering every unit's value -- while placing the work given those prices is the maximization here; strong duality makes them one optimum.)
+**The dual.** The primal has two constraint families -- capacity at each quantum and work-supply at each arrival -- so the dual carries two multiplier families: a capacity price p(t) >= 0 on each capacity constraint, and an opportunity value u_i(s) >= 0 on each work-supply constraint. The dual is
+
+```text
+minimize    sum_t C(t) p(t)  +  sum_{i,s} A_i(s) u_i(s)
+subject to  u_i(s) + p(t)  >=  v_i(s, t)      for all i, s and t >= s
+            p(t) >= 0,   u_i(s) >= 0
+```
+
+so u_i(s) is the shadow value of another unit of project i's work at s -- its willingness to pay, the demand side -- and p(t) is the price of capacity at t, the scarcity side. Complementary slackness reads off the placement: p(t) > 0 only where capacity binds; a unit arriving at s executes at the quantum t maximizing the **surplus** v_i(s, t) - p(t), and only where that surplus is non-negative, and at the optimum u_i(s) equals that maximized surplus. A congested quantum (high p(t)) takes only work whose value there beats the price; flexible work drifts to the cheap quanta. Two faces of one problem -- pricing capacity and placing work -- made one optimum by strong duality. The prices need not be unique: under degeneracy the dual has a face of optima (a non-unique benchmark, sec. 11), and intertemporal or reserve constraints can give slack capacity a positive option value, so p(t) = 0 on slack holds for a chosen complementary solution, not unconditionally.
 
 > **The shadow prices {p(t)} on per-quantum capacity are the marginal value of execution capacity at each quantum** -- what a unit of capacity at t is worth to a planner maximizing TET, given demand (A, tau, V, phi) and capacity C.
 
@@ -197,7 +264,7 @@ There are three roles, and today's builder holds all of them. Under proposer-bui
 
 On the supply side, the instrument that makes Part I's term structure tradable is a transferable claim on future execution -- the zero and coupon of sec. 2 given an owner and a secondary market: R = (t1, t2, C, Gamma), a window, a capacity entitlement, and service conditions, which the holder may consume, transfer, subdivide, resell before expiry, or hold as collateral. A secondary market sharpens price discovery on the curve, but transferability is not automatically fair: execution rights concentrate among holders with the highest MEV-extraction ability and lowest capital cost, so a capital-advantaged non-builder can dominate [21], though a secondary market can also cut concentration by letting specialists buy just-in-time [22]. A perpetual *share* of capacity is the sharpest form of the risk -- permanent rent extraction, a barrier to entry -- so the safer instrument is a renewable long-duration lease the protocol can reprice, not an irrevocable perpetual right.
 
-The two sides trade one conserved quantity. Patient work supplies **deferral liquidity** by accepting a later quantum; urgent work demands **advancement liquidity** by moving earlier; advancement exists only because deferral, or released reserve, creates it, so temporal liquidity is conserved except where the protocol releases reserve. This is what makes it an exchange rather than a fee market: the urgent party's payment does not vanish into the builder, it compensates the flexible party that gave up its position. The two camps of sec. 5 are the two sides of this book -- and, on the risk axis, the two sides of the fee swap (sec. 2.4). Turning this into a running market -- how bids and asks clear, the causality rule that keeps advancement from preceding commitment, the uniform crossing price, the market-maker options -- is a mechanism, developed as a candidate in **RN-12**.
+The two sides trade one conserved quantity -- and the conservation is a **flow** identity, per quantum, not a single scalar stock. Patient work supplies **deferral liquidity** by accepting a later quantum; urgent work demands **advancement liquidity** by moving earlier; advancement at a quantum exists only because deferral into it, or released reserve, makes the room, so per-quantum capacity is conserved under any reassignment except where the protocol releases reserve. Feasible reallocations are therefore flows and cycles over the per-quantum capacity constraints, not movements of one scalar inventory; "commodity" names the traded flexibility loosely, and what is conserved is capacity at each quantum, a vector. This is what makes it an exchange rather than a fee market: the urgent party's payment does not vanish into the builder, it compensates the flexible party that gave up its position. The two camps of sec. 5 are the two sides of this book -- and, on the risk axis, the two sides of the fee swap (sec. 2.4). Turning this into a running market -- how bids and asks clear, the causality rule that keeps advancement from preceding commitment, the uniform crossing price, the market-maker options -- is a mechanism, developed as a candidate in **RN-12**.
 
 ## 8. The constraints the mechanism must meet
 
@@ -247,9 +314,9 @@ Each appendix states a borrowed result and its source; the body uses the result 
 
 Single-slot block construction is a 0/1 knapsack: maximize included fee subject to a gas limit. The problem is NP-hard, but greedy value-density selection (sort by fee per unit gas) is near-optimal when items are small relative to capacity, and it is what priority-fee ordering already implements. Real blocks add precedence, conflicts, all-or-nothing bundles, and order-dependent (MEV) value, making the operative problem precedence-constrained and sequence-dependent. For the multi-period version with deadlines and cumulative capacities, fully-polynomial approximation schemes exist. Sources: Mohan & Khezr [13]; Gao, Birge & Gupta [19].
 
-### Appendix B -- Term-structure bootstrapping and no-arbitrage
+### Appendix B -- Term-structure construction for a coin-denominated, demand-linked service
 
-In fixed income a forward/zero curve is constructed from traded instrument prices under no-arbitrage: the spot fixes the front, zero-coupon prices fix intermediate maturities, par swap rates pin the long end (the bill-then-swap bootstrap), interpolation completes untraded maturities, and swaption prices calibrate the volatility. No-arbitrage is equivalent to a positive linear pricing functional (the fundamental theorem of asset pricing); forward-rate dynamics follow a Heath-Jarrow-Morton model. Sources: Hull [1]; Harrison-Kreps and Harrison-Pliska [4]; Heath-Jarrow-Morton [3]. Equilibrium term-structure models (Vasicek; Cox-Ingersoll-Ross [5]) are a related, distinct construction.
+In fixed income a forward/zero curve is built from traded instrument prices under no-arbitrage: the spot fixes the front, zero prices fix intermediate maturities, par swap rates pin the long end (the bill-then-swap bootstrap), interpolation completes untraded maturities, swaption prices calibrate the volatility; no-arbitrage is equivalent to a positive linear pricing functional (the fundamental theorem of asset pricing), and forward-rate dynamics follow a Heath-Jarrow-Morton model. Two adaptations are needed here, both standard once named. First, discounting is in the native coin, so the discount factor is the coin's own-rate B (sec. 0.5), not a dollar rate; the money leg compounds at B, the service leg does not. Second, the underlying is a non-storable dated service, so the spot-forward link is enforced not by storage (cash-and-carry) but by demand-side substitution -- the convenience-yield and commodity-forward literature is the analog, with temporal liquidity playing the role storage plays for a storable commodity and limited-storage/demand-response plays in electricity markets. In the limit of abundant substitution the construction reduces to the ordinary bond bootstrap; with bounded substitution the curve retains expected-scarcity structure. Sources: Hull [1]; Harrison-Kreps and Harrison-Pliska [4]; Heath-Jarrow-Morton [3]; Keynes ch. 17 own-rates [23]; Kaldor and Working on the theory of storage and convenience yield [24]; Geman on forward curves for non-storable commodities [25]. Equilibrium term-structure models (Vasicek; Cox-Ingersoll-Ross [5]) are a related, distinct construction.
 
 ### Appendix C -- Optimal execution and the scheduling MDP
 
@@ -314,6 +381,12 @@ Commit-reveal, threshold encryption, and timed commitments let a protocol fix a 
 [21] "MEV Capture and Decentralization in Execution Tickets." arXiv:2408.11255, 2024. (Transferable execution rights concentrate under MEV-extraction ability and low capital cost; sec. 7.)
 
 [22] "Galaxy Era: Agent-based Simulation of Execution Tickets." arXiv:2501.16090, 2025. (A secondary market can reduce concentration via just-in-time purchase; sec. 7.)
+
+[23] Keynes, J. M. *The General Theory of Employment, Interest and Money.* Macmillan, 1936, ch. 17 ("The Essential Properties of Interest and Money"; own-rates of interest). (sec. 0.5, App. B.)
+
+[24] Kaldor, N. "Speculation and Economic Stability." *Review of Economic Studies* 7(1), 1939, 1-27. Working, H. "The Theory of Price of Storage." *American Economic Review* 39(6), 1949, 1254-1262. (The theory of storage and convenience yield; sec. 3, App. B.)
+
+[25] Geman, H. *Commodities and Commodity Derivatives: Modeling and Pricing for Agriculturals, Metals and Energy.* Wiley, 2005. (Forward-curve construction for non-storable commodities; sec. 3, App. B.)
 
 ---
 
