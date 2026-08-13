@@ -2737,7 +2737,7 @@ The long-term objective is a theory in which protocol mechanisms can be evaluate
 
 [14] Real-time blockchain scheduling — deadline and multi-block schedulability literature (representative; primary citation to be fixed).
 
-[15] TLM Research Notes: **RN-05** (*Supply-side Heterogeneity and Temporal Granularity* — the quantum lattice, imported here as the supply substrate); **RN-11** (*An Economic Framework for a Blockchain Fee Market with Temporal Liquidity* — the canonical allocation program and its dual, and the block-fee-rate term structure).
+[15] TLM Research Notes: **RN-05** (*Supply-side Heterogeneity and Temporal Granularity* — the quantum lattice, imported here as the supply substrate); **RN-11** (*The Term Structure and Allocation of Execution Capital in a Temporal Liquidity Market* — the canonical allocation program and its dual, and the block-fee-rate term structure).
 
 ---
 
