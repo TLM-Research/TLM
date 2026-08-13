@@ -3,7 +3,7 @@ id: RN-09
 title: "Chain Virtualization: A Conceptual Frame for Diversified Project Types on a Shared Fast L1"
 status: "Public draft - conceptual research note, offered in good faith for comment"
 program: "Temporal Liquidity Market (TLM)"
-date: August 3, 2026
+date: August 12, 2026
 ---
 
 # RN-09 - Chain Virtualization
@@ -39,9 +39,11 @@ The frame has two axes, offered as concepts rather than as a chosen design.
 
 Networking offers a precedent worth borrowing as intuition. Differentiated Services (DiffServ) differentiates traffic by a class marking applied at the edge, so the network can offer different service without per-flow setup in its core; this contrasts with per-flow reservation (IntServ/RSVP). The intuition is that class-based differentiation can scale where per-instance provisioning does not - and standing up a separate chain per project resembles per-instance provisioning. That is the analogy's whole use here. This note does **not** claim that execution differentiation should be implemented in a DiffServ-like way, nor that "class" is the right unit; how differentiation is marked, scheduled, and enforced is a mechanism question, deferred to a later note.
 
+**The two axes are not independent.** They are drawn apart for intuition, but both draw on one shared resource pool, and a domain's own policy bounds the temporal guarantees feasible inside it: a low-latency exchange domain and a patient settlement domain make different temporal promises realizable, and every reservation on the time axis consumes host capacity the class axis also competes for. A joint treatment belongs to the mechanism note; the point here is that the two axes meet at the host's resources and cannot promise independently.
+
 ## 3. The host chain: a fast, EVM-compatible L1
 
-The host supplies the shared foundation: validators, consensus and finality, economic security, global settlement, shared state, and resource accounting. A Virtual Chain would inherit these, so its security approximates the host's rather than that of a small, separately bootstrapped validator set.
+The host supplies the shared foundation: validators, consensus and finality, economic security, global settlement, shared state, and resource accounting. A Virtual Chain would inherit these, so its security can approach the host's rather than that of a small, separately bootstrapped validator set - but conditionally. Consensus and settlement are inherited directly; inheritance of *execution* security depends on how a domain's runtime is validated - whether every validator executes it, a committee attests to it, or a proof verifies it (§7). Where that validation path is left undefined, the security claim is not yet earned.
 
 The host this note has in mind is a faster, temporally-aware Ethereum: EVM-compatible, with execution performance in the range Monad (RN-06) and Aptos (RN-08) have shown is achievable, and with the RN-05 lattice as scheduling structure. The goal is an ecosystem of Ethereum - its neutral settlement layer and developer base, made fast and temporally expressive enough to keep project types that today leave. This is a host-side premise, not a new chain.
 
@@ -58,7 +60,15 @@ These are the RN-04 service classes seen as full domains rather than lanes withi
 
 ## 5. Cross-domain execution and shared state
 
-The property that distinguishes this concept from the alternatives in §6 is shared state. Because Virtual Chains would share one settlement layer and one state substrate, they retain atomic interaction, shared liquidity, and unified state - the composability that independent Layer-1s and separately-bridged rollups give up. Domains would run in isolated execution contexts so failures stay local. This shared-state property is also the one most in tension with per-project tokens (§1); the two are reconciled only by defining the boundary, which is open.
+The property that distinguishes this concept from the alternatives in §6 is shared state. Because Virtual Chains would share one settlement layer and one state substrate, they retain atomic interaction, shared liquidity, and unified state - the composability that independent Layer-1s and separately-bridged rollups give up. That property is also the concept's hardest constraint, and it forces a choice on which the rest of this note's coherence depends.
+
+**The triangle.** Three things cannot all be strong at once: **execution sovereignty** (a domain choosing its own ordering and runtime), **atomic shared state** (domains composing atomically over one state), and **host-wide validation** (the host enforcing correctness). Independent ordering over one atomically-mutated state requires a root rule that serializes conflicting cross-domain accesses - and that rule is a shared control plane, so full ordering sovereignty is exactly what it costs. A design must say which two legs it keeps strong and what weakens in the third; keeping all three strong is what would make a Virtual Chain a property bundle rather than an architecture.
+
+**A candidate point, offered for the mechanism note to test.** Keep atomic shared state and host validation strong, and bound sovereignty: a domain is sovereign over ordering and runtime *within its own state namespace*, but a transaction touching state shared with another domain yields to a host-imposed serialization - a root commit order over cross-domain-touching transactions, as a database serializes conflicting transactions while leaving independent ones concurrent. Sovereignty is then full where state is disjoint and host-serialized where it is shared - coherent, but conceding that a domain does not control the ordering of its cross-domain interactions. Whether that concession is acceptable, and whether the serialization can be made cheap, is the mechanism question (§7); the point here is that a coherent point on the triangle exists and can be named.
+
+**Failure isolation is therefore only partial.** Domains that do not interact keep failures local, but an atomic cross-domain call couples them: if a transaction spans domains A and B and B's transition fails, the atomic transaction rolls back across both - liveness and rollback are shared along exactly the composability the concept exists to keep. The honest statement is not that failures stay local, but that they stay local except along atomic cross-domain calls, which roll back together.
+
+This shared-state property is also the one most in tension with per-project tokens (§1); the two are reconciled only by defining the boundary, which is open.
 
 ## 6. Prior art: situational fit and lessons
 
@@ -76,7 +86,7 @@ Read together: security can be shared, and execution can be sovereign, and both 
 
 ## 7. Open problems
 
-The main one is the mechanism itself: **how virtualization is realized** - how a domain is marked, admitted, scheduled, isolated, and enforced, and how each domain's fee and runtime reduce to the host's accounting. That is the subject of a planned mechanism note and is not decided here. Named alongside it: the **shared-versus-virtualized boundary** - what a per-project token, fee, and governance policy can control without fragmenting shared state (§1, §5); cross-domain atomicity across different runtimes; validator specialization and its centralization risk; fairness and minimum service for ordinary traffic; and truthful revelation of temporal and class profiles. Several have analogs in §6 - allocation and core scheduling in Polkadot, shared-sequencer coordination in the rollup ecosystem - which are sources of evidence rather than untried ground.
+The constitutive one is the **consistency model** of §5: which point on the sovereignty / atomic-state / host-validation triangle the host enforces. That choice decides whether the concept is coherent and distinct at all, and it comes before pricing. After it comes the mechanism itself: **how virtualization is realized** - how a domain is marked, admitted, scheduled, isolated, and enforced; how each domain's fee and runtime reduce to the host's accounting - a translation from a domain's own token or fee into the host's single-numeraire pricing of physical capacity, with a basis and a default rule (RN-10 sec. 3.1); and the per-domain state-transition authority, validation path, and finality that complete the definition of §4. That is the subject of a planned mechanism note. One thing that note must settle empirically: whether virtualization *expands* the set of project types served or merely *partitions* existing host capacity - static domains may only partition, and any expansion has to come from conflict isolation, complementary resource profiles, parallelism, or statistical multiplexing, not from the label. Named alongside it: the **shared-versus-virtualized boundary** - what a per-project token, fee, and governance policy can control without fragmenting shared state (§1, §5); cross-domain atomicity across different runtimes; validator specialization and its centralization risk; fairness and minimum service for ordinary traffic; and truthful revelation of temporal and class profiles. Several have analogs in §6 - allocation and core scheduling in Polkadot, shared-sequencer coordination in the rollup ecosystem - which are sources of evidence rather than untried ground.
 
 ## 8. Relationship to the TLM notes
 
