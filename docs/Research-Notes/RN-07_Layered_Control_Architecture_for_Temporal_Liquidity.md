@@ -1,10 +1,10 @@
 ---
 id: RN-07
 title: "A Layered Control Architecture for Temporal Liquidity: Multi-Timescale Control for Blockchain Execution Markets"
-version: v0.1
+version: v0.2 (recasts the reducibility invariant as a bounded-local-verification interface rather than compilation-to-scalars, and separates the deployability it secures from neutrality, stability, and incentive-compatibility, which it does not; corrects the 'policy-free' data plane to bounded auditable policy; adds strategic-feedback and fallback open problems and an O-RAN trust-model caveat. Supersedes v0.1.)
 status: "Public draft - research note, offered in good faith for comment"
 program: "Temporal Liquidity Market (TLM)"
-date: July 24, 2026
+date: August 12, 2026
 sourcing: >
   Networking precedents verified July 2026 against the O-RAN literature (Polese et al.,
   IEEE COMST 2023) and the multi-timescale optimization-decomposition line. Corrections
@@ -79,11 +79,11 @@ The two-plane control/data split (RN-06 sec. 2.2) was not the end of networking'
 | Fast / local | **Near-RT RIC** | 10 ms - 1 s | closed-loop control: resource management, **slicing** |
 | Real-time | **DU scheduler / dApps** | < 10 ms (per-TTI) | deterministic scheduling, kept *out* of the slow loops |
 
-The key detail: O-RAN **deliberately excludes** per-TTI scheduling from the closed control loops, because real-time decisions "are not compatible with closed-loop control." That is the discipline TLM needs - *slot-level ordering must not depend on global, multi-slot coordination.*
+The key detail: O-RAN **deliberately excludes** per-TTI scheduling from the closed control loops, because real-time decisions "are not compatible with closed-loop control." That is the discipline TLM needs - *slot-level ordering must not depend on global, multi-slot coordination.* One difference must be carried, not borrowed: O-RAN runs among authenticated operators under service agreements, whereas a permissionless chain has Byzantine participants and endogenous fees - so the *layering* transfers, but the security requirements at each plane (who signs, who verifies, what an adversary can do) must be derived separately.
 
 **A formal backbone.** The pattern is not merely operational. "Optimization decomposition across timescales" [2] formalizes it: decompose a global control problem *temporally* into a slow centralized controller (global view, aggregate flow level) and fast local controllers (data-stream level), each solving a local problem - with data-plane fast mechanisms bridging to slow convergence. TLM's slow/fast control split is an instance of this decomposition.
 
-**Ethereum already has a degenerate case.** EIP-1559's base fee is a *slow controller emitting a single per-block scalar*: a congestion signal integrated over recent blocks, applied locally by each block with no in-slot coordination. TLM generalizes this one-parameter controller to a richer, multi-dimensional control plane - but the compilation pattern (slow control -> per-slot scalar) is already in production and proven neutral.
+**Ethereum already has a degenerate case.** EIP-1559's base fee is a *slow controller emitting a single per-block scalar*: a congestion signal integrated over recent blocks, applied locally by each block with no in-slot coordination. TLM generalizes this one-parameter controller to a richer, multi-dimensional control plane - but the compilation pattern (slow control -> per-slot scalar) is already in production and neutral in that one-dimensional case; neutrality does not transfer automatically to the multi-dimensional generalization, which has to be shown rather than inherited.
 
 ---
 
@@ -105,9 +105,9 @@ The architecture is thus not new machinery; it is the **frame that unifies the n
 
 The architecture is only useful if it has a sharp admissibility criterion. Here it is:
 
-> **Reducibility invariant.** A control decision computed over multiple slots is *admissible* only if it compiles to a bounded set of **per-slot parameters** that the data plane applies **locally, deterministically, and without global coordination within the slot.**
+> **Reducibility invariant.** A control decision computed over multiple slots is *admissible* only if it compiles to a bounded, locally-verifiable **artifact** - a per-slot or per-transaction parameter, codepoint, quota, commitment, schedule, or succinct proof - that the data plane applies **locally, deterministically, and without global coordination within the slot.**
 
-Equivalently: every slow, global TLM mechanism must expose a **compilation target** - the per-slot scalar, codepoint, quota, or commitment the builder/validator applies with no further global computation. If a mechanism cannot be reduced to such a target, it is not deployable as a neutral protocol feature, because it would require in-slot global coordination - reintroducing latency, centralization, and extraction surface.
+Equivalently: every slow, global TLM mechanism must expose a **compilation target** - the per-slot scalar, codepoint, quota, or commitment the builder/validator applies with no further global computation. If a mechanism cannot be reduced to such a target, it is not deployable in the bounded fast path, because it would require in-slot global coordination - reintroducing latency, centralization, and extraction surface. Reducibility buys *deployability* only - a bounded, locally-verifiable fast path; neutrality, closed-loop stability, and incentive-compatibility are separate requirements it does not by itself provide, since a compiled artifact can still encode a discriminatory or manipulable policy.
 
 **Why this is the right invariant.** It is the union of three established lessons: the **end-to-end argument** (keep application semantics out of the fast path), **core-stateless fair queueing** (rich differentiation without per-flow state in the core), and O-RAN's **exclusion of real-time scheduling from closed loops**. All three say the same thing: the data plane stays simple; intelligence lives in slower layers and reaches the fast path only as a compiled parameter.
 
@@ -130,7 +130,7 @@ RN-06 sec. 2.2 posed the question: *which TLM decisions must be computed globall
 
 - **Global / slow (control plane, Non-RT-analog):** anything whose optimum depends on state across many slots - capacity, forward pricing, reserves, horizon admission. Output: per-slot parameters only.
 - **Local / fast (control plane, Near-RT-analog):** anything decidable within one or a few slots from handed-down policy - admission, class assignment, commitments.
-- **Real-time (data plane):** ordering and execution, deterministic, policy-free.
+- **Real-time (data plane):** ordering and execution, deterministic, carrying only bounded, auditable policy (the ordering and conflict-resolution rules a builder applies within protocol constraints) - not global optimization, and not policy-free.
 
 The partition is not a matter of taste: a decision belongs in the slowest layer whose timescale its optimum requires, and it may cross into the fast path **only** as a compiled parameter (the invariant). This is the formulation RN-06 gestured at - and it is materially stronger than borrowing DiffServ vocabulary, because it yields a testable admissibility criterion for every proposed mechanism.
 
@@ -139,7 +139,7 @@ The partition is not a matter of taste: a decision belongs in the slowest layer 
 ## 7. Why this matters
 
 - **It gives TLM a structural foundation.** The demand object, representations, classes, substrate, and reserve are now one architecture with defined interfaces, not a set of related ideas.
-- **It preserves neutrality and simplicity where they must be preserved.** By construction the data plane stays deterministic and policy-free; all expressiveness is pushed to slower layers and reaches execution only as coarse, local parameters - the same discipline that let DiffServ and SRv6 deploy.
+- **It preserves neutrality and simplicity where they must be preserved.** By construction the data plane stays deterministic and carries only bounded, local policy; all expressiveness beyond that is pushed to slower layers and reaches execution only as coarse, local artifacts - the same discipline that let DiffServ and SRv6 deploy.
 - **It disciplines mechanism design.** Every Phase-2 mechanism (generalized tiered fees, temporal auctions, the reserve) now has a home plane and a reducibility test before it is taken seriously.
 - **It is honest about feasibility.** Some attractive global optima may have no per-slot reduction; the invariant surfaces that early, rather than after a mechanism is proposed.
 
@@ -152,6 +152,8 @@ The partition is not a matter of taste: a decision belongs in the slowest layer 
 - **Stability of the closed loop.** With realized-metric feedback, when is the control system stable (no oscillation) - the temporal analog of EIP-1559's known base-fee dynamics?
 - **Interface minimality.** What is the smallest per-slot parameter set (the "codepoint budget") that supports the service classes of RN-04 without bloating the data plane?
 - **Incentive compatibility across planes.** Do the slow/fast layers' decisions remain incentive-compatible and OCA-proof when compiled to local parameters, or do the impossibilities bind at the compilation boundary?
+- **Strategic feedback.** The sensors and actuators are strategic: users and builders can manufacture congestion, withhold demand, misreport class, or censor telemetry to move future parameters. Closed-loop stability against stochastic load is necessary but not sufficient; the manipulation model must be analyzed alongside it.
+- **Fallback and safe-mode.** Timescale boundaries are endogenous - bursts, reorgs, and attacks can make a slow policy stale or force fast overrides. The fast path needs defined behavior when global control is stale or unavailable: update cadence, observation and actuation delay, finality, and override authority.
 
 ---
 

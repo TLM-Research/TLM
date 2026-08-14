@@ -1,8 +1,8 @@
 ---
 title: "RN-06 - Monad Through the Temporal-Liquidity Lens: Motivation, Novelty, and Limits"
 status: "Canonical single version - public research note, offered in good faith for comment."
-version: v0.3 (consolidated; supersedes the private v0.1/v0.2 drafts, retained only as traces)
-date: July 24, 2026
+version: v0.4 (softens the control-plane characterization from 'dumb' to thin/single-dimensional - ordering and a scalar fee are policy; grounds the workload-shaping gain in state-domain separation rather than temporal labeling and broadens the experiment baselines; reframes the faster-blocks claim as a ratio-dependent hypothesis; distinguishes bytecode from behavioral equivalence for opted-in traffic; softens advocacy vocabulary. Supersedes v0.3.)
+date: August 12, 2026
 spirit: >
   Offered in good faith and in admiration of Monad's engineering. The assessment in sec. 4 is
   candid, and some of it is deliberately controversial - but it concerns limitations
@@ -18,7 +18,7 @@ sourcing: >
 
 ## 0. Thesis, in one line
 
-Monad is the most serious attempt yet to remove Ethereum's execution ceiling *without* changing Ethereum's semantics. It is a supply-side achievement: the same ordered stream, executed far faster. Read through the Temporal Liquidity lens, that is also its boundary - **Monad optimizes how fast the single ordered stream executes, and leaves untouched what users can express about *when, in what order, and how predictably* they execute.** The demand-side market is the same on Monad as on Ethereum. And Monad's very success - 400ms blocks, sub-second finality - *sharpens* the temporal problem TLM studies, because the finer time gets, the more decisive timing becomes.
+Monad is a serious attempt to remove Ethereum's execution ceiling *without* changing Ethereum's semantics. It is a supply-side achievement: the same ordered stream, executed far faster. Read through the Temporal Liquidity lens, that is also its boundary - **Monad optimizes how fast the single ordered stream executes, and leaves untouched what users can express about *when, in what order, and how predictably* they execute.** The demand-side market is the same on Monad as on Ethereum. And Monad's very success - 400ms blocks, sub-second finality - *sharpens* the temporal problem TLM studies, because the finer time gets, the more decisive timing becomes.
 
 So the relationship is **complementary layers, not competition**: one concrete thing TLM can offer Monad (workload shaping, sec. 3), one large thing Monad does not attempt (enriching temporal demand, sec. 4), and a turn (sec. 5) in which that omission looks less like a limit than an *opportunity* - a demand-side layer, and ultimately a fee-mechanism framework, that could expand Monad's ecosystem and Ethereum's at large.
 
@@ -30,7 +30,7 @@ So the relationship is **complementary layers, not competition**: one concrete t
 
 **The bet.** Deliver ~10,000 TPS on a decentralized L1 while preserving **100% EVM equivalence** - identical bytecode semantics, identical developer and user experience - by re-architecting the layers *beneath* the transaction market rather than changing the market itself. Keep Ethereum's ecosystem (apps, tooling, wallets, mental model); remove the performance ceiling underneath it.
 
-**The competitive frame.** Monad aims to win the "high-performance L1" category on both flanks: Solana-class throughput *with* EVM compatibility (speed without the non-EVM developer tax), and better latency and cost than Ethereum L1/rollups without asking anyone to leave the EVM. EVM-equivalence is moat and constraint at once: it is why adoption is cheap, and - as sec. 4 discusses - why the demand-side market is held fixed.
+**The competitive frame.** Monad aims to win the "high-performance L1" category on both flanks: Solana-class throughput *with* EVM compatibility (speed without the non-EVM developer tax), and better latency and cost than Ethereum L1/rollups without asking anyone to leave the EVM. EVM-equivalence is a strength and a constraint at once: it is why adoption is cheap, and - as sec. 4 discusses - why the demand-side market is held fixed.
 
 The through-line for this note: **Monad's motivation is throughput and compatibility, not market expressiveness.** It does not ask whether the single ordered stream is the right economic object; it takes the stream as given and makes it fast.
 
@@ -71,7 +71,7 @@ The precise conclusion: **Monad is an optimized *implementation* of the EVM, not
 
 Read this as praise with a boundary. In these terms Monad is an operating-system project - the node reimagined as a special-purpose distributed OS, and done very well. That is also where the ceiling sits: the next level is not more OS. It is **networking** - the subject of sec. 2.2.
 
-### 2.2 The stronger analogy: control/data-plane decoupling - and the control plane Monad has left "dumb"
+### 2.2 The stronger analogy: control/data-plane decoupling - and the control plane Monad has left thin
 
 sec. 2.1 credited Monad's operating-system-paradigm achievement. The step to the next level is a change of paradigm - from OS to **networking** - and it turns on the defining architectural idea of the last two decades of networking: **the decoupling of the control plane (policy - *what* should happen) from the data plane (forwarding - making it happen fast).** This is the analogy that carries Monad forward, and TLM is the lens for it.
 
@@ -82,7 +82,7 @@ The lineage is instructive because each step added intelligence to the *control*
 - **SDN** - the split made *explicit and programmable*: a centralized, programmable control plane over dumb, fast forwarding elements. The value was never the separation itself; it was that the control plane became *software you could program* for traffic engineering, QoS, and admission control.
 - **Its recent descendants** - **P4** (programmable data planes that enforce QoS at line rate), **SRv6 / segment routing** (policy encoded as coarse, stateless instructions carried *in the packet header*, source-routed end-to-end), and **5G network slicing** (multiple SLA-differentiated virtual networks over one physical substrate) [8].
 
-Here is the point. **Monad has already performed the decoupling.** Deferred execution *is* a control/data-plane split: MonadBFT computes the ordering (control plane); the parallel EVM and MonadDB forward it at line rate (data plane). Architecturally, Monad is an SDN-era data plane - **but it runs a pre-SDN control plane**, one that computes a single thing (transaction order) and no policy at all. It is a programmable-forwarding substrate wired to a controller that only sorts.
+Here is the point. **Monad has already performed the decoupling.** Deferred execution *is* a control/data-plane split: MonadBFT computes the ordering (control plane); the parallel EVM and MonadDB forward it at line rate (data plane). Architecturally, Monad is an SDN-era data plane - **but it runs a pre-SDN control plane**, one that is *thin and single-dimensional*: it computes a transaction order and a scalar EIP-1559 fee, but no demand-side policy - no classes, windows, reservations, or temporal differentiation. Ordering and a fee market are themselves policy (ordering is the MEV-relevant decision, sec. 4a); what is missing is not policy but the *demand-side* control the rest of this note describes. It is a programmable-forwarding substrate wired to a controller that computes order and price and nothing else.
 
 That is the gap a demand-side layer fills, and TLM is the lens that names what the control plane should compute:
 
@@ -132,9 +132,9 @@ Monad discovers parallelism *after* ordering - optimistic execution against one 
 
 > **Classifying demand into temporal services before scheduling increases the parallelism available to any execution engine and reduces contention - regardless of which engine runs inside each service.**
 
-In database terms: Monad improves the **concurrency-control algorithm**; temporal classification changes the **workload presented to it**. Separating a high-rate, conflict-heavy continuous stream (own state domain, own cadence) from spot traffic removes cross-class conflicts *by construction* rather than discovering them optimistically. This is a systems-performance argument for classification that is **independent of the economic argument** - and it is quantifiable:
+In database terms: Monad improves the **concurrency-control algorithm**; temporal classification changes the **workload presented to it**. Separating a high-rate, conflict-heavy continuous stream into its **own state domain** (and own cadence) removes cross-class conflicts *by construction* - because the state is then disjoint, not because the work is labeled 'temporal.' The reduction comes from state-domain separation; temporal classification helps only where a class's timing tracks its state access, and where classes share hot state (a popular AMM pool, an oracle) there is no by-construction gain. The claim is therefore that classification *into separate state domains* changes the workload the executor sees. This is a systems-performance argument for classification that is **independent of the economic argument** - and it is quantifiable:
 
-> **Proposed experiment.** Replay a historical or synthetic transaction mix through (a) one ordered stream and (b) temporally classified streams; measure state-access conflict rates and achievable parallel speedup under an optimistic-execution model. A material difference supports the hypothesis; none refutes it.
+> **Proposed experiment.** Replay a historical or synthetic transaction mix through (a) one ordered stream, (b) conflict-aware scheduling, (c) temporal classification, and (d) joint temporal-and-conflict scheduling; measure state-access conflict rates and achievable parallel speedup under an optimistic-execution model, and account for classification, isolation, and re-execution overhead. Comparing (c) against (b) and (d) isolates the temporal contribution from the state-partitioning one. A material difference supports the hypothesis; none refutes it.
 
 This is offered as a contribution, not a critique: a concrete, falsifiable systems claim that anyone is welcome to run or rebut.
 
@@ -182,7 +182,7 @@ A candid assessment, offered in good faith - and, in places, deliberately provoc
 
 **(a) It optimizes supply and holds demand fixed - the core gap.** Monad keeps the scalar EIP-1559 fee market and the single global ordered stream exactly as Ethereum has them. Users still express only *price*; the temporal structure of demand (priority, delay tolerance, deadlines, predictability, continuity) stays implicit and un-priced. Monad makes the same price-only market run faster. This is progress in execution, not in market expressiveness - and by design, because EVM-equivalence forecloses demand-side redesign.
 
-**(b) Faster blocks intensify the temporal race Monad does not mediate.** Compressing block time to 400ms makes timing *more* decisive, not less: latency, ordering position, and sub-slot placement matter more when slots are short. Monad adds no protocol-level extraction resistance - no encrypted ordering, no protected windows, no temporal classes - so front-running / sandwiching dynamics persist and plausibly sharpen. Put positively, and this is the crux: **Monad made time finer, so the market for time matters more.**
+**(b) Faster blocks change the temporal race Monad does not mediate.** Compressing block time to 400ms makes some timing distinctions *more* decisive - latency, ordering position, and sub-slot placement matter more when slots are short - and Monad adds no protocol-level extraction resistance (no encrypted ordering, no protected windows, no temporal classes), so front-running and sandwiching persist. Whether the race *intensifies* or eases is not settled, though: shorter blocks also cut waiting time and the value of marginal priority, so the sign depends on the ratio of propagation delay to block interval, the auction cadence, and finality. Stated as a hypothesis, not a fact: **Monad made time finer, which makes the market for time more consequential - a market a temporal layer, not Monad, would mediate.**
 
 **(c) Optimism degrades under exactly the workloads that matter.** Optimistic parallel execution excels when transactions are independent, but degrades toward serial (re-execution overhead) on hot, contended state - popular AMM pools, oracle updates, liquidation cascades - which is where value and MEV concentrate. Realized speedup is workload-dependent, and the high-contention case is the weak case. This is the opening for sec. 3.1: classifying before ordering attacks contention structurally rather than discovering it optimistically.
 
@@ -192,7 +192,7 @@ A candid assessment, offered in good faith - and, in places, deliberately provoc
 
 **(f) Performance raises the centralization floor.** 10k TPS with MonadDB (io_uring, fast NVMe), RaptorCast bandwidth, and state-growth pressure lifts validator hardware and networking requirements. The standard high-performance-L1 tension applies: throughput bought partly with steeper node requirements, with the usual long-run questions about validator-set breadth and geographic decentralization. Not unique to Monad, but not escaped by it.
 
-**(g) EVM-equivalence is a strategic ceiling, not only a feature.** The moat (cheap adoption) is also the cap: by binding itself to exact Ethereum semantics, Monad cannot itself introduce the multidimensional, temporally-aware market TLM describes. It is committed to being *fast Ethereum* - which leaves the demand-side frontier to a layer above it.
+**(g) EVM-equivalence is a strategic ceiling, not only a feature.** The advantage (cheap adoption) is also the cap: by binding itself to exact Ethereum semantics, Monad cannot itself introduce the multidimensional, temporally-aware market TLM describes. It is committed to being *fast Ethereum* - which leaves the demand-side frontier to a layer above it.
 
 ### 4.1 The fair counter-argument
 Monad would reasonably say: *market redesign is not our job - we are the execution substrate, and neutrality and compatibility are the point.* That is correct, and it is why the framing throughout is "complementary layers," not "Monad is wrong." The limits above are limits **relative to the temporal-demand problem**, not relative to Monad's own stated goal - fast, compatible execution - which it largely achieves.
@@ -204,14 +204,14 @@ Monad would reasonably say: *market redesign is not our job - we are the executi
 The analysis so far treats Monad as substrate and TLM as a layer above it. There is a stronger reading: **Monad may be the natural first adopter of such a layer - because the very ecosystem it wants to grow is capped by the one layer it has not built.**
 
 1. **Monad finished the hard supply-side work.** It has a fast, EVM-equivalent *forwarding plane* (data plane). What it has *not* built is the demand-side *control plane* - admission control and traffic management deciding which flows get which execution service.
-2. **Throughput is commoditizing; demand-side service is the durable moat.** Raw speed is becoming table stakes (several fast chains now exist). What lasts is serving demand *better* - and Monad's own target market (on-chain CLOBs, HFT DeFi; sec. 3.2) is the set whose value comes from temporal structure.
+2. **Throughput is commoditizing; demand-side service is the durable advantage.** Raw speed is becoming table stakes (several fast chains now exist). What lasts is serving demand *better* - and Monad's own target market (on-chain CLOBs, HFT DeFi; sec. 3.2) is the set whose value comes from temporal structure.
 3. **Speed alone does not retain the defectors (sec. 3.3).** The applications Monad courts still have a reason to prefer sovereign chains: ordering and extraction control. A demand-side traffic manager - temporal service classes - is what closes that gap in-protocol.
 4. **The upside is ecosystem *expansion*, not just retention.** With temporal service classes, application types become viable that neither Ethereum nor plain-fast-Monad can host: protected continuous markets, deadline-guaranteed execution, predictable streams. The addressable space grows along a dimension speed cannot reach.
 
 **Networking restatement.** Monad built a fast router and left it running a single best-effort queue. Its highest-value users (trading) are the ones that most need QoS classes. Adding an admission-control / traffic-management layer is what lets a fast router offer differentiated service - and how the ecosystem expands beyond what forwarding speed alone can capture.
 
 ### 5.1 Honest objections (and why they are surmountable)
-- **"It breaks EVM-equivalence / neutrality."** It need not. The service classes are **opt-in, coarse, and additive** - a protocol-recognized virtual lane (RN-04 sec. 8), not a change to base EVM semantics. This is the DiffServ lesson: add differentiated classes without touching the core forwarding path. Default traffic is untouched; only applications that opt in see the new service.
+- **"It breaks EVM-equivalence / neutrality."** It need not for *default* traffic. The service classes are **opt-in and coarse** - a protocol-recognized virtual lane (RN-04 sec. 8) that leaves base EVM semantics and default traffic untouched. One distinction to keep: for transactions that *do* opt in, a different ordering, window, or state domain can change observable outcomes - gas, reverts, composability - even with identical bytecode. So what is preserved is **bytecode compatibility for all, and behavioral equivalence for default traffic** - not behavioral equivalence for opted-in traffic. This is the DiffServ lesson (add differentiated classes without touching the core forwarding path), with the honest rider that opting in is a behavioral choice, not a free marking.
 - **"Admission control centralizes / picks winners."** The classes are defined by *temporal characteristics of demand*, not by identity or application - neutral by construction (any transaction declaring the characteristic qualifies). Extraction-resistance and neutrality are explicit design constraints.
 - **"Not our layer - we do execution."** True today; but the boundary is a *choice*, and the ecosystem payoff sits just above where execution stops. Whether such a layer is built, enshrined, or merely hosted as a protocol-recognized lane is open.
 
