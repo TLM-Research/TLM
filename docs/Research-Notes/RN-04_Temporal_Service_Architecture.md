@@ -1,10 +1,10 @@
 ---
 id: RN-04
 title: "Temporal Execution Services: A Multi-Class Execution Architecture for Ethereum"
-version: "0.2"
+version: "0.3 (defines the service classes as contracts to be specified, with precedence for multi-fit requests; labels the 200ms lane an exchange-domain prototype and states its FIFO/no-public-queue properties as conditional on Problem P1; adds cold-start/sybil limits and a deposit/auction path to derived admission; replaces cross-class no-arbitrage coherence with a shared-resource allocation rule, pointing pricing at RN-10/11; sharpens the workload-shaping mechanism to state-domain separation; notes the lane adds no per-slot work. Supersedes 0.2.)"
 status: "Public draft - research note, offered in good faith for comment"
 program: "Temporal Liquidity Market (TLM)"
-date: "July 24, 2026"
+date: "August 12, 2026"
 ---
 
 # RN-04: Temporal Execution Services
@@ -64,6 +64,8 @@ Service classes are defined over the canonical dimensions of Temporal Liquidity 
 
 Two structural notes. **Best-Effort is the undeclared default** - participation in any other class is voluntary, so a privacy-preserving path always exists (no one is forced to disclose a temporal profile). And the classes deliberately mirror the **declared/observed split**: Protected Window is entered by *declaration* (a window is a stated preference), while Continuous State and Scheduled are naturally entered by *verified observation* (continuity and predictability are measurable from realized behavior - see sec. 5.2).
 
+**These are demand profiles, not yet contracts.** The table names each class by the temporal profile it serves, but a deployable class needs an enforceable **service contract**: the eligibility test, the admitted resource, the execution guarantee, the ordering semantics, the price, the fallback, the expiry, and the remedy on failure. The profiles also overlap - a request can be continuous *and* scheduled *and* window-protected at once - so the contracts must fix a **precedence** for a request that fits several (for instance, an explicit declared window binds over a derived class, and Best-Effort is the residual). Specifying the four classes as contracts, and deriving their names and precedence from them, is work the next version owes; this note fixes the profiles and the selection criterion (sec. 4.3), not the contracts.
+
 ---
 
 # 3. Completing the Two-Sided Market
@@ -92,7 +94,7 @@ The economic-layer precedent already exists: Kiayias, Koutsoupias, Lazos & Panag
 
 ## 4.1 The DiffServ discipline
 
-Classes specify **protocol-defined execution semantics, not application identities** - the protocol defines the service; builders remain free to optimize within it. This is the surviving lesson of Internet QoS: coarse, stateless class behaviors deployed; rich per-flow reservation did not [7, 8]. RN-02's caution carries over unchanged: DiffServ's classes held only where marking was policed - which is why admission (sec. 5.2) is load-bearing, not optional.
+Classes specify **protocol-defined execution semantics, not application identities** - the protocol defines the service; builders remain free to optimize within it. This is the surviving lesson of Internet QoS: coarse, stateless class behaviors deployed; rich per-flow reservation did not [7, 8]. RN-02's caution carries over unchanged: DiffServ's classes held only where marking was policed - which is why admission (sec. 5.2) is essential, not optional.
 
 ## 4.2 From store-and-forward to streaming
 
@@ -121,9 +123,11 @@ Selecting a service class *reveals temporal preference* - exactly the observabil
 
 Without policing, every transaction claims the best class and the classes collapse - DiffServ's marking problem, RN-02's central diagnosis. The defenses are inherited: **stake-backed declarations, verification against realized behavior, and penalties for divergence**. The observed-property classes (Continuous State, Scheduled) admit a cleaner solution: membership can be *derived from verified history* rather than declared - an application earns the class by demonstrably behaving like it. Declaration-based classes (Protected Window) need the economic binding.
 
+Two limits on derived admission. It has a **cold-start** problem - a new project can need continuous service before it has any history to be derived from - and it is exposed to **sybil** history-farming. So separate **capacity forecasting** (where verified history predicts a real resource cost, and derived admission fits) from **service purchase** (where a scarce guarantee should be bought with a deposit or auction, not earned by history), and keep the open Best-Effort default as the fallback so history is never a gate to inclusion. Neutrality here is a property to measure - sybil resistance, entry, concentration (sec. 5.4) - not one derived admission secures by itself.
+
 ## 5.3 Cross-class capacity allocation
 
-Blockspace allocated to classes is a coupled system: over-provisioning a committed class starves Best-Effort; strategic actors will arbitrage price differences across classes; and reserved-but-unused capacity is deadweight. Requirements: a **reserved-headroom cap** for urgent spot demand, **no-arbitrage coherence** between class prices (the term-structure discipline), and deterministic, aggregate-state-driven allocation rules (base-fee-style neutrality, no discretion).
+Blockspace allocated to classes is a coupled system: over-provisioning a committed class starves Best-Effort; strategic actors will arbitrage price differences across classes; and reserved-but-unused capacity is deadweight. Requirements: a **reserved-headroom cap** for urgent spot demand; a **shared-resource allocation rule** with explicit per-class and shared constraints, reclaim rules for unused reservations, and non-participant protection; and deterministic, aggregate-state-driven allocation (base-fee-style neutrality, no discretion). The classes provide *non-replicable* services (different ordering, finality, isolation), so their prices need not stand in one no-arbitrage relation - the incompleteness point of RN-10/RN-11, where cross-class pricing is posed, rather than settled here by an arbitrage-coherence assumption.
 
 ## 5.4 Neutrality under classes
 
@@ -183,7 +187,7 @@ One TLM claim belongs here because it bears directly on execution engines like M
 
 > **Workload-shaping hypothesis.** Classifying demand into temporal services *before* scheduling increases the parallelism available to any execution engine and reduces contention - regardless of which engine runs inside each service.
 
-Monad discovers parallelism *after* ordering (optimistic execution, validated afterward); temporal classification instead changes the *workload presented to it*, removing cross-class conflicts by construction rather than discovering them optimistically. The hypothesis is quantifiable - replay a transaction mix through (a) one ordered stream and (b) temporally classified streams, and measure state-access conflict rate and achievable parallel speedup.
+Monad discovers parallelism *after* ordering (optimistic execution, validated afterward); temporal classification instead changes the *workload presented to it*. The reduction is not from the label but from **state-domain separation**: giving a class its own state domain removes cross-class conflicts by construction, whereas classes that share hot state gain nothing, so temporal class reduces conflict only where it tracks state access (RN-06 sec. 3.1). The hypothesis is quantifiable - replay a transaction mix through (a) one ordered stream, (b) conflict-aware scheduling, and (c) temporally classified streams, and measure state-access conflict rate and achievable parallel speedup, separating the temporal contribution from the state-partitioning one.
 
 **For the full Monad analysis** - motivation, the verified architecture, the OS->networking (control/data-plane) framing, the application-roster and app-chain-exit arguments, the limits, and the first-adopter case - see **RN-06, *Monad Through the Temporal-Liquidity Lens.***
 
@@ -205,6 +209,8 @@ Subdivide Ethereum's 12-second slot into sub-slot snapshots - for illustration, 
 - **clearinghouse-style segregated state** - escrowed balances, native matching semantics, **net settlement to shared L1 state at each slot boundary**.
 
 Consensus, settlement, assets, and all other classes remain unchanged. The lane serves RN-03's *predictable-but-delay-intolerant* cell - on-chain order-book market making - inside the tent rather than on a sovereign chain.
+
+Three qualifications keep the sketch honest. First, the **FIFO and "no public queue" properties are conditional on Problem P1** (sec. 8.3): FIFO is only as honest as the arrival ordering, and without a verifiable arrival-witness primitive "no public queue" relocates the flow to one sequencing role rather than removing the advantage - the same "trust relocated, not removed" the note reads in Hyperliquid (sec. 6.2). Second, the lane's *semantics* - place/cancel/match, segregated collateral, clearinghouse net-settlement - are those of an **exchange-domain prototype** (a virtual-chain instance, RN-09), not the general Continuous State class; the general class is defined by its contract (sec. 2), and this lane is one worked instance of it for the order-book cell. Third, the beat adds **no per-slot physical work**: it is an ordering-commitment cadence with net settlement at the slot boundary, so total per-slot gas is unchanged and no capacity is created by finer quanta - the lane redistributes *when* within the slot, not *how much*.
 
 ### The 200ms beat: state-update checkpoints
 

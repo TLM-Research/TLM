@@ -1,33 +1,33 @@
 ---
 id: RN-03
 title: "Hyperliquid: A Case Study in Temporal Liquidity"
-version: "0.6"
+version: "0.7"
 status: "Public Draft of Research Note"
 program: "Temporal Liquidity Market (TLM)"
-date: "July 27, 2026"
+date: "August 12, 2026"
 ---
 
-# RN-03 v0.6
+# RN-03 v0.7
 
 # Hyperliquid: A Case Study in Temporal Liquidity
 
 **Temporal Liquidity Market (TLM) Research Program**
 **Research Note RN-03**
-**Version:** 0.6
+**Version:** 0.7
 **Status:** Public Draft of Research Note
-**Date:** July 27, 2026
+**Date:** August 12, 2026
 
 ---
 
 ## Abstract
 
-Blockchain execution markets today coordinate demand primarily through one visible variable - willingness to pay. This note uses Hyperliquid as an empirical case study to argue that execution demand also carries economically meaningful **temporal** structure that price alone does not represent.
+Blockchain execution markets today coordinate demand primarily through one visible variable - willingness to pay. This note uses Hyperliquid as a motivating case study to argue that execution demand also carries economically meaningful **temporal** structure that price alone does not represent - a system profile and argument, grounded in cited empirical work on the cost of delay, rather than a fresh measurement of Hyperliquid's own workload.
 
 Consistent with the TLM Vision Statement, **Temporal Liquidity** is treated here as an *umbrella* economic concept - the collection of economically meaningful temporal characteristics of execution demand - rather than a synonym for patience or delay tolerance [10]. Hyperliquid's fully on-chain, price-time-priority order book [1-3] is a useful lens because it exposes several of these characteristics at once: sustained **continuity**, partial aggregate **predictability**, acute **execution-priority** (intra-slot ordering) sensitivity, and bursty, delay-intolerant exceptional events.
 
 The note's central claim is deliberately modest. Hyperliquid is **motivating evidence** that multidimensional temporal demand exists and is systematically under-represented by spot fee markets - not proof that a protocol-visible temporal abstraction would obviate specialized chains. Used this way, it is a concrete, cited on-ramp to TLM.
 
-This version (v0.5) builds on the lean framing of v0.2, but corrects two gaps: it aligns the definition to the latest Vision (Temporal Liquidity as umbrella), and it restores the empirical and bibliographic citations that v0.2 omitted.
+The current version aligns the definition to the Vision (Temporal Liquidity as umbrella) and grounds the argument in the empirical and bibliographic citations; changes across drafts are recorded in the Revision Note.
 
 ---
 
@@ -99,7 +99,7 @@ This connects to active work on pricing time-as-priority. Arbitrum's **Timeboost
 
 That predictable, sustained demand is economically distinct from bursty spot demand is not an assertion; it follows from standard theory.
 
-- **Queueing.** Waiting time depends not only on average load but on its *variability*: in an M/G/1 queue, the Pollaczek-Khinchine relation ties expected wait to the second moment of service, so forecastable low-variance demand achieves lower delay at equal utilization [6]. Two workloads with identical average load can impose very different scheduling costs.
+- **Queueing.** Waiting time depends not only on average load but on its *variability*. The Pollaczek-Khinchine relation makes this precise for one channel - but for the second moment of *service time*, not of arrivals: in an M/G/1 queue, high service-time variance raises expected wait at equal utilization [6]. The demand-side claim this note cares about is a separate object and needs its own model: bursty or correlated *arrivals* lengthen waits (a G/G/1 rather than M/G/1 effect), and *predictability* is not a variance term in P-K at all - it helps only through a scheduler that acts on the forecast, and only up to its forecast error. So P-K establishes that variability is costly; that predictable, low-variance demand is served at lower delay rests on arrival structure and forecast-aware scheduling - the statistical-multiplexing point below - not on P-K alone. Either way, two workloads with identical average load can impose very different scheduling costs.
 - **Statistical multiplexing.** Shared systems gain efficiency by combining heterogeneous flows whose peaks do not coincide; credible information distinguishing baseline, bounded bursts, and deferrable work improves that gain.
 - **Reservation vs spot.** Cloud and transportation markets combine reservations (commitment/predictability in exchange for price stability) with spot allocation (absorbing residual uncertainty). This shows predictability can be valuable **independently of patience** - a stream can need immediate service per request while still supplying valuable advance information about aggregate demand.
 
@@ -115,11 +115,27 @@ Hyperliquid runs two execution environments on one HyperBFT consensus (a HotStuf
 
 **HyperCore** is a purpose-built Rust engine that runs the exchange itself: fully on-chain perpetual and spot order books, matching by **price-time priority**, margining (isolated, cross, and portfolio), liquidations, and mark-price computation. Order placement pays no gas, and matching happens inside consensus, so there is no public mempool to front-run. The **mark price** combines the order book with an oracle that each validator computes as a weighted median of major centralized-exchange prices, which externalizes the reference price against local-book manipulation. Most **liquidations** are routed to the order book for open competition rather than to privileged keepers. Each of these is a supply-side mechanism analyzed in RN-04 sec. 6; here they matter because they expose the temporal characteristics this note studies - continuous quote streams, ordering-sensitive fills, and bursty, delay-intolerant liquidation events.
 
-**HyperEVM** is a general-purpose EVM environment sharing the same state and consensus. It reaches HyperCore through two native lanes: **read precompiles** that return HyperCore state (positions, balances, oracle prices) atomically as of the EVM block, and a **CoreWriter** system contract through which EVM contracts send actions - orders, transfers - into HyperCore. One detail is directly temporal: CoreWriter order actions are **deliberately delayed a few seconds on-chain**, so that routing through the EVM confers no latency advantage over the native order path [14]. The protocol is managing execution *timing* to remove an ordering edge - a concrete instance of the theme in sec. 4 that execution priority must be governed, not left to whoever is fastest.
+**HyperEVM** is a general-purpose EVM environment sharing the same state and consensus - and, in its own right, a general-purpose EVM Layer-1 competing with Ethereum for ordinary smart-contract activity, not merely a sidecar to the exchange. It reaches HyperCore through two native lanes: **read precompiles** that return HyperCore state (positions, balances, oracle prices) atomically as of the EVM block, and a **CoreWriter** system contract through which EVM contracts send actions - orders, transfers - into HyperCore. One detail is directly temporal: CoreWriter order actions are **deliberately delayed a few seconds on-chain**, so that routing through the EVM confers no latency advantage over the native order path [14]. The protocol is managing execution *timing* to remove an ordering edge - a concrete instance of the theme in sec. 4 that execution priority must be governed, not left to whoever is fastest.
 
 Two differentiated execution environments thus share one consensus and settlement base. That pattern - differentiated execution without duplicated consensus - is the precursor RN-08 and RN-09 generalize as Virtual Chains.
 
-### 6.2 Motivation, not proof
+### 6.2 HyperEVM's dual-block lanes: coarse protocol-native time preference
+
+A second temporal mechanism sits *inside* HyperEVM, and it is distinct from the HyperCore/HyperEVM split of sec. 6.1: HyperEVM maintains one EVM state but schedules **two kinds of block**. **Small blocks** are produced roughly every second at a low gas limit (about 2M gas as documented), serving latency-sensitive traffic - transfers, swaps, deposits, oracle calls, CoreWriter interactions. **Large blocks** are produced roughly once a minute at a high gas limit (about 30M gas), serving contract deployment, migrations, and other heavy or large-atomic work. The two draw from **separate mempools** and expose **separate congestion signals** (a small-block base fee and a large-block base fee), yet they are interleaved into one increasing sequence of HyperEVM block numbers over one shared state, secured by the same HyperBFT consensus - one chain, not two [14]. (Cadences and gas limits are documented values subject to change; treat them as of the cited documentation.)
+
+Two features make this more than a size knob. First, the large lane's value is not aggregate throughput - sixty small blocks a minute (about 120M gas) already exceed one large block (30M gas) - but **single-block atomic capacity**: a 5M-gas deployment cannot be split across 2M-gas blocks, so the large lane exists to admit large *indivisible* work, decoupling block *speed* from block *size*. Second, lane selection is **explicit and account-based**: a developer sets the account into large-block mode (`usingBigBlocks`) rather than the protocol inferring intent from a transaction's gas, so the temporal service chosen is part of the account's execution configuration, and the two workloads do not compete in one homogeneous block stream.
+
+Read against this note's thesis, HyperEVM is a production instance of **protocol-native temporal differentiation**: it makes a transaction's time preference explicit and accommodates it at the protocol level, treating two temporal service classes - frequent-and-low-capacity, infrequent-and-high-capacity - as first-class protocol resources with their own queues, schedules, and fees. That a live chain found this worth building strengthens the note's claim in a specific way: the point is not only that multidimensional temporal demand exists (secs. 3-5), but that serving it through distinct protocol-level lanes is viable and valued in practice - the service-class idea RN-04 develops, already partly instantiated.
+
+> **HyperEVM introduces protocol-native temporal differentiation by allowing transactions to select between execution lanes with different latency and atomic-capacity profiles.**
+
+And because HyperEVM is a general-purpose chain, this is **chain-level** differentiation, not an application's internal rule - a distinction sec. 4 needs and that this case makes concrete. HyperCore's price-time priority is *application-internal*: a queue position inside one exchange's order book, jointly set by price, size, and cancellations. HyperEVM's dual-block lanes are *chain-level*: a general-purpose L1 offering arbitrary transactions two temporal service classes, directly comparable to Ethereum's single execution lane. Hyperliquid thus supplies both objects at once - application-internal ordering priority (HyperCore) and chain-level temporal service classes (HyperEVM) - and it is the second, on an Ethereum-competitor chain, that is the direct instance of what TLM proposes, with the order book motivating the finer intra-slot priority dimension (sec. 4) above it.
+
+Two limits keep this motivation rather than proof, and both sharpen the TLM contrast. It is **coarse**: two predefined classes, not a continuous or programmable preference - a transaction cannot state "execute within 2s at price X, within 1 minute at price Y," nor an arbitrary deadline, delay tolerance, or patience reward. And the two dimensions are **coupled, not isolated**: the small lane bundles low latency with low atomic capacity, the large lane bundles higher latency with high atomic capacity, so choosing a lane chooses latency *and* capacity together - exactly the bundling sec. 4 warns against, where distinct temporal characteristics collapse into one knob. HyperEVM recognizes time heterogeneity at the protocol level but represents it as two coupled classes; a finer temporal market would decouple the dimensions and let demand express a preference rather than pick a lane. The honest reading therefore matches sec. 6.3: the demand is real and protocol-level differentiation is viable, but the coarse, coupled, account-level form is what a programmable temporal market would refine, not a finished instance of one.
+
+The direction this points is toward Ethereum. Ethereum still routes latency-sensitive and capacity-intensive work through one homogeneous execution lane - one stream per 12-second slot - so a transaction cannot seek frequent, low-capacity service or infrequent, high-capacity service; both compete in the single block for the slot. HyperEVM shows that making transaction time preference even *partly* explicit is viable on a general-purpose EVM chain and valued enough to build. That is the case for bringing temporal differentiation to Ethereum itself - not HyperEVM's two coupled lanes, but the finer, decoupled, programmable temporal market this program develops on Ethereum's evolution (Vision; Foundation; RN-04). The motivation is therefore directional: a production Ethereum-competitor already differentiates time, coarsely; TLM is the proposal to do it finely and neutrally on the Ethereum foundation.
+
+### 6.3 Motivation, not proof
 
 Hyperliquid demonstrates that blockchain execution demand can exhibit sustained continuity, partial aggregate predictability, acute execution-priority sensitivity, low-latency requirements, and bursty exceptional events. Within the umbrella, these are dimensions of Temporal Liquidity.
 
@@ -182,6 +198,8 @@ Hyperliquid exposes execution demand that price alone describes poorly: a sustai
 ---
 
 ## Revision Note
+
+**Version 0.7** - adds sec. 6.2, HyperEVM's dual-block lanes (small/fast ~1s / ~2M-gas and large/slow ~1min / ~30M-gas, separate mempools and base fees, interleaved into one shared state), read as a production instance of coarse, protocol-native temporal differentiation - two temporal service classes as first-class protocol resources - with its limits noted (two predefined classes, account-based selection, and latency coupled to atomic capacity, sec. 4); renumbers the former sec. 6.2 to 6.3; corrects the abstract's stale version label; date and version normalized.
 
 **Version 0.6** - expands the case study with the actual system (sec. 6.1): **HyperCore** (Rust exchange engine - on-chain order books, price-time priority, margining, liquidations, oracle mark price) and **HyperEVM** (read precompiles + the CoreWriter system contract, with CoreWriter's deliberate few-second delay noted as a temporal mechanism); frames the two-execution-environments-under-one-consensus pattern as the RN-08/RN-09 Virtual Chains precursor; adds reference [14]. Keeps the demand-side, "motivation not proof" discipline.
 
