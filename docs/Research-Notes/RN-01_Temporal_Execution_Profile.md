@@ -6,8 +6,8 @@
 
 **Project:** Temporal Liquidity Market (TLM)\
 **Status:** Public Draft\
-**Version:** 0.3 (Complete Draft)\
-**Date:** July 24, 2026
+**Version:** 0.4 (Complete Draft)\
+**Date:** August 19, 2026
 
 ------------------------------------------------------------------------
 
@@ -73,12 +73,29 @@ maxFeePerGas
 maxPriorityFeePerGas
 ```
 
-These parameters reveal willingness to pay but reveal relatively little
-about **when execution creates value**.
+These parameters reveal willingness to pay. A one-shot next-block bid
+does not, however, encode a full **intertemporal** preference schedule —
+how value varies across *when* execution occurs. Repeated bidding,
+replacement strategies, and account abstraction recover part of this over
+time, and the limits of one-shot fee bidding are documented in the
+fee-market literature; the point here is the narrow one, that a single
+scalar bid does not express the schedule directly.
 
 Applications therefore implement retries, gas estimation, batching,
 oracle scheduling, rollup scheduling and private order flow outside the
 protocol.
+
+Heterogeneous temporal demand is already well recognized, and it is one
+of the forces behind the proliferation of Layer-1 chains beyond Ethereum:
+chains differentiate in part to serve execution and temporal needs that a
+single general-purpose fee market serves poorly. That proliferation
+fragments liquidity, which works against the original motivation for
+decentralized blockchains and wastes resources. One goal of the TLM
+program is to express this heterogeneity *within* a shared interface, so
+differentiated demand can be served without splintering into isolated
+chains — consolidating liquidity and network effects rather than
+fragmenting them. Temporal Execution Profiles are a candidate for that
+shared, cross-chain vocabulary (sec. 7, sec. 9).
 
 ------------------------------------------------------------------------
 
@@ -101,19 +118,45 @@ This separates
 -   market allocation,
 -   protocol implementation.
 
+A TEP is **transaction-level**. Stream-level properties — cadence,
+persistence, predictability, forecast reliability — belong to the
+**Temporal Demand Profile (TDP)** developed in RN-02; the two are
+complementary, and RN-02 treats their interaction.
+
+Representation-neutrality (sec. 5) is the interface goal, but a note
+cannot be neutral over nothing. As a minimal, **illustrative** anchor —
+not a commitment — one transaction-level profile might carry:
+
+-   an eligibility / commitment certificate (when the transaction
+    becomes admissible),
+-   a resource-demand vector,
+-   an admissible execution set or deadline,
+-   a value (or bid) over a small finite set of service outcomes,
+-   expiry, cancellation, and fallback behavior.
+
+This anchors the abstraction as a concrete object while leaving the
+mathematical representation open.
+
 ------------------------------------------------------------------------
 
 # 4. Physical Time and Blockchain Time
 
-Applications derive economic value in **Physical Time**.
+Applications derive economic value in **Physical Time** — but "Physical
+Time" is not a single primitive. The event that matters may be a
+wall-clock deadline, a consensus height, an oracle-certified external
+event, or a private economic state, and the protocol cannot directly
+observe all of these. The mapping from a physical target to a protocol
+outcome therefore carries error, and the note should say who supplies
+each target and how it is authenticated.
 
-Blockchain protocols allocate execution in **Blockchain Time**.
-
-Ethereum realizes Blockchain Time through protocol slots, blocks
-produced within slots, and execution ordering inside blocks.
-
-Different Layer-1 systems may realize Blockchain Time differently while
-serving the same conceptual role.
+Blockchain protocols allocate execution in **Blockchain Time**, which is
+itself several distinct stages rather than one: **eligibility**
+(admissible for inclusion), **assignment** (placed in a slot or
+position), **execution**, and **finality**. Ethereum realizes these
+through slots, blocks produced within slots, ordering inside blocks, and
+finalization; other Layer-1 systems realize them differently while
+serving the same roles. Collapsing them into a single "Blockchain Time"
+hides distinctions the later notes (RN-09, RN-13) depend on.
 
 ![Figure 1 - Physical Time and Blockchain Time, the two temporal domains TLM coordinates](figures/rn01/fig1_two_temporal_domains.svg)
 
@@ -206,6 +249,10 @@ Making part of this information protocol-visible may allow and/or increase econo
 
 If we look from the angle of communicating information in a distributed system, Temporal Execution Profiles seek to reduce information loss between applications and blockchain execution markets.
 
+**Protocol-visible is not the same as publicly revealed.** A deadline or an urgency field also exposes trading intent, and a profile visible in a public mempool before ordering can be priced against or front-run. *When* a field becomes visible is a design lever — committed-and-hidden, builder-visible, consensus-certified, or revealed only after sequencing — and it governs extraction. This note treats revelation timing as an open dimension (RN-02 develops it), not as pure information gain.
+
+**Not every field can be verified the same way.** A useful profile mixes certified facts (resource use, an authenticated deadline), observed statistics (recurrence, forecast error — mostly stream-level, TDP), declared preferences, and payment-bearing bids. A missed deadline is observable; the counterfactual value of a different execution time is not, so private value is never directly verifiable. Under the program's marked pricing (RN-02, RN-10/RN-11) this is acceptable: a class is charged at its prevailing marked rate, so selecting an urgent class means paying the urgent rate — a declaration is paid for, not policed. RN-02 sec. 6 develops the field classification and the pricing argument.
+
 ---------------------------------------------------------------
 
 ## 6.2 Supply-side Motivation
@@ -236,6 +283,8 @@ These examples are intended only to illustrate the concept.
 The broader objective is to allow execution markets to better match heterogeneous application demand with heterogeneous execution options.
 
 Rather than merely redistributing existing demand, richer execution options may expand the economically serviceable market for both applications and execution providers.
+
+This is a **hypothesis**, not a result: whether it holds is measured by deadline-success rates, waiting-time distributions, fee spend, utilization, effects on non-participants, extraction, and computational cost — posed here as questions for evaluation, not asserted as claims.
 
 This shifts the discussion from competition over a single execution service toward a market capable of supporting differentiated execution services.
 
@@ -313,6 +362,8 @@ Whether TEPs ultimately lead to new pricing models, execution services, scheduli
 The central hypothesis of this work is intentionally modest:
 
 > Better communication of transaction execution preferences may enable better blockchain execution markets.
+
+Stated more sharply, the question is not whether temporal information should be first-class but which **minimum sufficient descriptor** yields a scheduling gain that exceeds its disclosure, extraction, and complexity cost — a cost-benefit question this program studies, not a settled result.
 
 While this note focuses on Ethereum, the broader research question is independent of any single blockchain architecture. We hope this work encourages parallel studies across other Layer-1 ecosystems, where different execution models, consensus mechanisms, and application communities may reveal new insights into temporal execution markets. Comparative studies across blockchain platforms may ultimately prove as valuable as the mechanisms proposed within any individual ecosystem. Ultimately, we hope Temporal Execution Profiles evolve into a common vocabulary for discussing transaction execution preferences across blockchain ecosystems, enabling researchers to compare execution markets using a shared conceptual framework while exploring different protocol realizations
 ---
