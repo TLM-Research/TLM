@@ -25,7 +25,7 @@ Blockchain execution markets today coordinate demand primarily through one visib
 
 Consistent with the TLM Vision Statement, **Temporal Liquidity** is treated here as an *umbrella* economic concept - the collection of economically meaningful temporal characteristics of execution demand - rather than a synonym for patience or delay tolerance [10]. Hyperliquid's fully on-chain, price-time-priority order book [1-3] is a useful lens because it exposes several of these characteristics at once: sustained **continuity**, partial aggregate **predictability**, acute **execution-priority** (intra-slot ordering) sensitivity, and bursty, delay-intolerant exceptional events.
 
-The note's central claim is deliberately modest. Hyperliquid is **motivating evidence** that multidimensional temporal demand exists and is systematically under-represented by spot fee markets - not proof that a protocol-visible temporal abstraction would obviate specialized chains. Used this way, it is a concrete, cited on-ramp to TLM.
+The note's central claim is deliberately modest. Hyperliquid is **motivating evidence** that multidimensional temporal demand exists and is systematically under-represented by spot fee markets - not proof that a protocol-visible temporal abstraction would remove the need for specialized chains. Used this way, it is a concrete, cited on-ramp to TLM.
 
 The current version aligns the definition to the Vision (Temporal Liquidity as umbrella) and grounds the argument in the empirical and bibliographic citations; changes across drafts are recorded in the Revision Note.
 
@@ -146,7 +146,7 @@ It does **not** establish that:
 - a richer abstraction on a shared chain would reproduce Hyperliquid's performance;
 - a temporal abstraction alone would remove the need for specialized chains.
 
-Hyperliquid built its own L1, VM (HyperCore), and deterministic sequencing - i.e. it took control of the whole execution path, not merely the ability to *describe* its demand. Application-chain design and temporal-market design are **separate axes**; sovereignty, integrated margin/liquidation logic, and product strategy are confounds. So the right rhetorical use of this case is: *the demand exists and is mispriced*, not *an abstraction obviates appchains*.
+Hyperliquid built its own L1, VM (HyperCore), and deterministic sequencing - i.e. it took control of the whole execution path, not merely the ability to *describe* its demand. Application-chain design and temporal-market design are **separate axes**; sovereignty, integrated margin/liquidation logic, and product strategy are confounds. So the right rhetorical use of this case is: *the demand exists and is mispriced*, not *an abstraction removes the need for appchains*.
 
 ---
 
@@ -199,13 +199,20 @@ Hyperliquid exposes execution demand that price alone describes poorly: a sustai
 
 ## Revision Note
 
-**Version 0.7** - adds sec. 6.2, HyperEVM's dual-block lanes (small/fast ~1s / ~2M-gas and large/slow ~1min / ~30M-gas, separate mempools and base fees, interleaved into one shared state), read as a production instance of coarse, protocol-native temporal differentiation - two temporal service classes as first-class protocol resources - with its limits noted (two predefined classes, account-based selection, and latency coupled to atomic capacity, sec. 4); renumbers the former sec. 6.2 to 6.3; corrects the abstract's stale version label; date and version normalized.
+*Substantive changes only - claims added, qualified, or withdrawn, so that anyone citing an earlier version can see what has changed. Editorial, formatting, and metadata changes are in the repository history.*
 
-**Version 0.6** - expands the case study with the actual system (sec. 6.1): **HyperCore** (Rust exchange engine - on-chain order books, price-time priority, margining, liquidations, oracle mark price) and **HyperEVM** (read precompiles + the CoreWriter system contract, with CoreWriter's deliberate few-second delay noted as a temporal mechanism); frames the two-execution-environments-under-one-consensus pattern as the RN-08/RN-09 Virtual Chains precursor; adds reference [14]. Keeps the demand-side, "motivation not proof" discipline.
+**Version 0.7**
 
-**Version 0.5** - builds on the lean structure of v0.2 and deliberately does *not* adopt v0.3/v0.4's extended exchange-architecture comparison (dYdX, Injective, Solana CLOBs), which broadened scope beyond this note's motivating purpose. Changes from v0.2:
+- **Reframes the note from an *empirical* case study to a *motivating* one.** The note describes Hyperliquid's architecture and cites adjacent empirical work; it does not measure Hyperliquid's own workload. Earlier phrasing overstated this, and the "empirical case study" description should not be cited.
+- **Qualifies the sec. 5 queueing claim.** Pollaczek-Khinchine concerns service-time variance, not arrival forecastability; predictability lowers delay only given a forecast-aware scheduler and a stated error.
+- **Adds sec. 6.2, HyperEVM's dual-block lanes**, as a production instance of coarse protocol-native temporal differentiation, with its limits stated: two predefined classes, account-based selection, and latency coupled to atomic capacity.
 
-- aligns the definition to the current Vision: **Temporal Liquidity is the umbrella**; predictability, continuity, and execution priority are its dimensions (v0.2 had predictability *outside* Temporal Liquidity);
-- adds **execution priority** as a dimension, grounded in Hyperliquid's price-time-priority book and linked to Timeboost / Capponi-Zhu;
-- **restores citations** omitted in v0.2 - Hyperliquid docs, Zhao (cost of delay), Liu et al. (EIP-1559), Capponi-Zhu (Timeboost), Kleinrock (queueing), Roughgarden (TFM), plus supporting empirical work;
-- keeps the "motivation, not proof" discipline and the patience × predictability independence result.
+**Version 0.6**
+
+- **Adds the system as actually built (sec. 6.1)** - HyperCore and HyperEVM, including CoreWriter's deliberate delay as a temporal mechanism - and frames two execution environments under one consensus as the RN-08 / RN-09 precursor.
+
+**Version 0.5**
+
+- **Aligns the definition to the Vision: Temporal Liquidity is the umbrella**, with predictability, continuity, and execution priority as its dimensions. v0.2 placed predictability outside Temporal Liquidity; that framing should not be cited.
+- **Adds execution priority as a dimension**, grounded in Hyperliquid's price-time-priority book.
+- **Does not adopt v0.3 / v0.4's extended exchange-architecture comparison**, which broadened scope beyond the note's motivating purpose.
