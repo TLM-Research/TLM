@@ -10,11 +10,7 @@
 
 # Purpose
 
-Temporal Liquidity Market (TLM) is not intended as another isolated Ethereum proposal.
-
-Instead, it sits at the intersection of several mature research disciplines that have studied how scarce resources are allocated under heterogeneous demand.
-
-Ethereum provides the motivating application, but the intellectual foundations of TLM extend well beyond blockchain.
+Temporal Liquidity Market (TLM) sits at the intersection of several mature disciplines that have studied how scarce resources are allocated under heterogeneous demand. Ethereum provides the motivating application, but the foundations extend well beyond blockchain.
 
 This document organizes the literature by research community rather than by protocol feature.
 
@@ -186,9 +182,7 @@ TLM therefore positions this work not as a competitor but as the formal urgency-
 
 # 6. Position of TLM
 
-The contribution of TLM is not another scheduler, auction, or fee mechanism.
-
-Its proposed contribution is a conceptual framework connecting ideas that have historically evolved in separate research communities.
+TLM's proposed contribution is not another scheduler, auction, or fee mechanism, but a conceptual framework connecting ideas that evolved in separate research communities.
 
 | Research Area | Traditional Question | TLM Perspective |
 |---------------|----------------------|-----------------|
@@ -202,9 +196,7 @@ Its proposed contribution is a conceptual framework connecting ideas that have h
 
 # Positioning
 
-TLM should therefore be viewed neither as a replacement for Ethereum research nor as a direct extension of any single discipline.
-
-Instead, it is an interdisciplinary research program positioned at the intersection of:
+TLM is an interdisciplinary research program, neither a replacement for Ethereum research nor a direct extension of any single discipline. It sits at the intersection of:
 
 - distributed systems,
 - network resource allocation,

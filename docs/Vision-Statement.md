@@ -17,17 +17,15 @@ Ethereum has transformed blockchain protocol economics through innovations such 
 
 Temporal Liquidity Market (TLM) asks whether decentralized execution markets can benefit from making economically meaningful temporal characteristics of demand, in addition to price, visible through protocol-defined abstractions - and, more than that, whether coordinating them constitutes a **market**.
 
-The name is the thesis: the *M* is for Market. The temporal characteristics of demand are the new variable, and temporal liquidity is what a market would coordinate: demand that needs particular timing on one side, the supply of flexible execution capacity across blockchain time on the other, meeting at a price for time. Naming the variable is the first half of the program; the market that clears it is the second.
+Temporal liquidity is what such a market would coordinate: demand that needs particular timing on one side, the supply of flexible execution capacity across blockchain time on the other, meeting at a price for time. Naming the variable is one part of the program; the market that clears it is the other.
 
-Rather than replacing Ethereum's architecture, TLM explores the next stage of decentralized market design.
+TLM builds on Ethereum's architecture rather than replacing it.
 
 ---
 
 # Beyond Price
 
-Today's execution markets primarily coordinate demand through price.
-
-Execution demand also possesses temporal characteristics that influence resource allocation.
+Today's execution markets coordinate demand primarily through price, but execution demand also carries temporal characteristics that affect how capacity should be allocated.
 
 The **temporal characteristics of demand** are the properties a scalar fee leaves out - how execution value depends on *when*, in *what order*, and *how predictably* a transaction or stream is served. They are used here as an umbrella, a family of related-but-distinct properties, much as **market liquidity** is a family of properties (depth, immediacy, resiliency) rather than a single quantity.
 
@@ -58,8 +56,6 @@ A useful way to organize these is by **temporal granularity**:
 
 A second structural distinction cuts across the table: some characteristics are **declared preferences** the demand states (delay tolerance, windows, deadlines, priority), while others are **observed properties** others verify about the demand (predictability, continuity). These are represented and incentivized differently - declared preferences are what a market prices; observed properties are what can earn a coordination discount only if verified.
 
-Individual research notes may investigate individual dimensions without implying separate top-level concepts.
-
 The central question becomes:
 
 > Can simple, protocol-visible temporal abstractions improve decentralized coordination while preserving neutrality and simplicity?
@@ -82,11 +78,11 @@ Seen this way (RN-10), a blockchain is less a transaction-processing engine than
 
 The premise that timing carries real, heterogeneous economic value is not assumed but empirically supported.
 
-Zhao, in *The Cost of Delay: Evidence from the Ethereum Transaction Fee Market*, estimates the cost of delaying transactions in the Ethereum fee market and shows that delay imposes a **measurable economic cost that varies across transactions**. This is direct evidence that delay tolerance is a real and heterogeneous temporal characteristic of demand rather than a modeling convenience - and it is an important validation for the TLM premise that temporal flexibility differs meaningfully across execution demand.
+Zhao, in *The Cost of Delay: Evidence from the Ethereum Transaction Fee Market*, estimates the cost of delaying transactions in the Ethereum fee market and shows that delay imposes a **measurable economic cost that varies across transactions**. Delay tolerance is therefore a real and heterogeneous property of demand, not a modeling convenience.
 
 Complementary empirical work on EIP-1559 (Liu, Lu, Nayak, Zhang, Zhang & Zhao, 2022) shows that transaction-fee mechanism design measurably affects waiting times. Existing markets therefore already couple price and time - but only implicitly, compressed into a single scalar fee. TLM's question is whether making temporal characteristics *explicit* can coordinate that relationship more efficiently than pricing alone.
 
-Together with the latency-race evidence discussed below, these results give TLM two independent empirical anchors - the cost of delay and the cost of ordering - rather than a single supporting case.
+With the latency-race evidence below, TLM has two independent empirical anchors: the cost of delay and the cost of ordering.
 
 ---
 
@@ -103,8 +99,6 @@ Timeboost is instructive in two opposite directions, and TLM carries both:
 - It offers early evidence that coordinating temporal priority can **create surplus by reducing waste** - auctioning a time advantage can dampen the latency arms race rather than merely transfer value (Capponi & Zhu, 2026, *Auctioning Time to Mitigate Latency Races*).
 - It also shows the hazard: independent analysis reports that the express lane drove spam and centralization, a concrete example of how exposing a protocol-visible temporal variable can advantage the participants best positioned to exploit it.
 
-Both lessons motivate studying temporal characteristics carefully rather than exposing them naively.
-
 ---
 
 # A Historical Perspective
@@ -117,15 +111,13 @@ Permissionless blockchains inherit similar challenges under stronger adversarial
 
 However, blockchain protocols introduce cryptoeconomic tools - including staking, auctions, and mechanism design - that were largely unavailable during the evolution of Internet QoS. Timeboost is one early demonstration that time itself can be coordinated through such tools, with both the benefits and the centralization risks that follow.
 
-TLM asks whether these new tools fundamentally change what protocol-visible abstractions can achieve.
+TLM asks whether these tools change what protocol-visible abstractions can achieve.
 
 ---
 
 # Research Vision
 
-TLM investigates the temporal characteristics of demand, and the market for temporal liquidity they define, as a new dimension of decentralized market design.
-
-Its objective is to establish a conceptual framework for understanding, representing, and evaluating economically meaningful temporal characteristics of execution demand rather than prescribing a particular protocol mechanism.
+TLM aims to establish a conceptual framework for representing and evaluating the temporal characteristics of execution demand, rather than to prescribe a particular protocol mechanism.
 
 ---
 
@@ -143,11 +135,9 @@ Seen this way, TLM is a **multidimensional transaction fee mechanism**: extendin
 
 # Why Better Market Design Can Create Social Surplus
 
-TLM is not motivated by transferring value from one participant to another, nor by asking the network to sacrifice efficiency in order to accommodate patient users.
+The central hypothesis is that existing execution markets cannot coordinate some economically valuable transactions, because they expose only a limited set of demand information, primarily price. Some execution demand therefore remains **unrealized**: not because the network lacks capacity, but because the market cannot express what would coordinate it.
 
-Instead, the central hypothesis is that existing execution markets cannot fully coordinate certain economically valuable transactions because they expose only a limited set of demand information - primarily price.
-
-As a result, some execution demand remains **unrealized**, not because the network lacks capacity, but because the market lacks sufficient expressiveness to coordinate it efficiently.
+This is not a proposal to transfer value between participants, nor to ask the network to sacrifice efficiency for patient users.
 
 Surplus can arise through two complementary channels:
 
@@ -156,9 +146,7 @@ Surplus can arise through two complementary channels:
 
 There is already formal support for the first channel. Kiayias, Koutsoupias, Lazos & Panagiotakos (2023) show that a *tiered* fee mechanism, pricing by urgency, keeps low-urgency transactions cheap and admits a more diverse set of transactions than EIP-1559 - without necessarily sacrificing revenue. That is, in effect, the *urgency dimension* of the temporal characteristics worked out as a mechanism; TLM generalizes it across the full set of temporal characteristics. Their result also sharpens the distinction below: the revenue-neutrality runs through price discrimination (a redistribution channel), while the *inclusion of diverse demand* is the created surplus.
 
-In both cases the resulting social surplus comes from **better coordination**, rather than redistributing value among existing participants.
-
-This distinction is fundamental to the TLM research program.
+In both cases the surplus comes from **better coordination**, not from redistributing value among existing participants. That distinction runs through the whole program.
 
 ---
 
@@ -191,9 +179,7 @@ This distinction is fundamental to the TLM research program.
 
 Ethereum demonstrated that protocol-visible economic information can improve decentralized coordination.
 
-TLM extends that direction by asking whether the **temporal characteristics of demand** - and a market for the temporal liquidity they define - can become another foundation for decentralized market design.
-
-The project advances this as an open research agenda rather than a predetermined conclusion.
+TLM extends that direction by asking whether the **temporal characteristics of demand**, and a market for the temporal liquidity they define, can become another foundation for decentralized market design. This is an open research agenda, not a settled conclusion.
 
 ---
 

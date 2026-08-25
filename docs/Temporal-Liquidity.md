@@ -12,9 +12,7 @@
 
 ## A Broader Question
 
-Ethereum execution markets have evolved from simple fee markets toward increasingly sophisticated systems for decentralized resource allocation. EIP-1559, PBS, ePBS, builder markets, execution rights, and related research all improve how scarce execution opportunities are coordinated.
-
-These developments motivate a broader question.
+Ethereum execution markets have evolved from simple fee markets toward increasingly sophisticated systems for decentralized resource allocation. EIP-1559, PBS, ePBS, builder markets, execution rights, and related research all improve how scarce execution opportunities are coordinated. They also raise a broader question.
 
 > **Does demand contain economically meaningful temporal information beyond willingness to pay?**
 
@@ -24,7 +22,7 @@ TLM proposes that this question should be investigated before proposing new prot
 
 # Definition
 
-Temporal Liquidity is used, deliberately, as an **umbrella** economic concept - analogous to **market liquidity**, which is not a single quantity but a family of related properties (depth, immediacy, resiliency).
+Temporal Liquidity is used as an **umbrella** economic concept - analogous to **market liquidity**, which is not a single quantity but a family of related properties (depth, immediacy, resiliency).
 
 > **Temporal Liquidity is the collection of economically meaningful temporal characteristics of execution demand.**
 
@@ -47,13 +45,13 @@ Temporal Liquidity spans several characteristics, usefully organized by **tempor
 | Inter-slot | **delay tolerance**, **execution windows**, **deadlines** | *How long can I wait, and until when?* |
 | Multi-slot / stream | **predictability**, **continuity** | *How forecastable and sustained is my demand?* |
 
-A second distinction cuts across the table: some characteristics are **declared preferences** the demand states (delay tolerance, windows, deadlines, priority), while others are **observed properties** others verify about the demand (predictability, continuity). They are represented and priced differently - declared preferences are what a market charges for; observed properties can earn a coordination benefit only if verified. Individual research notes may investigate a single dimension without implying it is a separate top-level concept.
+A second distinction cuts across the table: some characteristics are **declared preferences** the demand states (delay tolerance, windows, deadlines, priority), while others are **observed properties** others verify about the demand (predictability, continuity). They are represented and priced differently - declared preferences are what a market charges for; observed properties can earn a coordination benefit only if verified.
 
 ---
 
 # The Delay-Tolerance Axis and the Elasticity Analogy
 
-The delay-tolerance dimension is where an **elasticity** analogy is tightest, and it is worth stating precisely because it is the most studied.
+The delay-tolerance dimension is the most studied, and where an **elasticity** analogy is tightest.
 
 Where price elasticity characterizes how demand responds to changes in **price**, delay tolerance characterizes how demand responds to changes in **execution timing** - its *movability in time without loss of value*, the temporal counterpart of financial liquidity's "movability without price impact." At the transaction level, the operational object is how economic value changes as execution opportunities are delayed.
 
@@ -68,7 +66,7 @@ Fast-decaying arbitrage (steep decay, near-immediate) and a treasury transfer wi
 
 # Concept, Representation, and Mechanism
 
-TLM deliberately distinguishes three layers.
+TLM distinguishes three layers.
 
 ```
 Temporal Liquidity            (the economic concept / umbrella)
@@ -116,12 +114,8 @@ Time-differentiated demand is not new; the novelty is the permissionless, advers
 - How should transaction-level and stream-level characteristics interact?
 - Under what conditions does richer temporal information improve decentralized coordination?
 
-These questions define the research agenda rather than assume its answers.
-
 ---
 
 # Summary
 
-Temporal Liquidity is the **umbrella** for the economically meaningful temporal characteristics of execution demand - delay tolerance (with its deadline and decay parameters), predictability, execution priority, execution windows and deadlines, and continuity. Rather than prescribing mechanisms, TLM first identifies these characteristics, investigates appropriate representations, and only then explores decentralized mechanisms that might coordinate them.
-
-In this sense, Temporal Liquidity is not the end of the research program - it is its starting point.
+Temporal Liquidity is the **umbrella** for the economically meaningful temporal characteristics of execution demand - delay tolerance (with its deadline and decay parameters), predictability, execution priority, execution windows and deadlines, and continuity. Rather than prescribing mechanisms, TLM first identifies these characteristics, investigates appropriate representations, and only then explores decentralized mechanisms that might coordinate them. It is the starting point of the research program, not its conclusion.

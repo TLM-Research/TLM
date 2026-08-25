@@ -4,7 +4,7 @@
 **Status:** Public Draft
 **Last Updated:** July 24, 2026
 
-Part II is the intellectual core of the Foundation. It sets out the principles that discipline the inquiry and the model-first methodology that orders it. It proposes no mechanism; it establishes how any future mechanism will be reasoned about. Throughout, the **temporal characteristics of demand** are the umbrella defined in Part I sec. 2 and elaborated in the [Temporal Liquidity](./Temporal-Liquidity.md) note, and **temporal liquidity** is the market resource they define.
+Part II sets out the principles that discipline the inquiry and the model-first methodology that orders it. It proposes no mechanism; it establishes how any future mechanism will be reasoned about. Throughout, the **temporal characteristics of demand** are the umbrella defined in Part I sec. 2 and elaborated in the [Temporal Liquidity](./Temporal-Liquidity.md) note, and **temporal liquidity** is the market resource they define.
 
 ---
 
@@ -36,7 +36,7 @@ Any exposed information or mechanism must preserve permissionless participation 
 
 # 6. Model-first Methodology
 
-TLM proceeds in a deliberate order - concepts before mechanisms:
+TLM proceeds concepts before mechanisms:
 
 1. **Model** the market's economically meaningful variables.
 2. **Decide** which of them merit protocol visibility.
@@ -49,7 +49,7 @@ A five-layer model organizes the discussion - Economic -> Representation -> Coor
 
 # 7. Three Notions of Time
 
-Precision requires distinguishing three times. **Physical time** is wall-clock ("execute before market close"). **Protocol time** is the discrete structure of slots and blocks. **Execution time** is the realized opportunity at which a transaction is included and ordered. Temporal characteristics are defined over *execution opportunities*, but applications express their needs in *physical* time, and the mapping between them is stochastic - congestion-dependent and subject to reorganization. This distinction (which Part I forward-references) is why "urgency" and "latency" are not interchangeable, and why execution priority - position *within* a slot - is a distinct characteristic from delay tolerance across slots.
+Precision requires distinguishing three times. **Physical time** is wall-clock ("execute before market close"). **Protocol time** is the discrete structure of slots and blocks. **Execution time** is the realized opportunity at which a transaction is included and ordered. Temporal characteristics are defined over *execution opportunities*, but applications express their needs in *physical* time, and the mapping between them is stochastic - congestion-dependent and subject to reorganization. This is why "urgency" and "latency" are not interchangeable, and why execution priority - position *within* a slot - is a distinct characteristic from delay tolerance across slots.
 
 ---
 
@@ -65,7 +65,7 @@ The formal backbone here is the second pillar of TFM theory, Chung & Shi's *Foun
 
 # 9. Evaluation Criteria
 
-Future mechanisms should be judged against common criteria rather than in isolation: economic efficiency, decentralized-coordination quality, protocol simplicity, participant neutrality, incentive compatibility, resistance to strategic manipulation, privacy, and deployability. These criteria are what let the framework adjudicate between candidate designs; Part III develops the empirical and falsification methodology that accompanies them.
+Future mechanisms should be judged against common criteria rather than in isolation: economic efficiency, decentralized-coordination quality, protocol simplicity, participant neutrality, incentive compatibility, resistance to strategic manipulation, privacy, and deployability. Part III develops the empirical and falsification methodology that accompanies them.
 
 ---
 
@@ -75,4 +75,4 @@ Making more information protocol-visible does **not** automatically improve mark
 
 > **Which economically meaningful temporal information should become protocol-visible, under what guarantees, and with what tradeoffs?**
 
-The concrete representations this implies - transaction-level and stream-level temporal profiles - are developed in the Research Notes before being folded back into the Foundation, so the constitutional document stays ahead of unsettled terminology rather than pinned to it.
+The concrete representations this implies - transaction-level and stream-level temporal profiles - are developed in the Research Notes before being folded back into the Foundation, so that this document is not pinned to terminology still in flux.
