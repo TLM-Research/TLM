@@ -1,13 +1,13 @@
 ---
 id: RN-05
 title: "Supply-side Heterogeneity and Temporal Granularity: A Quantum Lattice for Blockspace"
-version: "0.3"
-status: "Draft - Internal Research Note"
+version: "0.4"
+status: "Public draft - research note, offered in good faith for comment"
 program: "Temporal Liquidity Market (TLM)"
-date: "July 24, 2026"
+date: "August 24, 2026"
 ---
 
-# RN-05 v0.3
+# RN-05 v0.4
 
 # Supply-side Heterogeneity and Temporal Granularity
 
@@ -15,9 +15,9 @@ date: "July 24, 2026"
 
 **Temporal Liquidity Market (TLM) Research Program**
 **Research Note RN-05**
-**Version:** 0.3
-**Status:** Draft
-**Date:** July 24, 2026
+**Version:** 0.4
+**Status:** Public draft - research note, offered in good faith for comment
+**Date:** August 24, 2026
 
 ---
 
@@ -53,7 +53,7 @@ EIP-7782, proposed by Barnabé Monnot and targeted at Glamsterdam, would reduce 
 
 This is not the endpoint. The Ethereum Foundation's published strawmap contemplates slot times falling **as low as 2 seconds**, with finality between 6 and 16 seconds via a one-round BFT algorithm (Minimmit), reduced incrementally - on a roughly sqrt(2)-at-a-time schedule - and only when proven safe. Notably, the roadmap **decouples finality from slot time** so each may be optimized independently.
 
-Two observations follow. The trajectory toward shorter slots is established, not speculative; this note does not claim to arrest it. And the decoupling principle is itself an instance of the move this note argues for: separating temporal concerns previously conflated. The strawmap decouples finality from slot time. This note asks whether *ordering resolution* should likewise be decoupled from slot time.
+Two observations follow. The trajectory toward shorter slots is established, not speculative; this note does not claim to stop it. And the decoupling principle is itself an instance of the move this note argues for: separating temporal concerns previously conflated. The strawmap decouples finality from slot time. This note asks whether *ordering resolution* should likewise be decoupled from slot time.
 
 ### 2.2 Three facts about slot structure
 
@@ -92,6 +92,8 @@ Four distinct quantities are routinely conflated in this literature. The note us
 
 The quantum is an instance of the fourth. It is not a block time, not a finality target, and not an end-to-end latency. sec. 4.3 shows why this distinction determines what sizes are attainable.
 
+**One implication should be stated before it is assumed.** Fine *ordering-commitment resolution* does not imply fine execution, fine finality, or fine global visibility. A 100 ms commitment coordinate sits on top of a slot that still executes, finalises, and propagates on its own schedule. What a fine quantum buys is a finer unit in which a *position commitment* can be expressed and later checked - not faster settlement, and not a guarantee that every participant observes the fine structure as it happens. Claims about what granularity delivers should be read against this row of the table and no other.
+
 ---
 
 ## 3. Temporal Granularity as a Supply-side Property
@@ -115,17 +117,23 @@ Granularity is what a uniform block time compresses away. Under a single slot bo
 
 Indivisibility is the substantive property. A commitment cannot be expressed finer than one quantum; the interior is free *because* it lies below the resolution limit of the commitment system. Interior freedom is not a concession but the operational meaning of indivisibility.
 
+**"Free" means priority is not sold, not that order is absent.** A deterministic state machine must still serialize transactions that conflict on shared state, and causally concurrent transactions can conflict. So the interior of a quantum is not an unordered set at execution time; it is a set over which *no ordering commitment has been sold*. Some rule still decides the realised sequence, and an instantiation must say which - a commutative batch where conflicts are excluded by construction, a verifiable-random serialization, or a deterministic conflict-resolution procedure. The distinction matters because "the interior is free" invites the reading that intra-quantum position carries no value, when what the note claims is that intra-quantum position is not *purchasable*. RN-12 sec. 10 and RN-07 make the same point from the mechanism and control-plane sides; sec. 4.4 below carries the cost consequence.
+
 A quantum is therefore not a miniature slot. It fixes a *partial* order: a transaction in quantum *k* precedes all in *k+1* and follows all in *k-1*, while its position among its own quantum's members remains free.
 
 ### 4.2 The lattice and its sub-channels
 
-The quanta of a slot form a **lattice** - a shared coordinate system, not a set of separate objects.
+The quanta of a slot form a **lattice** - a shared coordinate system, not a set of separate objects. The term is meant literally, and it is worth saying which lattice: the partitions of a slot, ordered by refinement, form a lattice under the usual meet and join. One partition refines another when every cell of the finer sits inside a cell of the coarser; the join of two partitions is their coarsest common refinement, and the meet their finest common coarsening. A reader resolving whole slots and a reader resolving individual quanta occupy different points in that lattice, and the coarse reading is a genuine coarsening of the fine one rather than a different object. That is what supports the claim below that there is one coordinate system rather than several - and it is why refinement, not subdivision alone, is the operative relation.
 
 Participants read the lattice at different depths. Slot-level validators resolve slots and are unaffected by finer structure. A latency-sensitive **sub-channel** resolves individual quanta. Intermediate participants may resolve at intermediate depth.
 
 This is what makes differentiation possible without fragmentation. There is one coordinate system, not several; coarse readers are not trusting an opaque object but reading the same structure at lower resolution. Fine-grained capability is available to those who need it without being imposed on those who do not - the property that distinguishes the lattice from uniform block-time reduction (sec. 2.3).
 
 A **sub-channel** here means a set of transactions committed at a stated granularity, together with the providers serving them. Whether sub-channels are best defined over transactions, providers, or service tiers is an open question (sec. 9).
+
+**A composition rule is a prerequisite, not an open extra.** The refinement argument above establishes that coarse and fine *readings* are consistent when they describe one partition. It does not establish that commitments issued by *different* providers, at different granularities, without consensus deciding between them, compose into one canonical execution outcome. Post-hoc verification can check that a provider kept a signed promise; it cannot make two providers' promises globally consistent with each other when both touch the same state. Assignment integrity (sec. 4.3) is the narrower problem of one provider labelling honestly; this is the wider one.
+
+Any instantiation therefore has to fix four things: **who issues** a granularity commitment (proposer, builder, or a registered provider), **what certificate** carries it, **what conflict rule** applies when commitments disagree, and **over what scope** a commitment binds - per proposer, per transaction, per state-access domain, or per service class. Where providers touch disjoint state the question is mild, since commuting transactions impose no serialization requirement (sec. 4.5). Where they touch shared state it is the same serialization problem RN-09's triangle and RN-12 confront, and it should be treated as a precondition on the architecture rather than an item deferred to sec. 10.
 
 ### 4.3 On not specifying a quantum size
 
@@ -141,7 +149,7 @@ Consensus over a geo-distributed validator set is floor-limited by message propa
 
 A quantum outside consensus is not subject to that floor. It is a *local* ordering coordinate honoured by a provider before propagation and verified against realised behaviour afterward. Nothing must be agreed across the validator set within one quantum - only *committed to* by the provider and *checked* subsequently.
 
-The quantum can therefore be arbitrarily fine - plausibly far below any feasible block time - precisely because it carries no consensus status. How fine is an empirical question about commitment and verification cost, not a physics question. This is the strongest available argument that granularity and block time are separable concerns.
+The quantum can therefore be **much finer than block time - plausibly far below any feasible one - but it is not arbitrarily fine.** Three bounds hold below it. Commitment and verification cost, the note's own result. Clock uncertainty ε, which sec. 4.6 develops and which governs how sharp a boundary can be. And a third that is easy to miss: a commitment must **propagate, be observed, and remain available** for the quantum to function as a *neutral* coordinate at all. A 100-200 ms label visible only to colocated actors is not a global coordinate; it is a private advantage, and fineness bought that way is a colocation subsidy rather than a service. How fine the quantum can usefully be is therefore an empirical question about commitment cost, clock error, and observability jointly - not a physics question, but not an unbounded one either. What survives is the separability claim: granularity and block time are distinct concerns, and the floor on the former is not the consensus floor on the latter.
 
 **One distinction the argument must not blur.** "Verification cost" splits into two problems of very different difficulty, and only one is cheap:
 
@@ -195,12 +203,12 @@ sec. 4.3 treated *adversarial* assignment (a provider labelling dishonestly). Th
 - **clock-uncertainty floor (ε)** - governs how *sharp* a boundary can be; below ε a hard boundary is meaningless;
 - **commitment/verification-cost floor** - sec. 4.3's answer.
 
-The canonical treatment is Spanner's **TrueTime** (Corbett et al., 2012), which represents time as an interval `[earliest, latest]` with bounded uncertainty and either *waits out* the uncertainty (commit-wait) or accepts a probabilistic guarantee. Applied here, two resolutions and a quantifiable tradeoff:
+The canonical treatment is Spanner's **TrueTime** (Corbett et al., 2012), which represents time as an interval `[earliest, latest]` with bounded uncertainty and either *waits out* the uncertainty (commit-wait) or accepts a probabilistic guarantee. **The borrowing needs a caveat.** TrueTime's bound is small and, more to the point, *trustworthy* because Google operates GPS receivers and atomic clocks across its own datacentres - a single administrative domain with uniform, audited timing infrastructure. Permissionless validators share none of that. ε is correspondingly larger, harder to bound, and - unlike Spanner's - not verifiable by the parties relying on it, since a validator's claimed clock quality is itself a declaration. The mechanism transfers; the tight, trusted ε does not. This is the same conditions-gap RN-02 sec. 2 identifies in DiffServ, and it is why the centralisation point below bites rather than being incidental. Applied here, two resolutions and a quantifiable tradeoff:
 
 - **Guard band (commit-wait):** defer arrivals within ε of a boundary to the next quantum (or tie-break deterministically) - a *hard* boundary, at the cost of effective resolution bounded near ε.
 - **Soft lattice:** accept that the partial order holds with a *stated confidence*; near-boundary order is probabilistic.
 
-For arrivals roughly uniform in a quantum of width Q, the ambiguous fraction is ≈ ε/Q, so **confidence ≈ 1 - ε/Q** - near-certain when Q ≫ ε, collapsing as Q -> ε. This is the note's resolution-confidence dial, and it yields a **trilemma**:
+For arrivals roughly uniform in a quantum of width Q, the ambiguous fraction is ≈ ε/Q, so **confidence ≈ 1 - ε/Q** - near-certain when Q ≫ ε, collapsing as Q -> ε. *This is a stated modelling assumption, not a law.* Uniform arrivals and a single scalar ε stand in for what are really an arrival-time distribution and a clock-error distribution, and real traffic is bursty rather than uniform - liquidation cascades and oracle updates cluster precisely where boundary ambiguity is most costly. The relation should be read as a first-order dial whose shape a later note should replace with measured distributions. It yields a **trilemma**:
 
 > A quantum cannot be simultaneously **fine**, **hard-bounded**, and **consensus-free**. Consensus buys fine-and-hard, but that is Option C (sec. 5.3) - a shorter slot, excluded. Otherwise: fine-and-soft (probabilistic boundary), or hard-and-coarser (guard band ≈ ε).
 
@@ -238,6 +246,8 @@ The reduction is exact: anything validators must agree on, vote over, and resolv
 
 This matters because a motivating intuition for this note was that granularity might relieve pressure to shorten block time. Option C does the opposite. The quantum is a coarsening device, not a hidden slot-time reduction.
 
+**A committee or pipelined variant sits between A and C, and is not dismissed here.** The three options above are stated as a clean frontier, but intermediate designs exist: a rotating attester sub-committee witnessing arrivals without full validator-set agreement, or a pipelined scheme in which commitment and verification overlap successive quanta. These weaken Option C's latency floor without reaching Option B's pure post-hoc posture, and one of them may well be where an arrival witness (sec. 4.3) comes from. This note does not evaluate them - doing so requires the mechanism analysis it excludes - but the A/B/C partition should be read as three reference points on a frontier, not an exhaustive enumeration.
+
 **The partitioned-state variant** - quantum-level consensus over a subset of state, opaque to slot-level validators - fails for related reasons. State partitioning, not timing, is the binding constraint: a subset stays opaque only while genuinely isolated, and composability makes clean isolation rare. A commitment attested to without evaluation is a trust assumption, creating a smaller committee with authority over valuable state - the concentration risk of sec. 8 in its sharpest form. And slot-level validators are not unaffected: they still bear data propagation and reorg exposure, the constraints that bind small operators.
 
 ---
@@ -266,7 +276,7 @@ Preconfirmation research has independently developed sub-slot temporal coordinat
 
 Preconf transaction designs carry a **target slot** - the latest slot in which a transaction may be included, giving time-bound validity - together with a **target round**, the specific round *within* the target slot by which it must be included. MR-MEV-Boost segments slots into multiple preconfirmation rounds. Primev describes a slot split into a beacon round and an execution round supporting hybrid preconfirmation ratios for fulfillers and deliverers, with beacon-round commitments made by proposers or outsourced and execution-round commitments made by builders.
 
-**Timescales, and a striking convergence.** These systems span a range. MR-MEV-Boost issues preconfirmations in coarse batches, seconds apart. But Primev's **mev-commit** runs a dedicated commitment chain at a **200ms block time - 60 blocks per Ethereum slot** - advertising ~100ms preconfirmed settlement, and Chainbound's **Bolt** offers sub-second proposer commitments. That 200ms / 60-per-slot cadence is *exactly* the granularity RN-04's sub-slot lane contemplates and the fine end of this note's lattice - independent corroboration that sub-100-200ms sub-slot structure is real and useful. One architectural difference is load-bearing: mev-commit obtains its 200ms resolution by running a **separate fast chain** (its own consensus) - effectively Option C (sec. 5.3) relocated to a coprocessor - whereas the lattice pursues comparable resolution *without* a separate consensus (Option B: commitment plus post-hoc verification, sec. 5.2). The cadence converges; the substrate does not.
+**Timescales, and a striking convergence.** These systems span a range. MR-MEV-Boost issues preconfirmations in coarse batches, seconds apart. But Primev's **mev-commit** runs a dedicated commitment chain at a **200ms block time - 60 blocks per Ethereum slot** - advertising ~100ms preconfirmed settlement, and Chainbound's **Bolt** offers sub-second proposer commitments. That 200ms / 60-per-slot cadence is *exactly* the granularity RN-04's sub-slot lane contemplates and the fine end of this note's lattice - independent corroboration that sub-100-200ms sub-slot structure is real and useful. One architectural difference matters: mev-commit obtains its 200ms resolution by running a **separate fast chain** (its own consensus) - effectively Option C (sec. 5.3) relocated to a coprocessor - whereas the lattice pursues comparable resolution *without* a separate consensus (Option B: commitment plus post-hoc verification, sec. 5.2). The cadence converges; the substrate does not.
 
 The economics are already temporal. Primev observes that without a time-related mechanism actors can wait until a slot's end and issue a just-in-time preconfirmation to game the system, and proposes rewarding commitments experiencing the least **information decay**, with information decay tracking economic decay to price a commitment. That is a value-versus-delay relationship priced inside a slot.
 
@@ -280,7 +290,7 @@ The economics are already temporal. Primev observes that without a time-related 
 | **Interior** | Unspecified - position within a round has no representation | Explicitly free - interior freedom is definitional |
 | **Who sets it** | Mechanism-defined, uniform | Advertised per provider; read at varying depth |
 
-*Terminology note.* This note retains **quantum** rather than adopting *round*. "Round" is overloaded across at least four meanings in adjacent literature - preconf segment, phase-role, BFT consensus step (Minimmit is described as one-round-finality), and cryptographic iteration - which would make sentences such as "round-level consensus" ambiguous precisely where precision is needed. *Quantum* additionally carries the indivisibility connotation sec. 4.1 requires.
+*Terminology note.* This note retains **quantum** rather than adopting *round*. "Round" is overloaded across at least four meanings in adjacent literature - preconf segment, phase-role, BFT consensus step (Minimmit is described as one-round-finality), and cryptographic iteration - which would make sentences such as "round-level consensus" ambiguous precisely where precision is needed. *Quantum* additionally carries the indivisibility connotation sec. 4.1 requires. The choice is not fully settled: "quantum lattice" is defended here against *round*, but not against the quantum-computing misread, and the title remains provisional.
 
 ### 7.2 The missing elements
 
@@ -387,7 +397,9 @@ Three consequences make the layers fit precisely:
 
 ## Summary
 
-If demand is temporally heterogeneous, undifferentiated supply is a mismatch. This note names the supply-side property (temporal granularity), proposes a coordinate system for expressing it (the quantum lattice, with ordering constrained across quanta and free within), and shows that the lattice's central advantage - arbitrarily fine resolution - follows precisely from its lack of consensus status.
+If demand is temporally heterogeneous, undifferentiated supply is a mismatch. This note names the supply-side property (temporal granularity), proposes a coordinate system for expressing it (the quantum lattice, with ordering constrained across quanta and priority unsold within), and shows that resolution much finer than block time follows from the lattice's lack of consensus status - bounded below by commitment and verification cost, by clock uncertainty, and by the observability a neutral coordinate requires.
+
+**Scope.** This is an architecture note. It supplies vocabulary and a coordinate system; it proposes no mechanism, prices nothing, and does not attempt the capacity question - what workload is feasible at a given granularity, and how an `N x k` allocation behaves under fixed per-slot work, belong to the capacity theory and the trace-driven simulation, not here. Where this note states a bound it is structural, not measured.
 
 Three concessions are made deliberately. Preconfirmation research reached sub-slot coordinates first; TLM's contribution is the demand-side object beneath them and the two elements their rounds lack (sec. 7.2). The competitive argument removes one reason applications leave Ethereum, not all of them. And the multi-class validator thesis that motivated the note is not supported by current evidence; it is retained as an open question with the contrary evidence stated.
 
@@ -410,39 +422,31 @@ Three concessions are made deliberately. Preconfirmation research reached sub-sl
 - Corbett, J. C. et al. *Spanner: Google's Globally-Distributed Database.* OSDI 2012. (TrueTime; time as a bounded interval with commit-wait.)
 - TLM Research Program. Foundation Statement Parts I-III; `Temporal-Liquidity`; RN-01; RN-02; RN-03; RN-04 (service classes layered on this note's lattice).
 
-*Citations to be normalised against the project `Related-Work` document. Several sources are secondary; primary sources should be substituted where available - particularly the strawmap, Chainspect methodology, and Hyperliquid block-time figures.*
+*Citations to be normalised against the project `Related-Work` document.* Three are secondary and are **not to be cited as primary in any published version** until substituted: the **strawmap / Minimmit** trajectory (currently via secondary coverage - substitute Buterin's primary post and the Minimmit paper); **Chainspect's** Layer-1 block-time comparison (Figure 1 - a competitive-positioning artifact whose measured quantity is unlabelled, as sec. 2.3 already cautions; substitute per-chain primary documentation or drop the figure); and the **Hyperliquid** block-time and cadence figures (substitute the protocol documentation cited in RN-03, which carries verification dates). Where a claim in this note rests on one of the three, it should be read as illustrative of a design frontier rather than as a measurement.
 
 ---
 
 ## Revision Note
 
-**Version 0.3** (July 23, 2026) - reconciliation with RN-04 and a sharpened verification argument.
+*Substantive changes only - claims added, qualified, or withdrawn, so that anyone citing an earlier version can see what has changed. Editorial, formatting, and metadata changes are in the repository history.*
 
-Changes from v0.2:
-- adds the **RN-04 relationship** (sec. 11): the substrate/services layering, with RN-04's sub-slot lane identified as a sub-channel of this note's lattice, and RN-05 Option B recognised as RN-04's deployment step 1;
-- **splits the sec. 4.3 result**: cross-quantum ordering verification is cheap (the fineness result rests on it) but *quantum-assignment* integrity is not - a separate, unsolved arrival-witness problem (= RN-04's P1);
-- adds the **interior-freedom corollary** (sec. 4.4): constraining a quantum's interior (e.g. FIFO) re-imports verification cost, giving a shared design dial across RN-04's classes (Protected Window free-interior / batched; Continuous State pays for order);
-- adds **quantum-assignment manipulation** to the threat model (sec. 9), distinct from and more dangerous than strategic capability claims;
-- adds **sec. 4.5 - the lattice as a multiplexing structure**: the three axes (time / class / state-access), positioned against TDM, statistical multiplexing, SDM and scalable coding, with a value-locating table and the observation that the multiplexed resource is *ordering* at reader-chosen resolution;
-- adds **sec. 4.6 - the boundary is an interval**: physical-time uncertainty (Lamport, TrueTime), the clock-uncertainty floor ε, the resolution-confidence relation (≈ 1 - ε/Q), the *fine / hard / consensus-free* trilemma, and the state-commutativity mitigation that confines the residual hard case to conflicting transactions within ε of a boundary;
-- highlights the multiplexing framing in the abstract; adds Lamport and Spanner/TrueTime references;
-- date format normalised to *July 23, 2026*.
+**Version 0.4** (August 24, 2026)
 
-Open naming question carried forward: "quantum lattice" is defended against "round" (sec. 7.1) but not against the quantum-computing misread - the title remains provisional.
+- **Withdraws "arbitrarily fine" (sec. 4.3).** v0.3 concluded the quantum could be arbitrarily fine because it carries no consensus status. It is now stated as *much finer than block time but bounded* - below by commitment and verification cost, by clock uncertainty, and by the propagation and observability a coordinate needs in order to stay neutral rather than becoming a colocation subsidy. The separability of granularity from block time is retained; the unbounded form should not be cited.
+- **Justifies "lattice" (sec. 4.2).** Previously asserted. The object is now named: the refinement lattice of partitions of a slot, with meet and join, so readers at different depths occupy points in one lattice.
+- **Qualifies the free interior (sec. 4.1).** "Free" means priority is not *sold*, not that order is absent; conflicting transactions are still serialized, and an instantiation must name the intra-quantum rule.
+- **Qualifies the confidence relation (sec. 4.6).** `confidence ~ 1 - epsilon/Q` is a modelling assumption under uniform arrivals, not a law, and TrueTime's bounded epsilon rests on single-domain clock infrastructure that permissionless validators do not share.
+- **Promotes the composition rule from open question to prerequisite (sec. 4.2).** How commitments from different providers over shared state resolve to one outcome is a precondition on the architecture, not deferred work.
 
----
+**Version 0.3** (July 23, 2026)
 
-**Version 0.2** - substantial revision following survey of preconfirmation, strawmap, and sub-second L1 literature.
+- **Narrows the sec. 4.3 verification result.** Cross-quantum ordering verification is cheap and the fineness argument rests only on that; *quantum-assignment* integrity is a separate unsolved arrival-witness problem. Earlier versions did not separate the two.
+- **Qualifies interior freedom (sec. 4.4).** Constraining a quantum's interior re-imports verification cost, so fineness and interior freedom are two faces of one property.
+- **Adds the clock-uncertainty floor (sec. 4.6).** The quantum boundary is an interval of width epsilon, not a point, giving a resolution-confidence tradeoff and the fine / hard-bounded / consensus-free trilemma.
 
-Changes from v0.1:
-- introduces the **lattice** framing and sub-channels reading at differing depths (sec. 4.2), replacing granularity-as-provider-property alone;
-- **retains "quantum"** over "round," with the overloading argument and indivisibility rationale stated (sec. 7.1);
-- **removes any specified quantum size**, replacing it with the structural result that commitment scale is not floor-limited by consensus latency (sec. 4.3);
-- **re-grounds the rejection of Option C** on that same result - consensus status is incompatible with fineness - rather than on a cost judgment (sec. 5.3);
-- adds sec. 2.1 correction: the EF strawmap contemplates 2s slots, so this note does not claim to end slot-time reduction;
-- adds sec. 2.3 sub-100ms frontier and Figure 1, framed as *uniformly imposed* resolution - the contrast the lattice addresses;
-- adds sec. 2.4 timing taxonomy separating block time, finality, E2E latency, and ordering-commitment resolution;
-- adds sec. 6 competitive positioning, with RN-03 sec. 6 confounds preserved;
-- adds sec. 7.1 differential table and sec. 7.2 missing elements.
+**Version 0.2**
 
-Open drafting issues: sub-channel definition needs fixing (sec. 4.2, sec. 10); sec. 8's conditions need development; the propagation-versus-arrival gap (sec. 2.2) may warrant its own empirical note; Figure 1's underlying metric should be verified against Chainspect methodology before publication.
+- **Withdraws any specified quantum size.** Replaced by the structural result that commitment scale is not floor-limited by consensus latency.
+- **Re-grounds the rejection of Option C** on that structural result - consensus status is incompatible with fineness - rather than on a cost judgment.
+- **Corrects the slot-time framing (sec. 2.1).** The EF strawmap contemplates 2s slots; this note does not claim to stop slot-time reduction.
+- **Introduces the lattice framing** (sec. 4.2), replacing granularity-as-provider-property alone.
