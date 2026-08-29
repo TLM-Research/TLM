@@ -168,7 +168,7 @@ Because both are priced on one curve, the curve's **shape** carries information.
 | **Humped** | a scheduled event at a particular horizon lifts rates at that tenor, leaving both the immediate and the distant regions lower | a maturity-specific supply or demand concentration |
 | **Flat** | a balanced mix with no strong expectation either way | equilibrium |
 
-Note that **inversion is the normal congestion state for a blockchain**, not an anomaly: a surge raises the near quanta far above the forward horizon. That the curve can express this at all is the point. A scalar spot fee reports one number and can express none of these states; a curve reports the distribution of demand across time, and its shape becomes a public signal that participants - and the protocol's own control logic - can read and act on.
+Note that **inversion is the normal congestion state for a blockchain**, not an anomaly: a surge raises the near quanta far above the forward horizon. A scalar spot fee reports one number and can express none of these states; a curve reports the distribution of demand across time, and its shape becomes a public signal that participants - and the protocol's own control logic - can read and act on.
 
 ### 6.4 The swap curve: fixed versus floating
 
