@@ -120,7 +120,7 @@ This separates
 
 A TEP is **transaction-level**. Stream-level properties (cadence,
 persistence, predictability, forecast reliability) belong to the
-**Temporal Demand Profile (TDP)** developed in RN-02; the two are
+**Temporal Stream Profile (TSP)** developed in RN-02; the two are
 complementary, and RN-02 treats their interaction.
 
 Representation-neutrality (sec. 5) is the interface goal, but a note
@@ -251,7 +251,7 @@ If we look from the angle of communicating information in a distributed system, 
 
 **Protocol-visible is not the same as publicly revealed.** A deadline or an urgency field also exposes trading intent, and a profile visible in a public mempool before ordering can be priced against or front-run. *When* a field becomes visible is a design lever (committed-and-hidden, builder-visible, consensus-certified, or revealed only after sequencing), and it governs extraction. This note treats revelation timing as an open dimension (RN-02 develops it), not as pure information gain.
 
-**Not every field can be verified the same way.** A useful profile mixes certified facts (resource use, an authenticated deadline), observed statistics (recurrence, forecast error, mostly stream-level, TDP), declared preferences, and payment-bearing bids. A missed deadline is observable; the counterfactual value of a different execution time is not, so private value is never directly verifiable. Under the program's marked pricing (RN-02, RN-10/RN-11) this is acceptable: a class is charged at its prevailing marked rate, so selecting an urgent class means paying the urgent rate: a declaration is paid for, not policed. RN-02 sec. 6 develops the field classification and the pricing argument.
+**Not every field can be verified the same way.** A useful profile mixes certified facts (resource use, an authenticated deadline), observed statistics (recurrence, forecast error, mostly stream-level, TSP), declared preferences, and payment-bearing bids. A missed deadline is observable; the counterfactual value of a different execution time is not, so private value is never directly verifiable. Under the program's marked pricing (RN-02, RN-10/RN-11) this is acceptable: a class is charged at its prevailing marked rate, so selecting an urgent class means paying the urgent rate: a declaration is paid for, not policed. RN-02 sec. 6 develops the field classification and the pricing argument.
 
 ---------------------------------------------------------------
 

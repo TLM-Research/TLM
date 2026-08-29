@@ -28,7 +28,7 @@ The temporal characteristics become protocol-visible through representations at 
 - execution priority (sensitivity to ordering within a slot)
 - acceptable execution variability
 
-### Stream-level: Temporal Demand Profile (TDP)
+### Stream-level: Temporal Stream Profile (TSP)
 
 - continuity / persistence
 - predictability (forecastability of aggregate demand)
@@ -59,7 +59,7 @@ Hyperliquid illustrates that transaction urgency and stream predictability are d
 
 ## 8. Architectural Principles
 
-- concept before mechanism - but with the *minimal* consuming behavior and cost binding co-specified, since a descriptor has no meaning or integrity without them (illustratively: a TEP consumed by a deadline-aware ordering rule, a TDP consumed by a capacity-forecast / reservation rule - sketches, not commitments)
+- concept before mechanism - but with the *minimal* consuming behavior and cost binding co-specified, since a descriptor has no meaning or integrity without them (illustratively: a TEP consumed by a deadline-aware ordering rule, a TSP consumed by a capacity-forecast / reservation rule - sketches, not commitments)
 - minimal, coarse protocol-visible information
 - protocol neutrality via open, marked-price selection
 - application independence
@@ -80,7 +80,7 @@ These are open problems. RN-02 takes a stance; it does not claim to resolve them
 - the minimum credible descriptor whose scheduling gain exceeds its disclosure and extraction cost (the note's central question)
 - revelation timing of a class selection, and its effect on extraction
 - the reach of marked pricing in neutralizing advantage, and where verification is genuinely needed
-- minimal consuming behavior for each representation (the TEP and TDP sketches in sec. 8, made precise)
+- minimal consuming behavior for each representation (the TEP and TSP sketches in sec. 8, made precise)
 - transaction- versus stream-level interaction
 - builder scheduling benefit
 - efficiency measurement (a counterfactual for the sharing goal, sec. 5)

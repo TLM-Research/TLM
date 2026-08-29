@@ -35,7 +35,7 @@ A design that computes a global, multi-slot optimum but then demands global coor
 
 ```
         Demand-description plane            applications declare temporal
-        (intent / TEP / TDP)                characteristics: duration,
+        (intent / TEP / TSP)                characteristics: duration,
                  |                          intensity, variability,
                  v                          flexibility, deadline
    +-----------------------------+

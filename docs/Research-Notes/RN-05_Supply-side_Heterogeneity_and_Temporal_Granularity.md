@@ -23,7 +23,7 @@ date: "August 24, 2026"
 
 ## Abstract
 
-The TLM notes to date are demand-side. Temporal Liquidity names the temporal characteristics of demand; the Temporal Execution Profile (RN-01) and Temporal Demand Profile (RN-02) represent them. Supply appears only briefly - RN-01 sec. 5.2 observes that execution providers possess heterogeneous capabilities - and is not developed.
+The TLM notes to date are demand-side. Temporal Liquidity names the temporal characteristics of demand; the Temporal Execution Profile (RN-01) and Temporal Stream Profile (RN-02) represent them. Supply appears only briefly - RN-01 sec. 5.2 observes that execution providers possess heterogeneous capabilities - and is not developed.
 
 This note takes up that gap. If demand is temporally heterogeneous, the question is whether *supply* should be too: whether a single undifferentiated execution service is the right architecture, or whether a family of differentiated services, distinguished by temporal granularity, better matches heterogeneous demand.
 
@@ -382,7 +382,7 @@ RN-04 and RN-05 are different layers of the supply side, not competing notes. **
 
 ```
 Temporal Liquidity (demand umbrella)
-   -> TEP / TDP           demand representations       (RN-01 / RN-02)
+   -> TEP / TSP           demand representations       (RN-01 / RN-02)
    -> Quantum lattice     supply coordinate system     (RN-05 - this note)
    -> Service classes     execution semantics          (RN-04)
    -> Execution engines   Monad-class, per service

@@ -74,7 +74,7 @@ The TLM notes now have all three layers of a market design, and RN-04 is the mis
 
 ```
 Demand side (RN-01/RN-02):  applications describe temporal demand
-                            (TEP per transaction; TDP per stream)
+                            (TEP per transaction; TSP per stream)
                                         |
 Pricing layer:              fees match demand to services
                             (tiered/urgency pricing - Kiayias et al.;

@@ -1219,7 +1219,7 @@ The correct mathematical starting point may therefore combine:
 
 # Part III — Demand-Side Temporal Information
 
-## 16. Temporal Demand Profiles
+## 16. Temporal Stream Profiles
 
 For stream \(i\), represent temporal demand abstractly by
 
