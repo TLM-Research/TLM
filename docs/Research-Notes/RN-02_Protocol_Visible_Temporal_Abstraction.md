@@ -67,26 +67,16 @@ Hyperliquid illustrates that transaction urgency and stream predictability are d
 - marked pricing as the primary integrity mechanism; realized-behavior verification where a benefit is not directly priced
 - resistance to strategic manipulation
 
-## 9. Relationship to TLM
+## 9. What this note assumes, and what it leaves open
 
-- Foundation Statement - *why* (the framework and principles).
-- `Temporal-Liquidity` - *what the object is* (the umbrella concept and its dimensions).
-- RN-01 - the transaction-level representation (TEP).
-- RN-02 (this note) - *why* the characteristics should be protocol-visible at all, and through what representations.
-- Future mechanism notes - *how*.
+This note assumes the umbrella concept of temporal liquidity and the transaction-level
+representation, and argues one thing on top of them: that temporal characteristics should be
+visible to the protocol, and through which representations. It proposes no mechanism.
 
-These are open problems. RN-02 takes a stance; it does not claim to resolve them.
-
-- the minimum credible descriptor whose scheduling gain exceeds its disclosure and extraction cost (the note's central question)
-- revelation timing of a class selection, and its effect on extraction
-- the reach of marked pricing in neutralizing advantage, and where verification is genuinely needed
-- minimal consuming behavior for each representation (the TEP and TSP sketches in sec. 8, made precise)
-- transaction- versus stream-level interaction
-- builder scheduling benefit
-- efficiency measurement (a counterfactual for the sharing goal, sec. 5)
-- decentralization and extraction resistance
-- positioning against intents / order-flow auctions and multidimensional fees (partially competing, not purely complementary)
-- evaluation under transaction-fee-mechanism criteria (DSIC / MMIC / OCA-proofness)
+Three questions are left open and the note takes a stance on each without resolving it: the
+minimum credible descriptor whose scheduling gain exceeds its disclosure and extraction cost,
+which is the note's central question; the revelation timing of a class selection and its effect
+on extraction; and how a declaration is made credible by pricing rather than policing.
 
 ## Closing
 

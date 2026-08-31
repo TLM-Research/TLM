@@ -371,18 +371,15 @@ Candidate conditions worth investigating: whether commitment overhead can be mad
 
 ---
 
-## 11. Relationship to TLM
+## 11. What this note supplies, and to what
 
-- Foundation Statement - the framework and principles.
-- `Temporal-Liquidity` - the umbrella concept and its dimensions.
-- RN-01 - transaction-level demand representation (TEP).
-- RN-02 - why temporal characteristics should be protocol-visible, and through what representations.
-- RN-03 - empirical motivation for multidimensional temporal demand.
-- RN-04 - the **service classes** (execution semantics) built *on* the lattice; its sub-slot lane is a sub-channel of this note's lattice (see below).
-- RN-05 (this note) - the **supply-side substrate**: temporal granularity, the quantum lattice, and the market-structure question they raise.
-- Future mechanism notes - pricing, tier structure, and settlement remain out of scope.
+This note is the supply side: temporal granularity, the quantum lattice, and the market-structure
+question they raise. It assumes a demand-side representation exists and says nothing about how
+demand is described. Pricing, tier structure and settlement are out of scope.
 
-### Services on the substrate: relationship to RN-04
+One layering is worth stating because the two are easily confused.
+
+### The substrate and the services on it
 
 RN-04 and RN-05 are different layers of the supply side, not competing notes. **RN-05 supplies the coordinate substrate** - the lattice on which ordering commitments are expressed (partial order across quanta; readers at varying depth). **RN-04 supplies the execution semantics** - a small portfolio of service classes (Continuous State, Protected Window, Scheduled, Best-Effort) defined over the demand dimensions and layered on that substrate.
 
@@ -435,27 +432,15 @@ Three concessions are made deliberately. Preconfirmation research reached sub-sl
 
 ---
 
-## Revision Note
+## Withdrawn and Qualified Claims
 
-*Substantive changes only - claims added, qualified, or withdrawn, so that anyone citing an earlier version can see what has changed. Editorial, formatting, and metadata changes are in the repository history.*
+*Claims that earlier public versions of this note made and this version does not, so that anyone citing an earlier version can see what has changed. Everything else, including what each draft added, is in the repository history.*
 
-**Version 0.4** (August 24, 2026)
+- **"Arbitrarily fine" is withdrawn (sec. 4.3, v0.4).** v0.3 concluded the quantum could be arbitrarily fine because it carries no consensus status. It is now stated as much finer than block time but bounded: below by commitment and verification cost, by clock uncertainty, and by the propagation and observability a coordinate needs in order to stay neutral rather than becoming a colocation subsidy. The separability of granularity from block time is retained. The unbounded form should not be cited.
+- **No quantum size is specified (v0.2).** Earlier drafts named one. The claim is now structural: commitment scale is not floor-limited by consensus latency.
+- **The sec. 4.3 verification result is narrower than it was (v0.3).** Cross-quantum ordering verification is cheap and the fineness argument rests only on that. Quantum-assignment integrity is a separate and unsolved arrival-witness problem. Earlier versions did not separate the two.
+- **The confidence relation is a modelling assumption, not a law (sec. 4.6, v0.4).** `confidence ~ 1 - epsilon/Q` holds under uniform arrivals. TrueTime's bounded epsilon rests on single-domain clock infrastructure that permissionless validators do not share.
+- **"Free" interior means priority is not sold, not that order is absent (sec. 4.1 and 4.4, v0.3 and v0.4).** Conflicting transactions are still serialized, and an instantiation must name the intra-quantum rule. Constraining a quantum's interior re-imports verification cost, so fineness and interior freedom are two faces of one property.
+- **The note does not claim to stop slot-time reduction (sec. 2.1, v0.2).** The EF strawmap contemplates 2s slots. Earlier framing implied otherwise.
 
-- **Withdraws "arbitrarily fine" (sec. 4.3).** v0.3 concluded the quantum could be arbitrarily fine because it carries no consensus status. It is now stated as *much finer than block time but bounded* - below by commitment and verification cost, by clock uncertainty, and by the propagation and observability a coordinate needs in order to stay neutral rather than becoming a colocation subsidy. The separability of granularity from block time is retained; the unbounded form should not be cited.
-- **Justifies "lattice" (sec. 4.2).** Previously asserted. The object is now named: the refinement lattice of partitions of a slot, with meet and join, so readers at different depths occupy points in one lattice.
-- **Qualifies the free interior (sec. 4.1).** "Free" means priority is not *sold*, not that order is absent; conflicting transactions are still serialized, and an instantiation must name the intra-quantum rule.
-- **Qualifies the confidence relation (sec. 4.6).** `confidence ~ 1 - epsilon/Q` is a modelling assumption under uniform arrivals, not a law, and TrueTime's bounded epsilon rests on single-domain clock infrastructure that permissionless validators do not share.
-- **Promotes the composition rule from open question to prerequisite (sec. 4.2).** How commitments from different providers over shared state resolve to one outcome is a precondition on the architecture, not deferred work.
-
-**Version 0.3** (July 23, 2026)
-
-- **Narrows the sec. 4.3 verification result.** Cross-quantum ordering verification is cheap and the fineness argument rests only on that; *quantum-assignment* integrity is a separate unsolved arrival-witness problem. Earlier versions did not separate the two.
-- **Qualifies interior freedom (sec. 4.4).** Constraining a quantum's interior re-imports verification cost, so fineness and interior freedom are two faces of one property.
-- **Adds the clock-uncertainty floor (sec. 4.6).** The quantum boundary is an interval of width epsilon, not a point, giving a resolution-confidence tradeoff and the fine / hard-bounded / consensus-free trilemma.
-
-**Version 0.2**
-
-- **Withdraws any specified quantum size.** Replaced by the structural result that commitment scale is not floor-limited by consensus latency.
-- **Re-grounds the rejection of Option C** on that structural result - consensus status is incompatible with fineness - rather than on a cost judgment.
-- **Corrects the slot-time framing (sec. 2.1).** The EF strawmap contemplates 2s slots; this note does not claim to stop slot-time reduction.
-- **Introduces the lattice framing** (sec. 4.2), replacing granularity-as-provider-property alone.
+**31 August 2026.** This section replaces a Revision Note that ran the full draft sequence from v0.2. The withdrawals and qualifications above are what a reader needs; the record of what each draft added is kept in the programme's working files. No result, definition or claim is changed.

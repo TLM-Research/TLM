@@ -27,7 +27,7 @@ Consistent with the TLM Vision Statement, **Temporal Liquidity** is treated here
 
 The note's central claim is narrow. Hyperliquid is **motivating evidence** that multidimensional temporal demand exists and is systematically under-represented by spot fee markets - not proof that a protocol-visible temporal abstraction would remove the need for specialized chains. Used this way, it is a concrete, cited on-ramp to TLM.
 
-The current version aligns the definition to the Vision (Temporal Liquidity as umbrella) and grounds the argument in the empirical and bibliographic citations; changes across drafts are recorded in the Revision Note.
+The current version aligns the definition to the Vision (Temporal Liquidity as umbrella) and grounds the argument in the empirical and bibliographic citations. Claims that earlier versions made and this one withdraws are listed at the end.
 
 ---
 
@@ -197,22 +197,13 @@ Hyperliquid exposes execution demand that price alone describes poorly: a sustai
 
 ---
 
-## Revision Note
+## Withdrawn and Qualified Claims
 
-*Substantive changes only - claims added, qualified, or withdrawn, so that anyone citing an earlier version can see what has changed. Editorial, formatting, and metadata changes are in the repository history.*
+*Claims that earlier public versions of this note made and this version does not, so that anyone citing an earlier version can see what has changed. Everything else, including what each draft added, is in the repository history.*
 
-**Version 0.7**
+- **The note is a motivating case study, not an empirical one (v0.7).** It describes Hyperliquid's architecture and cites adjacent empirical work; it does not measure Hyperliquid's own workload. Earlier versions described it as an empirical case study, and that description should not be cited.
+- **The sec. 5 queueing claim is qualified (v0.7).** Pollaczek-Khinchine concerns service-time variance, not arrival forecastability. Predictability lowers delay only given a forecast-aware scheduler and a stated error.
+- **Predictability is inside Temporal Liquidity, not outside it (v0.5).** v0.2 placed predictability outside the umbrella concept. That framing should not be cited.
+- **The extended exchange-architecture comparison of v0.3 and v0.4 is not carried forward (v0.5).** It broadened scope beyond the note's motivating purpose and is no longer part of the note.
 
-- **Reframes the note from an *empirical* case study to a *motivating* one.** The note describes Hyperliquid's architecture and cites adjacent empirical work; it does not measure Hyperliquid's own workload. Earlier phrasing overstated this, and the "empirical case study" description should not be cited.
-- **Qualifies the sec. 5 queueing claim.** Pollaczek-Khinchine concerns service-time variance, not arrival forecastability; predictability lowers delay only given a forecast-aware scheduler and a stated error.
-- **Adds sec. 6.2, HyperEVM's dual-block lanes**, as a production instance of coarse protocol-native temporal differentiation, with its limits stated: two predefined classes, account-based selection, and latency coupled to atomic capacity.
-
-**Version 0.6**
-
-- **Adds the system as actually built (sec. 6.1)** - HyperCore and HyperEVM, including CoreWriter's deliberate delay as a temporal mechanism - and frames two execution environments under one consensus as the RN-08 / RN-09 precursor.
-
-**Version 0.5**
-
-- **Aligns the definition to the Vision: Temporal Liquidity is the umbrella**, with predictability, continuity, and execution priority as its dimensions. v0.2 placed predictability outside Temporal Liquidity; that framing should not be cited.
-- **Adds execution priority as a dimension**, grounded in Hyperliquid's price-time-priority book.
-- **Does not adopt v0.3 / v0.4's extended exchange-architecture comparison**, which broadened scope beyond the note's motivating purpose.
+**31 August 2026.** This section replaces a Revision Note that ran the full draft sequence from v0.5. The withdrawals above are what a reader needs; the record of what each draft added is kept in the programme's working files. No result, claim or citation is changed.

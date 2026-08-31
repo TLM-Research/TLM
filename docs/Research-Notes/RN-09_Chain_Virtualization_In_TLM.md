@@ -88,9 +88,11 @@ Read together: security can be shared, and execution can be sovereign, and both 
 
 The constitutive one is the **consistency model** of §5: which point on the sovereignty / atomic-state / host-validation triangle the host enforces. That choice decides whether the concept is coherent and distinct at all, and it comes before pricing. After it comes the mechanism itself: **how virtualization is realized** - how a domain is marked, admitted, scheduled, isolated, and enforced; how each domain's fee and runtime reduce to the host's accounting - a translation from a domain's own token or fee into the host's single-numeraire pricing of physical capacity, with a basis and a default rule (RN-10 sec. 3.1); and the per-domain state-transition authority, validation path, and finality that complete the definition of §4. That is the subject of a planned mechanism note. One thing that note must settle empirically: whether virtualization *expands* the set of project types served or merely *partitions* existing host capacity - static domains may only partition, and any expansion has to come from conflict isolation, complementary resource profiles, parallelism, or statistical multiplexing, not from the label. Named alongside it: the **shared-versus-virtualized boundary** - what a per-project token, fee, and governance policy can control without fragmenting shared state (§1, §5); cross-domain atomicity across different runtimes; validator specialization and its centralization risk; fairness and minimum service for ordinary traffic; and truthful revelation of temporal and class profiles. Several have analogs in §6 - allocation and core scheduling in Polkadot, shared-sequencer coordination in the rollup ecosystem - which are sources of evidence rather than untried ground.
 
-## 8. Relationship to the TLM notes
+## 8. What this note is
 
-RN-09 is the *conceptual, system-architecture* view. RN-01/02 supply the demand representations, RN-04 the service classes, RN-05 the lattice, RN-06 an execution engine and the networking framing, RN-07 the layered control plane, and RN-08 the comparative survey that motivates the design. Precursors in the wild include Hyperliquid's HyperCore/HyperEVM under one consensus (RN-03), Monad as an execution substrate (RN-06), and Aptos's Block-STM (RN-08); Ethereum is the neutral settlement layer this note aims to enhance. The mechanism note will follow from here.
+A conceptual, system-architecture view. It assumes the demand representations, the service
+classes, the lattice and the layered control plane, and asks what they look like when composed.
+It contributes no new primitive.
 
 ## 9. Positioning
 

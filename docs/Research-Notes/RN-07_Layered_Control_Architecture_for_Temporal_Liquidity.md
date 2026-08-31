@@ -157,9 +157,11 @@ The partition is not a matter of taste: a decision belongs in the slowest layer 
 
 ---
 
-## 9. Relationship to other notes
+## 9. What this note assumes
 
-RN-07 is the architectural spine. RN-01/02 populate the demand-description plane; RN-04 populates the fast-local control layer (service classes) and RN-05 the data plane (the substrate on which per-slot ordering is deterministic); RN-06 analyzes a supply-side engine (Monad) that sits inside the data plane and motivates the OS->networking framing this note completes. The temporal-liquidity reserve (Overview open problems) is the flagship slow-global mechanism whose admissibility this note makes testable.
+This note takes the demand representation and the supply-side substrate as given and asks one
+question about them: how control should be layered so that an allocation remains checkable. It
+proposes no representation, no substrate and no mechanism.
 
 ---
 

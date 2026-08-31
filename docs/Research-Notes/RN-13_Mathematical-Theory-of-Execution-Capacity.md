@@ -2,7 +2,7 @@
 
 ## Multi-User Demand, Temporal Resolution, Information, and Fundamental Limits
 
-**Draft v0.5 — August 2026**  
+**Draft v0.5, August 2026**  
 **Research Note:** RN-13  
 **Status:** Working Draft
 
@@ -256,7 +256,7 @@ These quantities must remain distinct. Richer demand information may reduce sche
 
 ---
 
-# Methodological Spine — Capacity Before Mechanism
+# Methodological Spine: Capacity Before Mechanism
 
 The central commitment of this paper is to define **execution capability before execution mechanism**.
 
@@ -672,7 +672,7 @@ The others may be improved through engineering, protocol design, or architectura
 
 ---
 
-# Part I — Fundamental Capacity
+# Part I: Fundamental Capacity
 
 ## 5. Shannon's Methodological Lesson
 
@@ -810,7 +810,7 @@ C_L(\delta)
 \log_2 |\Omega(T,\delta)|.
 \]
 
-This quantity is **not** a capacity and should not be read as one. It has no demand or welfare content; it grows without bound as \(\delta\to 0\) unless the resolution-dependent capacity \(K(\delta)\) of \S8.4 constrains \(|\Omega|\); and its value depends on how schedules are individuated. It is at most a *diagnostic of the substrate's expressive richness* — the analogue of a zero-error counting capacity for a channel that has not yet been given a notion of message. The economically meaningful objects are the oracle welfare \(W^{*}\) (\S31) and the service region \(\mathcal{C}(\delta,I,\epsilon)\) (\S34), which carry demand and value; \(C_L\) is retained only to make explicit that lattice richness alone is not capacity.
+This quantity is **not** a capacity and should not be read as one. It has no demand or welfare content; it grows without bound as \(\delta\to 0\) unless the resolution-dependent capacity \(K(\delta)\) of \S8.4 constrains \(|\Omega|\); and its value depends on how schedules are individuated. It is at most a *diagnostic of the substrate's expressive richness*, the analogue of a zero-error counting capacity for a channel that has not yet been given a notion of message. The economically meaningful objects are the oracle welfare \(W^{*}\) (\S31) and the service region \(\mathcal{C}(\delta,I,\epsilon)\) (\S34), which carry demand and value; \(C_L\) is retained only to make explicit that lattice richness alone is not capacity.
 
 The main value of the lattice is therefore not the expression above. It is that it gives the supply side an explicit state space against which heterogeneous demand can be matched.
 
@@ -926,7 +926,7 @@ The theory should therefore search for an **economically and physically meaningf
 
 ---
 
-# Part II — Lessons from Wireless Capacity Theory
+# Part II: Lessons from Wireless Capacity Theory
 
 ## 9. From Shannon to Time-Varying Wireless Channels
 
@@ -1217,7 +1217,7 @@ The correct mathematical starting point may therefore combine:
 
 ---
 
-# Part III — Demand-Side Temporal Information
+# Part III: Demand-Side Temporal Information
 
 ## 16. Temporal Stream Profiles
 
@@ -1322,9 +1322,9 @@ If \(\delta>\tau_i^{\mathrm{req}}\), the service lies outside the architecture's
 
 This creates a third exclusion mechanism:
 
-- **price exclusion** — execution is feasible but uneconomic;
-- **latency exclusion** — an individual operation cannot meet its arrival-to-execution deadline;
-- **cadence exclusion** — the architecture cannot expose successive meaningful execution opportunities frequently enough for a persistent service.
+- **price exclusion**, execution is feasible but uneconomic;
+- **latency exclusion**, an individual operation cannot meet its arrival-to-execution deadline;
+- **cadence exclusion**, the architecture cannot expose successive meaningful execution opportunities frequently enough for a persistent service.
 
 A throughput measure can therefore be misleading. A chain may process a large number of operations over a slot while failing to provide the state-transition frequency required by an application.
 
@@ -1489,7 +1489,7 @@ This decomposition is central to the proposed theory.
 
 ---
 
-# Part IV — Capacity as a Function of Information
+# Part IV: Capacity as a Function of Information
 
 ## 20. Information-Conditioned Capacity
 
@@ -1509,7 +1509,7 @@ The scheduler chooses an allocation based on
 
 Let \(I\) summarize the execution-relevant information available to the scheduler.
 
-**The type of \(I\).** Throughout, \(I\) denotes an **information structure** — the map \(X=f(D)\) together with the partition of the latent demand space it induces — ordered in the **Blackwell** sense: \(I_1 \succeq I_0\) means \(I_1\) is a sufficient refinement of \(I_0\), so any allocation realizable under \(I_0\) is realizable under \(I_1\). The monotonicity of capacity in information (\S21) is stated with respect to this partial order, not a scalar. Scalar summaries — a bit-rate for the message \(X\), or the mutual information \(\mathrm{I}(D;X)\) — are used only as *proxies* when a total order is needed (for instance the minimal-information quantity \(I_{\min}(\eta)\) of \S22), and whether such a proxy is monotonically linked to scheduling gain is itself an open question (\S48). Two Blackwell-incomparable information structures may not be ranked by capacity at all.
+**The type of \(I\).** Throughout, \(I\) denotes an **information structure**, the map \(X=f(D)\) together with the partition of the latent demand space it induces, ordered in the **Blackwell** sense: \(I_1 \succeq I_0\) means \(I_1\) is a sufficient refinement of \(I_0\), so any allocation realizable under \(I_0\) is realizable under \(I_1\). The monotonicity of capacity in information (\S21) is stated with respect to this partial order, not a scalar. Scalar summaries (a bit-rate for the message \(X\), or the mutual information \(\mathrm{I}(D;X)\)) are used only as *proxies* when a total order is needed (for instance the minimal-information quantity \(I_{\min}(\eta)\) of \S22), and whether such a proxy is monotonically linked to scheduling gain is itself an open question (\S48). Two Blackwell-incomparable information structures may not be ranked by capacity at all.
 
 With that fixed, we propose the candidate capacity family
 
@@ -1643,7 +1643,7 @@ A TLM profile should therefore be evaluated not by how expressive it is, but by 
 
 ---
 
-# Part V — Markets, Prices, and Feedback
+# Part V: Markets, Prices, and Feedback
 
 ## 24. Kelly: Capacity as an Economic Allocation Problem
 
@@ -1748,7 +1748,7 @@ Capacity analysis should eventually incorporate this endogeneity. The first theo
 
 ---
 
-# Part VI — Blockchain as a Motivating Application
+# Part VI: Blockchain as a Motivating Application
 
 ## 27. Existing Blockchain Capacity Work
 
@@ -1865,7 +1865,7 @@ A useful theory must be capable of showing both.
 
 ---
 
-# Part VII — Candidate Formal Model
+# Part VII: Candidate Formal Model
 
 ## 31. Minimal Two-Sided Model
 
@@ -1943,7 +1943,7 @@ subject to the constraints above.
 
 This is not yet a complete execution theory. But it gives us a clean benchmark against which information restrictions and online scheduling can be introduced.
 
-**Relationship to RN-11, and tractability.** This program is the same object as the execution-capital allocation problem of **RN-11**, in different notation. RN-11 writes the allocation as \(x_i(s,t)\) with time-shaped value \(v_i(s,t)=V_i(s)\,\phi_i(t-\tau_i(s))\), where the decay function \(\phi_i\) generalizes the hard feasible set \(F_{ij}\) used here: \(F_{ij}\) is the rectangular special case \(\phi_i\in\{0,1\}\), and the value profile \(v_{ij}(q)\) above subsumes \(\phi_i\) when values are allowed to vary across quanta. RN-11 additionally reads the dual shadow prices on per-quantum capacity as a **welfare benchmark on the value of capacity**, which it deliberately does **not** identify with the market block-fee-rate term structure — whether a decentralized fee market reproduces those shadow prices is left open there. That benchmark is the pricing-side counterpart of the capacity benchmark defined here and is not re-derived in this note. To keep the notes from carrying two drifting copies, **RN-11 is treated as the owner of the canonical allocation program** and this note references it (see \S53a). Finally, the oracle is clairvoyant *and* computationally unbounded by assumption (\S18): the program is a generalized assignment problem, NP-hard in general, so the simulation targets of \S52 should budget for exact small instances plus relaxations rather than assume \(W^{*}\) is cheap to compute at scale.
+**Relationship to RN-11, and tractability.** This program is the same object as the execution-capital allocation problem of **RN-11**, in different notation. RN-11 writes the allocation as \(x_i(s,t)\) with time-shaped value \(v_i(s,t)=V_i(s)\,\phi_i(t-\tau_i(s))\), where the decay function \(\phi_i\) generalizes the hard feasible set \(F_{ij}\) used here: \(F_{ij}\) is the rectangular special case \(\phi_i\in\{0,1\}\), and the value profile \(v_{ij}(q)\) above subsumes \(\phi_i\) when values are allowed to vary across quanta. RN-11 additionally reads the dual shadow prices on per-quantum capacity as a **welfare benchmark on the value of capacity**, which it deliberately does **not** identify with the market block-fee-rate term structure. Whether a decentralized fee market reproduces those shadow prices is left open there. That benchmark is the pricing-side counterpart of the capacity benchmark defined here and is not re-derived in this note. To keep the notes from carrying two drifting copies, **RN-11 is treated as the owner of the canonical allocation program** and this note references it (see \S53a). Finally, the oracle is clairvoyant *and* computationally unbounded by assumption (\S18): the program is a generalized assignment problem, NP-hard in general, so the simulation targets of \S52 should budget for exact small instances plus relaxations rather than assume \(W^{*}\) is cheap to compute at scale.
 
 ---
 
@@ -2012,7 +2012,7 @@ W^{*}(\Delta/4)
 \leq \cdots
 \]
 
-under ideal subdivision assumptions — specifically, for the divisible relaxation at fixed per-horizon capacity (the scope note in \S8.2). For the indivisible program of \S31 with resolution-dependent per-quantum capacity \(K(\delta)\), this ordering can fail unless jobs may span multiple contiguous quanta.
+under ideal subdivision assumptions, specifically, for the divisible relaxation at fixed per-horizon capacity (the scope note in \S8.2). For the indivisible program of \S31 with resolution-dependent per-quantum capacity \(K(\delta)\), this ordering can fail unless jobs may span multiple contiguous quanta.
 
 Define
 
@@ -2073,62 +2073,62 @@ The largest gains may require **joint improvement of both sides**.
 
 ---
 
-# Part VIII — Research Hypotheses
+# Part VIII: Research Hypotheses
 
 ## 35. Capacity Hypotheses
 
-### H1 — Capacity-Region Hypothesis
+### H1: Capacity-Region Hypothesis
 
 Shared execution systems are better characterized by a multi-dimensional achievable workload region than by a single throughput scalar.
 
-### H2 — Temporal-Resolution Hypothesis
+### H2: Temporal-Resolution Hypothesis
 
 Holding physical resources fixed, finer scheduling resolution can enlarge the achievable execution region when demand contains economically meaningful sub-slot temporal heterogeneity. (Formally a relaxation result for the divisible program at fixed per-horizon capacity; see the scope note in \S8.2.)
 
-### H3 — Diminishing-Resolution Hypothesis
+### H3: Diminishing-Resolution Hypothesis
 
 Capacity gain from finer temporal resolution eventually diminishes once the quantum becomes materially smaller than the characteristic temporal variation of demand.
 
-### H3a — Service-Cadence Hypothesis
+### H3a: Service-Cadence Hypothesis
 
 For persistent execution services, aggregate throughput and individual transaction latency do not fully determine feasibility. A service may additionally require a maximum spacing between consecutive meaningful executions. Finer lattice resolution can enlarge the capacity region by admitting service classes whose required cadence lies below the block or slot interval.
 
-### H3b — Block-Time Decoupling Hypothesis
+### H3b: Block-Time Decoupling Hypothesis
 
 The block or consensus slot interval need not be the fundamental minimum application execution interval. Architectures that safely expose multiple meaningful execution opportunities within a slot may support service cadences determined by the execution lattice quantum rather than the slot duration.
 
 
-### H4 — Information-Enhanced Capacity Hypothesis
+### H4: Information-Enhanced Capacity Hypothesis
 
 Holding physical resources and temporal resolution fixed, credible temporal demand information can enlarge the achievable service or welfare region.
 
-### H5 — Joint Capacity Hypothesis
+### H5: Joint Capacity Hypothesis
 
 Execution capacity is jointly constrained by the temporal resolution of supply and the execution-relevant information exposed by demand.
 
-### H6 — Multiuser Temporal-Multiplexing Hypothesis
+### H6: Multiuser Temporal-Multiplexing Hypothesis
 
 Heterogeneous temporal flexibility creates multiplexing gain because flexible streams can be shifted away from scarce execution intervals while delay-intolerant streams consume near-term capacity.
 
-### H7 — Delay-Constrained Capacity Hypothesis
+### H7: Delay-Constrained Capacity Hypothesis
 
 A workload may lie inside a system's throughput capacity region while lying outside its delay-constrained service region.
 
-### H8 — Information Sufficiency Hypothesis
+### H8: Information Sufficiency Hypothesis
 
 A low-dimensional temporal profile may capture most of the capacity gain obtainable from full demand disclosure.
 
-### H9 — Information Lower-Bound Hypothesis
+### H9: Information Lower-Bound Hypothesis
 
 For a fixed demand model, temporal resolution, and target efficiency \(\eta\), there exists a minimum amount of execution-relevant information required to achieve \(\eta\) of the oracle benchmark.
 
-### H10 — Mechanism Gap Hypothesis
+### H10: Mechanism Gap Hypothesis
 
 Even with identical physical resources and identical information, different market and scheduling mechanisms can realize materially different fractions of the capacity frontier.
 
 ---
 
-# Part IX — Measurement and Experimental Program
+# Part IX: Measurement and Experimental Program
 
 ## 36. Stage 1: Synthetic Capacity Experiments
 
@@ -2253,7 +2253,7 @@ from
 
 ---
 
-# Part X — Prior Work and Intellectual Lineage
+# Part X: Prior Work and Intellectual Lineage
 
 ## 40. Shannon
 
@@ -2364,158 +2364,37 @@ This distinction should be preserved carefully.
 
 ---
 
-# Part XI — Open Questions
+# Part XI: Open Questions
 
-## 47. Formal Questions
+Six questions would change the theory rather than extend it. Each is stated with what turns on it.
 
-1. What is the correct mathematical definition of execution capacity?
-2. Should the primary object be a region, welfare frontier, stability region, or combination?
-3. What is the correct supply-side lattice representation?
-4. Which physical constraints belong inside \(\Omega(T,\delta)\)?
-5. Under what assumptions is capacity monotone as \(\delta\) decreases?
-6. When does finer temporal resolution produce zero gain?
-7. What is the appropriate analogue of a characteristic or coherence time for temporal demand?
-8. How should execution streams with multiple time scales be modeled?
-9. How should state conflicts and precedence constraints alter the lattice?
-10. How should stochastic future capacity be represented?
+**1. What is the correct mathematical definition of execution capacity?** The paper works with a
+region and treats the welfare frontier and the stability region as related readings of it. If the
+primary object is one of the others, the results reorganise around a different centre.
 
-## 48. Information Questions
+**2. Under what assumptions is capacity monotone as the resolution parameter decreases, and when
+does finer resolution produce zero gain?** Monotonicity is assumed in several places. If it fails
+for a class of workloads, the case for finer resolution has to be made per workload rather than in
+general.
 
-11. What temporal information is sufficient for near-optimal allocation?
-12. How should information quantity be measured when messages are semantic rather than raw bits?
-13. Can mutual information between latent demand state and protocol-visible profile predict scheduling gain?
-14. Can an execution-information lower bound be derived?
-15. Is there a rate-distortion-like relationship between temporal-profile precision and acceptable execution-quality loss?
-16. How costly are stale or inaccurate profiles?
-17. What information should remain private?
+**3. Which physical constraints belong inside the feasible set?** The boundary between what the
+model carries and what it treats as exogenous is currently a modelling choice rather than a
+derivation, and the resource coefficient is the clearest instance.
 
-## 49. Market Questions
+**4. What temporal information is sufficient for near-optimal allocation?** The paper argues that
+some is, without bounding how much. A rate-distortion statement relating profile precision to
+execution-quality loss would settle both this and how costly stale profiles are.
 
-18. How can temporal information be elicited truthfully?
-19. How should price interact with temporal flexibility?
-20. When should predictable demand receive different treatment from bursty demand?
-21. How should fairness be defined across heterogeneous temporal classes?
-22. Can shadow prices be defined for lattice cells or future capacity?
-23. How should persistent demand commitments be enforced?
-24. Can temporal pricing increase participation rather than merely redistribute existing blockspace?
+**5. How can temporal information be elicited truthfully?** Every allocation result here assumes
+declarations that mean what they say. The known impossibility results in transaction-fee mechanism
+design bound what is achievable, and the theory does not yet say where it sits against them.
 
-## 50. Blockchain Questions
+**6. How much capacity does slot-level granularity strand in realistic workloads?** This is the
+empirical question the theory exists to make askable. Everything above is analysis; this one is
+measurement, and it decides whether the analysis was worth doing.
 
-25. How much capacity does slot-level temporal granularity strand in realistic blockchain workloads?
-26. How does the capacity-resolution curve differ across Ethereum-like, Monad-like, Aptos-like, and specialized execution substrates?
-27. Which high-frequency applications are physically impossible on a given chain and which are merely excluded by the current service interface?
-28. How much low-value demand is suppressed by spot congestion pricing despite being schedulable at other times?
-29. Can TLM recover materially useful capacity without increasing physical execution resources?
-30. What quantum resolution is justified by real demand rather than arbitrary engineering preference?
-
----
-
-# Part XII — Proposed Research Roadmap
-
-## 51. First Theorem Target
-
-The first theorem should be intentionally modest.
-
-Construct a two-class model:
-
-- class \(U\): urgent jobs with one feasible quantum;
-- class \(F\): flexible jobs with a window of \(k\) feasible quanta.
-
-Fix total physical execution capacity.
-
-Compare:
-
-1. slot-level scheduling;
-2. fine-quantum oracle scheduling;
-3. fine-quantum scheduling without flexibility information;
-4. fine-quantum scheduling with flexibility information.
-
-Seek conditions under which:
-
-\[
-\mathcal{C}_{\mathrm{slot}}
-\subsetneq
-\mathcal{C}_{\mathrm{quantum,no-info}}
-\subseteq
-\mathcal{C}_{\mathrm{quantum,info}}
-\subseteq
-\mathcal{C}^{*}.
-\]
-
-Even one strict-inclusion result would establish that temporal resolution and demand information are distinct sources of execution-capacity gain.
-
----
-
-## 52. First Simulation Target
-
-Build a discrete-event simulator with:
-
-- configurable slot duration;
-- configurable quantum \(\delta\);
-- fixed physical capacity per horizon;
-- heterogeneous temporal demand streams;
-- price-only and profile-aware schedulers;
-- oracle benchmark.
-
-Plot:
-
-\[
-\text{capacity or welfare}
-\quad\text{versus}\quad
-\delta.
-\]
-
-Then plot:
-
-\[
-\text{capacity or welfare}
-\quad\text{versus}\quad
-\text{information interface}.
-\]
-
-Finally estimate the joint surface:
-
-\[
-W(\delta,I).
-\]
-
-This would turn the theory from narrative into measurable research.
-
----
-
-## 53. First Empirical Target
-
-Identify demand traces where temporal structure is economically meaningful.
-
-Examples:
-
-- continuous order-book updates;
-- liquidation bursts;
-- rollup batch submission;
-- oracle updates;
-- recurring settlement;
-- automated machine-to-machine activity.
-
-Estimate:
-
-- characteristic time scales;
-- burstiness;
-- deadline distributions;
-- persistence;
-- feasible execution windows.
-
-Then ask whether a slot-only scheduler destroys economically useful temporal distinctions.
-
----
-
-## 53a. Reconciliation with RN-05 and RN-11
-
-This note deliberately overlaps two existing TLM notes and should reference, not restate, them.
-
-- **RN-05 — the supply substrate.** The execution lattice (\S7–\S8) and the quantum \(\delta\) are RN-05's quantum lattice. RN-05 argues the finest-resolution bound — that a sub-slot ordering quantum is limited by commitment and verification cost rather than by consensus latency — which this note imports as its physical-capability premise. The time-scale hierarchy \(\delta_{\mathrm{exec}}\le\delta_{\mathrm{order}}\le\Delta_{\mathrm{commit}}\le\Delta_{\mathrm{consensus}}\) is the multi-clock reading of the same substrate.
-- **RN-11 — the allocation program.** The benchmark program of \S31 is RN-11's execution-capital allocation problem. RN-11 is the more developed statement (time-shaped value \(v_i(s,t)=V_i(s)\phi_i(t-\tau_i(s))\); neutrality, reducibility, and incentive-compatibility constraints; and the dual shadow prices read as a welfare benchmark on capacity, which RN-11 explicitly does **not** identify with the market term structure). **RN-11 owns the canonical program;** this note uses it only as a capacity benchmark and does not introduce a competing formalization.
-
-Notation should be unified across the three notes in a single pass: the hard feasible set \(F_{ij}\) here is the rectangular special case of RN-11's decay function \(\phi_i\); this note's \(K_q\) is RN-11's per-quantum capacity \(C(t)\); this note's welfare \(W^{*}\) is RN-11's TET objective. Until that pass, cross-references above mark the correspondences.
+Further questions of specification, information measurement, market design and per-chain
+comparison are tracked separately and are not reproduced here.
 
 ---
 
@@ -2580,7 +2459,7 @@ This is a different objective from pipelining components for better benchmark th
 
 ## Distinct temporal capability layers, restated
 
-The time-scale hierarchy this positioning relies on — \(\delta_{\mathrm{exec}}\le\delta_{\mathrm{order}}\le\Delta_{\mathrm{commit}}\le\Delta_{\mathrm{consensus}}\), the four-way split of causes (irreducible-physical / security / protocol-induced / architecture-induced coupling), and the question *how much application execution capacity can exist below the cadence of global consensus?* — is developed once in the front section **Physical Geography, Speed-of-Light Bounds, and Decoupled Time Scales** and is not repeated here. The narrower point of this section is that **each of those layers is already the subject of an established research line**, so the contribution claimed below is the capacity abstraction over them, not the layering itself.
+The time-scale hierarchy this positioning relies on, \(\delta_{\mathrm{exec}}\le\delta_{\mathrm{order}}\le\Delta_{\mathrm{commit}}\le\Delta_{\mathrm{consensus}}\), the four-way split of causes (irreducible-physical / security / protocol-induced / architecture-induced coupling), and the question *how much application execution capacity can exist below the cadence of global consensus?*, is developed once in the front section **Physical Geography, Speed-of-Light Bounds, and Decoupled Time Scales** and is not repeated here. The narrower point of this section is that **each of those layers is already the subject of an established research line**, so the contribution claimed below is the capacity abstraction over them, not the layering itself.
 
 ## Synthesis rather than isolated novelty
 
@@ -2594,7 +2473,7 @@ The novelty, if established, would lie in the **capacity abstraction and unifica
 
 ## A Shannon-style research posture
 
-As in \S5 and \S40, the analogy to Shannon is methodological, not literal: he did not invent noise, bandwidth, or coding but defined the right constrained system and asked for a limit above any particular implementation. Likewise this note does not claim to invent consensus/execution separation, parallelism, or multi-block scheduling; it asks whether those components can be organized into one first-principles question — *given physical constraints and heterogeneous temporal demand, what execution-service region is fundamentally achievable?* — which then serves as the benchmark for concrete architectures.
+As in \S5 and \S40, the analogy to Shannon is methodological, not literal: he did not invent noise, bandwidth, or coding but defined the right constrained system and asked for a limit above any particular implementation. Likewise this note does not claim to invent consensus/execution separation, parallelism, or multi-block scheduling; it asks whether those components can be organized into one first-principles question, *given physical constraints and heterogeneous temporal demand, what execution-service region is fundamentally achievable?*, which then serves as the benchmark for concrete architectures.
 
 ---
 
@@ -2623,43 +2502,31 @@ The standalone object remains:
 
 ---
 
-# 54. Relationship to TLM
+## Revision note
 
-This paper is broader than TLM.
-
-Its general claim is that execution systems should be studied through a joint theory of:
-
-\[
-\boxed{
-\text{physical capacity}
-+
-\text{temporal resolution}
-+
-\text{demand information}
-+
-\text{multiuser allocation}
-}
-\]
-
-TLM is a concrete research framework that motivates the demand-side component.
-
-Within TLM:
-
-- **Temporal Liquidity** characterizes the economic structure and flexibility of execution demand;
-- **Temporal Liquidity Profiles** are candidate information interfaces;
-- the **execution lattice** represents supply-side execution opportunities;
-- **programmable execution scheduling** performs the matching;
-- fee and market mechanisms coordinate strategic participants.
-
-The capacity theory therefore gives TLM a benchmark independent of its own mechanisms.
-
-That is important scientifically.
-
-If TLM cannot move the realized execution frontier closer to the fundamental bound, its mechanisms are not justified by capacity arguments.
-
-If it can, the theory provides a principled way to measure the gain.
+**31 August 2026.** Part XI is reduced from thirty questions to six, keeping those whose answers
+would change the theory rather than extend it; each now states what turns on it. The full earlier
+list is retained in the programme's working files. Section 54 is rewritten to state what the
+theory contributes to any framework describing execution demand, rather than mapping the TLM notes
+onto each other. Punctuation is brought into line with the house style, which uses no em-dashes
+outside quoted titles. No result, definition, hypothesis or claim is changed.
 
 ---
+
+# 54. Relationship to TLM
+
+This paper is broader than the Temporal Liquidity Market programme, and stands on its own.
+
+Its claim is that execution systems should be studied through a joint theory of physical
+capacity, temporal resolution, demand information and multiuser allocation. Any framework that
+describes execution demand and matches it against supply is an instance. TLM is the instance that
+motivated the theory, and it supplies the demand-side component: a description of the economic
+structure of execution demand, candidate interfaces for making it visible, and a lattice
+representing supply-side opportunities.
+
+The theory returns a benchmark. It says what capacity a system could reach given its physical
+limits and the information available, independent of the mechanism any particular framework
+proposes. A mechanism can then be measured against it rather than against its own assumptions.
 
 # 55. Conclusion
 
@@ -2735,9 +2602,9 @@ The long-term objective is a theory in which protocol mechanisms can be evaluate
 
 [13] R. Gelashvili, A. Spiegelman, Z. Xiang, G. Danezis, Z. Li, D. Malkhi, Y. Xia, and R. Zhou, “Block-STM: Scaling Blockchain Execution by Turning Ordering Curse to a Performance Blessing,” *PPoPP 2023*. arXiv:2203.06871.
 
-[14] Real-time blockchain scheduling — deadline and multi-block schedulability literature (representative; primary citation to be fixed).
+[14] Real-time blockchain scheduling, deadline and multi-block schedulability literature (representative; primary citation to be fixed).
 
-[15] TLM Research Notes: **RN-05** (*Supply-side Heterogeneity and Temporal Granularity* — the quantum lattice, imported here as the supply substrate); **RN-11** (*The Term Structure and Allocation of Execution Capital in a Temporal Liquidity Market* — the canonical allocation program and its dual, and the block-fee-rate term structure).
+[15] TLM Research Notes: **RN-05** (*Supply-side Heterogeneity and Temporal Granularity*, the quantum lattice, imported here as the supply substrate); **RN-11** (*The Term Structure and Allocation of Execution Capital in a Temporal Liquidity Market*, the canonical allocation program and its dual, and the block-fee-rate term structure).
 
 ---
 

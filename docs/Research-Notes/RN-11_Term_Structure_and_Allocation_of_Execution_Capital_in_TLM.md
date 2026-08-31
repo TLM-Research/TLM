@@ -20,11 +20,11 @@ RN-10 argues at the level of economic structure: a blockchain allocates executio
 
 The mathematics both parts use -- knapsack, LP duality, no-arbitrage bootstrapping, optimal execution -- is standard and credited to appendices; what is new is the setting and the variables: demand's time-shape, temporal liquidity as a two-sided conserved commodity, and the allocation whose dual values capacity over time. The problem is stated, not solved; a candidate mechanism is RN-12.
 
-## 0. Relationship to the other notes
+## 0. What this note assumes
 
-RN-10 is the economics and is self-contained; this note is its formal counterpart and assumes it. The lattice of quanta is RN-05; the demand representation is RN-01/02; the reducibility constraint is RN-07; verification of declared characteristics is RN-02. The concrete clearing mechanism is RN-12. Questions this note opens are tracked in **RN-10 Follow-up Research Questions**.
+This note is the formal counterpart to the economics of RN-10 and assumes it. It takes the quantum lattice, the demand representation and the reducibility constraint as given, and states the allocation problem they imply. It builds no mechanism.
 
-References of the form "RN-10 sec. N" point to the economics note; internal references are to this note's own sections. Results borrowed from other literatures are stated where used and detailed in the appendices, one per source, so the note stays self-contained without re-deriving standard material.
+Results borrowed from other literatures are stated where used and detailed in the appendices, one per source, so the note does not re-derive standard material.
 
 ## What is new, and what is not
 
