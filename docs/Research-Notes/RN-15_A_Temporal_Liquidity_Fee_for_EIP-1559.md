@@ -26,7 +26,7 @@ license: "CC-BY-4.0"
 
 ## Abstract
 
-RN-14 sec. 8.3 identifies what Ethereum's fee market cannot express: a transaction has no way to obtain a lower price in exchange for accepting a later position, and the protocol has no way to check that the commitment was kept. RN-14 leaves open whether the counterpart to the priority fee should be a credit paid to the sender or a reduction in what the sender pays, observing that a credit needs a funding source and a reduction does not.
+RN-14 sec. 8.3 identifies what Ethereum's fee market cannot express. The priority fee is a bid for inclusion, with nothing attached about position. A sender cannot bid for inclusion at an earlier position within the slot, and cannot offer to take inclusion at a later position within the slot in exchange for paying less. Position inside the block is not addressable, since no field states a preference over it and no rule obliges a builder to honour one, though it is traded out-of-band by parties other than the sender. And the protocol has no way to check a position commitment if one were made. RN-14 leaves open whether the counterpart to the priority fee should be a credit paid to the sender or a reduction in what the sender pays, observing that a credit needs a funding source and a reduction does not.
 
 This note proposes a mechanism that is both. A signed **temporal liquidity fee** (`TLF`) is added to the transaction, and the reference value against which it is assessed is the gas-weighted mean of the declared fees over the block. Deviations from the mean sum to zero by construction, so premiums paid by transactions wanting early position fund discounts to transactions accepting late position, with no external funding source and no protocol-held balance. The fee also sets intra-slot ordering, which is what makes declaring it consequential and what the protocol can verify after the fact.
 
@@ -70,15 +70,23 @@ Section 2.3 gives the reason: any fixed constant is unsafe at some base fee. Two
 
 The sign is a marker of which side of the market the transaction is on, fixed at submission:
 
-- **`TLF` < 0, the temporal-liquidity provider.** Accepts late position and receives a discount. This is the supplier of RN-10 sec. 8.1.
-- **`TLF` > 0, the temporal-liquidity consumer.** Requests early position and pays a premium. This is the taker.
+- **`TLF` < 0, the temporal-liquidity provider.** Offers to take inclusion at a later position within the slot, and receives a discount. Inclusion is unchanged: the transaction is in the same block, later in it, and nothing is deferred to a later slot. This is the supplier of RN-10 sec. 8.1.
+- **`TLF` > 0, the temporal-liquidity consumer.** Bids for inclusion at an earlier position within the slot, and pays a premium. This is the taker.
 - **`TLF` = 0**, the default, is neither and reproduces current behaviour.
 
 **`TLF` is the Temporal Execution Profile, collapsed to one number.** RN-01 and RN-02 define the TEP as a transaction's declaration of its own temporal characteristics. This note takes the smallest version of that object which is still useful: a single signed scalar, whose magnitude is what the sender will pay or accept and whose **sign is a flag for the direction of temporal liquidity**. Positive consumes it, negative supplies it.
 
 What the collapse discards should be stated. A full TEP carries a deadline and a decay function, and those are different things: a transaction with a hard deadline and one whose value falls smoothly are not interchangeable, and one number cannot separate them. Nothing here recovers that distinction. The claim is only that the one-number form is enough to open a second side of the market inside an existing block, and that the richer object belongs with the stream-level TSP in later work on inter-slot temporal liquidity.
 
-The two sides are the substance of the proposal. A transaction that can only bid for earlier execution, as under EIP-1559, is on one side of a market with no other side. The signed field is what admits the second.
+The two sides are the substance of the proposal. Under EIP-1559 the priority fee bids for inclusion with no qualifier attached, so there is no position market in the protocol at all, on either side; position is traded anyway, out-of-band, which is the subject of sec. 7. The signed field attaches the qualifier and lets it run in both directions:
+
+```text
+today       bid for inclusion
+TLF > 0     bid for inclusion, earlier position within the slot
+TLF < 0     offer of inclusion, later position within the slot
+```
+
+Inclusion is common to both sides and is not what is traded. Position within the slot is. The negative side is the one that exists nowhere today.
 
 RN-10 and RN-11 use *supplier* and *taker* for the same partition. The vocabularies should be reconciled across the notes rather than left to run in parallel.
 
@@ -137,7 +145,7 @@ Coarseness also gives determinism. Integer ticks with a stated tie-break admit e
 
 RN-05 supplies the quanta this rule assigns, and this rule supplies RN-05's quantum an economic meaning: the band a transaction occupies is the one it paid or was paid to occupy. The mechanism needs no particular quantum size and needs quanta to carry commitment rather than consensus, which is RN-05 sec. 5.2, Option B.
 
-Under a sort, the priority fee remains the bid for **inclusion** and stops being the bid for **coarse position**, while continuing to determine position within a band. Whether a sort is the right binding, or whether eligibility windows or some other construction serves better, is left to later work.
+Under a sort, the priority fee remains the bid for **inclusion**, and **coarse position** becomes addressable for the first time, through `TLF`. The priority fee continues to determine order within a band. Whether a sort is the right binding, or whether eligibility windows or some other construction serves better, is left to later work.
 
 ---
 
@@ -183,6 +191,8 @@ This is not a limitation to be traded off against others. It is a binary conditi
 ## 5. Verification and reducibility
 
 RN-02 argues that declared temporal characteristics must be verified against realised behaviour. RN-14 sec. 8.3 observes that supplied temporal liquidity is the one temporal claim a protocol can check after the fact, because where a transaction landed is a fact about the chain while whether it needed to be early is a private counterfactual.
+
+Only one side needs checking, and it is the side that can be. A declaration of a later position within the slot is a claim about where the transaction lands, which the block records. A declaration of an earlier position is a claim about need, which nothing can certify, and the mechanism does not attempt it: that side pays, which is check enough.
 
 Here the check is a monotonicity test on the block: the sequence of `TLF` values over the included transactions must be non-increasing. It is linear in block size, requires no state, and its cost does not depend on quantum size.
 
@@ -233,6 +243,10 @@ One consequence survives unchanged. Builders retain a reason to route position s
 **It does not address congestion.** The base fee continues to be the only instrument acting on congestion. Reordering within a slot moves no demand between slots, so aggregate per-slot demand is unchanged and no peak is lowered.
 
 This is a sharper limitation than it first appears, because RN-14 sec. 11 identifies the *peak* base fee as what makes a low-value transfer unincludable during congestion rather than merely late, and sec. 8.3 states that a patient transfer pays a price set by the most impatient participant in the block. Neither is touched here. The barrier RN-14 names as excluding payment traffic is left standing, and only the position-pricing half of the argument is addressed.
+
+**The base fee is a floor, and the discount cannot reach past it.** The credit is bounded by `TLF_MAX`, which is `r * base_fee` with `r < 1/2`, so a provider still pays more than half the base fee under ordinary block composition and cannot pay less than `(1 - 2r) * base_fee` under any composition. The transfer runs entirely inside the tip field, and the base fee is burned and untouched by design.
+
+The two pools are not the same pool, and that is what limits the mechanism where sec. 6 most wants it to work. For a low-value transfer, what makes the transaction unaffordable is the base fee rather than the tip, and the base fee is the one thing this mechanism is built not to change. A sender who cannot afford to transact at the prevailing base fee is not brought in by a fraction off it. So the workload most able to take a later position is the one least able to collect the payment for taking it. This does not follow from the choice of `r`. It follows from redistributing the tip while the barrier sits in the burn, and no setting of `r` below one half changes it.
 
 **The credit thins as the mechanism succeeds.** The credit available to a provider is bounded by `base_TLF + TLF_MAX`. As the provider share of a block rises, the gas-weighted mean falls toward the floor and the per-transaction credit falls with it. The benefit to payment traffic declines in proportion to how much payment traffic the mechanism attracts. This is inherent to budget balance: a block of pure providers has no consumers to fund it. The magnitude of the discount under realistic block composition has not been estimated and should be, since the growth argument depends on it.
 
@@ -313,7 +327,7 @@ Four things would change the design if answered differently. The rest of the par
 
 Whether the two compose is open. Both allocate sub-slot position, so there are two prices over an overlapping good: the auction price paid to the staking parties, and the `TLF` premium paid to providers. They may compose, with the auction deciding who fills a quantum and `TLF` deciding which transactions are eligible for it, in which case a winner has bought a chunk it can fill only with consumers. They may also conflict. Settling this requires reading the proposal against sec. 2.4 rather than reasoning from the summary, and it is not attempted here.
 
-**Preconfirmations** already carry a target slot and a target round, so sub-slot coordinates exist in deployed systems. What they do not carry is a negative side. A preconf buys earlier execution; nothing in the design pays anyone for later execution.
+**Preconfirmations** already carry a target slot and a target round, so sub-slot coordinates exist in deployed systems. What they do not carry is a negative side. A preconf buys a commitment about position; nothing in the design pays anyone for offering to take a later one.
 
 **Timeboost** sells a time advantage through an exclusive lane, with the centralisation and spam results cited in sec. 9.
 
