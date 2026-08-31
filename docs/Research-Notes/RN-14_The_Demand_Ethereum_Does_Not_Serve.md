@@ -148,7 +148,7 @@ Whether timing is *the* sorting variable is what remains to be measured.
 
 Ethereum was first, and for most of its history it has held the deepest liquidity, the most composable application layer, and the largest developer base. That is the classic setup for a network effect: liquidity attracts applications, applications attract users, users deepen liquidity, and the advantage compounds until it is unassailable.
 
-Part of that happened. Ethereum's TVL is roughly eight times its nearest competitor and the ratio has survived several cycles. Capital compounded exactly as the theory predicts.
+Part of that happened. Ethereum's TVL is roughly eight times its nearest competitor and the ratio has survived several cycles. Capital compounded as the theory predicts.
 
 The user side did not. Ethereum serves fewer active addresses than Solana, Tron or BNB Chain, and Figure 1 shows the gap is stable across the year rather than closing. The flywheel that was supposed to turn capital into users, and users into more capital, turned only once.
 
@@ -166,7 +166,7 @@ There are at least two defensible answers, and they point in opposite directions
 
 **The first reading is that this was a choice, not a failure.** The rollup-centric roadmap deliberately moved execution off L1 and reframed the base layer as settlement and data availability. On that reading, low L1 address counts are the roadmap working: users were supposed to leave the base layer. The difficulty is that they did not only go to Ethereum rollups. They also went to other Layer 1s, taking their fees, their liquidity and their composability with them. A roadmap that exports execution succeeds only if the exported execution stays inside the security domain, and a large share of it did not.
 
-**The second reading is that the interface never offered them anything to stay for.** A chain with one execution lane, priced by a single scalar fee, offers every application the same service: inclusion as soon as your fee allows. That service is well matched to infrequent, high-value, latency-tolerant work, which is precisely the work Ethereum kept. It is poorly matched to frequent, low-value, latency-sensitive work, which is precisely the work that left. On this reading Ethereum did not lose those users to a better chain so much as decline to make them an offer.
+**The second reading is that the interface never offered them anything to stay for.** A chain with one execution lane, priced by a single scalar fee, offers every application the same service: inclusion as soon as your fee allows. That service is well matched to infrequent, high-value, latency-tolerant work, which is the work Ethereum kept. It is poorly matched to frequent, low-value, latency-sensitive work, which is the work that left. On this reading Ethereum did not lose those users to a better chain so much as decline to make them an offer.
 
 A third possibility should be kept on the table: some of the departed activity may not be worth having. Wash trading, airdrop farming and bot flow inflate address counts everywhere, and a chain that filters them through cost is not obviously worse off. Establishing how much of the gap is economically real is part of the measurement problem in section 13.
 
@@ -182,7 +182,7 @@ That position is now itself under revision. On 3 February 2026 Vitalik Buterin a
 
 The two arguments are independent and reach the same place from different directions. Buterin's is about what rollups turned out to be; this note's is about which demand the base layer does not serve. Neither entails the other, which makes their agreement worth more than it would be if one were derived from the other. His proposed direction, that L2s should identify a value add other than scaling and that some belong on a spectrum rather than as branded shards, is also compatible with the reading in section 9 below.
 
-So the honest answer to whether Ethereum was designed to serve all applications is: originally yes, then deliberately no, and now under active reconsideration. This note's data is evidence in that live argument rather than a comment on a settled design.
+So the answer to whether Ethereum was designed to serve all applications is: originally yes, then deliberately no, and now under active reconsideration. This note's data is evidence in that live argument rather than a comment on a settled design.
 
 The reversal creates a tension that bears on the TLM question. Raising L1 capacity lowers the congestion price of blockspace, which erodes the cost advantage that motivated rollups in the first place. Capacity alone therefore reshuffles where activity sits without settling what service the base layer offers. A chain can be fast and cheap and still express only one temporal profile.
 
@@ -223,7 +223,7 @@ Distribution and execution cost also interact, and the interaction is the part E
 
 **The wider point is about inclusion.** A chain's economy grows with the range of users it can serve, not only with the value of the users it already has. Ethereum's capital flywheel turns on a comparatively small number of high-value participants, which is a genuine advantage and also a bounded one: serving only the workloads that tolerate high cost caps the economy at the size of that segment. A network that cannot accommodate low-value, high-frequency users is missing not just those users but the second flywheel they would drive.
 
-**A counterfactual worth stating.** Would Binance have built a chain at all if Ethereum had served retail users well?
+**A counterfactual.** Would Binance have built a chain at all if Ethereum had served retail users well?
 
 The question cannot be settled, but the record narrows it. Binance announced the chain in April 2020 and launched mainnet that September, into the period when Ethereum fees were at their most punishing and DeFi activity was growing fastest. It launched as Binance Smart Chain and was renamed BNB Chain in 2022. And it was built **EVM-compatible**, so that Ethereum applications could port with minimal modification.
 
@@ -253,7 +253,7 @@ This is suggestive rather than conclusive, and the caution of section 5 still ap
 
 "Can Ethereum welcome Solana onto its chain" is therefore not hypothetical; something close to it exists, uses Ethereum for security, and returns fee value to ETH. What remains open is whether it draws meaningful volume, and whether importing the execution model is sufficient without importing the ecosystem, the market makers and the retail flow that surround it.
 
-The honest reading is that the execution model was never the hard part to copy. The liquidity and the habits are.
+The execution model was never the hard part to copy. The liquidity and the habits are.
 
 ## 8.3 Tron: the workload a temporal liquidity market needs most
 
@@ -293,7 +293,7 @@ The compensation for it is correspondingly thin. A sender who forgoes the tip sa
 
 Stated that way, the back of the block is a losing position rather than a traded one, and it is unsurprising that applications avoid it. A scalar fee can express "I want to be early." It has no way to express "I will be late, for a discount, provided I am included by a stated time," which is the sentence a temporal liquidity provider needs to be able to say. Until that sentence exists, the flow best suited to filling the quiet part of the block has no reason to go there, and the flow least suited to waiting bids the price for everyone.
 
-**What the interface would have to add is easier to state than to design.** It needs some counterpart to the priority fee: a way for a transaction to obtain a lower price in exchange for a commitment to a later position, and a way for the protocol to check that the commitment was kept. The second half is the part that makes it tractable, because whether a transaction waited is a fact about the chain while whether it truly needed to be early is a private counterfactual that no scheme can certify. Patience is the one temporal claim a protocol can verify after the fact.
+**What the interface would have to add is easier to state than to design.** It needs some counterpart to the priority fee: a way for a transaction to obtain a lower price in exchange for a commitment to a later position, and a way for the protocol to check that the commitment was kept. The second half is the part that makes it tractable, because whether a transaction waited is a fact about the chain while whether it needed to be early is a private counterfactual that no scheme can certify. Patience is the one temporal claim a protocol can verify after the fact.
 
 Whether such a counterpart should take the form of a payment to the patient sender or a discount on what they pay is an open design question, and the two differ in more than presentation: a payment requires a funding source and a discount does not. This note does not settle it. What the data here establishes is the demand-side case for wanting one at all.
 
@@ -305,6 +305,16 @@ Payments are also the most universal workload. Everyone needs to move value; onl
 
 The loss is therefore twofold, and the halves compound. Exporting payments gives away the patient demand a temporal liquidity market needs on its supply side, and it gives away the workload through which daily use, and therefore habit, would have formed. Fewer daily users means less patient flow to schedule; less patient flow means a thinner case for building the market that would have served them. Section 8.1 observed that BNB Chain has the user flywheel turning. Low-friction daily applications are how one starts.
 
+**The demand has a name, and it is currency substitution.** The preceding argument treats payments as a workload. In much of the world it is closer to a defence. Where a currency loses value predictably, holding a dollar-denominated token is not a preference among savings vehicles; it is the cheapest available way to not be paid in a depreciating unit. That makes it the least discretionary demand in the category, which is why it grows without marketing and why it does not respond to execution quality on any chain.
+
+The evidence is concentrated and one country carries most of it. In Argentina, **94 percent of peso-denominated crypto trading volume is directed at stablecoins**, the highest share of any major currency tracked. Roughly **20 percent of citizens** used stablecoins as of early 2026, with around 8.6 million Argentines having used cryptocurrency at all, and **31 percent of small retail transactions under $1,000** were settled in stablecoins over 2022 to 2024, second in the region only to Venezuela. Stablecoins accounted for 61.8 percent of Argentine crypto volume against a global average of 44.7 percent.
+
+The pattern is regional rather than national. Goldman Sachs estimates roughly **two thirds of global stablecoin supply is held in emerging markets**, seven of the top ten countries in Chainalysis's 2025 adoption index are developing economies, and the majority of global stablecoin flows by transaction count occur outside the United States. India has ranked first for two consecutive years on an index weighted by purchasing-power-parity income per capita, which is constructed to detect grassroots use rather than institutional flow.
+
+**One finding matters more than the volumes, and it is a natural experiment.** Argentine monthly inflation fell from a peak of 25.5 percent to roughly 2.1 percent by July 2026. **Stablecoin usage kept rising anyway.** Adoption has decoupled almost entirely from the condition that produced it.
+
+That is the strongest available evidence for the stickiness argument below, and it is stronger than the argument itself. A habit that persists after its cause recedes is not a response to circumstance; it is infrastructure. Section 6 asks why Ethereum's user-side flywheel never turned. This is what it looks like when one does turn, somewhere else, on a chain that charged little enough for daily use to be ordinary.
+
 **And daily habits are sticky in a way trading flow is not.** A trader moves to wherever execution is better next week, and the switching cost is a few minutes of setup. A payment habit involves counterparties. Changing it means changing where the people who pay you and the people you pay expect to transact, which is a coordination problem rather than a preference. Saved addresses, wallet defaults, merchant acceptance and payroll arrangements all point the same way.
 
 This inverts a natural assumption about winnability. Trading left for execution reasons and is the workload most likely to come back if execution improves, because its participants are mercenary by construction. Payments, which this section argues are the more valuable of the two, are the hardest to attract, and mostly were never Ethereum's to lose. Those users are not making an execution decision at all, and they would have to move together to move at all.
@@ -315,13 +325,13 @@ The practical consequence is that the window does not stay open. Habits formed e
 
 That is the sharper form of the question. It is not why users prefer Tron to Ethereum. It is why they would prefer an Ethereum rollup to Tron, and the answer is not obvious.
 
-**There is also no single rollup to choose.** Ethereum has no official or canonical Layer 2. L2BEAT currently tracks roughly two dozen rollups, a further nine validiums and optimiums, and scores of other scaling projects. For most workloads this is a liquidity inconvenience. For payments it is more than that, because the thing that makes a payment network valuable is the set of people who can be paid, and rollups partition exactly that set. A user on one rollup cannot natively pay a user on another without bridging.
+**There is also no single rollup to choose.** Ethereum has no official or canonical Layer 2. L2BEAT currently tracks roughly two dozen rollups, a further nine validiums and optimiums, and scores of other scaling projects. For most workloads this is a liquidity inconvenience. For payments it is more than that, because the thing that makes a payment network valuable is the set of people who can be paid, and rollups partition that set. A user on one rollup cannot natively pay a user on another without bridging.
 
 So the comparison is not one chain against another. It is one of many partitions against the whole of Tron, where any user can pay any other user by construction. Fragmentation here is not splitting capital across venues; it is splitting the recipient set, which is the network effect itself.
 
 The Ethereum Foundation treats this as a problem rather than a feature, and has an interoperability roadmap targeting 2026, along with proposals such as the Ethereum Economic Zone and shared sequencing across OP Stack chains. Consolidation around a few large rollups is also expected. Both would narrow the gap. Neither has closed it yet, and a payment application choosing where to deploy today is choosing between a partition and a whole network.
 
-This suggests a counterfactual worth stating. Had Ethereum offered one canonical execution environment for this workload, whether on the base layer or as a single designated rollup, the comparison with Tron would have turned on cost and distribution alone. Instead it also turns on reachability, which is the one dimension a payment network cannot compromise on.
+This suggests a counterfactual. Had Ethereum offered one canonical execution environment for this workload, whether on the base layer or as a single designated rollup, the comparison with Tron would have turned on cost and distribution alone. Instead it also turns on reachability, which is the one dimension a payment network cannot compromise on.
 
 **If Tron can serve this workload, what stops Ethereum?** Part of the answer is replication. Tron confirms across a far smaller validator set, and its low cost is partly bought with a weaker decentralisation and security position. That is a real trade and not one Ethereum should want to make.
 
@@ -369,7 +379,7 @@ What is open is whether the cost was priced correctly across workloads. For appl
 
 L2BEAT classifies rollup maturity in stages, where Stage 0 means a system still controlled by a small number of entities and Stage 2 means one governed by code. As of mid-2026 most rollups remain at Stage 0, including large ZK rollups whose upgrades run through multisig wallets. Only a small number, Arbitrum One and Base among them, have reached Stage 1. None has reached Stage 2.
 
-For a large position, settlement assurance may dominate and the operating risk is worth accepting. For a small daily payment, the calculation is different. The user is comparing a Stage 0 rollup's upgrade keys and single sequencer against an alternative Layer 1's validator set, and it is not obvious which they should prefer. That comparison is the one section 8.3 leaves unresolved, and the stage data is the reason it is genuinely unresolved rather than rhetorical.
+For a large position, settlement assurance may dominate and the operating risk is worth accepting. For a small daily payment, the calculation is different. The user is comparing a Stage 0 rollup's upgrade keys and single sequencer against an alternative Layer 1's validator set, and it is not obvious which they should prefer. That comparison is the one section 8.3 leaves unresolved, and the stage data is the reason it is unresolved rather than rhetorical.
 
 ---
 
@@ -381,7 +391,7 @@ Three paths are available in principle, and they are not mutually exclusive.
 
 **Absorb the execution.** Run the alternative execution model inside Ethereum's security domain, as Eclipse does for the SVM. This preserves settlement, security and ETH as the fee asset while conceding that a different runtime serves the workload better.
 
-**Compete on the advantages Ethereum already holds.** Security, settlement finality and the deepest liquidity are genuine and durable, and for any application whose value depends on them the case is already strong. This path requires no protocol change and has clearly not been sufficient on its own.
+**Compete on the advantages Ethereum already holds.** Security, settlement finality and the deepest liquidity are genuine and durable, and for any application whose value depends on them the case is already strong. This path requires no protocol change and has not been sufficient on its own.
 
 **Serve the temporal profiles the interface currently cannot express.** This is the TLM program's path, and it is the narrowest of the three: it addresses only the demand held elsewhere because the service on offer was wrong, not the demand held elsewhere by cost, distribution or jurisdiction. Section 8 suggests that share is real but smaller than the headline numbers imply.
 
@@ -391,7 +401,7 @@ Whether the third path recovers anything is an empirical question. The value of 
 
 Mechanism design comes later. These are the questions the program starts with.
 
-**Throughput, and what this is not.** This is not a throughput argument, and it is worth saying so before someone assumes otherwise. The base fee is a controller targeting a fixed gas usage, so any sustained increase is choked back: the standard update rule raises the base fee roughly threefold within ten blocks held at the limit and a hundredfold within forty. Long-run throughput is a protocol parameter, not something a fee-market change can move. A temporal interface changes **which** transactions occupy the target and **what the peak costs**, not how much gets through.
+**Throughput, and what this is not.** This is not a throughput argument. The base fee is a controller targeting a fixed gas usage, so any sustained increase is choked back: the standard update rule raises the base fee roughly threefold within ten blocks held at the limit and a hundredfold within forty. Long-run throughput is a protocol parameter, not something a fee-market change can move. A temporal interface changes **which** transactions occupy the target and **what the peak costs**, not how much gets through.
 
 The peak is the part that matters for the workload in section 8.3. Flattening demand always lowers the peak base fee, and the peak is what makes a low-value transfer unincludable during congestion rather than merely late. The effect on the average fee is weaker and conditional: it improves only when demand varies more slowly than roughly ten minutes, which is close to the response time of the base fee controller itself, since faster variation is already absorbed. Whether real congestion falls on the useful side of that crossover is an empirical question this note does not answer.
 

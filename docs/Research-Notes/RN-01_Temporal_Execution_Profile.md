@@ -134,6 +134,13 @@ not a commitment, one transaction-level profile might carry:
 -   a value (or bid) over a small finite set of service outcomes,
 -   expiry, cancellation, and fallback behavior.
 
+**Every time-valued field here is expressed in blockchain time, not
+physical time** (sec. 4). A deadline is a block height or slot index, not
+a wall-clock instant, so it is exact and identical on every node. Where an
+application's target is physical, the mapping to a blockchain-time
+declaration is the application's to make, and the error in that mapping is
+carried on the demand side rather than by the protocol.
+
 This anchors the abstraction as a concrete object while leaving the
 mathematical representation open.
 
@@ -251,7 +258,16 @@ If we look from the angle of communicating information in a distributed system, 
 
 **Protocol-visible is not the same as publicly revealed.** A deadline or an urgency field also exposes trading intent, and a profile visible in a public mempool before ordering can be priced against or front-run. *When* a field becomes visible is a design lever (committed-and-hidden, builder-visible, consensus-certified, or revealed only after sequencing), and it governs extraction. This note treats revelation timing as an open dimension (RN-02 develops it), not as pure information gain.
 
-**Not every field can be verified the same way.** A useful profile mixes certified facts (resource use, an authenticated deadline), observed statistics (recurrence, forecast error, mostly stream-level, TSP), declared preferences, and payment-bearing bids. A missed deadline is observable; the counterfactual value of a different execution time is not, so private value is never directly verifiable. Under the program's marked pricing (RN-02, RN-10/RN-11) this is acceptable: a class is charged at its prevailing marked rate, so selecting an urgent class means paying the urgent rate: a declaration is paid for, not policed. RN-02 sec. 6 develops the field classification and the pricing argument.
+**Not every field can be verified the same way.** A useful profile mixes four kinds of field, and the distinction that matters is *when* each can be checked:
+
+- **Certified in advance.** An authenticated deadline. A signature settles it at submission, before anything runs.
+- **Checkable only after execution.** Realised resource use. The quantity does not exist until the work has run, so nothing can be signed for it beforehand; it is verifiable, but not in advance. An earlier version of this note grouped resource use with the certified facts, which was wrong: a deadline and a realised cost are checkable at different times, and only one of them can be committed to up front.
+- **Observed statistics.** Recurrence, forecast error. Mostly stream-level, so TSP rather than TEP.
+- **Never verifiable.** Private value, and the declared preferences that express it.
+
+A missed deadline is observable; the counterfactual value of a different execution time is not, so private value is never directly verifiable. Under the program's marked pricing (RN-02, RN-10/RN-11) this is acceptable: a class is charged at its prevailing marked rate, so selecting an urgent class means paying the urgent rate: a declaration is paid for, not policed. RN-02 sec. 6 develops the field classification and the pricing argument.
+
+The second category is the one the rest of the program leans on hardest, and it is what separates a workable declaration from an unworkable one. Supplied temporal liquidity is checkable after execution, because the chain records where a transaction landed. Urgency is a private counterfactual that never becomes checkable at all. Realised resource use sits with the first of those, not with the deadline it was previously grouped beside.
 
 ---------------------------------------------------------------
 

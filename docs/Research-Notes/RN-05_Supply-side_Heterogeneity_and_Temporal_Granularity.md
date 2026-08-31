@@ -205,6 +205,12 @@ sec. 4.3 treated *adversarial* assignment (a provider labelling dishonestly). Th
 - **clock-uncertainty floor (ε)** - governs how *sharp* a boundary can be; below ε a hard boundary is meaningless;
 - **commitment/verification-cost floor** - sec. 4.3's answer.
 
+**This floor is about arrival attribution, not about declarations.** ε
+bounds how sharply a provider can say *which quantum an arrival fell in*,
+which is a physical-time measurement. It does not touch a TEP or TSP: those
+are expressed in blockchain time (RN-01 sec. 3 and sec. 4), where a block
+height is exact and agreed. A deadline of "block N+k" carries no ε.
+
 The canonical treatment is Spanner's **TrueTime** (Corbett et al., 2012), which represents time as an interval `[earliest, latest]` with bounded uncertainty and either *waits out* the uncertainty (commit-wait) or accepts a probabilistic guarantee. **The borrowing needs a caveat.** TrueTime's bound is small and, more to the point, *trustworthy* because Google operates GPS receivers and atomic clocks across its own datacentres - a single administrative domain with uniform, audited timing infrastructure. Permissionless validators share none of that. ε is correspondingly larger, harder to bound, and - unlike Spanner's - not verifiable by the parties relying on it, since a validator's claimed clock quality is itself a declaration. The mechanism transfers; the tight, trusted ε does not. This is the same conditions-gap RN-02 sec. 2 identifies in DiffServ, and it is why the centralisation point below bites rather than being incidental. Applied here, two resolutions and a quantifiable tradeoff:
 
 - **Guard band (commit-wait):** defer arrivals within ε of a boundary to the next quantum (or tie-break deterministically) - a *hard* boundary, at the cost of effective resolution bounded near ε.
