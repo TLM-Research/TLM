@@ -2,10 +2,10 @@
 id: RN-12
 title: "The Temporal Liquidity Market: Protocol and Mechanism Design"
 subtitle: "Trading temporal position against a neutral baseline"
-version: v0.1 (first standalone draft, split out of RN-11: the temporal-liquidity exchange, the logical-time quantum and temporal entitlement time, the bounded tradable window, and the drift/variance discriminator)
+version: "0.3"
 status: "Public draft. A candidate mechanism for the problem RN-11 states; proposed, not adopted."
 program: "Temporal Liquidity Market (TLM)"
-date: August 5, 2026
+date: "August 31, 2026"
 ---
 
 # RN-12 -- The Temporal Liquidity Market: Protocol and Mechanism Design
@@ -31,7 +31,7 @@ The mechanism here is stated for a chain in general. It assumes only that the sy
 **Ethereum is treated separately, and under its own constraints.** Two companion notes develop an Ethereum-specific instantiation, and their design goal is different from this one's:
 
 - **RN-15** proposes a single-slot temporal liquidity fee that fits inside EIP-1559 with one signed transaction field, no new roles, and no change to the builder's position. It is the minimal version, chosen for backward compatibility rather than for completeness.
-- **RN-21** sets out what an Ethereum design would need in order to work across slots rather than within one, and where the base fee controller constrains any such design.
+- A **second note, in preparation**, sets out what an Ethereum design would need in order to work across slots rather than within one, and where the base fee controller constrains any such design.
 
 **Backward compatibility is a design goal there and not here.** Ethereum has a decade of deployed tooling, a fee market users have learned, and a change process that rewards proposals which alter as little as possible. That is a real constraint and RN-15 accepts it. This note does not: it separates roles that Ethereum currently combines, which is a larger ask than any single EIP would carry. Readers who want the smallest change that could ship should start with RN-15. Readers who want to know what the market would look like if it were designed rather than retrofitted should stay here.
 
