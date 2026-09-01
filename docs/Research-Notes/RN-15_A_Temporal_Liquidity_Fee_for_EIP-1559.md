@@ -67,7 +67,7 @@ A tick is a fixed protocol constant in wei per gas. The declaration is coarse by
 TLF_MAX  =  floor( r * base_fee / tick )        r < 1/2
 ```
 
-Section 2.3 gives the reason: any fixed constant is unsafe at some base fee. Two properties follow from tying the cap to the base fee, and both are wanted independently. The expressible temporal range widens when execution is expensive and narrows when it is cheap, which is the right direction, since flexibility about position is worth more when position is expensive. And the specification carries no magic number: `r` is a ratio, and the number of available bands stays roughly constant as the base fee moves.
+Section 2.3 gives the reason: any fixed constant is unsafe at some base fee. Safety forces the proportional form, and it is also the form to prefer on other grounds. The expressible temporal range widens when execution is expensive and narrows when it is cheap, which is the right direction, since flexibility about position is worth more when position is expensive. And the specification carries no magic number: `r` is a ratio, and the number of available bands stays roughly constant as the base fee moves.
 
 The sign is a marker of which side of the market the transaction is on, fixed at submission:
 
