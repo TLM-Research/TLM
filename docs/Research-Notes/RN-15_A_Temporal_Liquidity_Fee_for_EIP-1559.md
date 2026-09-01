@@ -1,14 +1,14 @@
 ---
 id: RN-15
 title: "A Temporal Liquidity Fee for EIP-1559"
-version: "0.4"
-status: "Internal draft. Mechanism proposed, not analysed to completion."
+version: "0.5"
+status: "Public draft - research note, offered in good faith for comment"
 program: "Temporal Liquidity Market (TLM)"
-date: "2026-08-30"
+date: "2026-08-31"
 license: "CC-BY-4.0"
 ---
 
-# RN-15 v0.4
+# RN-15 v0.5
 
 # A Temporal Liquidity Fee for EIP-1559
 
@@ -16,9 +16,10 @@ license: "CC-BY-4.0"
 
 **Temporal Liquidity Market (TLM) Research Program**
 **Research Note RN-15**
-**Version:** 0.4
-**Status:** Internal draft. Mechanism proposed, not analysed to completion.
-**Date:** 30 August 2026
+**Version:** 0.5
+**Status:** Public draft - research note, offered in good faith for comment.
+**Scope:** Mechanism proposed, not analysed to completion. Sec. 2.4 names the binding rule without fixing it, sec. 4.1 states the condition the construction rests on, and sec. 11 lists what is unresolved.
+**Date:** 31 August 2026
 
 > **Licence.** CC BY 4.0, as with the rest of the research programme. If this mechanism is submitted as an Ethereum Improvement Proposal, the EIP will be written as a separate document under CC0, since EIP-1 requires every EIP to be in the public domain. This note is not that document and does not waive rights.
 
@@ -28,7 +29,7 @@ license: "CC-BY-4.0"
 
 RN-14 sec. 8.3 identifies what Ethereum's fee market cannot express. The priority fee is a bid for inclusion, with nothing attached about position. A sender cannot bid for inclusion at an earlier position within the slot, and cannot offer to take inclusion at a later position within the slot in exchange for paying less. Position inside the block is not addressable, since no field states a preference over it and no rule obliges a builder to honour one, though it is traded out-of-band by parties other than the sender. And the protocol has no way to check a position commitment if one were made. RN-14 leaves open whether the counterpart to the priority fee should be a credit paid to the sender or a reduction in what the sender pays, observing that a credit needs a funding source and a reduction does not.
 
-This note proposes a mechanism that is both. A signed **temporal liquidity fee** (`TLF`) is added to the transaction, and the reference value against which it is assessed is the gas-weighted mean of the declared fees over the block. Deviations from the mean sum to zero by construction, so premiums paid by transactions wanting early position fund discounts to transactions accepting late position, with no external funding source and no protocol-held balance. The fee also sets intra-slot ordering, which is what makes declaring it consequential and what the protocol can verify after the fact.
+This note proposes a mechanism that is both. A signed **temporal liquidity fee** (`TLF`) is added to the transaction, and the reference value against which it is assessed is the gas-weighted mean of the declared fees over the block. Deviations from the mean sum to zero by construction, so premiums paid by transactions bidding for an earlier position within the slot fund discounts to transactions offering to take a later one, with no external funding source and no protocol-held balance. The fee also sets intra-slot ordering, which is what makes declaring it consequential and what the protocol can verify after the fact.
 
 The scope is one slot. Nothing here defers a transaction to a later slot, and nothing here addresses congestion. The base fee continues to do that work alone. Inter-slot deferral requires the protocol to carry state across slots and is left to a later note.
 
