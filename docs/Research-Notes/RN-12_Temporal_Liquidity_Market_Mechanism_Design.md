@@ -2,10 +2,10 @@
 id: RN-12
 title: "The Temporal Liquidity Market: A Conceptual Mechanism Design"
 subtitle: "Trading temporal position against a neutral baseline"
-version: "2.2"
+version: "2.3"
 status: "Public draft. A candidate mechanism for the problem RN-11 states; proposed, not adopted."
 program: "Temporal Liquidity Market (TLM)"
-date: "August 31, 2026"
+date: "September 1, 2026"
 ---
 
 # RN-12 -- The Temporal Liquidity Market: A Conceptual Mechanism Design
@@ -266,6 +266,10 @@ Position is conserved whoever moves it. A builder reordering privately conserves
 **The difference is consent.** A rearrangement performed on the block produces a *displaced* transaction: one that bore a cost it did not agree to and is not told about. A trade produces a *counterparty*: one that offered to move later, at a price it named, and was paid. Conservation says the cost falls on someone. It does not say that someone chose it, and choosing is the whole of the difference.
 
 This is why the instrument of sec. 4 is a swap and not a fee. A swap has two sides, each of which wanted its own leg, and neither is the other's victim. So does this market.
+
+**It also moves a second margin, and this is easy to miss.** The clearing price `p*` is paid by advancers and received by deferrers, so an advancer's total cost rises above what it would otherwise have paid and a deferrer's falls below it. Wherever a chain has an inclusion threshold, a base fee, a reserve price, a minimum bid, the mechanism moves that threshold in opposite directions for the two sides: up for the side buying position, down for the side selling it. A request that could not afford inclusion at the prevailing threshold can afford it as a deferrer.
+
+So the crossing changes the composition of the included set and not only its order, and the two populations it swaps differ in more than patience. Advancers are event-driven: a liquidation or an arbitrage arrives when a price moves, not when execution is cheap, and pays what the opportunity is worth. Deferrers arrive on their own schedule and wait when execution is dear. Substituting the second for the first at the margin leaves throughput where it was and makes the marginal occupant elastic, so the next burst of demand displaces work that does not mind being displaced. **That is the mechanism's effect on congestion: not less demand, but a demand mix that absorbs a shock instead of amplifying it.**
 
 Often the position moved is not fresh arriving work but a *pre-existing held allocation*, a multi-slot stream's reserved quantum in a future slot. A trade then swaps standing positions: the seller vacates a held quantum and takes a later one, the buyer takes the vacated one, per-quantum capacity is conserved, and the same quantum may be re-traded before its slot is built. For a stream whose value is joint (RN-11 sec. 5), its ask is the marginal effect on its whole schedule rather than a per-unit loss, so held positions are reassigned only while the stream stays within tolerance.
 

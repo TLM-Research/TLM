@@ -1,15 +1,26 @@
-# TLM Research Note RN-01
+---
+id: RN-01
+title: "Temporal Execution Profiles (TEP)"
+subtitle: "A Demand-Side Communication Model for the Temporal Liquidity Market"
+version: "0.4"
+status: "Public draft - research note, offered in good faith for comment"
+program: "Temporal Liquidity Market (TLM)"
+date: "August 19, 2026"
+---
+
+# RN-01 v0.4
 
 # Temporal Execution Profiles (TEP)
 
 ## A Demand-Side Communication Model for the Temporal Liquidity Market
 
-**Project:** Temporal Liquidity Market (TLM)\
-**Status:** Public Draft\
-**Version:** 0.4 (Complete Draft)\
+**Temporal Liquidity Market (TLM) Research Program**  
+**Research Note RN-01**  
+**Version:** 0.4  
+**Status:** Public draft - research note, offered in good faith for comment  
 **Date:** August 19, 2026
 
-------------------------------------------------------------------------
+---
 
 # Abstract
 

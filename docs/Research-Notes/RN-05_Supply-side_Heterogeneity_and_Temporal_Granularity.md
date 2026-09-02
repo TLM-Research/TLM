@@ -13,10 +13,10 @@ date: "August 24, 2026"
 
 ## A Quantum Lattice for Blockspace
 
-**Temporal Liquidity Market (TLM) Research Program**
-**Research Note RN-05**
-**Version:** 0.4
-**Status:** Public draft - research note, offered in good faith for comment
+**Temporal Liquidity Market (TLM) Research Program**  
+**Research Note RN-05**  
+**Version:** 0.4  
+**Status:** Public draft - research note, offered in good faith for comment  
 **Date:** August 24, 2026
 
 ---

@@ -1,25 +1,25 @@
 ---
 id: RN-15
 title: "A Temporal Liquidity Fee for EIP-1559"
-version: "0.5"
+version: "0.6"
 status: "Public draft - research note, offered in good faith for comment"
 program: "Temporal Liquidity Market (TLM)"
-date: "2026-08-31"
+date: "2026-09-01"
 license: "CC-BY-4.0"
 ---
 
-# RN-15 v0.5
+# RN-15 v0.6
 
 # A Temporal Liquidity Fee for EIP-1559
 
 ## Pricing execution position within a single slot
 
-**Temporal Liquidity Market (TLM) Research Program**
-**Research Note RN-15**
-**Version:** 0.5
-**Status:** Public draft - research note, offered in good faith for comment.
-**Scope:** One slot, one existing block, no new protocol state. Prices position within the block. Does not defer a transaction to a later slot and does not act on congestion.
-**Date:** 31 August 2026
+**Temporal Liquidity Market (TLM) Research Program**  
+**Research Note RN-15**  
+**Version:** 0.6  
+**Status:** Public draft - research note, offered in good faith for comment.  
+**Scope:** One slot, one existing block, no new protocol state. No deferral instrument.  
+**Date:** 1 September 2026  
 
 > **Licence.** CC BY 4.0, as with the rest of the research programme. If this mechanism is submitted as an Ethereum Improvement Proposal, the EIP will be written as a separate document under CC0, since EIP-1 requires every EIP to be in the public domain. This note is not that document and does not waive rights.
 
@@ -27,19 +27,13 @@ license: "CC-BY-4.0"
 
 ## Abstract
 
-RN-14 sec. 8.3 identifies what Ethereum's fee market cannot express. The priority fee is a bid for inclusion, with nothing attached about position: a sender cannot bid for inclusion at an earlier position within the slot, and cannot offer to take a later one in exchange for paying less. Position inside the block is not addressable, though it is traded out-of-band by parties other than the sender, and the protocol could not check a position commitment if one were made.
+Under EIP-1559 the priority fee is a bid for inclusion with nothing attached about position. A sender cannot ask to be earlier in the slot, nor offer to take a later place for less, and the protocol could not check such an offer if one were made. Position is traded anyway, out-of-band, by parties other than the sender.
 
-This note adds a signed **temporal liquidity fee** (`TLF`) to the transaction, assessed against the gas-weighted mean of the declared fees over the block. Deviations from that mean sum to zero by construction, so premiums paid by transactions bidding for an earlier position fund discounts to transactions taking a later one, with no external funding source and no protocol-held balance. The fee also sets intra-slot ordering, which is what makes declaring it consequential and what the protocol can verify afterwards.
+This note adds one signed field, a **temporal liquidity fee** (`TLF`), assessed against the gas-weighted mean of the declared fees over the block. Deviations from that mean sum to zero, so premiums paid for an earlier position fund discounts to transactions taking a later one, with no external funding and no protocol-held balance. The same field sets intra-slot order, which is what makes declaring it consequential and what the protocol can check afterwards.
 
-**The scope is one slot.** Nothing here defers a transaction to a later slot or acts on congestion; the base fee continues to do that alone.
+Two things follow that are easy to miss. The cap must be a fraction of the base fee rather than a constant, and `r < 1/2` is a condition of the balance result rather than a parameter to tune (sec. 2.3). And because the adjustment sits outside the `max_fee` cap, the fee moves the admission threshold as well as the order: up for the side buying position, down for the side selling it (sec. 8).
 
-Two results are worth separating. Budget balance is a construction and holds by arithmetic, given a cap set as a fraction of the prevailing base fee, and sec. 2.3 shows why that cap cannot be an absolute constant. The claim that the scheme attracts the workloads RN-14 describes is a conjecture, and sec. 8 gives the reasons to doubt it.
-
-Being two-sided and budget-balanced, the mechanism cannot also be incentive compatible and efficient. Section 10 gives up incentive compatibility, on the ground that EIP-1559's priority fee already is not.
-
-Section 12 records an identity: this mechanism is the case of a more general one in which a reserve is held at exactly zero every block. Letting that reserve move is a larger change, worked out separately.
-
-Judge it as a proposal for an incremental change rather than a completed mechanism. The binding rule of sec. 2.4 is named but not fixed, sec. 4.1 states the condition the whole construction rests on, and sec. 11 lists what is unresolved.
+What is given up is incentive compatibility, which EIP-1559's priority fee has already given up (sec. 10). What is unresolved is whether the ordering rule can be enforced at all; if it cannot, the field is inert (sec. 4.1).
 
 ---
 
@@ -73,7 +67,7 @@ Section 2.3 gives the reason: any fixed constant is unsafe at some base fee. Saf
 
 The sign is a marker of which side of the market the transaction is on, fixed at submission:
 
-- **`TLF` < 0, the temporal-liquidity provider.** Offers to take inclusion at a later position within the slot, and receives a discount. Inclusion is unchanged: the transaction is in the same block, later in it, and nothing is deferred to a later slot. This is the supplier of RN-10 sec. 8.1.
+- **`TLF` < 0, the temporal-liquidity provider.** Offers to take inclusion at a later position within the slot, and receives a discount. It is in the same block, later in it, and it is not being scheduled for a different one. The discount also lowers what it must be able to pay, which sec. 8 treats. This is the supplier of RN-10 sec. 8.1.
 - **`TLF` > 0, the temporal-liquidity consumer.** Bids for inclusion at an earlier position within the slot, and pays a premium. This is the taker.
 - **`TLF` = 0**, the default, is neither and reproduces current behaviour.
 
@@ -120,9 +114,9 @@ payment_i  =  g_i * ( base_fee + tip_i )
 burn_i     =  g_i * base_fee
 ```
 
-No transaction may be paid to transact, so the realised total must stay positive. That requirement is what fixes the cap rule of sec. 2.1, and the two must be stated together.
+A provider's discount makes it pay less than the base fee. Pushed far enough, `base_fee + tip_i` goes negative and the sender is paid to send, which is free money and would be farmed. Ruling that out is what fixes the cap rule of sec. 2.1, so the payment rule and the cap have to be stated together.
 
-**Why a floor would not do.** Imposing `base_fee + tip_i >= 0` as a clipping rule is the obvious way to enforce it, and it destroys the balance of sec. 3. When the clip binds, the deviation actually applied to that transaction's payment is no longer `d_i`, so the applied deviations no longer sum to zero and the block runs a deficit against the burn with no party covering it. The rounding discipline of sec. 2.2 would be holding the balance to the last wei while a far larger hole opened here.
+**Why a floor would not do.** The obvious guard is a clipping rule, `base_fee + tip_i >= 0`, and it destroys the balance of sec. 3. When the clip binds, the deviation actually applied to that transaction's payment is no longer `d_i`, so the applied deviations no longer sum to zero and the block runs a deficit against the burn with no party covering it. The rounding discipline of sec. 2.2 would be holding the balance to the last wei while a far larger hole opened here.
 
 **The cap rule removes the case instead.** Since `tip0_i >= 0` and `base_TLF >= -TLF_MAX`, the worst deviation any transaction can carry is `d_i >= -2 * TLF_MAX`, so:
 
@@ -243,7 +237,23 @@ One consequence survives unchanged. Builders retain a reason to route position s
 
 ## 8. Limits
 
-**It does not address congestion.** The base fee continues to be the only instrument acting on congestion. Reordering within a slot moves no demand between slots, so aggregate per-slot demand is unchanged and no peak is lowered.
+**It carries no deferral instrument.** Nothing here schedules a transaction for a named later slot, and no state is held across slots, so the base fee remains the only thing acting on demand between slots. That is a narrower claim than it looks, and what the mechanism does move is worth stating precisely, because it is not only a reordering.
+
+**It acts on two margins at once, admission and position.** The adjustment sits outside the `min` of sec. 2.3, so it changes what a transaction pays and not only where it sits. A consumer pays `base_fee + tip0_i + d_i` with `d_i > 0`, more than its `max_fee` alone would have allowed, and a sender who cannot cover that is out. A provider pays with `d_i < 0`, falls below the base fee, and is bounded below by `base_fee * (1 - 2r)`. **The effective admission floor is therefore lower for a provider than the base fee itself**, so a transaction valued under the prevailing base fee can be included where today it cannot.
+
+The block's population changes as well as its order. Some urgent transactions are priced out at the margin, some delay-tolerant ones are priced in, and within whatever set results the front is priced rather than left to builder discretion. Contention for the front is what the gas race is, and today every transaction is in that queue by default because there is no way to say otherwise.
+
+**Who drives the variance, and who pays for it.** The two sides differ in more than deadline tolerance. Payment demand is filtered by a fee threshold: when the base fee rises the sender waits or does not send, and since a transfer is worth the same a slot later, waiting costs it nothing. Urgent demand has no such filter. A liquidation or an arbitrage arrives when a price moves, not when fees are convenient, and it pays what the opportunity is worth.
+
+So the variance in per-slot demand comes mostly from the side that does not respond to price, while the base fee's rise falls on the side that does. The controller rations by displacing whoever will leave, and that is the payment user. RN-14 sec. 8.3 observes that a patient transfer pays a price set by the most impatient participant in the block; this is the same fact from the other end, and the impatient participant sets the price precisely because the price will not move it.
+
+**The two groups swapped have different demand patterns, and that is where the relief is.** Much urgent demand is only marginally urgent: it would prefer to be early and today crowds the front for nothing, because wanting to be early costs no more than the tip everyone pays. That population is event-driven and bursty, since a liquidation or an arbitrage arrives when a price moves. What replaces it at the margin is steady and price-elastic, since a transfer arrives on its own schedule and waits when the fee rises.
+
+The consequence holds even at constant throughput. The block's marginal occupant becomes a transaction that can wait, so the next burst displaces demand that does not mind being displaced. That is not a lower base fee; it is a more elastic population absorbing the same shock.
+
+Three things keep the claim modest. It appears as better composition at the same throughput rather than as a lower base fee, since the block still fills and the controller sees the same gas used. The substitution needs payments to be the marginal bidder, which holds in moderate congestion and fails at the peak, where they have already left and the freed gas goes to another urgent transaction; RN-14 sec. 11 identifies the peak as what excludes payment traffic, so the effect lands somewhat away from the case that matters most. And the cap bounds it in both directions, since a premium of at most `r * base_fee` with `r < 1/2` will not deter a liquidation worth thousands. What is filtered is the tail that wanted earliness cheaply.
+
+Whether pricing position also reduces the gas the race itself wastes, in failed and speculative submissions, is a conjecture rather than a claim, and the Timeboost evidence of sec. 9 runs the other way.
 
 This is a sharper limitation than it first appears, because RN-14 sec. 11 identifies the *peak* base fee as what makes a low-value transfer unincludable during congestion rather than merely late, and sec. 8.3 states that a patient transfer pays a price set by the most impatient participant in the block. Neither is touched here. The barrier RN-14 names as excluding payment traffic is left standing, and only the position-pricing half of the argument is addressed.
 

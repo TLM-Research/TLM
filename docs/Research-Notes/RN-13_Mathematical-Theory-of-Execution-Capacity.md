@@ -1,10 +1,24 @@
+---
+id: RN-13
+title: "Toward a Mathematical Theory of Execution Capacity"
+subtitle: "Multi-User Demand, Temporal Resolution, Information, and Fundamental Limits"
+version: "0.5"
+status: "Public draft - research note, offered in good faith for comment"
+program: "Temporal Liquidity Market (TLM)"
+date: "August 31, 2026"
+---
+
+# RN-13 v0.5
+
 # Toward a Mathematical Theory of Execution Capacity
 
 ## Multi-User Demand, Temporal Resolution, Information, and Fundamental Limits
 
-**Draft v0.5, August 2026**  
-**Research Note:** RN-13  
-**Status:** Working Draft
+**Temporal Liquidity Market (TLM) Research Program**  
+**Research Note RN-13**  
+**Version:** 0.5  
+**Status:** Public draft - research note, offered in good faith for comment  
+**Date:** August 31, 2026
 
 ---
 

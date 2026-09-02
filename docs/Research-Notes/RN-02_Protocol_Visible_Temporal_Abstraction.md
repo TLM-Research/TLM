@@ -1,7 +1,23 @@
-# RN-02: Protocol-visible Temporal Abstraction (v0.4 @draft)
+---
+id: RN-02
+title: "Protocol-visible Temporal Abstraction"
+version: "0.4"
+status: "Public draft - research note, offered in good faith for comment"
+program: "Temporal Liquidity Market (TLM)"
+date: "August 19, 2026"
+---
 
-**Status:** @draft
-**Last Updated:** August 19, 2026
+# RN-02 v0.4
+
+# Protocol-visible Temporal Abstraction
+
+**Temporal Liquidity Market (TLM) Research Program**  
+**Research Note RN-02**  
+**Version:** 0.4  
+**Status:** Public draft - research note, offered in good faith for comment  
+**Date:** August 19, 2026
+
+---
 
 ## Abstract
 

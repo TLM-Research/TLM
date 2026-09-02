@@ -11,10 +11,10 @@ date: "August 12, 2026"
 
 # Hyperliquid: A Case Study in Temporal Liquidity
 
-**Temporal Liquidity Market (TLM) Research Program**
-**Research Note RN-03**
-**Version:** 0.7
-**Status:** Public Draft of Research Note
+**Temporal Liquidity Market (TLM) Research Program**  
+**Research Note RN-03**  
+**Version:** 0.7  
+**Status:** Public Draft of Research Note  
 **Date:** August 12, 2026
 
 ---

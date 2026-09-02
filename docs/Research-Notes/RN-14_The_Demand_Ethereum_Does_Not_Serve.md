@@ -13,10 +13,10 @@ date: "August 30, 2026"
 
 ## Workload specialization across four Layer-1 chains, and what the base layer forgoes
 
-**Temporal Liquidity Market (TLM) Research Program**
-**Research Note RN-14**
-**Version:** 0.5
-**Status:** Public draft - research note, offered in good faith for comment
+**Temporal Liquidity Market (TLM) Research Program**  
+**Research Note RN-14**  
+**Version:** 0.5  
+**Status:** Public draft - research note, offered in good faith for comment  
 **Date:** August 30, 2026
 
 ---
