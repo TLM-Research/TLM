@@ -18,7 +18,7 @@ license: "CC-BY-4.0"
 **Research Note RN-15**
 **Version:** 0.5
 **Status:** Public draft - research note, offered in good faith for comment.
-**Scope:** Mechanism proposed, not analysed to completion. Sec. 2.4 names the binding rule without fixing it, sec. 4.1 states the condition the construction rests on, and sec. 11 lists what is unresolved.
+**Scope:** One slot, one existing block, no new protocol state. Prices position within the block. Does not defer a transaction to a later slot and does not act on congestion.
 **Date:** 31 August 2026
 
 > **Licence.** CC BY 4.0, as with the rest of the research programme. If this mechanism is submitted as an Ethereum Improvement Proposal, the EIP will be written as a separate document under CC0, since EIP-1 requires every EIP to be in the public domain. This note is not that document and does not waive rights.
@@ -33,11 +33,13 @@ This note proposes a mechanism that is both. A signed **temporal liquidity fee**
 
 The scope is one slot. Nothing here defers a transaction to a later slot, and nothing here addresses congestion. The base fee continues to do that work alone. Inter-slot deferral requires the protocol to carry state across slots and is left to a later note.
 
+Section 12 records an identity worth stating: the mechanism here is the case of a more general one in which a reserve is held at exactly zero every block. Letting that reserve move is a larger change and is the subject of RN-16.
+
 Two results are worth separating. The budget-balance property is a construction and holds by arithmetic, given a cap on the charge set as a fraction of the prevailing base fee; sec. 2.3 shows why the cap cannot be an absolute constant and is part of the result rather than a free parameter. The claim that the scheme attracts the workloads RN-14 describes is a conjecture, and sec. 8 states the reasons to doubt it.
 
 Being two-sided and budget-balanced, the mechanism cannot also be incentive compatible and efficient. Section 10 states which of these is given up, and it is incentive compatibility, on the ground that EIP-1559's priority fee already is not.
 
-This is a proposal, and the first attempt in this program to use the temporal-liquidity framework to make a concrete contribution to Ethereum rather than to describe what the framework would require. It is incremental. A reader should judge it as a proposal for an incremental change, not as a completed mechanism: the binding rule of sec. 2.4 is named but not fixed, sec. 4.1 states the condition on which the whole construction rests, and sec. 11 lists what is unresolved.
+This is a proposal, and the first attempt in this program to use the temporal-liquidity framework to make a concrete contribution to Ethereum rather than to describe what the framework would require. It is incremental. A reader should judge it as a proposal for an incremental change, not as a completed mechanism: the binding rule of sec. 2.4 is named but not fixed, sec. 4.1 states the condition on which the whole construction rests, sec. 11 lists what is unresolved, and sec. 12 states the identity that makes this the zero-reserve case of RN-16.
 
 ---
 
@@ -322,7 +324,23 @@ Four things would change the design if answered differently. The rest of the par
 
 4. **The magnitude of the credit under realistic block composition.** Section 8 shows it thins as the provider share rises. Whether what remains is large enough to attract the workloads of sec. 6 is unmeasured, and the payments argument depends on it.
 
-## 12. Relation to other work
+## 12. The reserve this note holds at zero
+
+One identity is worth stating here, because it changes what this note is rather than proposing anything further.
+
+Suppose the reference were a price `P_t` posted in protocol state rather than computed from the block. Then the block's net flow is
+
+```text
+sum_{i in S} g_i * d_i  =  sum_{i in S} g_i * TLF_i  -  P_t * sum_{i in S} g_i
+```
+
+which is zero exactly when `P_t` equals the gas-weighted mean of sec. 2.2. So the mechanism of secs. 2 and 3 is the general case with `P_t` re-chosen every block to hold the net flow at zero. There is a reserve in this design already. It is pinned to zero by construction, and that is what buys the exact balance of sec. 3.
+
+Letting it move is a different proposal. It resolves the size advantage of sec. 10 and the composition dependence of sec. 8, because a posted price does not contain the transaction's own gas and does not depend on what else is in the block. It costs exact balance, requires the protocol to hold a balance rather than only burn, and adds a second controller alongside the base fee. That is a larger change than this note argues for, and it is developed in RN-16 together with the feedback policy it would need.
+
+Nothing about it moves a transaction to a later slot. The allocation stays inside one slot in both versions; what would cross a slot boundary is the money, not the transaction.
+
+## 13. Relation to other work
 
 **Mini-blocks** (Franco and Rogozinski) auction sub-slot position through SSV-backed sub-slot auctions. The instrument is one-sided: position is sold, and the proceeds accrue to the seller. The scheme here is two-sided and budget-balanced, and the proceeds accrue to the demand that yields position.
 
@@ -336,7 +354,7 @@ Whether the two compose is open. Both allocate sub-slot position, so there are t
 
 ---
 
-## 13. Relationship to the other notes
+## 14. Relationship to the other notes
 
 RN-14 sec. 8.3 poses the problem this note answers. RN-10 sec. 8 and sec. 9.5 give the two-sided structure; this is the intra-slot, quantum-indifferent grade of RN-10 sec. 9.5, and the two other grades, delayable and callable, need inter-slot state and are not addressed. RN-11 supplies the allocation problem and the three constraints checked in sec. 5, sec. 9 and sec. 10. RN-05 supplies the intra-slot positions the ordering rule assigns, and sec. 5 above returns a case to RN-05 sec. 4.3. RN-01 and RN-02 supply the demand representation, of which `TLF` is the one-scalar collapse set out in sec. 2.1: it carries neither a deadline nor a decay function, and the distinction between the two is lost. Recovering it, and pairing the transaction-level TEP with the stream-level TSP, is the subject of a separate note on inter-slot temporal liquidity.
 
@@ -353,4 +371,6 @@ RN-14 sec. 8.3 poses the problem this note answers. RN-10 sec. 8 and sec. 9.5 gi
 - Balance, cap and own-gas simulation supporting secs. 2.1, 2.3, 3 and 10: `sims/rn15_tlf_balance.py`, with tests asserting the published numbers in `sims/tests/` and a dated run in `sims/results/rn15_tlf_balance.txt`.
 - Zhao, Y. *The Cost of Delay: Evidence from the Ethereum Transaction Fee Market.* SSRN Working Paper No. 4436697.
 - Liu, Y., Lu, Y., Nayak, K., Zhang, F., Zhang, L. & Zhao, Y. "Empirical Analysis of EIP-1559: Transaction Fees, Waiting Time, and Consensus Security." *CCS '22*, 2099-2113.
+- Nasdaq. *The Nasdaq Opening and Closing Crosses.* https://www.nasdaqtrader.com/trader.aspx?id=openclose (Net Order Imbalance Indicator, disseminated from 3:50 p.m. ET at rising cadence; cited in sec. 12.3.)
+- NYSE. *Opening and Closing Auctions Fact Sheet* and *Imbalances* market data specification. https://www.nyse.com/market-data/real-time/imbalances
 - TLM Research Notes: RN-01, RN-02, RN-05, RN-07, RN-10, RN-11, RN-14.
