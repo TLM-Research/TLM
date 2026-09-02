@@ -1,7 +1,7 @@
 ---
 id: RN-04
 title: "Temporal Execution Services: A Multi-Class Execution Architecture for Ethereum"
-version: "0.3 (defines the service classes as contracts to be specified, with precedence for multi-fit requests; labels the 200ms lane an exchange-domain prototype and states its FIFO/no-public-queue properties as conditional on Problem P1; adds cold-start/sybil limits and a deposit/auction path to derived admission; replaces cross-class no-arbitrage coherence with a shared-resource allocation rule, pointing pricing at RN-10/11; sharpens the workload-shaping mechanism to state-domain separation; notes the lane adds no per-slot work. Supersedes 0.2.)"
+version: "0.3"
 status: "Public draft - research note, offered in good faith for comment"
 program: "Temporal Liquidity Market (TLM)"
 date: "August 12, 2026"

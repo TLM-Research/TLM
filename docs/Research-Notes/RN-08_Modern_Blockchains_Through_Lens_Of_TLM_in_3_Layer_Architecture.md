@@ -1,7 +1,7 @@
 ---
 id: RN-08
 title: "Modern Blockchains Through the Lens of TLM in a 3-layer Architecture: Common Components, Differentiated Features, and the Case for Decoupling Execution from Control"
-version: v0.5 (states the decoupling conclusion as a motivated hypothesis rather than a result; elevates shared-atomic-state feasibility to a precondition, cross-referenced to RN-09's triangle; reframes 'combine the four chains' as a redesign under a common interface, not module assembly; tightens the HyperCore claim; makes TET a metric vector; states the sample-selection rule and names falsifying cases; softens the host rankings. Supersedes v0.4.)
+version: "0.5"
 status: "Public draft, offered in good faith for comment"
 program: "Temporal Liquidity Market (TLM)"
 date: August 12, 2026

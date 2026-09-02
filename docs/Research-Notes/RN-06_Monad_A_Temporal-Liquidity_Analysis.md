@@ -1,7 +1,7 @@
 ---
 title: "RN-06 - Monad Through the Temporal-Liquidity Lens: Motivation, Novelty, and Limits"
 status: "Canonical single version - public research note, offered in good faith for comment."
-version: v0.4 (softens the control-plane characterization from 'dumb' to thin/single-dimensional - ordering and a scalar fee are policy; grounds the workload-shaping gain in state-domain separation rather than temporal labeling and broadens the experiment baselines; reframes the faster-blocks claim as a ratio-dependent hypothesis; distinguishes bytecode from behavioral equivalence for opted-in traffic; softens advocacy vocabulary. Supersedes v0.3.)
+version: "0.4"
 date: August 12, 2026
 spirit: >
   Offered in good faith and in admiration of Monad's engineering. The assessment in sec. 4 is

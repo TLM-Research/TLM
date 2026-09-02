@@ -2,7 +2,7 @@
 id: RN-11
 title: "The Term Structure and Allocation of Execution Capital in a Temporal Liquidity Market"
 subtitle: "A formal model -- the market curve of Part I and the allocation dual of Part II"
-version: v0.4.1 (Part I reframed around the coin-denominated term structure with temporal liquidity as the storability dial; the commodity-vs-money storability thesis, the numeraire/own-rate B, and the fee-as-abstraction are consolidated in RN-10 sec. 3 and referenced from sec. 0.5 here rather than duplicated. Part II carries surgical fixes only -- the full primal-dual with both multiplier families (sec. 6), flow rather than scalar conservation (sec. 7), softened width/kappa claims and tau's epistemic status (sec. 5) -- and the reference list is normalized.)
+version: "0.4.1"
 status: "Public draft. The formal center of the TLM program; stated, not solved."
 program: "Temporal Liquidity Market (TLM)"
 date: August 12, 2026

@@ -131,8 +131,9 @@ This separates
 
 A TEP is **transaction-level**. Stream-level properties (cadence,
 persistence, predictability, forecast reliability) belong to the
-**Temporal Stream Profile (TSP)** developed in RN-02; the two are
-complementary, and RN-02 treats their interaction.
+**Temporal Stream Profile (TSP)** developed in RN-02. A TEP describes one
+transaction; a TSP describes a source of recurring work. They are
+complementary, and neither substitutes for the other.
 
 Representation-neutrality (sec. 5) is the interface goal, but a note
 cannot be neutral over nothing. As a minimal, **illustrative** anchor,
@@ -174,7 +175,7 @@ position), **execution**, and **finality**. Ethereum realizes these
 through slots, blocks produced within slots, ordering inside blocks, and
 finalization; other Layer-1 systems realize them differently while
 serving the same roles. Collapsing them into a single "Blockchain Time"
-hides distinctions the later notes (RN-09, RN-13) depend on.
+hides distinctions that matter wherever intra-slot position is at issue.
 
 ![Figure 1 - Physical Time and Blockchain Time, the two temporal domains TLM coordinates](figures/rn01/fig1_two_temporal_domains.svg)
 
@@ -276,7 +277,7 @@ If we look from the angle of communicating information in a distributed system, 
 - **Observed statistics.** Recurrence, forecast error. Mostly stream-level, so TSP rather than TEP.
 - **Never verifiable.** Private value, and the declared preferences that express it.
 
-A missed deadline is observable; the counterfactual value of a different execution time is not, so private value is never directly verifiable. Under the program's marked pricing (RN-02, RN-10/RN-11) this is acceptable: a class is charged at its prevailing marked rate, so selecting an urgent class means paying the urgent rate: a declaration is paid for, not policed. RN-02 sec. 6 develops the field classification and the pricing argument.
+A missed deadline is observable; the counterfactual value of a different execution time is not, so private value is never directly verifiable. That is acceptable if each class is charged at its prevailing market-clearing rate, because selecting the urgent class then means paying the urgent rate: a declaration is paid for rather than policed. RN-02 sec. 6 develops the field classification and the pricing argument.
 
 The second category is the one the rest of the program leans on hardest, and it is what separates a workable declaration from an unworkable one. Supplied temporal liquidity is checkable after execution, because the chain records where a transaction landed. Urgency is a private counterfactual that never becomes checkable at all. Realised resource use sits with the first of those, not with the deadline it was previously grouped beside.
 

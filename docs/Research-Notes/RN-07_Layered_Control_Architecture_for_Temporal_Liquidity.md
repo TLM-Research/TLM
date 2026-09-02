@@ -1,7 +1,7 @@
 ---
 id: RN-07
 title: "A Layered Control Architecture for Temporal Liquidity: Multi-Timescale Control for Blockchain Execution Markets"
-version: v0.2 (recasts the reducibility invariant as a bounded-local-verification interface rather than compilation-to-scalars, and separates the deployability it secures from neutrality, stability, and incentive-compatibility, which it does not; corrects the 'policy-free' data plane to bounded auditable policy; adds strategic-feedback and fallback open problems and an O-RAN trust-model caveat. Supersedes v0.1.)
+version: "0.2"
 status: "Public draft - research note, offered in good faith for comment"
 program: "Temporal Liquidity Market (TLM)"
 date: August 12, 2026
