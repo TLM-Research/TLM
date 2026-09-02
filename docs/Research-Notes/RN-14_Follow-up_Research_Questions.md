@@ -58,10 +58,10 @@ Section 6 argues capital and users are two mechanisms with opposite cost sensiti
 
 These are design questions RN-14 raises and does not attempt.
 
-- **4.1 What temporal information would have to be protocol-visible to serve the demand that currently goes elsewhere?** Answered in RN-01 and RN-02 at the level of the interface, and in RN-12 and RN-20 at the level of mechanism.
+- **4.1 What temporal information would have to be protocol-visible to serve the demand that currently goes elsewhere?** Answered in RN-01 and RN-02 at the level of the interface, and in RN-12 and RN-21 at the level of mechanism.
 - **4.2 Can differentiated temporal service coexist with a global public mempool?** Section 7.2 argues the mempool is a design commitment rather than an accident, which makes this a constraint rather than an implementation detail.
 - **4.3 Does raising L1 capacity change which temporal profiles are servable, or only the price of the single profile on offer?** Section 11 finds the base fee controller returns usage to its target regardless, so capacity and interface are separate levers.
-- **4.4 Does real Ethereum congestion vary slowly enough for peak reduction to lower average fees rather than only redistribute them?** RN-14 section 11 puts the crossover near ten minutes, close to the response time of the base fee controller. The simulation is in `sims/rn21_basefee.py`; the empirical half is unanswered.
+- **4.4 Does real Ethereum congestion vary slowly enough for peak reduction to lower average fees rather than only redistribute them?** RN-14 section 11 puts the crossover near ten minutes, close to the response time of the base fee controller. The simulation is in `sims/rn22_basefee.py`; the empirical half is unanswered.
 
 ## 5. Recovery, and how it would be measured
 
@@ -77,7 +77,7 @@ Two questions that appeared in earlier versions of RN-14 section 13 have proper 
 
 | Question | Where it now lives |
 |---|---|
-| Given EIP-4844 established a second fee market for a second resource, what is the equivalent construction for a temporal dimension? | RN-21 sec. 4.1, as the model for an independently floating deferred fee |
+| Given EIP-4844 established a second fee market for a second resource, what is the equivalent construction for a temporal dimension? | A forthcoming note on inter-slot temporal liquidity, as the model for an independently floating deferred fee |
 | Does patient flow spread across blocks or concentrate into whichever blocks price it? | Working note of 30 August 2026 on the crossing frame, open item 2 |
 
 ---
@@ -89,7 +89,7 @@ Two questions that appeared in earlier versions of RN-14 section 13 have proper 
 | 1. Whether the split is real | RN-14 itself, revised | Data collection and cleaning |
 | 2. The temporal hypothesis | A new empirical note | Transaction-level measurement |
 | 3. The network-effect asymmetry | RN-10, extended | Economics |
-| 4. What the protocol would expose | RN-01, RN-02, RN-12, RN-15, RN-21 | Interface and mechanism design |
+| 4. What the protocol would expose | RN-01, RN-02, RN-12, RN-15 | Interface and mechanism design |
 | 5. Recovery and its measurement | RN-06, RN-09, and a deployment note | Empirical and design |
 
 The three prerequisites for the mechanism work are questions 1.1, 1.2 and 2.1. Until the address gap survives cleaning, the cost-only explanation is tested, and temporal characteristics are observed rather than inferred, the demand-side case in RN-14 remains an argument for measurement rather than a finding.
