@@ -58,7 +58,7 @@ Section 6 argues capital and users are two mechanisms with opposite cost sensiti
 
 These are design questions RN-14 raises and does not attempt.
 
-- **4.1 What temporal information would have to be protocol-visible to serve the demand that currently goes elsewhere?** Answered in RN-01 and RN-02 at the level of the interface, and in RN-12 and RN-21 at the level of mechanism.
+- **4.1 What temporal information would have to be protocol-visible to serve the demand that currently goes elsewhere?** Answered in RN-01 and RN-02 at the level of the interface, and in RN-12 at the level of mechanism.
 - **4.2 Can differentiated temporal service coexist with a global public mempool?** Section 7.2 argues the mempool is a design commitment rather than an accident, which makes this a constraint rather than an implementation detail.
 - **4.3 Does raising L1 capacity change which temporal profiles are servable, or only the price of the single profile on offer?** Section 11 finds the base fee controller returns usage to its target regardless, so capacity and interface are separate levers.
 - **4.4 Does real Ethereum congestion vary slowly enough for peak reduction to lower average fees rather than only redistribute them?** RN-14 section 11 puts the crossover near ten minutes, close to the response time of the base fee controller. The simulation is in `sims/rn22_basefee.py`; the empirical half is unanswered.
