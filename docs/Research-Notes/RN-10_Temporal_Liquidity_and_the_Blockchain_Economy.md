@@ -1,10 +1,10 @@
 ---
 id: RN-10
 title: "The Economics of the Temporal Liquidity Market: How TLM Expands the Blockchain Economy"
-version: v0.6 (recasts sec. 3 as the commodity/capital/money storability thesis - blockspace's fee, quoted in the native coin, is storable and the coin is a claim on the capital that produces blockspace - and adds the numeraire/own-rate and fee-as-abstraction subsections as the canonical exposition RN-11 can reference and simplify against; bridges sec. 6 to it; corrects the abstract and sec. 13 to the dual/market-curve non-identity. Supersedes v0.5: retitled around the causal claim; sec. 12 rewritten as the synthesis that claim needs, including retention and the exit evidence; **project type** introduced in sec. 1 as the class-level unit above **project**; abstract reordered to close on the argument. Supersedes v0.4, which added the two-sided-market keystone, the partition by binding tightness, and the prior-art positioning of sec. 8.8, and moved the formal statement to RN-11 and the open questions to a companion note.)
+version: "0.6"
 status: "Concept note - the economics of the TLM program. Public draft, circulated for external review and comment."
 program: "Temporal Liquidity Market (TLM)"
-date: August 12, 2026
+date: "August 12, 2026"
 ---
 
 # RN-10 - The Economics of the Temporal Liquidity Market
