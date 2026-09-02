@@ -27,19 +27,19 @@ license: "CC-BY-4.0"
 
 ## Abstract
 
-RN-14 sec. 8.3 identifies what Ethereum's fee market cannot express. The priority fee is a bid for inclusion, with nothing attached about position. A sender cannot bid for inclusion at an earlier position within the slot, and cannot offer to take inclusion at a later position within the slot in exchange for paying less. Position inside the block is not addressable, since no field states a preference over it and no rule obliges a builder to honour one, though it is traded out-of-band by parties other than the sender. And the protocol has no way to check a position commitment if one were made. RN-14 leaves open whether the counterpart to the priority fee should be a credit paid to the sender or a reduction in what the sender pays, observing that a credit needs a funding source and a reduction does not.
+RN-14 sec. 8.3 identifies what Ethereum's fee market cannot express. The priority fee is a bid for inclusion, with nothing attached about position: a sender cannot bid for inclusion at an earlier position within the slot, and cannot offer to take a later one in exchange for paying less. Position inside the block is not addressable, though it is traded out-of-band by parties other than the sender, and the protocol could not check a position commitment if one were made.
 
-This note proposes a mechanism that is both. A signed **temporal liquidity fee** (`TLF`) is added to the transaction, and the reference value against which it is assessed is the gas-weighted mean of the declared fees over the block. Deviations from the mean sum to zero by construction, so premiums paid by transactions bidding for an earlier position within the slot fund discounts to transactions offering to take a later one, with no external funding source and no protocol-held balance. The fee also sets intra-slot ordering, which is what makes declaring it consequential and what the protocol can verify after the fact.
+This note adds a signed **temporal liquidity fee** (`TLF`) to the transaction, assessed against the gas-weighted mean of the declared fees over the block. Deviations from that mean sum to zero by construction, so premiums paid by transactions bidding for an earlier position fund discounts to transactions taking a later one, with no external funding source and no protocol-held balance. The fee also sets intra-slot ordering, which is what makes declaring it consequential and what the protocol can verify afterwards.
 
-The scope is one slot. Nothing here defers a transaction to a later slot, and nothing here addresses congestion. The base fee continues to do that work alone. Inter-slot deferral requires the protocol to carry state across slots and is left to a later note.
+**The scope is one slot.** Nothing here defers a transaction to a later slot or acts on congestion; the base fee continues to do that alone.
 
-Section 12 records an identity worth stating: the mechanism here is the case of a more general one in which a reserve is held at exactly zero every block. Letting that reserve move is a larger change and is the subject of RN-16.
+Two results are worth separating. Budget balance is a construction and holds by arithmetic, given a cap set as a fraction of the prevailing base fee, and sec. 2.3 shows why that cap cannot be an absolute constant. The claim that the scheme attracts the workloads RN-14 describes is a conjecture, and sec. 8 gives the reasons to doubt it.
 
-Two results are worth separating. The budget-balance property is a construction and holds by arithmetic, given a cap on the charge set as a fraction of the prevailing base fee; sec. 2.3 shows why the cap cannot be an absolute constant and is part of the result rather than a free parameter. The claim that the scheme attracts the workloads RN-14 describes is a conjecture, and sec. 8 states the reasons to doubt it.
+Being two-sided and budget-balanced, the mechanism cannot also be incentive compatible and efficient. Section 10 gives up incentive compatibility, on the ground that EIP-1559's priority fee already is not.
 
-Being two-sided and budget-balanced, the mechanism cannot also be incentive compatible and efficient. Section 10 states which of these is given up, and it is incentive compatibility, on the ground that EIP-1559's priority fee already is not.
+Section 12 records an identity: this mechanism is the case of a more general one in which a reserve is held at exactly zero every block. Letting that reserve move is a larger change, worked out separately.
 
-This is a proposal, and the first attempt in this program to use the temporal-liquidity framework to make a concrete contribution to Ethereum rather than to describe what the framework would require. It is incremental. A reader should judge it as a proposal for an incremental change, not as a completed mechanism: the binding rule of sec. 2.4 is named but not fixed, sec. 4.1 states the condition on which the whole construction rests, sec. 11 lists what is unresolved, and sec. 12 states the identity that makes this the zero-reserve case of RN-16.
+Judge it as a proposal for an incremental change rather than a completed mechanism. The binding rule of sec. 2.4 is named but not fixed, sec. 4.1 states the condition the whole construction rests on, and sec. 11 lists what is unresolved.
 
 ---
 
@@ -79,7 +79,7 @@ The sign is a marker of which side of the market the transaction is on, fixed at
 
 **`TLF` is the Temporal Execution Profile, collapsed to one number.** RN-01 and RN-02 define the TEP as a transaction's declaration of its own temporal characteristics. This note takes the smallest version of that object which is still useful: a single signed scalar, whose magnitude is what the sender will pay or accept and whose **sign is a flag for the direction of temporal liquidity**. Positive consumes it, negative supplies it.
 
-What the collapse discards should be stated. A full TEP carries a deadline and a decay function, and those are different things: a transaction with a hard deadline and one whose value falls smoothly are not interchangeable, and one number cannot separate them. Nothing here recovers that distinction. The claim is only that the one-number form is enough to open a second side of the market inside an existing block, and that the richer object belongs with the stream-level TSP in later work on inter-slot temporal liquidity.
+A full TEP carries a deadline and a decay function, and those are different things: a transaction with a hard deadline and one whose value falls smoothly are not interchangeable, and one number cannot separate them. Nothing here recovers that distinction. The claim is only that the one-number form is enough to open a second side of the market inside an existing block, and that the richer object belongs with the stream-level TSP in later work on inter-slot temporal liquidity.
 
 The two sides are the substance of the proposal. Under EIP-1559 the priority fee bids for inclusion with no qualifier attached, so there is no position market in the protocol at all, on either side; position is traded anyway, out-of-band, which is the subject of sec. 7. The signed field attaches the qualifier and lets it run in both directions:
 
@@ -297,7 +297,7 @@ A two-sided budget-balanced mechanism cannot have everything, and the note shoul
 
 **The defence is that EIP-1559 already gave this up.** The priority fee is effectively a first-price bid: a sender pays close to their own cap, so they must estimate what others will pay, and misestimating costs them. Adding a second field with the same character does not introduce a defect that was absent; it extends one that is already there. What would be a regression is a mechanism that made the *base fee* strategic, and this does not, since the base fee rule is untouched.
 
-**One consequence is concrete and should be stated.** Because a transaction's own gas contributes to the gas-weighted reference, its marginal cost of a tick is `g_i * (1 - g_i / G)` rather than `g_i`. A transaction moving the reference in proportion to its own size pays less per tick of priority than a small one:
+**Large transactions pay less per tick than small ones.** Because a transaction's own gas contributes to the gas-weighted reference, its marginal cost of a tick is `g_i * (1 - g_i / G)` rather than `g_i`. A transaction moving the reference in proportion to its own size pays less per tick of priority than a small one:
 
 | Gas used | Share of block | Cost per tick, relative | Effective discount |
 |---:|---:|---:|---:|
@@ -308,7 +308,7 @@ A two-sided budget-balanced mechanism cannot have everything, and the note shoul
 
 The advantage equals the transaction's share of block gas. For ordinary transfers it is negligible. For a single transaction consuming a fifth of the block it is a fifth off the price of priority, which is a size advantage the protocol does not currently grant and which sits uneasily with RN-11's neutrality constraint, since the allocation would then depend on something other than declared characteristics alone. Whether it is small enough to accept, or wants a correction that excludes a transaction's own gas from its reference, is open.
 
-Excluding own-gas has a cost worth noting: each transaction would face a slightly different reference, the deviations would no longer sum to zero against a single `base_TLF`, and the balance of sec. 3 would have to be re-derived or abandoned. The trade is neutrality against exact balance, which is the same trade sec. 2.3 and sec. 9 make in other places, and it is not obvious it should be settled the same way each time.
+Excluding own-gas has a cost: each transaction would face a slightly different reference, the deviations would no longer sum to zero against a single `base_TLF`, and the balance of sec. 3 would have to be re-derived or abandoned. The trade is neutrality against exact balance, which is the same trade sec. 2.3 and sec. 9 make in other places, and it is not obvious it should be settled the same way each time.
 
 ---
 
@@ -326,8 +326,6 @@ Four things would change the design if answered differently. The rest of the par
 
 ## 12. The reserve this note holds at zero
 
-One identity is worth stating here, because it changes what this note is rather than proposing anything further.
-
 Suppose the reference were a price `P_t` posted in protocol state rather than computed from the block. Then the block's net flow is
 
 ```text
@@ -336,7 +334,7 @@ sum_{i in S} g_i * d_i  =  sum_{i in S} g_i * TLF_i  -  P_t * sum_{i in S} g_i
 
 which is zero exactly when `P_t` equals the gas-weighted mean of sec. 2.2. So the mechanism of secs. 2 and 3 is the general case with `P_t` re-chosen every block to hold the net flow at zero. There is a reserve in this design already. It is pinned to zero by construction, and that is what buys the exact balance of sec. 3.
 
-Letting it move is a different proposal. It resolves the size advantage of sec. 10 and the composition dependence of sec. 8, because a posted price does not contain the transaction's own gas and does not depend on what else is in the block. It costs exact balance, requires the protocol to hold a balance rather than only burn, and adds a second controller alongside the base fee. That is a larger change than this note argues for, and it is developed in RN-16 together with the feedback policy it would need.
+Letting it move is a different proposal. It resolves the size advantage of sec. 10 and the composition dependence of sec. 8, because a posted price does not contain the transaction's own gas and does not depend on what else is in the block. It costs exact balance, requires the protocol to hold a balance rather than only burn, and adds a second controller alongside the base fee. That is a larger change than this note argues for, and a separate note develops it together with the feedback policy it would need.
 
 Nothing about it moves a transaction to a later slot. The allocation stays inside one slot in both versions; what would cross a slot boundary is the money, not the transaction.
 
