@@ -8,7 +8,7 @@
 
   <!-- PHYSICAL WORLD -->
   <rect x="40" y="30" width="620" height="150" rx="10" fill="#f1f7f2" stroke="#bcd7c0" stroke-width="1.3"/>
-  <text x="350" y="56" font-size="14" text-anchor="middle" fill="#3f7a4b" font-weight="bold" letter-spacing="1">PHYSICAL WORLD &#8212; Physical Time</text>
+  <text x="350" y="56" font-size="14" text-anchor="middle" fill="#3f7a4b" font-weight="bold" letter-spacing="1">PHYSICAL WORLD - Physical Time</text>
   <g font-size="12.5" fill="#1a2332" text-anchor="middle">
     <rect x="70" y="72" width="96" height="34" rx="5" fill="#ffffff" stroke="#7a9a80"/><text x="118" y="94">Business Logic</text>
     <rect x="182" y="72" width="80" height="34" rx="5" fill="#ffffff" stroke="#7a9a80"/><text x="222" y="94">Oracle</text>
@@ -39,7 +39,7 @@
 
   <!-- BLOCKCHAIN WORLD -->
   <rect x="40" y="392" width="620" height="150" rx="10" fill="#eef2fb" stroke="#c3cdea" stroke-width="1.3"/>
-  <text x="350" y="418" font-size="14" text-anchor="middle" fill="#3a55a8" font-weight="bold" letter-spacing="1">BLOCKCHAIN WORLD &#8212; Blockchain Time</text>
+  <text x="350" y="418" font-size="14" text-anchor="middle" fill="#3a55a8" font-weight="bold" letter-spacing="1">BLOCKCHAIN WORLD - Blockchain Time</text>
   <g font-size="11.5" fill="#5b6b7a" text-anchor="middle">
     <text x="94" y="444">Slot 100</text><text x="206" y="444">Slot 101</text><text x="318" y="444">Slot 102</text><text x="430" y="444">Slot 103</text><text x="542" y="444">Slot 104</text>
   </g>
