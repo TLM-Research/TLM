@@ -2,13 +2,13 @@
 id: RN-01
 title: "Temporal Execution Profiles (TEP)"
 subtitle: "A Demand-Side Communication Model for the Temporal Liquidity Market"
-version: "0.4"
+version: "0.6"
 status: "Public draft - research note, offered in good faith for comment"
 program: "Temporal Liquidity Market (TLM)"
-date: "August 19, 2026"
+date: "September 2, 2026"
 ---
 
-# RN-01 v0.4
+# RN-01 v0.6
 
 # Temporal Execution Profiles (TEP)
 
@@ -16,9 +16,9 @@ date: "August 19, 2026"
 
 **Temporal Liquidity Market (TLM) Research Program**  
 **Research Note RN-01**  
-**Version:** 0.4  
+**Version:** 0.6  
 **Status:** Public draft - research note, offered in good faith for comment  
-**Date:** August 19, 2026
+**Date:** September 2, 2026
 
 ---
 
@@ -89,8 +89,8 @@ does not, however, encode a full **intertemporal** preference schedule:
 how value varies across *when* execution occurs. Repeated bidding,
 replacement strategies, and account abstraction recover part of this over
 time, and the limits of one-shot fee bidding are documented in the
-fee-market literature; the point here is the narrow one, that a single
-scalar bid does not express the schedule directly.
+fee-market literature. A single scalar bid still does not express the
+schedule directly.
 
 Applications therefore implement retries, gas estimation, batching,
 oracle scheduling, rollup scheduling and private order flow outside the
@@ -106,7 +106,7 @@ program is to express this heterogeneity *within* a shared interface, so
 differentiated demand can be served without splintering into isolated
 chains, consolidating liquidity and network effects rather than
 fragmenting them. Temporal Execution Profiles are a candidate for that
-shared, cross-chain vocabulary (sec. 7, sec. 9).
+shared, cross-chain vocabulary (sec. 8, sec. 10).
 
 ------------------------------------------------------------------------
 
@@ -118,6 +118,11 @@ execution outcomes over Blockchain Time.**
 
 A TEP captures application demand without prescribing either the
 mathematical representation or the allocation mechanism.
+
+![Figure 2 - From a single execution point to a structured profile over Blockchain Time](figures/rn01/fig2_point_vs_profile.svg)
+
+The scalar bid of sec. 2 names one fee and one preferred slot. A profile
+carries value across the whole set of acceptable execution outcomes.
 
 Execution remains the responsibility of the **Temporal Liquidity
 Market**.
@@ -186,23 +191,21 @@ temporal domains.
 
 # 5. Representing Temporal Execution Profiles
 
-A Temporal Execution Profile intentionally separates **temporal execution preferences** from their mathematical representation. Here, temporal execution preference broadly means temporal execution options as there are certain economic trade-off between execution price and execution time. 
+A Temporal Execution Profile separates **temporal execution preferences** from their mathematical representation. A preference here is a trade-off between what execution costs and when it happens, so it describes a set of acceptable outcomes rather than a single desired one.
 
 Different blockchain protocols may choose different representations while conveying equivalent temporal execution preferences.
 
 Possible representations include
 
-- Temporal Bid Functions,
 - execution deadlines,
 - acceptable delay intervals,
 - discrete execution classes,
 - piecewise value schedules,
+- bid schedules over execution time,
 - protocol-specific encodings,
 - or future representations yet to be explored.
 
-Throughout the TLM research program, **Temporal Bid Functions** are investigated as one natural mathematical representation of a Temporal Execution Profile.
-
-The TLM framework intentionally remains representation-neutral.
+The TLM framework remains representation-neutral, and this note does not choose among these.
 
 The abstraction is the **Temporal Execution Profile**.
 
@@ -214,23 +217,17 @@ This separation allows representations and protocol mechanisms to evolve indepen
 
 # 6. Economic Motivation for Temporal Execution Profiles
 
-Temporal Execution Profiles are motivated by a simple economic observation.
+Applications have heterogeneous execution preferences; execution markets have heterogeneous execution capabilities. A market matches the two well only when participants can communicate enough for the match to be made.
 
-Applications possess heterogeneous execution preferences, while blockchain execution markets possess heterogeneous execution capabilities.
+Current fee markets communicate willingness to pay. They communicate only a limited part of an application's temporal execution options.
 
-A market functions effectively only when participants can communicate sufficient information for efficient matching.
+The question is whether exposing those options at protocol level improves the match before any allocation mechanism is applied.
 
-Current blockchain fee markets communicate willingness to pay, but communicate only a limited portion of an application's temporal execution options (including but not limited to preferences).
-
-Temporal Execution Profiles investigate whether exposing the temporal execution options between applications (at demand-side) and execution markets (at supply-side) at protocol level may improve this matching before any allocation mechanism is applied.
-
-The objective is not to increase throughput. Nor is it to replace existing fee markets.
-
-Instead, the objective is to improve how execution markets (at supply side) understand the temporal execution options of applications (at demand side) that already exists today.
+The objective is not to increase throughput, and not to replace existing fee markets. It is to improve how the supply side understands temporal demand that already exists today.
 
 ## 6.1 Demand-side Motivation
 
-Applications today often purchase essentially the execution service in the same manner despite having very different temporal execution requirements and options.
+Applications today buy the same execution service despite having different temporal requirements.
 
 Returning to the examples introduced earlier,
 
@@ -264,11 +261,11 @@ The objective is **not** to guarantee execution nor is it to reduce fees for eve
 
 Rather, the objective is to allow applications to communicate demand-side temporal execution options to the supply side at protocol level. 
 
-Making part of this information protocol-visible may allow and/or increase economically feasible demand that is currently suppressed or inefficiently expressed to participate in exeuction market more effectively.
+Making part of this information protocol-visible may allow and/or increase economically feasible demand that is currently suppressed or inefficiently expressed to participate in the execution market more effectively.
 
 If we look from the angle of communicating information in a distributed system, Temporal Execution Profiles seek to reduce information loss between applications and blockchain execution markets.
 
-**Protocol-visible is not the same as publicly revealed.** A deadline or an urgency field also exposes trading intent, and a profile visible in a public mempool before ordering can be priced against or front-run. *When* a field becomes visible is a design lever (committed-and-hidden, builder-visible, consensus-certified, or revealed only after sequencing), and it governs extraction. This note treats revelation timing as an open dimension (RN-02 develops it), not as pure information gain.
+**Protocol-visible is not the same as publicly revealed.** A deadline or an urgency field also exposes trading intent, and a profile visible in a public mempool before ordering can be priced against or front-run. *When* a field becomes visible is a design lever (committed-and-hidden, builder-visible, consensus-certified, or revealed only after sequencing), and it governs extraction. This note treats revelation timing as an open dimension, and RN-02 develops it.
 
 **Not every field can be verified the same way.** A useful profile mixes four kinds of field, and the distinction that matters is *when* each can be checked:
 
@@ -312,13 +309,31 @@ The broader objective is to allow execution markets to better match heterogeneou
 
 Rather than merely redistributing existing demand, richer execution options may expand the economically serviceable market for both applications and execution providers.
 
-This is a **hypothesis**, not a result: whether it holds is measured by deadline-success rates, waiting-time distributions, fee spend, utilization, effects on non-participants, extraction, and computational cost. These are posed as questions for evaluation, not asserted as claims.
+This is a **hypothesis**, not a result. Whether it holds is measured by deadline-success rates, waiting-time distributions, fee spend, utilization, effects on non-participants, extraction, and computational cost.
 
 This shifts the discussion from competition over a single execution service toward a market capable of supporting differentiated execution services.
 
 ------------------------------------------------------------------------
 
-# 7. Relationship to Ethereum Research
+# 7. The Temporal Liquidity Market
+
+Temporal Execution Profiles do not stand alone. They are the demand-side layer of a broader architecture.
+
+The Temporal Liquidity Market (TLM) research program studies how protocol-level market design can coordinate heterogeneous temporal demand with heterogeneous execution opportunities.
+
+![Figure 3 - The layered TLM architecture](figures/rn01/fig3_tlm_architecture.svg)
+
+- **Physical Time** carries application semantics: the events and deadlines that give a transaction its value.
+- **Blockchain Time** carries protocol execution: the slots, blocks and ordering over which execution opportunities are organized.
+- **Temporal Execution Profiles** carry temporal execution choices from the physical world into the protocol.
+- **The Temporal Liquidity Market** matches that demand against the available execution opportunities.
+- **Mechanisms**, meaning pricing, incentives and allocation rules, are built on top of that coordination layer.
+
+This note contributes the communication layer only. Later notes take up mathematical representations, protocol-level learning from observed execution behavior, and the mechanisms themselves. The program introduces concepts before representations, and representations before mechanisms.
+
+------------------------------------------------------------------------
+
+# 8. Relationship to Ethereum Research
 
 Ethereum has continuously improved its execution market through advances in both pricing and allocation.
 
@@ -350,32 +365,17 @@ The underlying concepts are expected to apply more broadly to future blockchain 
 
 ------------------------------------------------------------------------
 
-# 8. Current Research Directions
+# 9. Current Research Directions
 
-This note introduces **Temporal Execution Profiles (TEPs)** as the conceptual foundation of Demand-side communication Model for the Temporal Liquidity Market (TLM) research program.
+Temporal Execution Profiles are the demand-side communication model of the Temporal Liquidity Market research program. Two pricing questions follow from them and are under investigation.
 
-Building upon this foundation, the project is currently investigating several complementary research directions. These represent active research topics rather than finalized protocol proposals.
+**Urgency pricing** asks how time-sensitive demand can communicate urgency more explicitly than a scalar priority fee allows. **Patience incentives** ask what would make flexible demand reveal its flexibility, given that revealing it invites being scheduled later.
 
-| Research Direction | Current Focus |
-|--------------------|---------------|
-| **Temporal Execution Profiles (TEP)** | Demand-side communication model of transaction execution preferences. |
-| **Temporal Bid Functions** | Mathematical representations of Temporal Execution Profiles. |
-| **Urgency Pricing** | Mechanisms allowing highly time-sensitive demand to communicate urgency more explicitly. |
-| **Patience Incentives** | Mechanisms encouraging flexible demand to reveal temporal flexibility. |
-| **Temporal Liquidity Reserve (TLR)** | Protocol-managed temporal balancing mechanisms. |
-| **Temporal Market Feedback** | Protocol feedback using observed temporal execution behavior. |
-| **Execution Option Markets** | Markets supporting differentiated execution options across time and execution ordering. |
-| **Builder Optimization** | Builder optimization using Temporal Execution Profiles rather than scalar fee bids alone. |
-
-These directions document the current research trajectory of the TLM project.
-
-Their purpose is to encourage discussion, invite collaboration, and provide context for future Research Notes and Mechanism Notes.
-
-Individual mechanisms are expected to evolve as the research progresses.
+Both are open research topics rather than protocol proposals, and the mechanisms are expected to change as the work proceeds.
 
 ------------------------------------------------------------------------
 
-# 9. Conclusion
+# 10. Conclusion
 
 Blockchain execution markets have made substantial progress in improving pricing and execution allocation.
 
@@ -391,35 +391,5 @@ The central hypothesis of this work is intentionally modest:
 
 > Better communication of transaction execution preferences may enable better blockchain execution markets.
 
-Stated more sharply, the question is not whether temporal information should be first-class but which **minimum sufficient descriptor** yields a scheduling gain that exceeds its disclosure, extraction, and complexity cost. This is a cost-benefit question the program studies, not a settled result.
-
-While this note focuses on Ethereum, the broader research question is independent of any single blockchain architecture. We hope this work encourages parallel studies across other Layer-1 ecosystems, where different execution models, consensus mechanisms, and application communities may reveal new insights into temporal execution markets. Comparative studies across blockchain platforms may ultimately prove as valuable as the mechanisms proposed within any individual ecosystem. Ultimately, we hope Temporal Execution Profiles evolve into a common vocabulary for discussing transaction execution preferences across blockchain ecosystems, enabling researchers to compare execution markets using a shared conceptual framework while exploring different protocol realizations
----
-
-# Research Philosophy
-
-The Temporal Liquidity Market (TLM) project is developed as an open research program.
-
-It distinguishes between
-
-- Foundation Documents,
-- Research Notes,
-- Mechanism Notes,
-- Protocol Implementations.
-
-Research Notes introduce conceptual ideas.
-
-Mechanism Notes investigate candidate protocol designs built upon those ideas.
-
-Public publication serves two complementary purposes.
-
-First, it establishes a transparent, timestamped record of the project's evolution.
-
-Second, it encourages constructive discussion and collaboration within the broader blockchain research community.
-
-Mechanisms may evolve.
-
-Representations may evolve.
-
-The conceptual foundations are expected to mature through open research, experimentation, and community feedback.
+Stated more sharply, the question is not whether temporal information should be first-class but which **minimum sufficient descriptor** yields a scheduling gain that exceeds its disclosure, extraction, and complexity cost.
 
