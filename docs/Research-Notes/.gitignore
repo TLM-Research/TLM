@@ -1,0 +1,11 @@
+# Rendered previews. Build artifacts, regenerated from the markdown with:
+#   pandoc -s --toc --mathjax -f markdown -t html5 RN-NN_*.md -o RN-NN_preview.html
+# GitHub renders the .md directly, so these are for local reading only.
+*_preview.html
+
+# Working material that is not published: draft history, open questions
+private/
+
+# Superseded versions, kept locally for reference. A note that is withdrawn or
+# replaced moves here, which removes it from the repository; earlier versions
+archive/
