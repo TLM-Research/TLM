@@ -1,23 +1,23 @@
 ---
 id: RN-14
 title: "The Demand Ethereum Does Not Serve"
-version: "0.5"
+version: "0.6"
 status: "Public draft - research note, offered in good faith for comment"
 program: "Temporal Liquidity Market (TLM)"
-date: "August 30, 2026"
+date: "September 6, 2026"
 ---
 
-# RN-14 v0.5
+# RN-14 v0.6
 
 # The Demand Ethereum Does Not Serve
 
-## Workload specialization across four Layer-1 chains, and what the base layer forgoes
+## Observed workload differences across four Layer-1 chains and a temporal-demand hypothesis
 
 **Temporal Liquidity Market (TLM) Research Program**  
 **Research Note RN-14**  
-**Version:** 0.5  
+**Version:** 0.6  
 **Status:** Public draft - research note, offered in good faith for comment  
-**Date:** August 30, 2026
+**Date:** September 6, 2026
 
 ---
 
@@ -25,13 +25,13 @@ date: "August 30, 2026"
 
 This note compares activity across Ethereum, Solana, Tron and BNB Chain, then asks what the pattern implies for Ethereum. It does not compare consensus designs or headline throughput.
 
-The data show a durable split. Ethereum holds roughly eight times the DeFi capital of its nearest competitor while serving the fewest active addresses. Tron serves more active addresses than any other chain and almost no trading volume. Solana serves fewer addresses than Tron and roughly fifty-seven times its decentralized-exchange volume. The chains are not doing the same thing at different speeds; they are doing different things.
+The data show a workload split that is persistent in the one-year active-address series and visible in point-in-time capital and trading measures. Ethereum holds roughly eight times the DeFi capital of its nearest competitor while reporting the fewest active addresses in both sources used here. The relative ranking of Tron and Solana depends on source and date: Artemis places Solana first at the end of its one-year series, while the DeFiLlama snapshot places Tron first. Tron reports little decentralized-exchange volume relative to either address count; whether the remaining activity is primarily payments requires direct transfer data. The chains appear to host different activity mixes, not merely the same activity at different speeds.
 
-Read against Ethereum, the split describes a network effect that compounded on one side and not the other. Capital accumulated as the theory predicts. Users did not, and neither did trading volume. The note argues these are two mechanisms with opposite cost sensitivity, which is how a chain can win the first competition and lose the second on identical fundamentals.
+Read against Ethereum L1, the split is consistent with a network effect that compounded more strongly in capital than in user activity or trading volume. The aggregate data do not identify migration, unrealized adoption, or causality. They motivate a narrower question: whether the execution and fee interface contributes to the difference after cost, incentives, distribution, geography, and Ethereum's rollup strategy are taken into account.
 
-Sections 8 and 9 take the argument to the individual cases. BNB Chain's position rests on distribution through an exchange, which is a genuine demand-side network effect rather than a confound. Solana was designed around ordering time in 2017, years before the demand appeared, and its execution model has since been imported to Ethereum by Eclipse. Tron holds the workload this program should want most: payments are patient demand, the supply side of a temporal liquidity market, the most universal daily application, and the founding use case of the field, contested against banking rather than against another chain. Ethereum's relationship with its own rollups is examined separately, as a wholesale channel that delivers differentiated service at the granularity of which chain you are on rather than what each transaction needs.
+Sections 8 and 9 take the argument to the individual cases. BNB Chain's position appears closely related to distribution through an exchange, which is a demand-side network effect rather than a nuisance variable. Solana was designed around ordering time in 2017, years before the present workload appeared, and its execution model has since been imported to Ethereum by Eclipse. Tron is treated as a candidate payment case and therefore as a possible source of patient demand for a temporal liquidity market; the classification remains a hypothesis pending direct stablecoin-transfer measurement. Ethereum's relationship with its rollups is examined separately, because an L1-only comparison cannot by itself support claims about the Ethereum ecosystem.
 
-Whether **temporal requirements** explain the split is asked rather than answered. Cost, incentive programs, regulatory geography and distribution all shape where activity lands, and this note cannot separate their contributions from timing. What it can establish is that the specialization is real, that it appears in more than one metric, and that it is not explained by consensus design.
+Whether **temporal requirements** explain the split is asked rather than answered. Cost, incentive programs, regulatory geography, distribution, execution design, and Ethereum's L2 roadmap all shape where activity lands, and this note cannot separate their contributions from timing. It establishes a descriptive pattern that warrants measurement, not that Ethereum should recover every missing workload on L1 or that temporal design caused the observed sorting.
 
 ---
 
@@ -51,7 +51,11 @@ The claims here are **observational**. They describe what is visible in public c
 
 **This is not a controlled comparison.** The chains differ in fee levels, token incentives, regulatory exposure, tooling, funding and ecosystem age. Any of these can move activity.
 
+**The main comparison is Layer 1 against Layer 1.** Unless stated otherwise, “Ethereum” in the quantitative sections means Ethereum L1, not Ethereum plus its rollups. That is appropriate for a base-layer fee-market question but insufficient for claims about the Ethereum ecosystem. A complete comparison needs two panels: L1-only and ecosystem-adjusted. The latter must address duplicated users across bridges and rollups, double-counted TVL, shared liquidity, and differing security classifications. Section 9 discusses the issue qualitatively; this version does not yet supply the second panel.
+
 **The metrics are imperfect.** Active addresses are not people; one operator can control many addresses, and bot and airdrop activity inflates counts differently on different chains. TVL moves with token prices and depends on which protocols a data provider tracks. DEX volume includes wash trading. Each metric is directionally informative and none is precise.
+
+**The windows are not yet uniform.** Active addresses are shown over one year, while the central TVL and DEX comparison is a snapshot. Persistence in the address gap does not establish persistence in every metric. The multi-metric use of “durable” is therefore avoided pending common-window series.
 
 **Timing is inferred, not measured.** Nothing in aggregate data records a transaction's deadline, delay tolerance or sensitivity to ordering. Where this note calls a workload latency-sensitive, that is a reading of what the application does, not a measurement of what it needs. Measuring the temporal characteristics directly requires transaction-level work of the kind proposed in section 13.
 
@@ -67,7 +71,7 @@ The standard for this note is whether it identifies a pattern deserving measurem
 
 **Figure 1. One-year daily active addresses by chain.** Artemis, one-year series to 25 August 2026. On the final date the chart shows approximately 5.0M on Solana, 3.3M on Tron, 2.5M on BNB Chain and 594K on Ethereum.
 
-Ethereum serves roughly an eighth of Solana's active addresses, and the gap is stable across the year rather than a recent development.
+On the final Artemis observation Ethereum reports roughly an eighth of Solana's active addresses. Ethereum remains below the other three chains through the displayed year; the endpoint ratio should not be read as a source-independent user count.
 
 ## 3.2 Capital, trading and addresses together
 
@@ -84,11 +88,11 @@ DeFiLlama chain pages, observed 28 August 2026:
 
 **Figure 2. Capital and trading, 28 August 2026.** Two columns from the table above; active addresses are already in Figure 1. The ordering reverses between the panels, with Ethereum leading on capital and Solana on trading. Vertical scales differ.
 
-Note that the address counts here differ from Figure 1: Artemis reports 3.3M for Tron against DeFiLlama's 3.79M, and 594K for Ethereum against 569K. Different dates and different methodologies. The discrepancy is small enough not to affect the pattern and large enough to be worth stating.
+The address counts here differ from Figure 1 because the dates and methodologies differ. More importantly, the sources reverse the Tron-Solana ranking: Artemis ends with Solana near 5.0M and Tron near 3.3M, while the DeFiLlama snapshot reports Tron at 3.79M and Solana at 2.65M. The stable statement is that both report substantially more active addresses than Ethereum, not which one leads independently of source.
 
-## 3.3 What each address appears to be doing
+## 3.3 Ecosystem-level ratios
 
-Dividing the stock and flow measures by active addresses gives a rough picture of activity type. These are ratios of noisy metrics and should be read as orders of magnitude, not estimates.
+Dividing the stock and flow measures by active addresses gives ecosystem-level normalization ratios. They are not estimates of what a representative address or user owns or does: TVL is a stock, DEX volume and active addresses are flows, the participating populations differ, and one actor can control many addresses. The ratios are shown only as orders of magnitude from one mixed-source snapshot.
 
 | Chain | TVL per active address | DEX volume per active address (24h) |
 |---|---:|---:|
@@ -97,17 +101,17 @@ Dividing the stock and flow measures by active addresses gives a rough picture o
 | Solana | $2,226 | $1,306 |
 | Tron | $1,380 | $16 |
 
-![What each active address is doing](figures/rn14/activity-per-address.svg)
+![Ecosystem-level activity ratios](figures/rn14/activity-per-address.svg)
 
-**Figure 3. What each active address is doing.** Log scale, since the values span four orders of magnitude. The short Tron bar on the right is the observation a cost-only explanation does not reach.
+**Figure 3. Ecosystem-level activity ratios.** Log scale, since the values span four orders of magnitude. These ratios do not identify individual behavior or a causal effect of fees.
 
 Three contrasts stand out.
 
-**Ethereum holds 63 times more capital per active address than Tron.** Few users, each associated with large positions. That is a settlement and capital-custody pattern.
+**Ethereum's TVL-to-active-address ratio is 63 times Tron's in this snapshot.** This is consistent with a more capital-intensive ecosystem mix. It does not show that each Ethereum user owns a large position or that the counted addresses supply the TVL.
 
-**Tron has 1.43 times more active addresses than Solana and roughly one fifty-seventh of its DEX volume.** More users, almost no trading. That is a payments pattern, and it is the observation that most resists a cost-only explanation: if Tron's users were doing the same thing as Solana's but paying less for it, the volume ratio would not look like this.
+**In the DeFiLlama snapshot, Tron has 1.43 times more active addresses than Solana and roughly one fifty-seventh of its DEX volume.** This is consistent with a non-DEX workload such as payments, but it does not distinguish payments from exchange operations, bots, account maintenance, staking, or differences in address counting. Direct stablecoin transfer counts, adjusted value, sender and receiver counts, transaction sizes, and exchange-wallet filtering are required before calling it a payment result.
 
-**Solana's DEX volume exceeds Ethereum's on a chain with a twelfth of the capital.** High turnover against a small base, which is what interactive trading looks like.
+**Solana's DEX volume exceeds Ethereum's in this snapshot on a chain with about a twelfth of the TVL.** The ratio is consistent with a higher-turnover trading mix. A common-window series is needed before calling it durable.
 
 ---
 
@@ -138,7 +142,7 @@ The temporal reading is not the only one available, and the alternatives are str
 
 **Endogeneity.** The chains shaped their own demand. A chain with sub-second blocks attracts applications needing sub-second blocks, and those applications would not have appeared on a chain without them. Observed workload is partly a consequence of the architecture serving it, the same caution RN-03 applies to Hyperliquid.
 
-**What survives.** Cost explains why an application might leave an expensive chain. It does not explain the *shape* of the split. Tron and Solana are both cheap relative to Ethereum, and both attract millions of addresses, yet one carries fifty-seven times the trading volume of the other. Two chains at similar cost, with similar user counts, hosting entirely different activity, is not a cost result. Something is sorting applications by what they do rather than by what they pay, and the differences in what they do are substantially differences in timing: how often, how fast, how predictably, and with what ordering guarantees.
+**What survives.** Cost alone does not mechanically predict the DEX-volume and active-address ordering in this snapshot. Tron and Solana are both cheap relative to Ethereum yet report different activity mixes. That does not reject cost or consensus explanations: distribution, incentives, application ecosystems, geography, counting methods, and execution design differ as well. Temporal requirements are one candidate sorting variable because the apparent workloads differ in frequency, latency, predictability, and ordering sensitivity.
 
 Whether timing is *the* sorting variable is what remains to be measured.
 
@@ -150,9 +154,9 @@ Ethereum was first, and for most of its history it has held the deepest liquidit
 
 Part of that happened. Ethereum's TVL is roughly eight times its nearest competitor and the ratio has survived several cycles. Capital compounded as the theory predicts.
 
-The user side did not. Ethereum serves fewer active addresses than Solana, Tron or BNB Chain, and Figure 1 shows the gap is stable across the year rather than closing. The flywheel that was supposed to turn capital into users, and users into more capital, turned only once.
+The user-side metric did not follow the same pattern. Ethereum reports fewer active addresses than Solana, Tron or BNB Chain through Figure 1's window. This is consistent with stronger compounding in capital than in L1 user activity, but the aggregate series does not identify the mechanism or measure Ethereum's rollup users.
 
-**A distinction worth holding throughout what follows.** Two different things are being described and they are usually run together. Trading volume Ethereum had and lost share of: it was there and it moved. The user base Ethereum largely never had: Tron's payment users and BNB Chain's exchange-recruited users did not defect from Ethereum, they arrived on chains that were reachable at a price they would pay. The first is a competitive loss and the second is demand that was never addressed. The remedies differ, and so does the difficulty. Winning back flow that left is a matter of being better; attracting flow that never came is a matter of being available at all.
+**A distinction worth holding throughout what follows.** Migration and unrealized adoption are different counterfactuals. Some trading protocols, liquidity, and volume moved across chains and can be studied through deployments, bridge flows, and cohorts. The active-address data do not establish whether users defected from Ethereum or first adopted elsewhere. This note therefore uses “competitive loss” and “demand never addressed” as hypotheses requiring different evidence, not as findings from the aggregate snapshot.
 
 **The two network effects are not the same mechanism, and only one of them favours an expensive chain.** Capital network effects reward depth and composability: a large position wants the venue where it can be levered, hedged and unwound against the most counterparties, and it will pay a high per-transaction cost to get there because the cost is small relative to the position. User network effects reward cost and immediacy per interaction, and there the same fee is decisive. A chain can therefore win the first competition and lose the second on identical fundamentals, which appears to be what happened.
 
@@ -166,7 +170,7 @@ There are at least two defensible answers, and they point in opposite directions
 
 **The first reading is that this was a choice, not a failure.** The rollup-centric roadmap deliberately moved execution off L1 and reframed the base layer as settlement and data availability. On that reading, low L1 address counts are the roadmap working: users were supposed to leave the base layer. The difficulty is that they did not only go to Ethereum rollups. They also went to other Layer 1s, taking their fees, their liquidity and their composability with them. A roadmap that exports execution succeeds only if the exported execution stays inside the security domain, and a large share of it did not.
 
-**The second reading is that the interface never offered them anything to stay for.** A chain with one execution lane, priced by a single scalar fee, offers every application the same service: inclusion as soon as your fee allows. That service is well matched to infrequent, high-value, latency-tolerant work, which is the work Ethereum kept. It is poorly matched to frequent, low-value, latency-sensitive work, which is the work that left. On this reading Ethereum did not lose those users to a better chain so much as decline to make them an offer.
+**The second reading is that the interface did not expose the service some applications needed.** A chain with one execution lane, priced by a scalar fee, gives applications limited means to distinguish urgency from flexibility. This may fit some infrequent, high-value work better than frequent, low-value or position-sensitive work. Whether that mismatch affected chain choice remains to be tested after fees, incentives, distribution, and L2 activity are controlled for.
 
 A third possibility should be kept on the table: some of the departed activity may not be worth having. Wash trading, airdrop farming and bot flow inflate address counts everywhere, and a chain that filters them through cost is not obviously worse off. Establishing how much of the gap is economically real is part of the measurement problem in section 13.
 
@@ -217,11 +221,11 @@ Binance reports a user base above 300 million with roughly 180,000 new sign-ups 
 
 That has an analytical consequence for this note: **the BNB Chain row in section 4 should not be read as a workload signal in the way the others are.** It measures a distribution channel. Its presence in the data is a reminder that onboarding friction may explain more of the cross-chain split than execution characteristics do, which is a rival explanation section 5 states in general terms and which BNB makes concrete.
 
-None of this makes BNB Chain's position less real or less earned, and treating it as a confound would be a mistake. Distribution is itself a network effect. Users who arrive through the funnel make the chain more valuable to the next application built on it, that application attracts the next cohort, and the loop runs. This is the demand-side flywheel of section 6, and BNB Chain has it turning while Ethereum does not.
+None of this makes BNB Chain's distribution advantage irrelevant. Distribution can produce a network effect: users attract applications and applications can attract users. The aggregate data are consistent with that loop but do not identify it causally or show that Ethereum lacks an ecosystem-level counterpart.
 
 Distribution and execution cost also interact, and the interaction is the part Ethereum can act on. A one-click funnel converts only if the first transaction is cheap enough not to break the experience. The same funnel pointed at an expensive chain would lose users at the first fee. Distribution brings users to the door; the execution layer decides whether they come through it.
 
-**The wider point is about inclusion.** A chain's economy grows with the range of users it can serve, not only with the value of the users it already has. Ethereum's capital flywheel turns on a comparatively small number of high-value participants, which is a genuine advantage and also a bounded one: serving only the workloads that tolerate high cost caps the economy at the size of that segment. A network that cannot accommodate low-value, high-frequency users is missing not just those users but the second flywheel they would drive.
+**The wider point is about inclusion and strategy.** Serving a wider range of users may create additional network effects, but scarce L1 capacity has an opportunity cost and not every workload belongs on the base layer. The relevant comparison is between the value created by broader access, the value of displaced execution, and the possibility of serving the same demand through Ethereum L2s.
 
 **A counterfactual.** Would Binance have built a chain at all if Ethereum had served retail users well?
 
@@ -255,7 +259,7 @@ This is suggestive rather than conclusive, and the caution of section 5 still ap
 
 The execution model was never the hard part to copy. The liquidity and the habits are.
 
-## 8.3 Tron: the workload a temporal liquidity market needs most
+## 8.3 Tron: a candidate source of patient payment demand
 
 An earlier reading of this case treated it as the weakest one, on the grounds that stablecoin transfer is not latency-sensitive and therefore not addressable by execution design. That was too quick.
 
@@ -271,19 +275,19 @@ That contest is barely under way, though how barely depends entirely on which vo
 
 The claim this section needs is the narrowest one and it survives on any of the three. The World Bank's Remittance Prices Worldwide puts the global average cost of sending $200 at roughly 6.4 percent in 2026. Blockchain rails can move the same value for a small fraction of that, with corridor-level implementations reporting all-in costs well below one percent. Against that cost advantage, payments volume in the narrow sense remains a rounding error on global payment activity, and even the adjusted figure sits at a low single-digit percentage of the cross-border market. Chainalysis projects stablecoin payment volumes matching the card networks somewhere between 2031 and 2039, which is a forecast rather than a measurement but places the contest firmly in the future.
 
-The addressable market is therefore largely unaddressed, and the cost advantage that would address it is large. Which of the three figures a reader prefers changes the size of the prize, not the direction of the argument.
+The potential market is large, but these aggregate figures do not show which chain should serve it or on which layer. Which definition a reader uses changes both the estimated scale and the economic interpretation.
 
 That is the scale against which a chain's own fee should be read. For a workload repeated daily, the per-transaction cost is not a detail of user experience; it is a line item in a competitive cost stack against a bank. A chain expensive enough to exclude frequent low-value transfers is not merely losing share to Tron. It is absent from the contest with the incumbent the technology was created to challenge.
 
-Stablecoin transfer is low-value, high-frequency, and largely indifferent to latency and to ordering. In this program's vocabulary that is not a marginal workload. It is the **supply side** of a temporal liquidity market.
+The working hypothesis is that many stablecoin transfers are low-value, high-frequency, and relatively flexible about intra-block position. If transaction-level evidence supports it, that makes part of the payment workload a candidate **supply side** of a temporal liquidity market. It does not imply that every payment is patient or that the aggregate Tron activity measured above consists of payments.
 
 A temporal liquidity market needs two sides. Impatient demand takes temporal liquidity; patient demand provides it by yielding contended slots and accepting later ones. This is the two-sided structure developed in **RN-10**, where the economics of the market are set out, and given a formal statement in **RN-11**, where the allocation problem and the term structure that prices it are developed. **RN-04** describes the service classes such a market would offer, **RN-05** the supply-side substrate they would run on, and **RN-12** the mechanism that would clear it.
 
-Payments are close to an ideal provider in that structure, and the reason is specific: **they are flexible about their position in the block.** A transfer that settles three positions later, or one block later, is worth what it was worth before. Nothing in its value depends on where it lands. That flexibility is the thing a temporal market needs supplied, and payments supply it continuously and in volume. A chain that never attracts this workload has takers without providers, which is an odd position for a market to be in.
+Some payments may be useful providers in that structure for a specific reason: **their value may be relatively insensitive to position within a block.** That claim should be measured rather than assumed. A transfer can still carry a deadline, depend on confirmation predictability, or be part of a state-dependent sequence. Inter-block deferral is also a stronger commitment than moving several positions later and should not be inferred from intra-block flexibility.
 
-It also follows that such demand should be **cheap for a structural reason** rather than as a subsidy. The reason is not that there is room going spare. It is that a transaction indifferent to its position asks for less than one that must be early. Early position is the contested resource; a transfer that does not want it is not competing for it and should not be charged as though it were. Ethereum does not price it that way. A patient transfer bids against an urgent liquidation at the same base fee, so it pays a price set by the most impatient participant in the block. The uniform fee, not what the transaction actually asks for, is what makes patient demand expensive.
+If position has a price, a transaction indifferent to position asks for less temporal service than one that must be early. That does not mean its execution is costless or that block space is unused. In an underfilled block it may use otherwise idle capacity; in a full block it displaces another transaction. A temporal discount is justified only by the value of supplied flexibility and the resulting allocation, not by labeling one application patient.
 
-**Payments are also the workload with least to fear from ordering.** A stablecoin transfer is not worth front-running. There is no price to move, no oracle to race, no liquidation to seize. Of all the traffic on a chain, this is the flow that can be reordered or deferred with the least harm to the sender, which makes it the natural occupant of the positions nobody is competing for.
+**Payments may have less direct ordering sensitivity than trading.** A simple transfer has no swap price or liquidation opportunity inside the transaction itself, though surrounding application state, account dependencies, compliance checks, or linked transactions can still make order matter. This makes payments a candidate for later positions, not a class that can be reordered without analysis.
 
 Those positions exist and are visible. Franco and Rogozinski, motivating the mini-blocks design, observe that Ethereum block value concentrates at the top: the first transactions, arbitrage legs, liquidations and oracle-sensitive trades, capture a disproportionate share of what is extracted over a slot, while the rest of the block settles into what they call "a comparatively quiet, lower-value regime." Position at the front is contested. Position further back is not, and that is a statement about competition for position rather than about space going unused.
 
@@ -295,15 +299,15 @@ Stated that way, the back of the block is a losing position rather than a traded
 
 **What the interface would have to add is easier to state than to design.** It needs some counterpart to the priority fee: a way for a transaction to obtain a lower price in exchange for taking a later position within the slot, and a way for the protocol to check that it did. The second half is what makes it tractable, because where a transaction landed is a fact the block records, while whether it needed to be early is a private counterfactual that no scheme can certify. Only one side of a position market can be audited, and it is the supplying side. That asymmetry is what makes the instrument buildable at all.
 
-Whether such a counterpart should take the form of a payment to the patient sender or a discount on what they pay is an open design question, and the two differ in more than presentation: a payment requires a funding source and a discount does not. This note does not settle it. What the data here establishes is the demand-side case for wanting one at all.
+Whether such a counterpart should take the form of a payment to the patient sender or a discount on what they pay is a mechanism-design question, and the two differ in more than presentation. This note does not settle it. RN-12 gives the broader conceptual market and RN-15 proposes one block-local authorization and funding rule. The data here supplies a hypothesis those mechanisms must test; it does not establish that the mechanism improves welfare.
 
-**These are daily applications, and friction decides everything for them.** The point is not only that payments bring users. It is that payments are used repeatedly, often several times a day, and tolerance for friction falls as frequency rises. A few dollars of fee on a monthly treasury settlement is a rounding error. The same fee on a daily transfer is prohibitive. The applications people touch every day are the ones with the least room for cost and delay, and they are the ones a chain must serve to become part of an ordinary routine rather than a venue visited occasionally for something important.
+**These are daily applications, so repeated friction matters.** A fee acceptable for an occasional treasury settlement may be prohibitive for a daily transfer. Serving such activity can support habit and network effects, but this is an ecosystem-strategy claim rather than proof that the transactions belong on Ethereum L1.
 
-That is also the mechanism behind the missing flywheel of section 6. Habit, not headcount, is what turns a chain into infrastructure. Someone who transacts daily holds a balance, has a default, and encounters whatever else the ecosystem offers. Someone who transacts twice a year has none of these. Ethereum's cost structure excludes the frequency band in which habit forms, which is a plausible reason the user side never compounded while the capital side did.
+This supplies a possible mechanism for user-side network effects. Repeated use can create balances, defaults, and exposure to other applications. High cost may inhibit that frequency on L1, though the aggregate data do not separate cost from distribution, geography, incentives, or use through rollups.
 
-Payments are also the most universal workload. Everyone needs to move value; only some trade, and fewer allocate capital at scale. That combination, universal and daily, is why payment networks concentrate rather than fragment, and why they are the widest entry point into an ecosystem.
+Payments are a broad and repeated workload. That makes them a possible entry point into an ecosystem, while their appropriate execution layer remains open.
 
-The loss is therefore twofold, and the halves compound. Exporting payments gives away the patient demand a temporal liquidity market needs on its supply side, and it gives away the workload through which daily use, and therefore habit, would have formed. Fewer daily users means less patient flow to schedule; less patient flow means a thinner case for building the market that would have served them. Section 8.1 observed that BNB Chain has the user flywheel turning. Low-friction daily applications are how one starts.
+If payment activity forms elsewhere, Ethereum may lose both potential patient flow and a source of daily user habit. That is a strategic possibility, not a measured welfare loss. Delegating payments to rollups may be an intentional specialization if the ecosystem preserves reachability, security, and economic linkage.
 
 **The demand has a name, and it is currency substitution.** The preceding argument treats payments as a workload. In much of the world it is closer to a defence. Where a currency loses value predictably, holding a dollar-denominated token is not a preference among savings vehicles; it is the cheapest available way to not be paid in a depreciating unit. That makes it the least discretionary demand in the category, which is why it grows without marketing and why it does not respond to execution quality on any chain.
 
@@ -313,11 +317,11 @@ The pattern is regional rather than national. Goldman Sachs estimates roughly **
 
 **One finding matters more than the volumes, and it is a natural experiment.** Argentine monthly inflation fell from a peak of 25.5 percent to roughly 2.1 percent by July 2026. **Stablecoin usage kept rising anyway.** Adoption has decoupled almost entirely from the condition that produced it.
 
-That is the strongest available evidence for the stickiness argument below, and it is stronger than the argument itself. A habit that persists after its cause recedes is not a response to circumstance; it is infrastructure. Section 6 asks why Ethereum's user-side flywheel never turned. This is what it looks like when one does turn, somewhere else, on a chain that charged little enough for daily use to be ordinary.
+This is evidence consistent with persistence in payment habits after the initiating condition weakens. It does not isolate habit from wallet adoption, off-ramps, regulation, or other contemporaneous factors, and it is not direct evidence about Ethereum.
 
 **And daily habits are sticky in a way trading flow is not.** A trader moves to wherever execution is better next week, and the switching cost is a few minutes of setup. A payment habit involves counterparties. Changing it means changing where the people who pay you and the people you pay expect to transact, which is a coordination problem rather than a preference. Saved addresses, wallet defaults, merchant acceptance and payroll arrangements all point the same way.
 
-This inverts a natural assumption about winnability. Trading left for execution reasons and is the workload most likely to come back if execution improves, because its participants are mercenary by construction. Payments, which this section argues are the more valuable of the two, are the hardest to attract, and mostly were never Ethereum's to lose. Those users are not making an execution decision at all, and they would have to move together to move at all.
+This may invert a natural assumption about winnability. Trading can move quickly when execution improves. Payment habits depend on counterparties and may be harder to attract. The note does not rank the two by social value; that requires a benchmark covering admitted demand, temporal value, real resource cost, incidence, and fairness.
 
 The practical consequence is that the window does not stay open. Habits formed elsewhere become defaults, and the cost of not serving a daily workload rises the longer it goes unserved.
 
@@ -341,7 +345,7 @@ But part of the answer has nothing to do with replication. Serving users who are
 
 ## 8.4 The pattern across the three
 
-Read together, the three cases separate the problem into parts that respond to different remedies. Solana's advantage is an execution model, and execution models are importable. BNB Chain's advantage is a distribution channel that has converted into a user-side network effect, which Ethereum cannot copy directly but which shows what having that flywheel looks like. Tron's advantage is cost plus geography, and the cost half is addressable without weakening Ethereum's security position, because patient demand is cheap to serve when it can be scheduled rather than priced against urgent demand.
+Read together, the three cases suggest different candidate explanations and remedies. Solana supplies an execution-model comparison. BNB Chain supplies a distribution hypothesis. Tron supplies a cost, geography, and possible payments hypothesis. Temporal scheduling could change how flexible demand is priced, but it does not make that demand free to execute or establish that admitting it improves welfare.
 
 The demand worth pursuing is the demand an execution interface could address, whether it left for reasons of that kind or never arrived for them. On the reading above that set is larger than it first appears, because it includes the patient workloads a temporal liquidity market would want on its supply side.
 
@@ -393,25 +397,41 @@ Three paths are available in principle, and they are not mutually exclusive.
 
 **Compete on the advantages Ethereum already holds.** Security, settlement finality and the deepest liquidity are genuine and durable, and for any application whose value depends on them the case is already strong. This path requires no protocol change and has not been sufficient on its own.
 
-**Serve the temporal profiles the interface currently cannot express.** This is the TLM program's path, and it is the narrowest of the three: it addresses only the demand held elsewhere because the service on offer was wrong, not the demand held elsewhere by cost, distribution or jurisdiction. Section 8 suggests that share is real but smaller than the headline numbers imply.
+**Serve temporal profiles the interface currently cannot express.** This is the TLM program's path and the narrowest of the three. It tests whether some demand is held elsewhere partly because the service on offer does not match its temporal requirements. It does not address demand determined by cost, distribution, jurisdiction, or application network effects, and this note does not estimate the share attributable to each cause.
 
 Whether the third path recovers anything is an empirical question. The value of asking it is that the first two are already being tried, and neither has closed the user gap.
 
+## 10.1 The strategic specialization argument
+
+A reasonable objection is that Ethereum should not try to serve every workload on L1. Its execution capacity is deliberately scarce, EIP-1559 regulates average gas toward a target below the hard block limit, and high-security settlement may be the base layer's comparative advantage. On this view, routine payments belong on rollups or other networks, while L1 concentrates on activity that can justify its opportunity cost.
+
+This note accepts the scarcity premise. It does not follow that the highest fee identifies the highest social value, or that every workload absent from L1 was efficiently excluded. Fees reflect private willingness and ability to pay. They can include urgency, MEV, transfers between traders, and access to private order flow. Conversely, payments and shared infrastructure can create network effects or benefits not captured by the originating transaction's fee.
+
+The useful distinction is among three kinds of absent demand:
+
+1. **Efficiently excluded demand:** its value is below the opportunity cost of scarce L1 resources.
+2. **Misallocated demand:** a scalar interface excludes it even though a feasible temporal allocation would create more value.
+3. **Strategically delegated demand:** Ethereum intends to serve it through L2 rather than direct L1 execution.
+
+TLM is primarily a hypothesis about the second category. It may affect the boundary between the second and third, but it does not establish that all missing activity belongs on L1. The test is counterfactual: when temporally flexible demand is admitted or moved later, does it use otherwise idle capacity, displace another transaction, or only change order? Any gain must be evaluated against the value of displaced execution, resource and state costs, builder incentives, economic incidence, and fairness.
+
+Capacity, transaction count, fees, and burn therefore cannot decide the strategy alone. The companion benchmark note RN-13-NEW develops a multi-criteria comparison. RN-14 supplies the demand hypothesis; it does not supply the welfare ranking.
+
 # 11. What Comes Next
 
-Mechanism design comes later. These are the questions the program starts with.
+Mechanism design is treated in RN-12 and, for one block-local construction, RN-15. The questions here determine what those mechanisms would need to demonstrate empirically.
 
-**Throughput, and what this is not.** This is not a throughput argument. The base fee is a controller targeting a fixed gas usage, so any sustained increase is choked back: the standard update rule raises the base fee roughly threefold within ten blocks held at the limit and a hundredfold within forty. Long-run throughput is a protocol parameter, not something a fee-market change can move. A temporal interface changes **which** transactions occupy the target and **what the peak costs**, not how much gets through.
+**Throughput, and what this is not.** This is not a throughput argument. The base fee is a controller targeting average gas usage below the hard block limit. Sustained blocks above target raise the base fee and suppress marginal demand; the exact path depends on the starting fee, gas-limit and target settings, block sequence, and demand elasticity. Long-run throughput is principally a protocol parameter, not something a fee-market change can increase on its own. A temporal interface changes **which** transactions occupy the target, **where** they execute, and potentially **what congestion peaks cost**.
 
-The peak is the part that matters for the workload in section 8.3. Flattening demand always lowers the peak base fee, and the peak is what makes a low-value transfer unincludable during congestion rather than merely late. The effect on the average fee is weaker and conditional: it improves only when demand varies more slowly than roughly ten minutes, which is close to the response time of the base fee controller itself, since faster variation is already absorbed. Whether real congestion falls on the useful side of that crossover is an empirical question this note does not answer.
+The peak may matter for the workload in section 8.3 because it can make a low-value transfer unincludable rather than merely late. Whether temporal smoothing lowers the peak is conditional on fixed total demand, feasible displacement, the initial controller state, and the time horizon; shifting demand can also create a later peak. Any claimed crossover with the base-fee response time requires an explicit simulation and stated parameters. Whether real congestion falls on the useful side is an empirical question this note does not answer.
 
 Beyond the fee level, temporal structure is scheduling information. Knowing which transactions can be deferred, which must stay adjacent, and which are independent is much of what an execution engine needs in order to run work in parallel, and Monad, Aptos and HyperCore each show what becomes available when a chain treats execution scheduling as a design problem rather than a given. Whether temporal profiles can feed that kind of engine, and what that does to throughput, is a direction worth pursuing (RN-06).
 
-**Which workloads are winnable, and in what order.** Section 8.3 suggests winnability runs opposite to value. Trading is mercenary and would come for better execution; daily payment habits are held in place by counterparties and may not move at any execution quality. The more valuable workload is therefore the harder one to attract.
+**Which workloads are winnable, and in what order.** Section 8.3 suggests that trading may respond more quickly to execution quality, while daily payment habits are held in place by counterparties. This is a claim about mobility, not a ranking of social value. Which workload Ethereum should seek depends on the strategic and welfare benchmark stated above.
 
 **How it fits the existing fee market.** EIP-1559, ePBS, execution tickets and slot auctions improve allocation, and this builds on them rather than replacing them. Temporal classes would interact with the base fee and with proposer and builder incentives, so part of the work is understanding those interactions and what they imply for the mechanisms already in place.
 
-**The mechanism itself.** The supply-side structure and the demand-side profile fields are both still to be designed. Every class added costs disclosure, extraction surface and protocol complexity, so the question is what the smallest useful set is rather than how much differentiation is possible.
+**The mechanism itself.** RN-12 proposes a conceptual two-sided market, while RN-15 collapses temporal demand to one signed field for a block-local construction. Neither establishes that the chosen representation is sufficient or efficient. Every class added costs disclosure, extraction surface, and protocol complexity, so the question remains what the smallest useful set is rather than how much differentiation is possible.
 
 ---
 
@@ -436,19 +456,22 @@ The intended comparison window is 26 August 2025 to 25 August 2026, matching Fig
 
 # 13. Open Research Questions
 
-Three questions decide whether this note's reading survives. The first two could overturn it; the third is the claim it makes and does not establish.
+Six questions decide whether this note's reading survives. Several could overturn it rather than merely refine it.
 
 1. **Is the address gap economically real?** The comparison in section 3 rests on active-address counts, and those counts include wash trading, airdrop farming and automated flow in proportions that differ by chain. Removing them on a consistent basis is the single measurement most likely to change the conclusion.
 2. **Is the split explained by cost and incentive spending alone?** Regressing workload share on relative fee level and on incentive programs tests the cheapest rival explanation, and it is the one a reader will reach for first.
 3. **Do the application mixes differ in temporal characteristics at the transaction level, or only in value and frequency?** This requires observed value decay rather than inter-transaction intervals, since only the first is a property of demand rather than of what the chain permits.
+4. **Does the result survive an ecosystem-adjusted comparison?** Ethereum L1 should be shown both alone and together with rollups, with explicit treatment of duplicated addresses, bridge activity, shared liquidity, TVL, and security assumptions.
+5. **Is Tron activity in fact payment activity?** Stablecoin transfer count, adjusted value, unique senders and receivers, transaction-size distributions, and exchange-wallet filtering are needed before the payment interpretation becomes a finding.
+6. **Would temporal differentiation improve allocation rather than transaction count alone?** For each newly served class, measure whether it uses idle capacity, displaces ordinary demand, or only changes execution order, then compare temporal value, real resource cost, builder incentives, economic incidence, and fairness. RN-13-NEW develops this benchmark.
 
 ---
 
 # 14. Conclusion
 
-The Layer-1 landscape shows a durable split: capital on one chain, users on others, payments on a third, trading on a fourth. It is not explained by consensus design, and the internal structure of the split is not explained by cost.
+The Layer-1 snapshot shows different combinations of capital, active addresses, and DEX activity, while the one-year address series shows that Ethereum's relative address gap persists in that metric. The available data do not establish a durable multi-metric split, identify payments directly, or reject cost, consensus, distribution, incentive, geography, and ecosystem-strategy explanations.
 
-This note reads it as specialization by execution demand and asks whether temporal requirements are part of what separates the categories. It does not establish that they are. Establishing it requires the transaction-level measurement set out in section 13, and this note is the argument that such measurement is worth doing.
+This note reads the pattern as a reason to test specialization by execution demand and asks whether temporal requirements are part of what separates the categories. It does not establish that they are, that the absent activity belongs on Ethereum L1, or that maximizing transaction count is a suitable objective. Establishing the narrower temporal claim requires the transaction-level measurement set out in section 13 and an evaluation of welfare, displaced demand, resource costs, incidence, and fairness. This note is the argument that those measurements are worth doing.
 
 ---
 
