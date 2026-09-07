@@ -2,14 +2,14 @@
 id: RN-15
 title: "A Temporal Liquidity Authorization for EIP-1559"
 subtitle: "Making the base fee a midpoint rather than a floor"
-version: "2.3"
+version: "2.5"
 status: "Public draft - research note, offered in good faith for comment"
 program: "Temporal Liquidity Market (TLM)"
-date: "2026-09-05"
+date: "2026-09-06"
 license: "CC-BY-4.0"
 ---
 
-# RN-15 v2.3
+# RN-15 v2.5
 
 # A Temporal Liquidity Authorization for EIP-1559
 
@@ -17,10 +17,10 @@ license: "CC-BY-4.0"
 
 **Temporal Liquidity Market (TLM) Research Program**  
 **Research Note RN-15**  
-**Version:** 2.3  
+**Version:** 2.5  
 **Status:** Public draft - research note, offered in good faith for comment.  
 **Scope:** One slot, one existing block, no new protocol state. No deferral instrument. The mechanism clears against Ethereum's scalar gas accounting
-**Date:** 5 September 2026  
+**Date:** 6 September 2026  
 
 > **Licence.** CC BY 4.0, as with the rest of the research programme. If this mechanism is submitted as an Ethereum Improvement Proposal, the EIP will be written as a separate document under CC0, since EIP-1 requires every EIP to be in the public domain. This note is not that document and does not waive rights.
 
@@ -69,7 +69,7 @@ Provider treatment requires both `TLA_i < 0` and `max_fee_i < base_fee`. A negat
 
 What a consumer buys is earlier relative position. What a provider supplies is later position, and what it receives is **conditional inclusion funding**: it is included only if the pool covers its shortfall, and excluded otherwise. So the mechanism allocates position on one side and both position and inclusion on the other, and it is not accurate to say inclusion is untraded.
 
-The negative side exists nowhere today, and it is why the base fee has to stop being a floor: an offer to take a later position is worth nothing if the discount cannot reach the part of the fee that made the transaction unaffordable. RN-14 sec. 11 identifies the peak base fee, not the tip, as what excludes low-value payment traffic during congestion. A mechanism redistributing only the tip leaves that barrier standing.
+Both sides remain subject to the same base fee in the same slot. A provider receives no favorable base-fee update or separate base-fee class; consumer authorization only closes the provider's transaction-specific payment shortfall. The negative side exists nowhere today, and it is why the base fee has to stop being a floor: an offer to take a later position is worth nothing if the discount cannot reach the part of the fee that made the transaction unaffordable. RN-14 sec. 11 identifies the peak base fee, not the tip, as what excludes low-value payment traffic during congestion. A mechanism redistributing only the tip leaves that barrier standing.
 
 `TLA` is the Temporal Execution Profile of RN-01 and RN-02 collapsed to one signed scalar with two branches. A full TEP carries a deadline and a decay function, and one number cannot separate financial authorization from temporal preference cleanly. Version 2.3 therefore states the asymmetry rather than treating negative magnitude as money. RN-10 and RN-11 call the same partition *supplier* and *taker*.
 
@@ -361,6 +361,38 @@ The entries below are **violation counts**, not values of payments, inclusion, b
 
 These checks test whether the reference implementation preserves the stated accounting and ordering invariants over the generated inputs. They do not prove the invariants for all valid inputs and do not establish welfare, incentive compatibility, equilibrium behaviour or deployment safety. Several checks verify properties imposed by construction—for example, exact budget balance tests the integer apportionment implementation rather than independently demonstrating that the payment rule is economically desirable.
 
+### 7.8 Benchmark extension: target utilization
+
+The preceding experiments test one-block accounting and builder choice. They do not yet measure the system-level question posed by RN-13 Part II: whether temporal information improves the target-utilization frontier.
+
+For RN-15, the first benchmark is deliberately limited. Providers and consumers face the same `base_fee` in the same slot. Provider admission does not weaken the EIP-1559 price signal; it uses consumer authorization to close identified provider shortfalls. The block may nevertheless use more gas than the baseline because transactions that fail the ordinary fee-cap validity condition can become conditionally includable. That additional gas affects the next base fee in the ordinary way.
+
+The simulation suite should therefore add paired baseline/TLA runs over identical demand traces and report:
+
+```text
+u_hard,t     = gas_used_t / gas_limit_t
+u_target,t   = gas_used_t / gas_target_t
+headroom_t   = gas_limit_t - gas_used_t
+added_gas_t  = gas used by funded providers not admitted in the baseline
+displaced_t  = baseline gas or value removed by the TLA allocation
+```
+
+It should also report admitted requests and declared value by class, next-block base fee, base-fee volatility, burn, builder revenue, consumer charges, provider subsidies, reservation efficiency, and the share of additional provider gas that uses otherwise idle capacity rather than displacing ordinary demand.
+
+Three regimes must remain separate: underfilled blocks, blocks near the EIP-1559 target, and blocks near the hard gas limit. A rise in `u_target` is not by itself a gain. It is useful only when the added service exceeds displacement and real execution costs without unacceptable loss of headroom or worse fee dynamics. RN-15 can measure a one-slot admission and ordering gain. It cannot establish that Ethereum can safely adopt a higher long-run target ratio, because it neither carries liquidity nor defers demand across slots. That stronger test belongs to RN-16.
+
+### 7.9 Base-fee-only baseline and preliminary multi-slot result
+
+The target-utilization simulator first disables TLA and runs ordinary EIP-1559 over Poisson arrivals, a persistent mempool and heterogeneous fee caps. At the 50 percent target, the base fee moves after each block from the parent block's gas use. Under low offered load, utilization remains below target because the controller cannot create demand. As offered load rises, average utilization approaches the target; it need not equal it in every finite run because transactions are indivisible, fee caps are heterogeneous and some requests expire.
+
+The RN-15 comparison uses the same arrivals and a conservative fill-only builder. It preserves the baseline ordinary block and funds providers only from included consumer TLA and otherwise unused gas. This rules out direct displacement by construction. The preliminary synthetic runs show why a multi-slot benchmark is still necessary: RN-15 can admit additional provider gas in slot (t), that gas can raise (b_{t+1}), and the higher base fee can exclude or delay transactions in later slots. A current-slot admission gain may therefore become later congestion even though providers and consumers faced the same base fee in the original slot.
+
+This is not evidence against RN-15. It identifies its boundary. RN-15 supplies an intra-slot price and funding mechanism, not inter-slot demand smoothing. The result to carry into RN-16 is that a reserve must do more than retain unmatched money: temporal feedback must move flexible demand away from constrained slots, or additional funding can amplify the next base-fee update.
+
+The literature gives a reason to test that interaction. Leonardos et al. model EIP-1559 as a discrete dynamical system, derive conditions sufficient for convergence, and show periodic or chaotic base-fee and occupancy behavior outside stable regimes. Reijsbergen et al. report that EIP-1559 achieved its objective on average in its first month while adjusting slowly during demand bursts and exhibiting substantial short-run occupancy variation. Ethereum's twelve-second slot converts every one-block update lag into wall-clock delay, but slot duration alone does not establish instability: the adjustment step, valuation distribution, demand elasticity, mempool policy and shock persistence also matter.
+
+
+
 ---
 
 ## 8. The provider tip and builder selection
@@ -405,7 +437,7 @@ This is not a selfish builder against a public-spirited one. Both use rules the 
 
 **`max_fee` no longer bounds the complete fee liability.** It continues to cap the EIP-1559 execution-gas price. Positive TLA separately caps the temporal charge. A consumer must be able to cover `L_i * max_fee_i + c_i`, excluding attached value and any other fee dimensions. Its realised fee payment is at most `g_i * max_fee_i + a_i`, where `a_i <= c_i`. Wallets must display both authorisations.
 
-**The mechanism carries no inter-slot deferral instrument.** Negative TLA purchases a later intra-block band and conditional inclusion funding; it does not schedule execution for a named future slot. The base fee remains the principal price acting on demand across blocks. Inter-block retention and funding belong to the TLR mechanism in RN-16.
+**The mechanism carries no inter-slot deferral instrument.** Negative TLA purchases a later intra-block band and conditional inclusion funding; it does not schedule execution for a named future slot. The base fee remains the principal price acting on demand across blocks. RN-15 can change one block's utilization and therefore the next base fee, but it cannot smooth demand over several slots or justify a smaller EIP-1559 elasticity reserve. Inter-block retention, feedback and that target-utilization question belong to the TLR mechanism in RN-16.
 
 **Funding is bounded and prioritised, not confined to near-marginal demand.** Total provider subsidy cannot exceed charged consumer TLA. Cheapest-full-shortfall-first accounts for both the base-fee deficiency and the selected provider tip. It prioritises the least expensive complete subsidy claims per gas, but a deeply excluded provider can still be funded if the consumer pool covers its reservation. A block containing only providers funds none under RN-15.
 
@@ -473,7 +505,7 @@ Version 0.6 deduced from Myerson and Satterthwaite that fixing budget balance an
 
 9. **The magnitude of the transfer under realistic block composition.** Nobody has measured how often the two sides meet in one block on mainnet.
 
-10. **The incidence of any base-fee change caused by additional gas** (sec. 9). The effect is conditional on gas used relative to target and on later demand response. Its distribution across newly included users, already-included users and ETH holders is not estimated.
+10. **The target-utilization effect of additional provider gas** (secs. 7.8 and 9). The effect is conditional on gas used relative to target and hard limit, displacement, and later demand response. Its distribution across newly included users, already-included users and ETH holders is not estimated. Nor does RN-15 establish that a higher long-run target ratio is safe.
 
 11. **How the mechanism should account for MEV, bundles, state conflicts and displaced ordinary tips**, none of which the simulations model.
 
@@ -485,9 +517,9 @@ Two limitations share a cause. **Both sides must meet in one slot**, so a consum
 
 Holding a balance across slots relaxes both. A block with surplus authorisation would retain it, a block short of it would draw, and a provider could be funded out of an earlier block's surplus. The constraint becomes intertemporal solvency rather than per-block balance, and value held over from one block can pay a builder in another without any single block extracting from its own consumers.
 
-A companion note in preparation develops this. It requires the protocol to hold a balance rather than only burn, adds a second controller alongside the base fee, and needs a rule for sustained one-sided demand, since a balance can be drained. It also inherits the private-channel problem of sec. 8.
+RN-16 develops this. It requires the protocol to hold a balance rather than only burn, adds temporal feedback coupled to the base-fee controller, and needs rules for sustained one-sided demand and reserve depletion. Its design goal is to combine the block elasticity reserve with a Temporal Liquidity Reserve so that flexible demand can be shifted across slots and the target-utilization frontier can be tested at fixed reliability. It also inherits the private-channel problem of sec. 8.
 
-Neither version moves a transaction to a later slot. The allocation stays inside one slot in both; what crosses a slot boundary is the money.
+Carrying money alone does not move a transaction to another slot. RN-16 must pair the reserve with an inter-slot scheduling or deferral rule. Without that rule, additional funding may raise later base fees without smoothing demand.
 
 ---
 
@@ -500,6 +532,8 @@ Neither version moves a transaction to a later slot. The allocation stays inside
 **Timeboost** sells a time advantage through an exclusive lane, with the centralisation and spam results cited in sec. 10.
 
 **EIP-4844** is the precedent for adding a fee dimension to Ethereum in production, though the dimension it added is a resource rather than a temporal one (RN-14 sec. 7.3).
+
+**EIP-1559 dynamics.** Leonardos et al. show that convergence depends on the adjustment step and demand environment; periodic and chaotic occupancy are possible outside stable regimes. Reijsbergen et al. find slow burst response and short-run occupancy variation despite acceptable average behavior. EIP-4396 separately shows how missed slots can make a following block signal a misleading demand spike. These results motivate the RN-16 comparison among base-fee-only, adaptive-base-fee and base-fee-plus-TLR designs; they do not establish that TLR is necessary or stable.
 
 ---
 
@@ -515,6 +549,9 @@ RN-14 sec. 8.3 poses the problem this note answers, and RN-14 sec. 11 identifies
 - *EIP-3529: Reduction in refunds.* https://eips.ethereum.org/EIPS/eip-3529
 - *EIP-4844: Shard Blob Transactions.* https://eips.ethereum.org/EIPS/eip-4844
 - Roughgarden, T. *Transaction Fee Mechanism Design.* arXiv:2106.01340; *JACM*, 2024.
+- Leonardos, S., Monnot, B., Reijsbergen, D., Skoulakis, S. & Piliouras, G. “Dynamical Analysis of the EIP-1559 Ethereum Fee Market.” arXiv:2102.10567. https://arxiv.org/abs/2102.10567
+- Reijsbergen, D., Sridhar, S., Monnot, B., Leonardos, S., Skoulakis, S. & Piliouras, G. “Transaction Fees on a Honeymoon: Ethereum's EIP-1559 One Month Later.” arXiv:2110.04753. https://arxiv.org/abs/2110.04753
+- *EIP-4396: Time-Aware Base Fee Calculation.* https://eips.ethereum.org/EIPS/eip-4396
 - Myerson, R. B. & Satterthwaite, M. A. "Efficient Mechanisms for Bilateral Trading." *Journal of Economic Theory* 29(2), 1983, 265-281.
 - Franco, M. & Rogozinski, G. *Mini-Blocks: SSV-Backed Sub-Slot Auctions for Ethereum PBS.* Ethereum Research, May 2026. https://ethresear.ch/t/mini-blocks-ssv-backed-sub-slot-auctions-for-ethereum-pbs/24898
 - Capponi, A. & Zhu, B. *Auctioning Time to Mitigate Latency Races: Theory and Evidence from Blockchains.* SSRN, 2026. See also *The Express Lane to Spam and Centralization: An Empirical Analysis of Arbitrum's Timeboost,* arXiv:2509.22143.
@@ -522,5 +559,5 @@ RN-14 sec. 8.3 poses the problem this note answers, and RN-14 sec. 11 identifies
 - Liu, Y., Lu, Y., Nayak, K., Zhang, F., Zhang, L. & Zhao, Y. "Empirical Analysis of EIP-1559: Transaction Fees, Waiting Time, and Consensus Security." *CCS '22*, 2099-2113.
 - Nasdaq. *The Nasdaq Opening and Closing Crosses.* https://www.nasdaqtrader.com/trader.aspx?id=openclose
 - NYSE. *Opening and Closing Auctions Fact Sheet* and *Imbalances* market data specification. https://www.nyse.com/market-data/real-time/imbalances
-- Clearing rule: `sims/rn15_tla.py`. Every figure in sec. 7: `sims/rn15_report.py`, output in `sims/results/rn15_report_v2.2.txt`. Published numbers asserted in `sims/tests/test_rn15_tla.py`.
-- TLM Research Notes: RN-01, RN-02, RN-05, RN-07, RN-10, RN-11, RN-14.
+- Clearing rule: `sims/rn15_tla.py`. Accounting figures: `sims/rn15_report.py`. Target-utilization model: `rn15_target_utilization_frontier.py`, with design and generated aggregate results published alongside this note.
+- TLM Research Notes: RN-01, RN-02, RN-05, RN-07, RN-10, RN-11, RN-13 Part II, RN-14, RN-16.
