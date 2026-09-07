@@ -196,7 +196,7 @@ sum of a_i   =   sum over funded providers of  g_i * s_i(p_i)
 
 by construction of the apportionment, over realised gas. The burn is unchanged, no balance is carried between slots, and no external funding enters. Consumer TLA authorization and each sender's fee caps are respected separately; positivity follows from `max_fee > 0`, and the reservation rule keeps the pool solvent.
 
-Verified across 60,000 clearings and three tip policies with no violation (sec. 7.7).
+The reference implementation reported no violation of this identity or the other listed invariants across 60,000 randomized clearings under three tip policies (sec. 7.7). This is an implementation check rather than a proof or an economic-performance result.
 
 Two things the identity does not say. Aggregate builder tip is not thereby favourable to the builder, which is sec. 8. And unmatched authorisation is not charged, so `c_i` is a maximum; sec. 12 carries the alternative reading.
 
@@ -341,23 +341,25 @@ Four consumers each authorising 500,000, one provider needing 300,000:
 | 60,000 | 600,000 | yes | 2,000,000 | yes |
 | 150,000 | 1,500,000 | yes | 2,000,000 | yes |
 
-### 7.7 Properties
+### 7.7 Randomized invariant checks
 
-20,000 random blocks per tip policy. Base fees from 1 to 1,000, gas limits from 21,000 to 1,000,000, realised gas drawn below each limit.
+The entries below are **violation counts**, not values of payments, inclusion, burn or welfare. The simulator generated 20,000 random blocks for each provider-tip policy, using base fees from 1 to 1,000, gas limits from 21,000 to 1,000,000, and realised gas no greater than each limit. Thus `0 / 20,000` means that the stated invariant was not violated in any generated block under that policy.
 
-| property | `p = 0` | `p` maximal | `p` capped at 2 |
+| invariant checked | `p = 0` violations | `p` maximal violations | `p` capped at 2 violations |
 |---|---:|---:|---:|
-| provider pays exactly `max_fee` | 0 | 0 | 0 |
-| provider tip within signed authorization | 0 | 0 | 0 |
-| provider shortfall accounting | 0 | 0 | 0 |
-| execution fee within `max_fee` | 0 | 0 | 0 |
-| temporal charge within `TLA` | 0 | 0 | 0 |
-| neutral untouched | 0 | 0 | 0 |
-| positivity | 0 | 0 | 0 |
-| pool never overdrawn | 0 | 0 | 0 |
-| balance | 0 | 0 | 0 |
-| provider funding order | 0 | 0 | 0 |
-| TLA band order | 0 | 0 | 0 |
+| provider payment differs from `g_i * max_fee_i` | 0 / 20,000 | 0 / 20,000 | 0 / 20,000 |
+| provider tip exceeds signed authorization | 0 / 20,000 | 0 / 20,000 | 0 / 20,000 |
+| provider shortfall, reservation or settlement is inconsistent | 0 / 20,000 | 0 / 20,000 | 0 / 20,000 |
+| ordinary execution fee exceeds `max_fee` | 0 / 20,000 | 0 / 20,000 | 0 / 20,000 |
+| consumer temporal charge exceeds positive `TLA` | 0 / 20,000 | 0 / 20,000 | 0 / 20,000 |
+| neutral transaction receives a temporal charge | 0 / 20,000 | 0 / 20,000 | 0 / 20,000 |
+| a live transaction has a negative payment | 0 / 20,000 | 0 / 20,000 | 0 / 20,000 |
+| pool reservation or settlement exceeds available funding | 0 / 20,000 | 0 / 20,000 | 0 / 20,000 |
+| consumer temporal charges differ from provider subsidies used | 0 / 20,000 | 0 / 20,000 | 0 / 20,000 |
+| funded-provider sequence violates ascending shortfall | 0 / 20,000 | 0 / 20,000 | 0 / 20,000 |
+| execution sequence violates non-increasing TLA bands | 0 / 20,000 | 0 / 20,000 | 0 / 20,000 |
+
+These checks test whether the reference implementation preserves the stated accounting and ordering invariants over the generated inputs. They do not prove the invariants for all valid inputs and do not establish welfare, incentive compatibility, equilibrium behaviour or deployment safety. Several checks verify properties imposed by construction—for example, exact budget balance tests the integer apportionment implementation rather than independently demonstrating that the payment rule is economically desirable.
 
 ---
 
