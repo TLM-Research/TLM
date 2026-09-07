@@ -2,14 +2,14 @@
 id: RN-15
 title: "A Temporal Liquidity Authorization for EIP-1559"
 subtitle: "Making the base fee a midpoint rather than a floor"
-version: "2.5"
+version: "2.8"
 status: "Public draft - research note, offered in good faith for comment"
 program: "Temporal Liquidity Market (TLM)"
 date: "2026-09-06"
 license: "CC-BY-4.0"
 ---
 
-# RN-15 v2.5
+# RN-15 v2.8
 
 # A Temporal Liquidity Authorization for EIP-1559
 
@@ -17,7 +17,7 @@ license: "CC-BY-4.0"
 
 **Temporal Liquidity Market (TLM) Research Program**  
 **Research Note RN-15**  
-**Version:** 2.5  
+**Version:** 2.8  
 **Status:** Public draft - research note, offered in good faith for comment.  
 **Scope:** One slot, one existing block, no new protocol state. No deferral instrument. The mechanism clears against Ethereum's scalar gas accounting
 **Date:** 6 September 2026  
@@ -72,6 +72,31 @@ What a consumer buys is earlier relative position. What a provider supplies is l
 Both sides remain subject to the same base fee in the same slot. A provider receives no favorable base-fee update or separate base-fee class; consumer authorization only closes the provider's transaction-specific payment shortfall. The negative side exists nowhere today, and it is why the base fee has to stop being a floor: an offer to take a later position is worth nothing if the discount cannot reach the part of the fee that made the transaction unaffordable. RN-14 sec. 11 identifies the peak base fee, not the tip, as what excludes low-value payment traffic during congestion. A mechanism redistributing only the tip leaves that barrier standing.
 
 `TLA` is the Temporal Execution Profile of RN-01 and RN-02 collapsed to one signed scalar with two branches. A full TEP carries a deadline and a decay function, and one number cannot separate financial authorization from temporal preference cleanly. Version 2.3 therefore states the asymmetry rather than treating negative magnitude as money. RN-10 and RN-11 call the same partition *supplier* and *taker*.
+
+### 2.1.1 Expiring demand and the second protocol lever
+
+A transaction excluded from one block does not necessarily remain available for the next. For a rigid request, the opportunity may expire:
+
+\[
+v_i(t)>0,
+\qquad
+v_i(t+1)=0.
+\]
+
+Such demand does not always appear as a persistent mempool backlog or a higher bid in the next slot. It may disappear, move to a faster venue, or never be submitted to this chain. A gas-only mechanism observes neither the lost opportunity nor the demand that selected another execution system before submission.
+
+This is the demand-side problem RN-14 makes visible at ecosystem scale. Its activity comparison is consistent with interactive, short-value-decay trading being concentrated more heavily on Solana while Ethereum retains more capital and settlement activity. The aggregate evidence does not establish that particular transactions migrated because of latency or fees. It does establish a competitive pattern that makes the missing-demand counterfactual important: activity that expires or chooses another venue is absent from Ethereum's fee signal.
+
+RN-15 adds a second, orthogonal authorization to the existing execution-fee fields. `max_fee` and `max_priority_fee` state how much the sender will pay for execution and builder compensation. Positive TLA states how much additional money the sender authorizes for earlier relative service. The conceptual contribution is not another larger gas bid. It is a separately signed temporal instrument:
+
+\[
+\text{execution-price authorization}
+\quad\perp\quad
+\text{temporal-service authorization}.
+\]
+
+The separation matters because a sender can raise positive TLA without representing that every unit of gas is worth the same higher execution price. The protocol can use that authorization for ordering, provider funding and a composition-aware congestion signal. RN-15 still carries no explicit deadline, so it cannot prove that a positive-TLA transaction is rigid or recover demand that never arrives. It is the smallest protocol-level lever with which those questions can be tested.
+
 
 ### 2.2 Why the authorisation is money and the shortfall is a rate
 
@@ -391,6 +416,70 @@ This is not evidence against RN-15. It identifies its boundary. RN-15 supplies a
 
 The literature gives a reason to test that interaction. Leonardos et al. model EIP-1559 as a discrete dynamical system, derive conditions sufficient for convergence, and show periodic or chaotic base-fee and occupancy behavior outside stable regimes. Reijsbergen et al. report that EIP-1559 achieved its objective on average in its first month while adjusting slowly during demand bursts and exhibiting substantial short-run occupancy variation. Ethereum's twelve-second slot converts every one-block update lag into wall-clock delay, but slot duration alone does not establish instability: the adjustment step, valuation distribution, demand elasticity, mempool policy and shock persistence also matter.
 
+### 7.10 Lagging, coincident, and leading indicators
+
+EIP-1559 uses realised gas in block (t) to set the base fee for block (t+1). Realised gas is therefore a lagging control input: it reports the quantity admitted under the old price after allocation and execution have already occurred. Under Ethereum's twelve-second slots, a one-block observation-and-response cycle is about twelve seconds when the next slot contains a block and longer when a slot is missed. During a fast event, that interval is economically material.
+
+RN-15 adds a coincident composition signal. In the same block that produces (G_t), settlement identifies ordinary and consumer gas (G_t^O), conditionally funded provider gas (G_t^P), positive authorization (C_t), and actual temporal charge (A_t). This does not remove the consensus update delay: the next base fee is still known only after block (t). It does reduce the informational mismatch in the observation. The controller need not interpret every gas unit as the same evidence about independently eligible demand.
+
+Positive TLA can become a leading indicator only in a stated sense. Included TLA at (t) may predict continuing urgency at (t+1), and public pre-block declarations may arrive before block construction. The first is a forecasting claim to test. The second is not yet a consensus-complete signal because builders observe different mempools and private order flow. RN-15 should therefore distinguish:
+
+```text
+realised gas                    lagging quantity signal
+included and settled TLA       coincident composition signal
+TLA change across recent slots candidate leading indicator for the next slot
+public pending TLA              earlier but incomplete and manipulable signal
+```
+
+For a normalized positive-TLA series (u_t), the level, first difference and second difference,
+
+\[
+u_t,
+\qquad
+\Delta u_t=u_t-u_{t-1},
+\qquad
+\Delta^2u_t=u_t-2u_{t-1}+u_{t-2},
+\]
+
+represent temporal pressure, direction and acceleration. They may help distinguish a building burst from a receding one before gas-only feedback has completed several twelve-second updates. Differencing also amplifies noise and strategic path manipulation, so the signals require filtering, caps and out-of-sample predictive tests before they enter a live update rule.
+
+The first RN-15 experiment should remain a shadow controller. It should compare the standard gas-only update with (i) a source-aware gas signal that does not use funded provider gas above target as upward pressure and (ii) a forecast augmented by positive-TLA level and changes. Success means better prediction of next-slot independently eligible demand and better closed-loop outcomes, not merely a closer statistical fit.
+
+### 7.11 Source-aware base-fee updating
+
+RN-15 creates a specific divergence in the gas signal. Let
+
+\[
+G_t=G_t^O+G_t^P,
+\]
+
+where (G_t^O) is ordinary and consumer gas and (G_t^P) is funded-provider gas. A provider satisfies `max_fee < base_fee` and is valid only while current positive-TLA funding covers its reservation. If the next block has no consumer pool, the unchanged base fee already excludes it. Raising the base fee is not required to make that future admission conditional.
+
+The first experimental signal is therefore
+
+\[
+\boxed{
+G_t^{BF}
+=
+G_t^O+
+\min\{G_t^P,\max(0,T-G_t^O)\}.
+}
+\]
+
+Provider gas counts enough to prevent a base-fee decrease when it fills otherwise unused target capacity. Its marginal contribution above target is zero. Ordinary and consumer gas above target continues to raise the base fee. The standard all-gas rule remains the baseline.
+
+This is an economic-signal adjustment, not physical discounting. All provider gas still counts against the hard limit, execution and propagation load, state growth and burn. A separate operating cap (H<L) should bound total gas admitted through the experiment:
+
+\[
+G_t^O+G_t^P\le H<L.
+\]
+
+The rule also depends on RN-15's block-local settlement. Positive funding is refunded rather than carried. A persistent provider is still excluded in the next slot unless a new consumer pool appears. RN-16 changes this condition by carrying the funding leg, so it must add reserve-release and multi-slot scheduling controls before applying the same discount.
+
+RN-15 is thus extended along two congestion-control surfaces. The classification rule corrects the current gas signal by source. Positive-TLA level and changes are then tested as predictors of the next-slot demand state. Neither result is assumed in the core accounting proof, and both remain shadow-controller experiments until manipulation and closed-loop stability are measured.
+
+
+
 
 
 ---
@@ -539,7 +628,7 @@ Carrying money alone does not move a transaction to another slot. RN-16 must pai
 
 ## 15. Relationship to the other notes
 
-RN-14 sec. 8.3 poses the problem this note answers, and RN-14 sec. 11 identifies the base fee rather than the tip as the barrier, which forces the midpoint construction of sec. 2.1. RN-10 sec. 8 and sec. 9.5 give the two-sided structure; this is the intra-slot, quantum-indifferent grade of RN-10 sec. 9.5, and the delayable and callable grades need inter-slot state and are not addressed. RN-11 supplies the allocation problem and the constraints checked in secs. 5, 10 and 11, and its term structure is where a priced version of this mechanism would connect. RN-05 supplies the intra-slot positions the ordering rule assigns, and sec. 5 returns a case to RN-05 sec. 4.3. RN-01 and RN-02 supply the demand representation, of which `TLA` is the one-scalar collapse: it carries neither a deadline nor a decay function. Recovering that distinction, and pairing the transaction-level TEP with the stream-level TSP, is the subject of a separate note on inter-slot temporal liquidity.
+RN-14 poses the demand problem this note answers and identifies the base fee rather than the tip as a barrier, which forces the midpoint construction of sec. 2.1. Its cross-chain activity split also motivates the missing-demand case in sec. 2.1.1: a short-lived trading opportunity may expire or choose another venue and therefore never appear as persistent Ethereum demand. That interpretation remains a hypothesis rather than a causal result from aggregate chain data. RN-10 sec. 8 and sec. 9.5 give the two-sided structure; this is the intra-slot, quantum-indifferent grade of RN-10 sec. 9.5. RN-11 supplies the allocation problem and the constraints checked in secs. 5, 10 and 11. RN-05 supplies the intra-slot positions the ordering rule assigns, and sec. 5 returns a case to RN-05 sec. 4.3. RN-01 and RN-02 supply TEP, of which `TLA` is the one-scalar transaction-level collapse. RN-16 remains transaction-level and TEP-based while carrying funding and provider offers across adjacent slots. RN-17 is the separate TSP-level note for streams, deadline-based curves, future service classes and term structure.
 
 ---
 
@@ -552,6 +641,7 @@ RN-14 sec. 8.3 poses the problem this note answers, and RN-14 sec. 11 identifies
 - Leonardos, S., Monnot, B., Reijsbergen, D., Skoulakis, S. & Piliouras, G. “Dynamical Analysis of the EIP-1559 Ethereum Fee Market.” arXiv:2102.10567. https://arxiv.org/abs/2102.10567
 - Reijsbergen, D., Sridhar, S., Monnot, B., Leonardos, S., Skoulakis, S. & Piliouras, G. “Transaction Fees on a Honeymoon: Ethereum's EIP-1559 One Month Later.” arXiv:2110.04753. https://arxiv.org/abs/2110.04753
 - *EIP-4396: Time-Aware Base Fee Calculation.* https://eips.ethereum.org/EIPS/eip-4396
+- Ethereum Foundation. “Proof-of-stake.” https://ethereum.org/developers/docs/consensus-mechanisms/pos/
 - Myerson, R. B. & Satterthwaite, M. A. "Efficient Mechanisms for Bilateral Trading." *Journal of Economic Theory* 29(2), 1983, 265-281.
 - Franco, M. & Rogozinski, G. *Mini-Blocks: SSV-Backed Sub-Slot Auctions for Ethereum PBS.* Ethereum Research, May 2026. https://ethresear.ch/t/mini-blocks-ssv-backed-sub-slot-auctions-for-ethereum-pbs/24898
 - Capponi, A. & Zhu, B. *Auctioning Time to Mitigate Latency Races: Theory and Evidence from Blockchains.* SSRN, 2026. See also *The Express Lane to Spam and Centralization: An Empirical Analysis of Arbitrum's Timeboost,* arXiv:2509.22143.
@@ -560,4 +650,4 @@ RN-14 sec. 8.3 poses the problem this note answers, and RN-14 sec. 11 identifies
 - Nasdaq. *The Nasdaq Opening and Closing Crosses.* https://www.nasdaqtrader.com/trader.aspx?id=openclose
 - NYSE. *Opening and Closing Auctions Fact Sheet* and *Imbalances* market data specification. https://www.nyse.com/market-data/real-time/imbalances
 - Clearing rule: `sims/rn15_tla.py`. Accounting figures: `sims/rn15_report.py`. Target-utilization model: `rn15_target_utilization_frontier.py`, with design and generated aggregate results published alongside this note.
-- TLM Research Notes: RN-01, RN-02, RN-05, RN-07, RN-10, RN-11, RN-13 Part II, RN-14, RN-16.
+- TLM Research Notes: RN-01, RN-02, RN-05, RN-07, RN-10, RN-11, RN-13 Part II, RN-14, RN-16 and RN-17.
