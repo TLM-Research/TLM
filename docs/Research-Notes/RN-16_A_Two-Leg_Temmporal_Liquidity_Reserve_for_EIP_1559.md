@@ -2,14 +2,14 @@
 id: RN-16
 title: "A Two-Leg Temporal Liquidity Reserve for EIP-1559"
 subtitle: "Carrying temporal-liquidity funding and supply across slots without a forward curve"
-version: "0.8"
+version: "0.9"
 status: "Working draft - mechanism and controller not yet validated"
 program: "Temporal Liquidity Market (TLM)"
 date: "2026-09-07"
 license: "CC-BY-4.0"
 ---
 
-# RN-16 v0.8
+# RN-16 v0.9
 
 # A Two-Leg Temporal Liquidity Reserve for EIP-1559
 
@@ -17,7 +17,7 @@ license: "CC-BY-4.0"
 
 **Temporal Liquidity Market (TLM) Research Program**  
 **Research Note RN-16**  
-**Version:** 0.8  
+**Version:** 0.9  
 **Status:** Working draft. The two-leg state, scheduling rule and base-fee interaction remain to be simulated.  
 **Date:** 7 September 2026
 
@@ -27,9 +27,9 @@ license: "CC-BY-4.0"
 
 RN-15 clears a Temporal Liquidity Authorization within one block. Positive TLA is a maximum monetary authorization in wei. Negative TLA opts a below-base-fee transaction into provider treatment and commits it to a later execution band. Consumers fund provider shortfalls, unused consumer authorization is refunded, and the block ends in exact financial balance.
 
-This note extends that mechanism across slots while retaining EIP-1559 and an ePBS setting. It introduces a Temporal Liquidity Reserve with two legs that must not be netted. The **Temporal Liquidity Funding Leg** carries unused positive-TLA money. The **Temporal Liquidity Supply Leg** carries valid negative-TLA provider offers that remain available for later selection. The Funding Leg is measured in wei. The Supply Leg is a set of transaction-level temporal commitments with gas limits, fee caps and current shortfalls. They are opposite sides of an exchange, not positive and negative quantities in one unit.
+This note extends that mechanism across slots while retaining EIP-1559 and an ePBS setting. It introduces a Temporal Liquidity Reserve with two economic legs that must not be netted. The **Temporal Liquidity Funding Leg** carries unused positive-TLA money as protocol state. The **Temporal Liquidity Supply Leg** consists, in the baseline, of valid negative-TLA provider transactions retained in builders' or nodes' transaction pools. The Funding Leg is measured in wei. The Supply Leg is an off-chain candidate set and need not be identical across builders. They are opposite sides of an exchange, not positive and negative quantities in one unit or two consensus-state balances.
 
-RN-16 remains a short-horizon TEP mechanism. It does not reserve named future slots, post a term structure, or aggregate stream-level Temporal Service Profiles. Those questions belong to RN-17. RN-16 asks a narrower systems question: can carried funding, carried provider offers and source-aware gas accounting improve congestion control over several adjacent slots without destabilizing EIP-1559?
+RN-16 remains a short-horizon TEP mechanism. It does not reserve named future slots, post a term structure, or aggregate stream-level Temporal Service Profiles. Those questions belong to RN-17. RN-16 asks a narrower systems question: can carried funding, locally retained provider offers and source-aware gas accounting improve congestion control over several adjacent slots without destabilizing EIP-1559?
 
 The target result is not higher utilization alone. It is a better target-utilization frontier at fixed bounds on urgent expiry, physical headroom, base-fee volatility, builder incentives and reserve depletion.
 
@@ -49,9 +49,9 @@ This note assumes:
 It changes RN-15 in two ways:
 
 1. unused positive-TLA funding may remain available after the block; and
-2. unfunded negative-TLA providers may remain candidates in later slots while their transactions remain valid.
+2. unfunded negative-TLA providers may remain candidates in later slots while their transactions remain pending, visible to a builder and valid.
 
-Nothing in this note promises execution in a specific future slot. A carried provider offer remains eligible for later scheduling; it does not own future capacity.
+Nothing in this note promises execution in a specific future slot. A locally retained provider offer may remain eligible for later scheduling; it has no protocol-guaranteed persistence, queue position or claim on future capacity.
 
 ---
 
@@ -120,13 +120,19 @@ This leg is money and may be added across slots.
 
 For provider (j), negative TLA is not negative money. It supplies a later-position commitment and opts a below-base-fee transaction into conditional funding.
 
-Let:
+For builder or node (B), let:
 
 \[
-\mathcal P_t
+\mathcal P_t^B
 \]
 
-be the Temporal Liquidity Supply Leg: the set of valid provider offers available in slot (t). It contains transaction records, not a scalar balance. Each record includes at least:
+be its local Temporal Liquidity Supply Leg: the set of pending provider offers it can observe and considers valid in slot (t). It contains transaction records, not a scalar balance. Different builders may have different sets:
+
+\[
+\mathcal P_t^{B_1}\ne\mathcal P_t^{B_2}.
+\]
+
+Each record includes at least:
 
 \[
 (L_j,\operatorname{maxFee}_j,
@@ -143,40 +149,54 @@ s_{j,t}=b_t+p_{j,t}-\operatorname{maxFee}_j,
 R_{j,t}=L_j s_{j,t}.
 \]
 
-The Supply Leg evolves as a queue or candidate set:
+The Supply Leg evolves as a locally retained and revalidated candidate set:
 
 \[
 \boxed{
-\mathcal P_{t+1}
+\mathcal P_{t+1}^{B}
 =
-\operatorname{Carry}(\mathcal P_t\setminus\mathcal X_t)
+\operatorname{Revalidate}_{t+1}
+\left[
+\operatorname{Retain}^{B}
+(\mathcal P_t^{B}\setminus\mathcal X_t)
 \cup
-\mathcal P_t^{new},
+\mathcal P_{t+1}^{B,new}
+\right],
 }
 
-where \(\mathcal X_t\) contains executed, expired, cancelled or invalidated offers. Carrying an offer does not preserve its old subsidy quote because the base fee and selected tip may change.
+where \(\mathcal X_t\) contains executed, expired, replaced, cancelled, invalidated or locally evicted offers. Retaining an offer does not preserve its old subsidy quote because the base fee, selected tip and relevant execution state may change.
+
+Under ordinary Ethereum transaction handling, a sender can amend or withdraw an offer by broadcasting a valid same-nonce replacement. Replacing the transaction also replaces its signed TLA declaration. The replacement must reach the builder concerned; transaction-pool propagation and retention are not consensus guarantees.
 
 This leg is temporal service supply. It cannot be added to or subtracted from (F_t).
 
 Here, **supply** means the supply of temporal liquidity: willingness to accept later treatment. It does not mean physical execution capacity. Every transaction in the Supply Leg still consumes gas and other execution resources when admitted.
 
-### 2.3 The TLR state
+### 2.3 The TLR mechanism and its state boundary
 
-The minimal reserve state is therefore:
+The two-leg economic mechanism is:
 
 \[
 \boxed{
-TLR_t=(F_t,\mathcal P_t).
+TLR_t^B=(F_t,\mathcal P_t^B).
 }
+
+This notation does not mean that both components are stored in consensus state. In the compatibility baseline:
+
+\[
+\boxed{TLR_t^{protocol}=F_t,}
+\]
+
+while \(\mathcal P_t^B\) is builder- or node-local transaction-pool state.
 
 The two legs are opposite in market role:
 
 | Leg | What enters | Unit | What leaves |
 |---|---|---|---|
 | Temporal Liquidity Funding | accepted positive TLA | wei | provider subsidy, withdrawal or expiry |
-| Temporal Liquidity Supply | valid negative-TLA offers | transaction commitments with gas and TEP | execution, cancellation, expiry or invalidation |
+| Temporal Liquidity Supply | locally visible valid negative-TLA offers | pending transactions with gas and TEP | execution, replacement, cancellation, expiry, invalidation or eviction |
 
-There is no meaningful signed total (F_t-\mathcal P_t). They meet only through allocation and settlement.
+There is no meaningful signed total \(F_t-\mathcal P_t^B\). They meet only through allocation and settlement. A protocol-registered Supply Leg would provide common persistence but would require new registration, cancellation, storage and anti-spam rules; it is outside the baseline.
 
 ---
 
@@ -186,7 +206,7 @@ At the beginning of slot (t), the builder observes or derives:
 
 - current base fee (b_t);
 - funding balance (F_t);
-- carried provider set \(\mathcal P_t\);
+- locally visible provider set \(\mathcal P_t^B\);
 - new positive-, zero- and negative-TLA transactions;
 - the physical gas target (T), operating cap (H), and hard limit (L).
 
@@ -194,14 +214,14 @@ A minimal transition is:
 
 1. construct the ordinary and positive-TLA candidate set;
 2. add accepted positive-TLA funding to (F_t^{avail});
-3. merge new negative-TLA providers into \(\mathcal P_t\);
+3. merge new negative-TLA providers into the builder's local \(\mathcal P_t^B\);
 4. recompute each provider's shortfall and gas-limit reservation at (b_t);
 5. select a provider subset subject to funding and physical capacity;
 6. execute, reserve against gas limit, and settle against realized gas;
-7. carry unused funding and still-valid provider offers into (t+1);
+7. carry unused funding in protocol state, while builders or nodes may retain and revalidate still-pending provider offers for (t+1);
 8. update the base fee under the selected experimental rule.
 
-The block remains verifiable from pre-state, included transactions, execution results and the deterministic settlement rule. Candidate offers omitted from the block are not globally visible unless the protocol supplies a common inclusion list or commitment mechanism. ePBS therefore leaves a builder-observability problem that this note does not solve.
+The block remains verifiable from funding pre-state, included transactions, execution results and the deterministic settlement rule. Candidate offers omitted from the block are not globally visible and do not become protocol state. ePBS therefore leaves a builder-observability problem that this note does not solve.
 
 ---
 
@@ -298,13 +318,13 @@ The indicators first belong in a shadow forecast of next-slot independently elig
 
 Realized gas in slot (t) sets the base fee for slot (t+1). With twelve-second Ethereum slots, a one-block update delay is about twelve seconds when the next slot contains a block and longer after a missed slot. EIP-1559 can perform well on average while responding slowly to bursts or oscillating under some demand and parameter regimes.
 
-TLA does not remove consensus causality. It classifies the current block's demand. TLR carries the Funding Leg and Supply Leg across the slot boundary. Together they may give the next scheduler and experimental base-fee controller a more informative state than undifferentiated realized gas.
+TLA does not remove consensus causality. It classifies the current block's demand. TLR carries the Funding Leg in protocol state, while builders may retain and revalidate Supply Leg offers through existing transaction-pool behavior. Together they may give the next scheduler and experimental base-fee controller more information than undifferentiated realized gas, although only the Funding Leg is common protocol state in the baseline.
 
 ---
 
 ## 5. Scheduling without a forward curve
 
-RN-16 does not post prices for named future slots or reserve future block space. It makes a current-slot decision using carried state.
+RN-16 does not post prices for named future slots or reserve future block space. It makes a current-slot decision using carried funding and the provider transactions visible to the current builder.
 
 A provider can remain pending over several slots, but each slot repeats:
 
@@ -314,9 +334,9 @@ A provider can remain pending over several slots, but each slot repeats:
 - physical-capacity admission;
 - builder selection.
 
-The TEP may state transaction-level constraints such as an expiry or acceptable delay, but RN-16 does not aggregate those declarations into a forward curve. The scheduler chooses among currently valid transactions and carried offers.
+The TEP may state transaction-level constraints such as an expiry or acceptable delay, but RN-16 does not aggregate those declarations into a forward curve. The scheduler chooses among currently valid transactions and locally retained offers. It cannot assume that all builders observe the same supply set.
 
-This keeps the mechanism close to current EIP-1559 and ePBS. It also limits what RN-16 can promise: no user receives a guaranteed future slot, and a carried provider can still expire without execution.
+This keeps the mechanism close to current EIP-1559 and ePBS. It also limits what RN-16 can promise: no user receives a guaranteed future slot, and an unincluded provider may be replaced, cancelled, invalidated, evicted or simply unavailable to a later builder.
 
 ### 5.1 Exploratory option: a one-slot deferral voucher
 
@@ -348,7 +368,7 @@ v_i(t+1)=0.
 
 It may also move to another chain, rollup or centralized venue. Gas and backlog then understate unsatisfied demand. RN-14's cross-chain activity comparison motivates this counterfactual but does not establish that latency or fees caused individual migration.
 
-TLA gives rigid demand a protocol-level monetary authorization for temporal service. The Supply Leg gives less rigid transactions a way to accept later treatment. TLR carries both funding state and pending supply offers across slots. The benchmark must still distinguish:
+TLA gives rigid demand a protocol-level monetary authorization for temporal service. The Supply Leg gives less rigid transactions a way to accept later treatment. TLR carries funding as protocol state; pending supply offers persist only where transaction pools retain and propagate them. The benchmark must still distinguish:
 
 - queued demand;
 - expired demand;
@@ -396,7 +416,7 @@ Carrying unused positive TLA changes an authorization into a balance with intert
 3. a pooled protocol balance with stated refund rights;
 4. irrevocable contributions once accepted.
 
-These alternatives have different solvency and governance properties. Version 0.8 leaves the choice open and represents withdrawals and expiries by (W_t). A simulator must select one explicit policy for each run.
+These alternatives have different solvency and governance properties. Version 0.9 leaves the choice open and represents withdrawals and expiries by (W_t). A simulator must select one explicit policy for each run.
 
 ---
 
@@ -411,7 +431,9 @@ RN-16 does not contain:
 - TSP aggregation;
 - a proof of controller stability;
 - a truthful-reporting result;
-- a complete ePBS candidate-visibility mechanism.
+- a complete ePBS candidate-visibility mechanism;
+- protocol-guaranteed persistence, age or inclusion rights for Supply Leg offers;
+- a consensus-registered provider queue.
 
 These omissions are scope boundaries, not claims that the problems are unimportant.
 
@@ -427,7 +449,7 @@ Compare, under common arrivals:
 4. RN-16 with carried funding but standard base-fee updates;
 5. RN-16 with carried funding, provider scheduling and source-aware updates.
 
-Traffic models should include independent Poisson arrivals, persistent burst states, common shocks, within-slot arrivals and bid replacement.
+Traffic models should include independent Poisson arrivals, persistent burst states, common shocks, within-slot arrivals, bid replacement, local transaction-pool eviction and unequal builder visibility.
 
 Sweep:
 
@@ -445,7 +467,7 @@ Report:
 - physical and signal utilization;
 - ordinary, consumer and provider gas;
 - funding balance and drawdown;
-- provider queue size, age, expiry and execution;
+- local provider-set size, observed age, replacement, eviction, expiry and execution;
 - positive-TLA authorization and actual charge;
 - base-fee path, overshoot, oscillation and convergence time;
 - urgent inclusion and expiry;
@@ -463,7 +485,7 @@ The result sought is an outward movement of the target-utilization frontier at a
 
 **RN-15** is block-local. Positive authorization and provider need must meet in one block, and unused authorization is refunded. It introduces the asymmetric TLA field, block-local ordering, provider funding, and the first source-aware base-fee experiment.
 
-**RN-16** is transaction-level and inter-slot. It carries the Temporal Liquidity Funding Leg and still-valid offers in the Temporal Liquidity Supply Leg, then repeats allocation over several adjacent slots. It remains based on TEP and does not reserve future slots.
+**RN-16** is transaction-level and inter-slot. It carries the Temporal Liquidity Funding Leg as protocol state. Builders may retain still-valid provider transactions as a local Temporal Liquidity Supply Leg and repeat allocation over several adjacent slots. RN-16 remains based on TEP, does not make the Supply Leg consensus state, and does not reserve future slots.
 
 **RN-17** is the stream-level extension. TSP represents periodic or continuing demand and can support deadline-based curves, future service classes, term structure and explicit multi-horizon commitments. Those objects should not be imported into RN-16.
 
@@ -472,7 +494,7 @@ The result sought is an outward movement of the target-utilization frontier at a
 ## 12. Open questions
 
 1. What ownership and expiry rule applies to carried positive-TLA funding?
-2. Is the Temporal Liquidity Supply Leg a protocol-visible set, a builder-local queue, or a committed inclusion list?
+2. How much divergence among builder-local Supply Legs can the mechanism tolerate, and is a later commitment mechanism necessary?
 3. How should the reserve release limit depend on funding balance and physical headroom?
 4. Does source-aware base-fee updating improve congestion control or invite builder substitution?
 5. Do positive-TLA level and changes predict future independently eligible demand?
@@ -489,5 +511,5 @@ The result sought is an outward movement of the target-utilization frontier at a
 - Leonardos, S., Monnot, B., Reijsbergen, D., Skoulakis, S. & Piliouras, G. “Dynamical Analysis of the EIP-1559 Ethereum Fee Market.” arXiv:2102.10567. https://arxiv.org/abs/2102.10567
 - Reijsbergen, D., Sridhar, S., Monnot, B., Leonardos, S., Skoulakis, S. & Piliouras, G. “Transaction Fees on a Honeymoon: Ethereum's EIP-1559 One Month Later.” arXiv:2110.04753. https://arxiv.org/abs/2110.04753
 - *EIP-4396: Time-Aware Base Fee Calculation.* https://eips.ethereum.org/EIPS/eip-4396
-- Ethereum Foundation. “Proof-of-stake.” https://ethereum.org/developers/docs/consensus-mechanisms/pos/
+- Ethereum Foundation. â€œProof-of-stake.â€ https://ethereum.org/developers/docs/consensus-mechanisms/pos/
 - TLM Research Notes: RN-01, RN-02, RN-10, RN-11, RN-12, RN-13 Part II, RN-14, RN-15 and RN-17.
