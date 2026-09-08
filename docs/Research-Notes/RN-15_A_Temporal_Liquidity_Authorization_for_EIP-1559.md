@@ -77,11 +77,10 @@ Both sides remain subject to the same base fee in the same slot. A provider rece
 
 A transaction excluded from one block does not necessarily remain available for the next. For a rigid request, the opportunity may expire:
 
-\[
-v_i(t)>0,
-\qquad
-v_i(t+1)=0.
-\]
+```text
+v_i(t) > 0        the opportunity has value now
+v_i(t+1) = 0      it is worth nothing one slot later
+```
 
 Such demand does not always appear as a persistent mempool backlog or a higher bid in the next slot. It may disappear, move to a faster venue, or never be submitted to this chain. A gas-only mechanism observes neither the lost opportunity nor the demand that selected another execution system before submission.
 
@@ -89,11 +88,9 @@ This is the demand-side problem RN-14 makes visible at ecosystem scale. Its acti
 
 RN-15 adds a second, orthogonal authorization to the existing execution-fee fields. `max_fee` and `max_priority_fee` state how much the sender will pay for execution and builder compensation. Positive TLA states how much additional money the sender authorizes for earlier relative service. The conceptual contribution is not another larger gas bid. It is a separately signed temporal instrument:
 
-\[
-\text{execution-price authorization}
-\quad\perp\quad
-\text{temporal-service authorization}.
-\]
+```text
+execution-price authorization      independent of      temporal-service authorization
+```
 
 The separation matters because a sender can raise positive TLA without representing that every unit of gas is worth the same higher execution price. The protocol can use that authorization for ordering, provider funding and a composition-aware congestion signal. RN-15 still carries no explicit deadline, so it cannot prove that a positive-TLA transaction is rigid or recover demand that never arrives. It is the smallest protocol-level lever with which those questions can be tested.
 
@@ -410,7 +407,7 @@ Three regimes must remain separate: underfilled blocks, blocks near the EIP-1559
 
 The target-utilization simulator first disables TLA and runs ordinary EIP-1559 over Poisson arrivals, a persistent mempool and heterogeneous fee caps. At the 50 percent target, the base fee moves after each block from the parent block's gas use. Under low offered load, utilization remains below target because the controller cannot create demand. As offered load rises, average utilization approaches the target; it need not equal it in every finite run because transactions are indivisible, fee caps are heterogeneous and some requests expire.
 
-The RN-15 comparison uses the same arrivals and a conservative fill-only builder. It preserves the baseline ordinary block and funds providers only from included consumer TLA and otherwise unused gas. This rules out direct displacement by construction. The preliminary synthetic runs show why a multi-slot benchmark is still necessary: RN-15 can admit additional provider gas in slot (t), that gas can raise (b_{t+1}), and the higher base fee can exclude or delay transactions in later slots. A current-slot admission gain may therefore become later congestion even though providers and consumers faced the same base fee in the original slot.
+The RN-15 comparison uses the same arrivals and a conservative fill-only builder. It preserves the baseline ordinary block and funds providers only from included consumer TLA and otherwise unused gas. This rules out direct displacement by construction. The preliminary synthetic runs show why a multi-slot benchmark is still necessary: RN-15 can admit additional provider gas in slot `t`, that gas can raise (b_{t+1}), and the higher base fee can exclude or delay transactions in later slots. A current-slot admission gain may therefore become later congestion even though providers and consumers faced the same base fee in the original slot.
 
 This is not evidence against RN-15. It identifies its boundary. RN-15 supplies an intra-slot price and funding mechanism, not inter-slot demand smoothing. The result to carry into RN-16 is that a reserve must do more than retain unmatched money: temporal feedback must move flexible demand away from constrained slots, or additional funding can amplify the next base-fee update.
 
@@ -418,11 +415,11 @@ The literature gives a reason to test that interaction. Leonardos et al. model E
 
 ### 7.10 Lagging, coincident, and leading indicators
 
-EIP-1559 uses realised gas in block (t) to set the base fee for block (t+1). Realised gas is therefore a lagging control input: it reports the quantity admitted under the old price after allocation and execution have already occurred. Under Ethereum's twelve-second slots, a one-block observation-and-response cycle is about twelve seconds when the next slot contains a block and longer when a slot is missed. During a fast event, that interval is economically material.
+EIP-1559 uses realised gas in block `t` to set the base fee for block `t+1`. Realised gas is therefore a lagging control input: it reports the quantity admitted under the old price after allocation and execution have already occurred. Under Ethereum's twelve-second slots, a one-block observation-and-response cycle is about twelve seconds when the next slot contains a block and longer when a slot is missed. During a fast event, that interval is economically material.
 
-RN-15 adds a coincident composition signal. In the same block that produces (G_t), settlement identifies ordinary and consumer gas (G_t^O), conditionally funded provider gas (G_t^P), positive authorization (C_t), and actual temporal charge (A_t). This does not remove the consensus update delay: the next base fee is still known only after block (t). It does reduce the informational mismatch in the observation. The controller need not interpret every gas unit as the same evidence about independently eligible demand.
+RN-15 adds a coincident composition signal. In the same block that produces `G_t`, settlement identifies ordinary and consumer gas `G_t^O`, conditionally funded provider gas `G_t^P`, positive authorization `C_t`, and actual temporal charge `A_t`. This does not remove the consensus update delay: the next base fee is still known only after block `t`. It does reduce the informational mismatch in the observation. The controller need not interpret every gas unit as the same evidence about independently eligible demand.
 
-Positive TLA can become a leading indicator only in a stated sense. Included TLA at (t) may predict continuing urgency at (t+1), and public pre-block declarations may arrive before block construction. The first is a forecasting claim to test. The second is not yet a consensus-complete signal because builders observe different mempools and private order flow. RN-15 should therefore distinguish:
+Positive TLA can become a leading indicator only in a stated sense. Included TLA at `t` may predict continuing urgency at `t+1`, and public pre-block declarations may arrive before block construction. The first is a forecasting claim to test. The second is not yet a consensus-complete signal because builders observe different mempools and private order flow. RN-15 should therefore distinguish:
 
 ```text
 realised gas                    lagging quantity signal
@@ -431,15 +428,13 @@ TLA change across recent slots candidate leading indicator for the next slot
 public pending TLA              earlier but incomplete and manipulable signal
 ```
 
-For a normalized positive-TLA series (u_t), the level, first difference and second difference,
+For a normalized positive-TLA series `u_t`, the level, first difference and second difference are
 
-\[
-u_t,
-\qquad
-\Delta u_t=u_t-u_{t-1},
-\qquad
-\Delta^2u_t=u_t-2u_{t-1}+u_{t-2},
-\]
+```text
+level              u_t
+first difference   u_t - u_{t-1}
+second difference  u_t - 2*u_{t-1} + u_{t-2}
+```
 
 represent temporal pressure, direction and acceleration. They may help distinguish a building burst from a receding one before gas-only feedback has completed several twelve-second updates. Differencing also amplifies noise and strategic path manipulation, so the signals require filtering, caps and out-of-sample predictive tests before they enter a live update rule.
 
@@ -449,30 +444,25 @@ The first RN-15 experiment should remain a shadow controller. It should compare 
 
 RN-15 creates a specific divergence in the gas signal. Let
 
-\[
-G_t=G_t^O+G_t^P,
-\]
+```text
+G_t = G_t^O + G_t^P
+```
 
-where (G_t^O) is ordinary and consumer gas and (G_t^P) is funded-provider gas. A provider satisfies `max_fee < base_fee` and is valid only while current positive-TLA funding covers its reservation. If the next block has no consumer pool, the unchanged base fee already excludes it. Raising the base fee is not required to make that future admission conditional.
+where `G_t^O` is ordinary and consumer gas and `G_t^P` is funded-provider gas. A provider satisfies `max_fee < base_fee` and is valid only while current positive-TLA funding covers its reservation. If the next block has no consumer pool, the unchanged base fee already excludes it. Raising the base fee is not required to make that future admission conditional.
 
 The first experimental signal is therefore
 
-\[
-\boxed{
-G_t^{BF}
-=
-G_t^O+
-\min\{G_t^P,\max(0,T-G_t^O)\}.
-}
-\]
+```text
+G_t^BF  =  G_t^O + min( G_t^P , max( 0 , T - G_t^O ) )
+```
 
 Provider gas counts enough to prevent a base-fee decrease when it fills otherwise unused target capacity. Its marginal contribution above target is zero. Ordinary and consumer gas above target continues to raise the base fee. The standard all-gas rule remains the baseline.
 
-This is an economic-signal adjustment, not physical discounting. All provider gas still counts against the hard limit, execution and propagation load, state growth and burn. A separate operating cap (H<L) should bound total gas admitted through the experiment:
+This is an economic-signal adjustment, not physical discounting. All provider gas still counts against the hard limit, execution and propagation load, state growth and burn. A separate operating cap `H < L` should bound total gas admitted through the experiment:
 
-\[
-G_t^O+G_t^P\le H<L.
-\]
+```text
+G_t^O + G_t^P  <=  H  <  L
+```
 
 The rule also depends on RN-15's block-local settlement. Positive funding is refunded rather than carried. A persistent provider is still excluded in the next slot unless a new consumer pool appears. RN-16 changes this condition by carrying the funding leg, so it must add reserve-release and multi-slot scheduling controls before applying the same discount.
 
@@ -488,17 +478,17 @@ RN-15 is thus extended along two congestion-control surfaces. The classification
 
 A provider chooses `max_priority_fee` when signing the transaction. Under Scheme B, the builder may select an effective `p_i` between zero and that signed maximum. A funded provider pays the selected amount per unit of realised gas. The builder therefore chooses both the effective tip and the included provider set, within the transaction's fee and TLA limits.
 
-For identical providers with gas (g), minimum shortfall (d), abundant supply, no displacement cost and a continuous approximation, a pool (A) funds approximately
+For identical providers with gas `g`, minimum shortfall `d`, abundant supply, no displacement cost and a continuous approximation, a pool `A` funds approximately
 
-\[
-n(p) \approx \frac{A}{g(d+p)}
-\]
+```text
+n(p)  ~  A / ( g * (d + p) )
+```
 
 providers, and aggregate provider-tip revenue is
 
-\[
-R(p) \approx A\frac{p}{d+p}.
-\]
+```text
+R(p)  ~  A * p / (d + p)
+```
 
 In that model, selecting higher effective tips gives builders more revenue per funded provider while the pool funds fewer providers. Section 7.5 illustrates the result and then gives a heterogeneous counterexample. It is not a general theorem or an equilibrium result. With indivisible providers, finite supply, heterogeneous gas limits and shortfalls, displaced ordinary tips, MEV, bundles or state conflicts, the builder's joint tip-and-subset optimum can differ.
 
