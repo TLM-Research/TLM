@@ -1,0 +1,69 @@
+# Continuous integration for sims/
+#
+# THIS FILE IS STAGED, NOT ACTIVE.
+#
+# GitHub only runs workflows from .github/workflows/ at the repository root.
+# Move it there to activate:
+#
+#     mkdir -p .github/workflows
+#     git mv sims/ci-workflow.yml .github/workflows/sims.yml
+#
+# It is kept here because sims/ is the only directory it concerns, and because
+# a workflow file sitting unused in .github is more confusing than one sitting
+# labelled in the directory it tests.
+
+name: sims
+
+on:
+  push:
+    paths:
+      - 'sims/**'
+      - '.github/workflows/sims.yml'
+  pull_request:
+    paths:
+      - 'sims/**'
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      # No dependency installation step. The simulations use the standard
+      # library only, which is deliberate: a reviewer should be able to check
+      # the arithmetic without installing anything, and CI should prove that.
+
+      - name: RN-15 temporal liquidity authorization
+        run: |
+          python3 tests/test_rn15_tla.py
+          python3 tests/test_rn15_prorata.py
+          python3 tests/test_rn15_tla_balance.py
+        working-directory: sims
+
+      # The tests assert the exact numbers published in the notes. A failure
+      # means either the model changed or a note's table is wrong. Both need
+      # a human, so the job is deliberately not allowed to continue on error.
+
+      - name: Results are current
+        run: |
+          python3 rn15_report.py      > /tmp/rn15_report.txt
+          python3 rn15_prorata.py     > /tmp/rn15_prorata.txt
+          python3 rn15_tla_balance.py > /tmp/rn15_balance.txt
+          # Compare against the committed results, stripping the generation
+          # header (everything up to and including the first blank line, which
+          # carries a timestamp and a Python version) and the appended test
+          # output. Marker-based rather than line-counted, so the check does
+          # not break if the header gains a line.
+          strip() { sed '1,/^$/d' "$1" | sed '/^--- tests ---$/,$d'; }
+          diff /tmp/rn15_report.txt results/rn15_report.txt \
+            || { echo "results/rn15_report.txt is stale; regenerate it"; exit 1; }
+          diff /tmp/rn15_prorata.txt results/rn15_prorata.txt \
+            || { echo "results/rn15_prorata.txt is stale; regenerate it"; exit 1; }
+          diff /tmp/rn15_balance.txt results/rn15_tla_balance.txt \
+            || { echo "results/rn15_tla_balance.txt is stale; regenerate it"; exit 1; }
+        working-directory: sims
