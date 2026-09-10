@@ -2,19 +2,25 @@
 
 Simulations supporting quantitative claims in the TLM research notes.
 
-**One script per note.** Each script backs the tables and figures in a single note, is named for that note, and is cited from that note's reference list. A claim in a note that carries a number should be traceable to a script here, and a number here that no note uses should be removed.
+Each current script backs the tables and figures in a research note and is cited from that note. Historical scripts remain temporarily for comparison and are identified below.
 
 | Script | Supports | Claims backed |
 |---|---|---|
-| `rn15_tlf_balance.py` | RN-15, *A Temporal Liquidity Fee for EIP-1559* | secs. 2.1, 2.3, 3, 10 |
+| `rn15_tla.py` | Current RN-15, *A Temporal Liquidity Authorization for EIP-1559* | clearing, ordering, reserve-and-settle, exact settlement |
+| `rn15_prorata.py` | Current RN-15 | exact pro-rata allocation of realised provider shortfalls to consumers |
+| `rn15_tla_balance.py` | Current RN-15 | randomized budget-balance and validity invariants |
+| `rn15_report.py` | Current RN-15 | worked examples and randomized invariant counts |
 | `rn22_basefee.py` | RN-22, *A Temporal Liquidity Fee Market Design for Ethereum* | secs. 5.1, 5.2 |
+
+The withdrawn gas-weighted temporal-liquidity-fee model is no longer part of the active simulation directory. Current scripts use `TLA`: positive values are lump-sum consumer authorizations, while negative values are provider opt-in and later-band commitments. Under provider Scheme B, the full signed `max_priority_fee` enters the shortfall; builders select the included set but do not choose a lower effective provider priority fee.
 
 ## Running
 
 No dependencies. Python 3.8 or later, standard library only, which is deliberate: a reviewer should be able to check the arithmetic without installing anything.
 
 ```bash
-python3 rn15_tlf_balance.py
+python3 rn15_report.py
+python3 rn15_tla_balance.py
 python3 rn22_basefee.py
 ```
 
@@ -23,7 +29,9 @@ python3 rn22_basefee.py
 The tests assert the exact numbers the notes publish, not merely that the code runs. If a note's table is edited without the model changing, or the model changes without the table being updated, a test fails.
 
 ```bash
-python3 tests/test_rn15_tlf_balance.py
+python3 tests/test_rn15_tla.py
+python3 tests/test_rn15_prorata.py
+python3 tests/test_rn15_tla_balance.py
 python3 tests/test_rn22_basefee.py
 ```
 
@@ -34,7 +42,9 @@ They are also standard `pytest` files, so `pytest tests/` works if pytest is ins
 `results/` holds captured output from a dated run, so a reader can check a table in a note against a recorded result without executing anything. Regenerate with:
 
 ```bash
-python3 rn15_tlf_balance.py > results/rn15_tlf_balance.txt
+python3 rn15_report.py      > results/rn15_report.txt
+python3 rn15_prorata.py     > results/rn15_prorata.txt
+python3 rn15_tla_balance.py > results/rn15_tla_balance.txt
 python3 rn22_basefee.py     > results/rn22_basefee.txt
 ```
 
@@ -63,6 +73,6 @@ MIT, see `LICENSE`. The research notes in `docs/` are CC BY 4.0. See `docs/LICEN
 
 ## What these simulations are and are not
 
-They are stylized. `rn22_basefee.py` uses a single sinusoidal demand path with no elasticity, no backlog dynamics and no heterogeneity in willingness to pay; it establishes the sign of an effect and the location of a crossover, not magnitudes for real traffic. `rn15_tlf_balance.py` is exact arithmetic on constructed blocks rather than a behavioural model, and its worst case is built by hand rather than sampled, because random blocks essentially never produce the adversarial composition.
+They are stylized. `rn22_basefee.py` uses a single sinusoidal demand path with no elasticity, no backlog dynamics and no heterogeneity in willingness to pay; it establishes the sign of an effect and the location of a crossover, not magnitudes for real traffic. `rn15_tla.py` is an exact reference model of current TLA accounting and ordering. It is not calibrated to transaction arrival, builder behaviour or mainnet demand. `rn15_report.py` includes constructed examples and randomized property checks; these establish accounting properties, not an equilibrium.
 
 Neither is calibrated to mainnet data. Where a note needs a magnitude rather than a direction, it says so and marks the measurement as open.
