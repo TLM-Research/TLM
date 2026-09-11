@@ -1,6 +1,6 @@
 ---
 id: RN-17
-title: "Temporal Service Profiles and Future Execution Tickets for Ethereum"
+title: "Temporal Stream Profiles and Future Execution Tickets for Ethereum"
 version: "0.6"
 status: "Working draft - research agenda, not a protocol proposal"
 program: "Temporal Liquidity Market (TLM)"
@@ -9,7 +9,7 @@ date: "September 9, 2026"
 
 # RN-17 v0.6
 
-# Temporal Service Profiles and Future Execution Tickets for Ethereum
+# Temporal Stream Profiles and Future Execution Tickets for Ethereum
 
 ## Standing multi-slot bids, stream commitments, and temporal liquidity curves
 
@@ -25,7 +25,7 @@ date: "September 9, 2026"
 
 Ethereum sells execution one block at a time. EIP-1559 prices current gas and proposer-builder separation allocates construction of the current block. Neither lets an application stand at time `t` and bid for service over future slots: a deadline, a cadence, a recurring reservation, or a bounded delay for a stream of related transactions.
 
-This note studies that object. Its unit of demand is the **Temporal Service Profile**, a declaration for a stream whose members are related across time, carrying cadence, admissible windows, deadlines, value decay, reliability and dependencies.
+This note studies that object. Its unit of demand is the **Temporal Stream Profile**, a declaration for a stream whose members are related across time, carrying cadence, admissible windows, deadlines, value decay, reliability and dependencies.
 
 Two claims are worth defending. **Funding and supply cannot be collapsed into one signed reserve**, and over a horizon this matters more than in RN-16, because money is fungible across maturities and deliverable capacity is not. And **the seller determines the horizon**: within the proposer lookahead a known party can commit, which is what preconfirmation markets already do on one side only; beyond it no party holds a position to sell against, which is where an execution-ticket architecture would be required.
 
@@ -47,7 +47,7 @@ The three notes address different horizons and should not be merged into one mec
 
 **RN-16** carries temporal state across adjacent slots while preserving the different semantics of the two sides. The funding leg is an amount in wei that can remain after settlement. The supply leg is a set of still-valid provider transactions whose shortfalls must be recomputed each slot. It creates no forward curve and allocates no named future slot.
 
-**RN-17** studies a participant acting now and requesting service over a future horizon: one execution before a deadline, one execution in any of the next `k` slots, one execution every five slots for an hour, an urgent update followed by summaries at 1, 5, 10 and 15 minutes, a group of dependent transactions that must retain order, or a recurring stream accepting interruptible service for a lower temporal price. These are Temporal Service Profiles, and they cannot be represented by repeating an independent scalar on every transaction.
+**RN-17** studies a participant acting now and requesting service over a future horizon: one execution before a deadline, one execution in any of the next `k` slots, one execution every five slots for an hour, an urgent update followed by summaries at 1, 5, 10 and 15 minutes, a group of dependent transactions that must retain order, or a recurring stream accepting interruptible service for a lower temporal price. These are Temporal Stream Profiles, and they cannot be represented by repeating an independent scalar on every transaction.
 
 ---
 
@@ -65,7 +65,7 @@ This is an information claim, not an efficiency theorem. A richer declaration he
 
 ---
 
-## 3. The Temporal Service Profile
+## 3. The Temporal Stream Profile
 
 A TSP is a priced declaration made by or for a stream of related execution requests. It is not a statistical description of past traffic.
 

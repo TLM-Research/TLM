@@ -27,7 +27,9 @@ license: "CC-BY-4.0"
 
 RN-06 found that Monad performed the control and data plane decoupling, built an excellent data plane, and left the control plane thin: it computes a transaction order and a scalar fee and nothing else. This note establishes the frame for that control plane on Monad's own parameters and sequences the work that follows. RN-04 and RN-12 supply the programme-level discipline. It sets out where the contention sits, along which axes service can differ, what a second price would have to attach to, how a candidate would be judged, and what has to be simulated to judge it. **These are concepts rather than a specification**, and the specification is RN-33's work.
 
-Four claims. Short blocks **relocate the temporal question outward**, since one Ethereum slot spans about thirty Monad blocks, so the intra-block dimension compresses while an inter-block dimension acquires resolution Ethereum cannot express. Parallel execution **erodes vertical differentiation**, because non-conflicting transactions execute concurrently and "earlier" thins as a service distinction. What remains is **horizontal**: contention over which class obtains capacity in a shared sub-block space, needing a price the priority fee does not supply. And a fine block time **does not remove temporal heterogeneity; it makes it resolvable while leaving it invisible to the protocol and the fee market**, because a twelve-second slot is a low-pass filter on demand, a 400-millisecond one is not, and Monad inherited Ethereum's envelope and scalar fee market either way.
+Four claims. Short blocks **relocate the temporal question outward**, since one Ethereum slot spans about thirty Monad blocks, so the intra-block dimension compresses while an inter-block dimension acquires resolution Ethereum cannot express. Parallel execution **erodes vertical differentiation**, because non-conflicting transactions execute concurrently and "earlier" thins as a service distinction. What remains is **horizontal**: contention over which class obtains capacity in a shared sub-block space, needing a price the priority fee does not supply. And a fine block time **does not remove temporal heterogeneity; it makes it resolvable while leaving it invisible to the protocol and the fee market**, because a twelve-second slot is a low-pass filter on demand and a 400-millisecond one is not.
+
+A fifth follows from Monad's own fee design. Its base fee is not EIP-1559's: the update rule is variance-aware, stepping cautiously when demand is noisy and decisively when it is steady, so **the controller already carries an estimate of demand variance and estimates it backward from realised gas**. A temporal declaration states the same quantity forward. That makes declared demand an input to price stability rather than only to placement, and it makes the target utilisation a function of how much demand is declared.
 
 Latency-sensitive traffic is not one class. It is heterogeneous on two independent axes: **in scale**, spanning three orders of magnitude within the urgency dimension alone, and **in requirement**, since being time-sensitive means value depends on execution time rather than that earlier is better, and deadlines, windows, cadence and dependencies are satisfied by placement rather than by haste. Both mechanisms therefore have material to work with here: **a crossing needs dispersion in the marginal value of earlier service, not a patient population**, and that dispersion is what a short block time makes visible. Which mechanism to build is a comparison of payoff against cost, not a structural precondition, and it is RN-33's question.
 
@@ -113,7 +115,7 @@ settlement and reconciliation    minutes
 
 Six or seven orders of magnitude, of which Ethereum's slot renders roughly the top four indistinguishable.
 
-**Monad has this temporal heterogeneity. It is visible in neither the protocol nor the fee-market design.** The demand is there and the block interval is fine enough to resolve it, but Monad inherited Ethereum's transaction envelope and its scalar fee market, so a sender still cannot declare a requirement and the scheduler still cannot act on one.
+**Monad has this temporal heterogeneity. It is visible in neither the protocol nor the fee-market design.** The demand is there and the block interval is fine enough to resolve it, but Monad kept Ethereum's transaction envelope and a scalar fee market, so a sender still cannot declare a requirement and the scheduler still cannot act on one. The fee market is not EIP-1559's, as sec. 8 sets out; it is scalar all the same.
 
 Monad therefore has **more resolvable structure and the same protocol and fee market**, which widens the gap between what the demand contains and what either can see. That gap is RN-06's missing control plane.
 
@@ -163,7 +165,7 @@ A market does not require these populations (sec. 5.3). They would widen the dis
 
 Parallel execution suits both structurally: payment transfers largely touch disjoint state, which is the workload optimistic execution handles best, and patient work can be placed where it conflicts least because it does not need a particular position. A class-based design should include one shaped for this: **settled within a bounded window, no ordering guarantee, low price, high assurance.** It earns its place under RN-04 because both its demand cell and its scheduler behavior are distinct.
 
-A wider demand distribution raises the payoff of both mechanisms, and neither is blocked by the current mix. **The mix sets the size of the gain, not whether a mechanism is possible**, which is what sec. 9's sweep over traffic composition measures.
+A wider demand distribution raises the payoff of both mechanisms, and neither is blocked by the current mix. **The mix sets the size of the gain, not whether a mechanism is possible**, which is what sec. 10's sweep over traffic composition measures.
 
 **Network effects.** They accrue to the venue that hosts the most heterogeneous demand simultaneously without one class degrading another. Ethereum cannot differentiate, so its classes interfere: RN-14 sec. 11 identifies the peak base fee, not the tip, as what excludes low-value payment traffic during congestion, which is one class priced out by another's burst. The claim is not that throughput wins. **Throughput is necessary and not sufficient, and differentiation is the missing term.**
 
@@ -183,7 +185,57 @@ RN-15's provider side is of the second kind, since its subsidy is a rate applied
 
 ---
 
-## 8. Benchmark
+## 8. The base fee already has a variance term
+
+Monad kept EIP-1559's form and replaced its controller. A sender still pays `min(max_fee, base_fee + priority_fee)`, the base fee still rises above target and falls below it, and charging is on the **declared gas limit rather than gas used**, which asynchronous execution requires: a transaction enters a block before it executes, so without that rule a sender could reserve capacity at no cost.
+
+The update rule is adaptive in the RMSprop and Adam sense. It carries two smoothed statistics of the deviation of block gas from target, and derives the step size from them:
+
+```text
+trend_k+1   =  b * trend_k   + (1-b) * ( target - block_gas_k )
+moment_k+1  =  b * moment_k  + (1-b) * ( target - block_gas_k )^2
+
+eta_k       =  max_step * e / ( e + sqrt( moment_k - trend_k^2 ) )
+
+base_fee_k+1 = max( min_base_fee,
+                    base_fee_k * exp[ eta_k * (block_gas_k - target) / (limit - target) ] )
+```
+
+with `b = 0.96`, a half-life near 17 blocks or 7 seconds at 400 ms; a target at 80 per cent of the limit against Ethereum's 50; and a step cap of 1/28 per block.
+
+The term that matters here is `moment - trend^2`, the estimated variance of demand around target. **When demand is volatile the controller steps cautiously; when demand is stable it steps decisively.** That is the controller stating how much it trusts its own signal.
+
+Two things follow that bear directly on this note.
+
+### 8.1 The variance is estimated backward and could be declared forward
+
+The estimate has the properties any smoothed estimator has. It lags by its half-life. It cannot separate transient noise from the opening of a sustained burst, because while either is happening both look like variance. And it observes variance only once the variance has been realised.
+
+A temporal declaration carries the same quantity in advance. A stream profile states cadence, rate, jitter and burstiness; those are variance parameters. A transaction profile states a window, and a window is a statement about how much placement freedom that arrival brings.
+
+Declared demand and the controller's variance term are therefore the same object seen from two directions. **A controller that reads declarations would hold a forward estimate of demand variance where it now holds a backward one.**
+
+This is a use for temporal declarations unlike any other in this note. Elsewhere they serve admission and placement, and the benefit accrues to the sender who declares. Here they would serve price stability, and the benefit accrues to everyone, including senders who declare nothing.
+
+### 8.2 The target rate becomes a design variable
+
+Headroom exists because demand is unforecastable. Ethereum targets half its limit and Monad four fifths, and the gap between target and limit is the room a controller keeps for what it did not see coming.
+
+If a material share of demand is declared, less of it is unforeseen. **The safe target utilisation is then a function of the declared share**, and a chain gains effective capacity without changing the gas limit, the hardware requirement, or the execution engine.
+
+That is the sharpest return a temporal control plane could offer a chain that already runs fast, and it is testable. The benchmark of sec. 9 and the simulator of sec. 10 can sweep declared share against achievable target at a fixed bound on fee volatility.
+
+### 8.3 What this risks
+
+Letting declarations reach the base-fee controller makes the base fee depend on something senders choose. RN-15 sec. 11 accepts extending first-price bidding to a second field and states that **making the base fee strategic would be a regression**. This walks toward that line.
+
+The attack is immediate: understate jitter so the controller grows confident, then burst. It pays in proportion to how much the controller trusts the declaration. So the declaration has to bind, through RN-04's admission discipline and RN-02's verification against realised behaviour, before it reaches the controller at all. **A free declaration is worse here than no declaration**, because it corrupts a signal the chain already relies on.
+
+The conservative form is a shadow controller: compute the declaration-informed variance beside the realised one, compare their out-of-sample accuracy, and let nothing reach the live rule until the comparison is settled and the binding is in place.
+
+---
+
+## 9. Benchmark
 
 Raw throughput fails twice here. RN-13 Part II shows utilization alone is insufficient anywhere. And under optimistic parallel execution, achieved throughput is a function of the workload's conflict structure, so **a TPS figure describes the benchmark workload as much as the chain, and workload shaping moves it directly.** Throughput cannot be the independent variable against which workload shaping is judged.
 
@@ -196,7 +248,7 @@ The benchmark is a frontier reported at a fixed reliability vector. Monad-specif
 | **Effective parallelism** | conflict rate, speculative aborts, re-execution work, achieved speedup |
 | Physical utilization | resource use against limits, including multidimensional constraints |
 | Economic incidence | payment by class, second-price revenue, validator revenue, burn |
-| Fee behaviour | level, variance, predictability, burst response, recovery |
+| Fee behaviour | level, variance, predictability, burst response, recovery, and the realised step size `eta` under each scheme |
 | Lost demand | expired, cancelled, abandoned and outside-option demand by class |
 | Neutral-class protection | outcomes for transactions declaring nothing, against the pre-mechanism baseline |
 | Extraction | realized extraction, sandwich incidence, private-order-flow share |
@@ -204,11 +256,13 @@ The benchmark is a frontier reported at a fixed reliability vector. Monad-specif
 | Access | distribution of service across senders; entry cost for small participants |
 | Protocol cost | state, computation, bandwidth, verification, complexity |
 
+Any fee comparison must run against Monad's own update rule rather than EIP-1559's (sec. 8), or the base-fee path is wrong before the temporal mechanism is applied at all.
+
 Two reporting rules. The neutral class is a constraint rather than a metric to trade against: a scheme that improves aggregate service while degrading transactions which declared nothing fails RN-04's neutrality requirement whatever else it achieves. And gains must be net of the re-execution that reordering caused, which is accounting RN-15 does not need and Monad does.
 
 ---
 
-## 9. Simulation framework
+## 10. Simulation framework
 
 A simulator representing capacity as a scalar gas pool is adequate for Ethereum and useless here, because under optimistic parallel execution capacity is a function of the conflict graph. **The simulator must model state access and conflict.** The existing TLM simulations do not, so that is the first thing to build.
 
@@ -226,7 +280,7 @@ A simulator representing capacity as a scalar gas pool is adequate for Ethereum 
 
 The mix is a parameter and must be swept, not fixed: results under the current urgent-heavy roster and under a mix including sec. 6's populations are different experiments and both are needed.
 
-**Models.** Arrivals should include Poisson for accounting checks only, regime-switching for quiet and congested states, self-exciting processes for cascades, periodic processes for oracle cadence, and common-shock arrivals that make several types burst together, which is the case that matters and that independent processes miss. State access must be drawn with hot-key skew rather than uniformly, since a uniform model assumes the problem away; the skew parameter should be calibrated, not chosen. Execution is simulated optimistically with re-execution, so throughput is endogenous, and settlement carries the k-block lag.
+**Models.** Arrivals should include Poisson for accounting checks only, regime-switching for quiet and congested states, self-exciting processes for cascades, periodic processes for oracle cadence, and common-shock arrivals that make several types burst together, which is the case that matters and that independent processes miss. State access must be drawn with hot-key skew rather than uniformly, since a uniform model assumes the problem away; the skew parameter should be calibrated, not chosen. Execution is simulated optimistically with re-execution, so throughput is endogenous, and settlement carries the k-block lag. The fee controller must be Monad's rule from sec. 8, with `b`, the target, and the step cap as sweep parameters, since the variance term is itself under study.
 
 **Comparison set.** RN-06 sec. 3.1 already specifies the core experiment and it has not been run: one ordered stream, conflict-aware scheduling, temporal classification, and joint scheduling. **Comparing classification against conflict-aware scheduling isolates the temporal contribution from the state-partitioning one.** Without that pair the result cannot be interpreted. Add current fee priority as status quo and an oracle allocation over simulated private values as a non-implementable upper bound.
 
@@ -234,19 +288,19 @@ The mix is a parameter and must be swept, not fixed: results under the current u
 
 ---
 
-## 10. Roadmap
+## 11. Roadmap
 
-This note fixes the frame: where contention sits (secs. 2 to 5), what demand the chain could host (sec. 6), what constrains settlement (sec. 7), how a candidate is judged (sec. 8), and what must be simulated (sec. 9). The conceptual material is here, including the two axes of sec. 4, the constraints on a second price, and the class shape sec. 6 argues for. What is not here is a specification: no class set is fixed, no price rule is chosen, no baseline is selected, no encoding is given. Three notes follow, each with a different burden of proof.
+This note fixes the frame: where contention sits (secs. 2 to 5), what demand the chain could host (sec. 6), what constrains settlement (sec. 7), how a candidate is judged (sec. 9), and what must be simulated (sec. 10). The conceptual material is here, including the two axes of sec. 4, the constraints on a second price, and the class shape sec. 6 argues for. What is not here is a specification: no class set is fixed, no price rule is chosen, no baseline is selected, no encoding is given. Three notes follow, each with a different burden of proof.
 
-**RN-33, a conceptual mechanism with benchmark analysis.** The counterpart of RN-12's role for Ethereum, fixing objects rather than encoding: what the horizontal classes are and what makes them distinct in scheduler behavior; what the second price attaches to and what makes it bind; how the neutral default is protected; whether a vertical component is retained and what it trades; and what baseline a Monad crossing would need. It states which of RN-04's discipline and RN-12's crossing the architecture selects, which sec. 4's hypothesis and sec. 9's experiment settle.
+**RN-33, a conceptual mechanism with benchmark analysis.** The counterpart of RN-12's role for Ethereum, fixing objects rather than encoding: what the horizontal classes are and what makes them distinct in scheduler behavior; what the second price attaches to and what makes it bind; how the neutral default is protected; whether a vertical component is retained and what it trades; and what baseline a Monad crossing would need. It states which of RN-04's discipline and RN-12's crossing the architecture selects, which sec. 4's hypothesis and sec. 10's experiment settle. It also takes sec. 8's question: whether a declared-variance input to the base-fee controller is worth its manipulation surface, and what binding would have to hold before one could be trusted.
 
 RN-33 also carries the benchmark. Section 8 says what has to be measured; RN-33 applies it, comparing candidate designs against the frontier and against each other before any encoding is fixed. Section 6's application question enters as a sensitivity rather than a precondition, since the traffic mix changes the size of the gain and not whether a mechanism is possible.
 
-**RN-34, a transaction-level mechanism, with simulation.** A TEP-based design over the near-block horizon: bounded windows, roles, admission binding, and sec. 7's settlement constraint. The instrument for the three-to-twenty-five-block range where sec. 2 says resolution now exists, and deliberately not an RN-15 port. **Its conclusions must be supported by simulation on the sec. 9 framework**, including the conflict model, since a design claim about a parallel-execution chain that has not been run against a conflict-aware simulator is not evidence.
+**RN-34, a transaction-level mechanism, with simulation.** A TEP-based design over the near-block horizon: bounded windows, roles, admission binding, and sec. 7's settlement constraint. The instrument for the three-to-twenty-five-block range where sec. 2 says resolution now exists, and deliberately not an RN-15 port. **Its conclusions must be supported by simulation on the sec. 10 framework**, including the conflict model, since a design claim about a parallel-execution chain that has not been run against a conflict-aware simulator is not evidence.
 
-**RN-35, a stream-level mechanism, with simulation.** A TSP-based design, which sec. 2 argues is the primary representation here rather than a long-horizon extension. Cadence, rate envelopes, recurring service, reliability classes. The oracle and order-book cases are both stream problems, and they are the two workloads the roster actually contains. **Its conclusions likewise rest on simulation**, and the stream case additionally requires the arrival models of sec. 9, since cadence and burst structure are the object under study rather than a background assumption.
+**RN-35, a stream-level mechanism, with simulation.** A TSP-based design, which sec. 2 argues is the primary representation here rather than a long-horizon extension. Cadence, rate envelopes, recurring service, reliability classes. The oracle and order-book cases are both stream problems, and they are the two workloads the roster actually contains. **Its conclusions likewise rest on simulation**, and the stream case additionally requires the arrival models of sec. 10, since cadence and burst structure are the object under study rather than a background assumption.
 
-The simulator of sec. 9 is therefore built for RN-33 and used by all three.
+The simulator of sec. 10 is therefore built for RN-33 and used by all three.
 
 ---
 
@@ -254,9 +308,11 @@ The simulator of sec. 9 is therefore built for RN-33 and used by all three.
 
 - TLM Research Program. **RN-01: Temporal Execution Profile.** **RN-02: Protocol-Visible Temporal Abstraction.** **RN-04: Temporal Execution Services.** **RN-05: Supply-side Heterogeneity and Temporal Granularity.** **RN-06: Monad Through the Temporal-Liquidity Lens.**
 - TLM Research Program. **RN-12: The Temporal Liquidity Market: A Conceptual Mechanism Design.** **RN-13 Part II: Capacity and Welfare in Blockchain Execution Systems.** **RN-14: The Demand Ethereum Does Not Serve.**
-- TLM Research Program. **RN-15: A Temporal Liquidity Authorization for EIP-1559.** **RN-16: A Two-Leg Temporal Liquidity Reserve for EIP-1559.** **RN-17: Temporal Service Profiles and Future Execution Tickets.**
-- TLM Research Program. **RN-33, RN-34, RN-35:** in preparation, per sec. 10.
+- TLM Research Program. **RN-15: A Temporal Liquidity Authorization for EIP-1559.** **RN-16: A Two-Leg Temporal Liquidity Reserve for EIP-1559.** **RN-17: Temporal Stream Profiles and Future Execution Tickets.**
+- TLM Research Program. **RN-33, RN-34, RN-35:** in preparation, per sec. 11.
 - Monad Developer Documentation. **Asynchronous Execution.** https://docs.monad.xyz/monad-arch/consensus/asynchronous-execution
 - Monad Developer Documentation. **Parallel Execution.** https://docs.monad.xyz/monad-arch/execution/parallel-execution
 - Monad Foundation. **How Monad Works.** https://monad.xyz/blog/how-monad-works
+- Milionis, J. & Heimbach, L., Category Labs. **Redesigning a Base Fee for Monad.** 10 October 2025. https://www.category.xyz/blogs/redesigning-a-base-fee-for-monad
+- Monad Developer Documentation. **Gas Pricing.** https://docs.monad.xyz/developer-essentials/gas-pricing
 - Category Labs. **Monad Initial Specification Proposal, Version 2.0.1.** https://category-labs.github.io/category-research/monad-initial-spec-proposal.pdf
