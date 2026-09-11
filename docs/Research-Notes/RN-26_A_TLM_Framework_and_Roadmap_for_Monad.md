@@ -3,7 +3,7 @@ id: RN-26
 title: "A TLM Framework and Roadmap for Monad"
 subtitle: "Where temporal contention relocates under short blocks, and a roadmap for RN-33, RN-34 and RN-35"
 version: "0.7"
-status: "Working note - framework and roadmap. No mechanism proposed; that is RN-33."
+status: "Working note - framework and roadmap. Conceptual; the specification is RN-33."
 program: "Temporal Liquidity Market (TLM)"
 date: "2026-09-10"
 license: "CC-BY-4.0"
@@ -25,7 +25,7 @@ license: "CC-BY-4.0"
 
 ## Abstract
 
-RN-06 found that Monad performed the control and data plane decoupling, built an excellent data plane, and left the control plane thin: it computes a transaction order and a scalar fee and nothing else. This note establishes the frame for that control plane on Monad's own parameters and sequences the work that follows. RN-04 and RN-12 supply the programme-level discipline. **It designs no mechanism; that is RN-33.** What it fixes is where the contention sits, along which axes service can differ, how a candidate would be judged, and what has to be simulated to judge it.
+RN-06 found that Monad performed the control and data plane decoupling, built an excellent data plane, and left the control plane thin: it computes a transaction order and a scalar fee and nothing else. This note establishes the frame for that control plane on Monad's own parameters and sequences the work that follows. RN-04 and RN-12 supply the programme-level discipline. It sets out where the contention sits, along which axes service can differ, what a second price would have to attach to, how a candidate would be judged, and what has to be simulated to judge it. **These are concepts rather than a specification**, and the specification is RN-33's work.
 
 Four claims. Short blocks **relocate the temporal question outward**, since one Ethereum slot spans about thirty Monad blocks, so the intra-block dimension compresses while an inter-block dimension acquires resolution Ethereum cannot express. Parallel execution **erodes vertical differentiation**, because non-conflicting transactions execute concurrently and "earlier" thins as a service distinction. What remains is **horizontal**: contention over which class obtains capacity in a shared sub-block space, needing a price the priority fee does not supply. And a fine block time **does not remove temporal heterogeneity; it makes it resolvable while leaving it invisible to the protocol and the fee market**, because a twelve-second slot is a low-pass filter on demand, a 400-millisecond one is not, and Monad inherited Ethereum's envelope and scalar fee market either way.
 
@@ -236,7 +236,7 @@ The mix is a parameter and must be swept, not fixed: results under the current u
 
 ## 10. Roadmap
 
-This note fixes the frame: where contention sits (secs. 2 to 5), what demand the chain could host (sec. 6), what constrains settlement (sec. 7), how a candidate is judged (sec. 8), and what must be simulated (sec. 9). It commits to no design objects. Three notes follow, each with a different burden of proof, and the first of them is where design begins.
+This note fixes the frame: where contention sits (secs. 2 to 5), what demand the chain could host (sec. 6), what constrains settlement (sec. 7), how a candidate is judged (sec. 8), and what must be simulated (sec. 9). The conceptual material is here, including the two axes of sec. 4, the constraints on a second price, and the class shape sec. 6 argues for. What is not here is a specification: no class set is fixed, no price rule is chosen, no baseline is selected, no encoding is given. Three notes follow, each with a different burden of proof.
 
 **RN-33, a conceptual mechanism with benchmark analysis.** The counterpart of RN-12's role for Ethereum, fixing objects rather than encoding: what the horizontal classes are and what makes them distinct in scheduler behavior; what the second price attaches to and what makes it bind; how the neutral default is protected; whether a vertical component is retained and what it trades; and what baseline a Monad crossing would need. It states which of RN-04's discipline and RN-12's crossing the architecture selects, which sec. 4's hypothesis and sec. 9's experiment settle.
 
