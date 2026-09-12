@@ -6,7 +6,7 @@ Temporal Liquidity Market (TLM) is an open research project investigating whethe
 
 The name carries two contributions. **Temporal Liquidity** is a first-degree, protocol-visible variable, alongside price: the timing structure of demand that a scalar fee compresses away. **Market** is what coordinating that variable creates — a *two-sided* market, with demand that needs execution at a particular time or order (takers) on one side, and the supply of execution capacity across blockchain time, including flexibility that patient demand can release (suppliers), on the other. TLM studies both the variable and the market that clears it.
 
-It is **model-first**: concepts, representations, and evaluation criteria come first. But that is the *first phase*, not the whole program — **market-mechanism design is an explicit second phase**, in which the project develops and evaluates candidate mechanisms that coordinate Temporal Liquidity.
+It is **model-first**: concepts, representations, and evaluation criteria come first. It then follows with **conceptual mechanism design** and a **foundational evaluation framework**, so that candidate mechanisms for coordinating Temporal Liquidity can be stated and assessed rather than only motivated.
 
 ---
 
@@ -59,7 +59,7 @@ TLM begins *upstream* of any auction: it defines the temporal commodity, the inf
 3. Investigate which additional variables merit protocol-visible representation.
 4. Design and evaluate **market mechanisms** that coordinate them — separating **concept**, **representation**, and **mechanism**.
 
-Steps 1–3 are the current, model-first phase; step 4 — **market-mechanism design** — is the project's planned next phase, developed in-project and open to contributions and competing proposals from the community.
+Steps 1–3 are the model-first foundation. Step 4 is under way at the conceptual level, developed in-project and open to contributions and competing proposals from the community.
 
 ---
 
