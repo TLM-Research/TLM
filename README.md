@@ -48,7 +48,9 @@ Seen this way (RN-10), a blockchain is less a transaction-processing engine than
 
 ## Positioning — exchange designer, not exchange
 
-TLM begins *upstream* of any auction: it defines the temporal commodity, the information a market makes visible, and the constraints — neutrality, extraction-resistance, simplicity, incentive-compatibility — that any mechanism must satisfy. It then builds on that foundation toward **candidate market mechanisms**, evaluated against those constraints and developed within the project — while actively welcoming competing and complementary mechanism proposals from the builder, proposer, and auction- and mechanism-design community. See [`docs/TLM-Positioning.md`](docs/TLM-Positioning.md).
+TLM begins *upstream* of any auction: it defines the temporal commodity, the information a market makes visible, and the constraints — neutrality, extraction-resistance, simplicity, incentive-compatibility — that any mechanism must satisfy. It then builds on that foundation toward **candidate market mechanisms**, evaluated against those constraints and developed within the project — while actively welcoming competing and complementary mechanism proposals from the builder, proposer, and auction- and mechanism-design community.
+
+**Despite the name, TLM is not a trading venue and not a market participant.** It sits in the market designer's seat: the designer specifies the tradable object, the information the market reveals, and the rules it must honor; builders, proposers and searchers optimize within those rules. Nothing here is operated, and nothing is for sale.
 
 ---
 
@@ -92,7 +94,6 @@ RN-26 and RN-33 begin a second line, applying the framework to a fast L1 where s
 docs/
     Vision-Statement.md          — the umbrella concept and guiding principles
     TLM-Research-Overview.md     — outward-facing research invitation
-    TLM-Positioning.md           — where TLM's contribution lies
     Foundation-Outline.md        — structure of the Foundation Statement
     Foundation-1-Introduction.md — Part I: introduction & the concept
     Foundation-2-Framework.md    — Part II: principles & model-first methodology

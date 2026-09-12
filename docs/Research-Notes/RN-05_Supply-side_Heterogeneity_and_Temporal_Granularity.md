@@ -125,7 +125,7 @@ A quantum is therefore not a miniature slot. It fixes a *partial* order: a trans
 
 ### 4.2 The lattice and its sub-channels
 
-The quanta of a slot form a **lattice** - a shared coordinate system, not a set of separate objects. The term is meant literally, and it is worth saying which lattice: the partitions of a slot, ordered by refinement, form a lattice under the usual meet and join. One partition refines another when every cell of the finer sits inside a cell of the coarser; the join of two partitions is their coarsest common refinement, and the meet their finest common coarsening. A reader resolving whole slots and a reader resolving individual quanta occupy different points in that lattice, and the coarse reading is a genuine coarsening of the fine one rather than a different object. That is what supports the claim below that there is one coordinate system rather than several - and it is why refinement, not subdivision alone, is the operative relation.
+The quanta of a slot form a **lattice** - a shared coordinate system, not a set of separate objects. The term is meant literally: the partitions of a slot, ordered by refinement, form a lattice under the usual meet and join. One partition refines another when every cell of the finer sits inside a cell of the coarser; the join of two partitions is their coarsest common refinement, and the meet their finest common coarsening. A reader resolving whole slots and a reader resolving individual quanta occupy different points in that lattice, and the coarse reading is a genuine coarsening of the fine one rather than a different object. That is what supports the claim below that there is one coordinate system rather than several - and it is why refinement, not subdivision alone, is the operative relation.
 
 Participants read the lattice at different depths. Slot-level validators resolve slots and are unaffected by finer structure. A latency-sensitive **sub-channel** resolves individual quanta. Intermediate participants may resolve at intermediate depth.
 
@@ -377,7 +377,7 @@ This note is the supply side: temporal granularity, the quantum lattice, and the
 question they raise. It assumes a demand-side representation exists and says nothing about how
 demand is described. Pricing, tier structure and settlement are out of scope.
 
-One layering is worth stating because the two are easily confused.
+RN-04 and RN-05 are easily confused, so the layering is worth stating.
 
 ### The substrate and the services on it
 

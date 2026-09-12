@@ -178,7 +178,7 @@ The orientation matters. Kiayias's tiering [7] is the clean theoretical treatmen
 
 ## 4. Limits of Monad (relative to the temporal-demand problem)
 
-A candid assessment, offered in good faith, and, in places, deliberately provocative. These are limits **relative to the problem TLM studies (the temporal structure of demand)**, not relative to Monad's own goal of fast, compatible execution, which it achieves impressively (sec. 4.1 makes this explicit). Ordered from most-central to most-general.
+A candid assessment, in places deliberately provocative. These are limits **relative to the problem TLM studies (the temporal structure of demand)**, not relative to Monad's own goal of fast, compatible execution, which it achieves impressively (sec. 4.1 makes this explicit). Ordered from most-central to most-general.
 
 **(a) It optimizes supply and holds demand fixed, the core gap.** Monad keeps the scalar EIP-1559 fee market and the single global ordered stream exactly as Ethereum has them. Users still express only *price*; the temporal structure of demand (priority, delay tolerance, deadlines, predictability, continuity) stays implicit and un-priced. Monad makes the same price-only market run faster. This is progress in execution, not in market expressiveness, and by design, because EVM-equivalence forecloses demand-side redesign.
 

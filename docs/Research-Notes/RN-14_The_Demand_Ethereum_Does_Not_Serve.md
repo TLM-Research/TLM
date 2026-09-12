@@ -383,7 +383,7 @@ What is open is whether the cost was priced correctly across workloads. For appl
 
 L2BEAT classifies rollup maturity in stages, where Stage 0 means a system still controlled by a small number of entities and Stage 2 means one governed by code. As of mid-2026 most rollups remain at Stage 0, including large ZK rollups whose upgrades run through multisig wallets. Only a small number, Arbitrum One and Base among them, have reached Stage 1. None has reached Stage 2.
 
-For a large position, settlement assurance may dominate and the operating risk is worth accepting. For a small daily payment, the calculation is different. The user is comparing a Stage 0 rollup's upgrade keys and single sequencer against an alternative Layer 1's validator set, and it is not obvious which they should prefer. That comparison is the one section 8.3 leaves unresolved, and the stage data is the reason it is unresolved rather than rhetorical.
+For a large position, settlement assurance may dominate and the operating risk is worth accepting. For a small daily payment, the calculation is different. The user is comparing a Stage 0 rollup's upgrade keys and single sequencer against an alternative Layer 1's validator set, and it is not obvious which they should prefer. That comparison is the one section 8.3 leaves unresolved, and the stage data is why it stays open.
 
 ---
 

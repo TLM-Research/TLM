@@ -183,6 +183,20 @@ Settlement depending only on the committed order, such as class assignment or de
 
 RN-15's provider side is of the second kind, since its subsidy is a rate applied to consumed gas. **The block-local property that makes RN-15 minimal on Ethereum is therefore unavailable on Monad.** RN-06 sec. 4(d) notes that deferred execution moves a cost rather than removing it, and this is one place the cost lands. RN-06 sec. 4(e) notes that charging on declared rather than consumed gas is a pricing distortion; for a temporal mechanism it is also a convenience, since a declared quantity is available at consensus time.
 
+### 7.1 Who the counterparty is, and how far ahead it is known
+
+A forward temporal instrument needs a counterparty who will still hold the right to act when the instrument comes due. On Ethereum that is the proposer-lookahead problem, and RN-17 works around it with a short horizon.
+
+Monad differs in three ways.
+
+**There is no proposer-builder separation.** A leader selects a payload from its own mempool, builds the block, and proposes it. There is no builder auction, no relay and no separate building market. The party that would honour a temporal commitment is the same party that orders the block, so a commitment does not have to survive a handoff between two roles with different incentives.
+
+**The leader schedule is deterministic and known hours ahead**, being stake-weighted over fixed epochs of 50,000 blocks. Whoever will lead a given future round is knowable long before that round arrives, which is the condition a forward instrument needs and which Ethereum supplies only for a short lookahead.
+
+**There is no global mempool.** Each validator holds a local pool, and RPC nodes forward transactions directly to the next several scheduled leaders rather than gossiping to the network. This cuts both ways. It means a commitment can be routed to the party that will act on it, and it means no party observes a complete candidate set, so nothing can be verified against what a leader could have included. RN-33 sec. 10 takes the second half as a constraint on what any class rule may require.
+
+Taken together, the counterparty for a forward temporal instrument is better identified here than on Ethereum, and worse observed. Whether the first outweighs the second is open and belongs to RN-35.
+
 ---
 
 ## 8. The base fee already has a variance term

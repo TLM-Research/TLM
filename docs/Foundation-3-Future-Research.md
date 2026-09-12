@@ -32,7 +32,7 @@ The methodology has direct precedents worth inheriting - the estimation of the *
 
 # 12. Protocol Evolution
 
-The Foundation intentionally avoids prescribing Ethereum's roadmap; it offers a lens through which future evolution may be interpreted. It is nonetheless worth naming the architectural developments that would make protocol-visible temporal information *cheap to add*, since they bound what is practical: ePBS commitment slots and inclusion lists (which create places to attach or honor forward commitments), blob-style multidimensional fee pricing (which shows a new protocol-visible resource dimension can be introduced), and extended proposer lookahead (which is what would let anyone credibly speak for future slots). A market for temporal liquidity is one candidate direction that such developments could support, not a predetermined destination.
+The Foundation intentionally avoids prescribing Ethereum's roadmap; it offers a lens through which future evolution may be interpreted. The architectural developments that would make protocol-visible temporal information *cheap to add* bound what is practical: ePBS commitment slots and inclusion lists (which create places to attach or honor forward commitments), blob-style multidimensional fee pricing (which shows a new protocol-visible resource dimension can be introduced), and extended proposer lookahead (which is what would let anyone credibly speak for future slots). A market for temporal liquidity is one candidate direction that such developments could support, not a predetermined destination.
 
 ---
 
@@ -50,7 +50,7 @@ A useful research framework must name the observations that would weaken or inva
 
 # 15. Relationship to the Research Notes
 
-The Foundation establishes the agenda; the Research Notes investigate individual questions in depth, which keeps the Foundation stable while the notes evolve. The thirteen notes to date span both sides of the market and the market itself:
+The Foundation establishes the agenda; the Research Notes investigate individual questions in depth, which keeps the Foundation stable while the notes evolve. The notes published to date span both sides of the market and the market itself:
 
 - **RN-01 - Temporal Execution Profile.** The transaction-level representation of temporal demand.
 - **RN-02 - Protocol-visible Temporal Abstraction.** How temporal characteristics can be made visible to the protocol, and the declared-versus-verified distinction.
@@ -63,8 +63,18 @@ The Foundation establishes the agenda; the Research Notes investigate individual
 - **RN-09 - Chain Virtualization.** A conceptual frame for diversified project types on a shared fast L1.
 - **RN-10 - The Economics of the Temporal Liquidity Market.** How TLM expands the blockchain economy: the blockchain as an execution-capital market (with a companion follow-up research-questions note).
 - **RN-11 - The Term Structure and Allocation of Execution Capital.** The term structure of block-fee-rates, and the execution-capital allocation problem and its dual.
-- **RN-12 - The Temporal Liquidity Market: Protocol and Mechanism Design.** A first candidate mechanism for clearing the market. In draft.
-- **RN-13 - Toward a Mathematical Theory of Execution Capacity.** Multi-user demand, temporal resolution, information, and fundamental limits. In draft.
+- **RN-12 - The Temporal Liquidity Market: A Conceptual Mechanism Design.** A first candidate mechanism for clearing the market.
+- **RN-13 Part I - Capacity Theory for Execution Systems.** A survey of capacity theory under a temporal liquidity lens.
+- **RN-13 Part II - Capacity and Welfare in Blockchain Execution Systems.** What execution-service region is achievable, and how much of it depends on scheduler information.
+- **RN-14 - The Demand Ethereum Does Not Serve.** The workload split, and the empirical case for the gap.
+- **RN-15 - A Temporal Liquidity Authorization for EIP-1559.** A first mechanism proposal, keeping the change to the existing fee market small.
+- **RN-16 - A Two-Leg Temporal Liquidity Reserve for EIP-1559.** The same instrument extended across neighbouring slots, with an explicit supply leg.
+- **RN-17 - Temporal Stream Profiles and Future Execution Tickets.** Raising the unit of demand from the transaction to the stream.
+
+The framework is host-independent, and a second line applies it to chains whose architecture changes what temporal liquidity is worth:
+
+- **RN-26 - A TLM Framework and Roadmap for Monad.** What short blocks, asynchronous execution and parallel execution change.
+- **RN-33 - Horizontal Scheduling Classes for Monad.** A class and scheduling architecture, stated as hypotheses with the experiments that would settle them.
 
 ---
 
