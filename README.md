@@ -76,6 +76,16 @@ The full literature map is in [`docs/Related-Work.md`](docs/Related-Work.md).
 
 ---
 
+## Status — September 2026
+
+Published: **RN-01 to RN-17**, plus **RN-26** and **RN-33**.
+
+RN-01 to RN-14 build the concept, its representation, and the economics. **RN-15 to RN-17 are the first mechanism proposals, and Ethereum is the primary target**: a temporal liquidity authorization for EIP-1559, a two-leg reserve across neighbouring slots, and a shift of the unit from the transaction to the stream. They are proposals offered for comment.
+
+RN-26 and RN-33 begin a second line, applying the framework to a fast L1 where short blocks and parallel execution change what temporal liquidity is worth. RN-33 is stated as an architecture with hypotheses and experiments rather than as a specification. Work on other fast L1s, L2s, and oracle networks is in progress and not yet published.
+
+---
+
 ## Repository map
 
 ```text
@@ -90,17 +100,14 @@ docs/
     Temporal-Liquidity.md        — canonical concept exposition
     Related-Work.md              — interdisciplinary literature map
     Research-Notes/
-        RN-01 — Temporal Execution Profiles (transaction-level representation)
-        RN-02 — Protocol-visible Temporal Abstraction
-        RN-03 — Hyperliquid: A Case Study in Temporal Demand
-        RN-04 — Temporal Service Architecture (service classes)
-        RN-05 — Supply-side Heterogeneity and Temporal Granularity (the supply side)
-        RN-06 — Monad Through the Temporal-Liquidity Lens (host analysis)
-        RN-07 — Layered Control Architecture for Temporal Liquidity
-        RN-08 — Modern Blockchains and Host Candidacy (comparative survey)
-        RN-09 — Chain Virtualization (diversified project types on a shared fast L1)
-        RN-10 — Temporal Liquidity and the Blockchain Economy (the execution-capital market)
-        RN-11 — The Temporal Liquidity Market: A Formal Foundation (the execution-capital allocation problem; the term structure of block-fee-rates via the bond-market mapping)
+        RN-01, RN-02   Temporal Execution Profile; protocol-visible temporal abstraction
+        RN-03, RN-14   Evidence: Hyperliquid; the demand Ethereum does not serve
+        RN-04, RN-05   Service classes for Ethereum; supply-side granularity
+        RN-06 – RN-09  Host analysis, layered control, comparative survey, chain virtualization
+        RN-10, RN-11   The execution-capital market; its term structure via the bond-market mapping
+        RN-12, RN-13   Conceptual mechanism design; capacity and welfare
+        RN-15 – RN-17  Ethereum mechanisms: TLA for EIP-1559, two-leg reserve, stream profiles and tickets
+        RN-26, RN-33   Monad: a TLM framework and roadmap; horizontal scheduling classes
 ```
 
 ---
@@ -112,6 +119,8 @@ docs/
 - **Want the framework?** The Foundation Statement — [Part I](docs/Foundation-1-Introduction.md) · [Part II](docs/Foundation-2-Framework.md) · [Part III](docs/Foundation-3-Future-Research.md).
 - **Want the evidence?** [RN-03: Hyperliquid](docs/Research-Notes/RN-03_Hyperliquid_A_Case_Study_in_Temporal_Liquidity.md).
 - **Want the market view?** [RN-10: Temporal Liquidity and the Blockchain Economy](docs/Research-Notes/RN-10_Temporal_Liquidity_and_the_Blockchain_Economy.md).
+- **Want a mechanism?** [RN-15: A Temporal Liquidity Authorization for EIP-1559](docs/Research-Notes/RN-15_A_Temporal_Liquidity_Authorization_for_EIP-1559.md).
+- **Want the fast-L1 case?** [RN-33: Horizontal Scheduling Classes for Monad](docs/Research-Notes/RN-33_Horizontal_Scheduling_Classes_for_Monad.md).
 
 ---
 
