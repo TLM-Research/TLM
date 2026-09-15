@@ -1,13 +1,13 @@
 ---
 id: RN-17
 title: "Temporal Stream Profiles and Future Execution Tickets for Ethereum"
-version: "0.6"
+version: "0.7"
 status: "Working draft - research agenda, not a protocol proposal"
 program: "Temporal Liquidity Market (TLM)"
-date: "September 9, 2026"
+date: "September 15, 2026"
 ---
 
-# RN-17 v0.6
+# RN-17 v0.7
 
 # Temporal Stream Profiles and Future Execution Tickets for Ethereum
 
@@ -15,9 +15,9 @@ date: "September 9, 2026"
 
 **Temporal Liquidity Market (TLM) Research Program**  
 **Research Note RN-17**  
-**Version:** 0.6  
+**Version:** 0.7  
 **Status:** Working draft. Research agenda, not a protocol proposal.  
-**Date:** 9 September 2026
+**Date:** 15 September 2026
 
 ---
 
@@ -126,7 +126,7 @@ The demand side of that market is easy to specify: a stream declares and pays. *
 
 **The current slot.** The builder is selecting the block. This is RN-15's setting, and the supply side is the set of transactions willing to accept later in-block position.
 
-**Within the proposer lookahead.** Ethereum's proposer schedule for an epoch is known in advance, currently on the order of one epoch, so a party that knows it proposes slot `t+k` holds something real to sell. **This is the regime in which forward temporal service is already being sold.** Preconfirmation designs have a known proposer commit to including a transaction in a coming slot, backed by restaked collateral and slashing for failure to honour it, and the gateway or proposer takes the delivery risk.
+**Within the proposer lookahead.** Ethereum's proposer schedule for an epoch is known in advance, currently on the order of one epoch, so a party that knows it proposes slot `t+k` holds something real to sell. **This is the regime in which forward temporal service is already being sold.** A partial term structure for L1 blockspace is already traded out of protocol (ETHGas base-fee futures and multi-slot commitments, where L2s and other buyers purchase from validators), which is evidence the forward demand is real and motivation for an in-protocol temporal market. Preconfirmation designs have a known proposer commit to including a transaction in a coming slot, backed by restaked collateral and slashing for failure to honour it, and the gateway or proposer takes the delivery risk.
 
 RN-17's addition here is not the commitment machinery, which exists, but the second side. A preconfirmation buys a commitment about position, and nothing in those designs pays a sender for offering to take a later one. **Preconfirmation markets are one-sided in exactly the way RN-15 is two-sided.** A TSP layered on the same collateral and slashing substrate would let a stream sell flexibility across a window rather than only buy priority at a point. That is a concrete, near-term research question with an existing counterparty and an existing enforcement mechanism, and it does not depend on any new protocol object.
 
@@ -358,6 +358,7 @@ The horizon is set by the seller. Within the proposer lookahead, preconfirmation
 - Ethereum Research. **Exploring Sophisticated Execution Proposers for Ethereum** (2025). https://ethresear.ch/t/exploring-sophisticated-execution-proposers-for-ethereum/21386
 - Ethereum Research. **On block-space distribution mechanisms** (2024). https://ethresear.ch/t/on-block-space-distribution-mechanisms/19764
 - Ethereum Improvement Proposals. **EIP-1559: Fee Market Change for ETH 1.0 Chain.** https://eips.ethereum.org/EIPS/eip-1559
+- ETHGas. *Out-of-protocol blockspace market: L2s and other buyers purchase L1 inclusion from validators; base-fee futures.* https://docs.ethgas.com/ ; validator commitment reported at https://www.theblock.co/post/397457/etherfi-3-billion-eth-validator-liquidity-ethgas-three-years
 - R. F. Engle. **Autoregressive Conditional Heteroscedasticity with Estimates of the Variance of United Kingdom Inflation.** *Econometrica* 50(4), 1982.
 - R. F. Engle and J. R. Russell. **Autoregressive Conditional Duration: A New Model for Irregularly Spaced Transaction Data.** *Econometrica* 66(5), 1998.
 - TLM Research Program: RN-01 and RN-02 (TEP and TSP); RN-05 (temporal execution quanta, and preconfirmation comparison in sec. 7); RN-11 and RN-12 (allocation and mechanism design); RN-13 Part II (capacity and benchmarks); RN-14 (demand and venue choice); RN-15 (one-slot TLA); RN-16 (two-leg adjacent-slot TLR).

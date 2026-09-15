@@ -2,14 +2,14 @@
 id: RN-16
 title: "A Two-Leg Temporal Liquidity Reserve for EIP-1559"
 subtitle: "Carrying temporal-liquidity funding across slots, and naming the supply it must meet"
-version: "1.0"
+version: "1.1"
 status: "Working draft - mechanism specified, controller and simulation not yet run"
 program: "Temporal Liquidity Market (TLM)"
-date: "2026-09-09"
+date: "2026-09-15"
 license: "CC-BY-4.0"
 ---
 
-# RN-16 v1.0
+# RN-16 v1.1
 
 # A Two-Leg Temporal Liquidity Reserve for EIP-1559
 
@@ -17,9 +17,9 @@ license: "CC-BY-4.0"
 
 **Temporal Liquidity Market (TLM) Research Program**  
 **Research Note RN-16**  
-**Version:** 1.0  
+**Version:** 1.1  
 **Status:** Working draft. The mechanism is specified; the controller and the simulation program in sec. 10 have not been run.  
-**Date:** 9 September 2026
+**Date:** 15 September 2026
 
 ---
 
@@ -165,6 +165,8 @@ These indicators belong first in a shadow forecast of next-slot independently el
 
 RN-16 posts no prices for named future slots and reserves no future block space. It makes a current-slot decision using carried funding and the provider transactions visible to the current builder.
 
+A forward market for L1 blockspace already exists out of protocol (ETHGas, where L2s and other buyers purchase blockspace and forward inclusion from validators, with supply committed for years), which is evidence that pricing execution across slots is demanded and motivation for an in-protocol funding reserve rather than a competitor to it.
+
 A provider can remain pending over several slots, but each slot repeats validity checking, shortfall calculation, funding reservation, physical-capacity admission and builder selection. A TEP may state transaction-level constraints such as an expiry or acceptable delay, but RN-16 does not aggregate declarations into a forward curve, and it cannot assume all builders observe the same supply set.
 
 No user receives a guaranteed future slot, and an unincluded provider may be replaced, cancelled, invalidated, evicted, or simply unavailable to a later builder.
@@ -288,4 +290,5 @@ The result sought is an outward movement of the target-utilization frontier at a
 - Reijsbergen, D., Sridhar, S., Monnot, B., Leonardos, S., Skoulakis, S. & Piliouras, G. "Transaction Fees on a Honeymoon: Ethereum's EIP-1559 One Month Later." arXiv:2110.04753. https://arxiv.org/abs/2110.04753
 - *EIP-4396: Time-Aware Base Fee Calculation.* https://eips.ethereum.org/EIPS/eip-4396
 - Ethereum Foundation. "Proof-of-stake." https://ethereum.org/developers/docs/consensus-mechanisms/pos/
+- ETHGas. *Out-of-protocol blockspace market: L2s and other buyers purchase L1 inclusion from validators; base-fee futures.* https://docs.ethgas.com/ ; validator commitment reported at https://www.theblock.co/post/397457/etherfi-3-billion-eth-validator-liquidity-ethgas-three-years
 - TLM Research Notes: RN-01, RN-02, RN-10, RN-11, RN-12, RN-13 Part II, RN-14, RN-15 and RN-17.

@@ -2,14 +2,14 @@
 id: RN-15
 title: "A Temporal Liquidity Authorization for EIP-1559"
 subtitle: "Making the base fee a midpoint rather than a floor"
-version: "2.8"
+version: "2.9"
 status: "Public draft - research note, offered in good faith for comment"
 program: "Temporal Liquidity Market (TLM)"
-date: "2026-09-06"
+date: "2026-09-15"
 license: "CC-BY-4.0"
 ---
 
-# RN-15 v2.8
+# RN-15 v2.9
 
 # A Temporal Liquidity Authorization for EIP-1559
 
@@ -17,10 +17,10 @@ license: "CC-BY-4.0"
 
 **Temporal Liquidity Market (TLM) Research Program**  
 **Research Note RN-15**  
-**Version:** 2.8  
+**Version:** 2.9  
 **Status:** Public draft - research note, offered in good faith for comment.  
 **Scope:** One slot, one existing block, no new protocol state. No deferral instrument. The mechanism clears against Ethereum's scalar gas accounting
-**Date:** 6 September 2026  
+**Date:** 15 September 2026  
 
 > **Licence.** CC BY 4.0, as with the rest of the research programme. If this mechanism is submitted as an Ethereum Improvement Proposal, the EIP will be written as a separate document under CC0, since EIP-1 requires every EIP to be in the public domain. This note is not that document and does not waive rights.
 
@@ -608,6 +608,8 @@ Carrying money alone does not move a transaction to another slot. RN-16 must pai
 
 **Preconfirmations** already carry a target slot and round, so sub-slot coordinates exist in deployed systems. What they lack is a negative side: a preconf buys a commitment about position, and nothing pays anyone for offering to take a later one.
 
+**Forward blockspace markets.** That a capitalized out-of-protocol market for execution timing already exists, ETHGas, where L2s and other buyers purchase L1 blockspace from validators, is evidence the demand is real and motivates pricing temporal execution natively in protocol.
+
 **Timeboost** sells a time advantage through an exclusive lane, with the centralisation and spam results cited in sec. 10.
 
 **EIP-4844** is the precedent for adding a fee dimension to Ethereum in production, though the dimension it added is a resource rather than a temporal one (RN-14 sec. 7.3).
@@ -634,6 +636,7 @@ RN-14 poses the demand problem this note answers and identifies the base fee rat
 - Ethereum Foundation. “Proof-of-stake.” https://ethereum.org/developers/docs/consensus-mechanisms/pos/
 - Myerson, R. B. & Satterthwaite, M. A. "Efficient Mechanisms for Bilateral Trading." *Journal of Economic Theory* 29(2), 1983, 265-281.
 - Franco, M. & Rogozinski, G. *Mini-Blocks: SSV-Backed Sub-Slot Auctions for Ethereum PBS.* Ethereum Research, May 2026. https://ethresear.ch/t/mini-blocks-ssv-backed-sub-slot-auctions-for-ethereum-pbs/24898
+- ETHGas. *Out-of-protocol blockspace market: L2s and other buyers purchase L1 inclusion from validators; base-fee futures.* https://docs.ethgas.com/ ; validator commitment reported at https://www.theblock.co/post/397457/etherfi-3-billion-eth-validator-liquidity-ethgas-three-years
 - Capponi, A. & Zhu, B. *Auctioning Time to Mitigate Latency Races: Theory and Evidence from Blockchains.* SSRN, 2026. See also *The Express Lane to Spam and Centralization: An Empirical Analysis of Arbitrum's Timeboost,* arXiv:2509.22143.
 - Zhao, Y. *The Cost of Delay: Evidence from the Ethereum Transaction Fee Market.* SSRN Working Paper No. 4436697.
 - Liu, Y., Lu, Y., Nayak, K., Zhang, F., Zhang, L. & Zhao, Y. "Empirical Analysis of EIP-1559: Transaction Fees, Waiting Time, and Consensus Security." *CCS '22*, 2099-2113.
