@@ -66,6 +66,12 @@ The **Funding Leg** is the money authorized and escrowed by positive-TLA partici
 
 If no flexible supply appears, TLA remains a priority-ranking mechanism but the two-sided TLM claim has not been established.
 
+**No deployed blockchain execution market pays a participant to accept a later position.** Ethereum L1, Timeboost, and the forward blockspace market of sec. 8 each sell an earlier or guaranteed position. The Supply Leg is the side none of them carries, and establishing it is what RN-25 has to do. This section owns that claim; later sections refer to it.
+
+**A discount is not a payment.** Schemes that give flexible demand a lower price are common, and the Supply Leg is not one of them. Cloud spot instances are cheaper because they are interruptible. Off-peak tariffs are cheaper because load is shiftable. RFC 8622 Lower Effort marks traffic as yielding and compensates it with nothing. In each case the flexible party asks for less and receives less. Negative TLA instead receives a transfer, which requires that the provider held a position and gave it up. This is why sec. 9.3 pays only on realized displacement `d_j > 0`, and why sec. 5.1 commits the baseline before sorting. Without that entitlement there is nothing to compensate, and a declaration of flexibility does not create one.
+
+**The paid form exists outside blockchains.** Demand-response programmes pay consumers to curtail load, measured against a metered customer baseline. Airlines pay denied-boarding compensation to passengers holding a confirmed reservation who accept later transport. Both clear at scale, and both settle the entitlement before paying, on a baseline the paying party does not construct. A single operator-run sequencer has no equivalent, which is what secs. 5.2 and 6.1 concede. That gap, rather than implementation cost, is what the baseline commitment is trying to narrow.
+
 ### 1.4 Initial mechanism scope
 
 The initial mechanism changes neither Nitro transaction validity nor physical gas accounting. Every transaction must independently satisfy ordinary Nitro fee and validity rules. Temporal payment is separate from execution and parent-data charges. The first deployment is block-local; cross-block reserves, TSP commitments, and L1 batch-posting markets remain later parts of the L2 research program.
@@ -141,9 +147,9 @@ A rollup-as-a-service chain still runs an operator-controlled sequencer. It lowe
 
 The note is written against Nitro because Nitro's fee controller and Timeboost are concrete. Two parts of the argument transfer to the OP Stack, Polygon CDK, and the ZK Stack; one does not.
 
-Transfers: the sequencer is a single ordering authority with direct control over position, so sections 5, 6, 9, and 13 apply as written; and the baseline problem of section 9 is a property of single-sequencer operation rather than of Nitro.
+Transfers: the sequencer is a single ordering authority with direct control over position, so the TLA interface (sec. 5), in-place sorting (sec. 6), the block-local mechanism (sec. 9), and the implementation sequence (sec. 13) apply as written; and the baseline problem of secs. 5.2 and 6.1 is a property of single-sequencer operation rather than of Nitro.
 
-Does not transfer: section 4's backlog controller. The OP Stack uses an EIP-1559-style per-block update rather than a continuously draining backlog, so the fee dynamics in section 12.2 have to be re-derived per stack. Quantitative results in this note are Nitro results until they are repeated elsewhere.
+Does not transfer: sec. 4's backlog controller. The OP Stack uses an EIP-1559-style per-block update rather than a continuously draining backlog, so the fee dynamics in sec. 12.2 have to be re-derived per stack. Quantitative results in this note are Nitro results until they are repeated elsewhere.
 
 ---
 
@@ -371,7 +377,7 @@ A forward market for Ethereum blockspace now operates outside consensus, and it 
 
 The market supplies evidence that some users will pay for timed execution commitments. A rollup buying forward L1 inclusion for its batches would also express temporal demand at the L2-to-L1 posting layer. These facts support the broader TLM research agenda, but that cross-layer market is separate from RN-25's initial block-local ordering rule.
 
-TLM's separable content is a side that pays flexible demand to accept a later position, which this market does not carry. Whether that side clears against urgent demand in real traffic is a central empirical question for L2 deployment (sec. 15, open question 1); sec. 14 states the same point as a hazard. The test of sec. 7.2 applies: if TLM only re-sells inclusion, a forward market already covers the useful part.
+This market does not carry the paid flexibility side of sec. 1.3, and it is a discount-free sale of position rather than a compensation scheme. Whether that side clears against urgent demand in real traffic is a central empirical question for L2 deployment (sec. 15, question 1); sec. 14 states the same point as a hazard. If TLM only re-sells inclusion, a forward market already covers the useful part.
 
 The layer is not the distinction. What separates the proposed L2 mechanism from a forward inclusion market is the paid flexibility side.
 
@@ -385,7 +391,7 @@ Three questions follow, all testable against markets that already operate.
 
 **Knowing user deadlines should change what L1 inclusion is worth.** A sequencer that reads TEP deadlines knows how much of its pending work can wait past the next posting opportunity. That is the input to how far forward it should buy, and at what price. If declared temporal information lets an L2 buy L1 inclusion more cheaply for the same service, that is the TLM claim tested one layer up, against a priced market rather than a simulation.
 
-**Smoothing below may not smooth above.** Sec. 14 notes that smoothing L2 execution can shift posting bursts to the parent chain. Stated as a market question: does a TLM-aware L2 reduce the variance of its own forward L1 purchases, or only relocate it? Open question 14 asks this, and the forward market makes it measurable.
+**Smoothing below may not smooth above.** Sec. 14 notes that smoothing L2 execution can shift posting bursts to the parent chain. Stated as a market question: does a TLM-aware L2 reduce the variance of its own forward L1 purchases, or only relocate it? This is a cross-layer question, outside the block-local mechanism and outside the five questions of sec. 15; the forward market makes it measurable when the work reaches that stage.
 
 ---
 
@@ -459,7 +465,7 @@ y_j = pi_k * sum_i z_ij.
 
 Choose the highest feasible matched quantity under a published deterministic matching and price rule, subject to consumer authorization and provider eligibility. Unmatched authorization is refunded and unmatched negative supply receives no payment. The reference implementation should initially set `phi_i = 0`; a later operator fee should be evaluated separately rather than hidden in clearing.
 
-The exact price-selection rule—such as a posted price, threshold price, or uniform auction price—must be fixed before deployment. Simulation may compare these price selectors while preserving the crossing, budget-balance, and refund invariants above.
+The exact price-selection rule, whether a posted price, a threshold price, or a uniform auction price, must be fixed before deployment. Simulation may compare these price selectors while preserving the crossing, budget-balance, and refund invariants above.
 
 ### 9.6 Alternative settlement choices
 
@@ -677,7 +683,7 @@ Timeboost, priority fees, forward blockspace contracts, TLA, and TSP reservation
 
 ### Thin provider supply
 
-Some application mixes may contain many urgent consumers but few transactions willing to wait. A two-sided market cannot be assumed to clear. This is the empirical bet the forward blockspace comparison in sec. 8 isolates: urgency demand is demonstrated, flexibility supply is not.
+Some application mixes may contain many urgent consumers but few transactions willing to wait, and a two-sided market cannot be assumed to clear. This is the bet stated in sec. 1.3: urgent demand is demonstrated, flexible supply is not. A related failure is subtler. Demand that would accept a discount for waiting may decline a compensated position, because compensation requires opting in, holding a baseline rank, and being seen to be displaced. Flexible traffic could then exist on the chain and still never enter the Supply Leg.
 
 ### Capacity confusion
 
@@ -721,6 +727,8 @@ Secondary design, implementation, cross-block, and cross-layer questions are mai
 - Relative to the committed baseline, a negative participant supplies compensable service only when an eligible positive participant crosses it and funded matching occurs.
 - Opt-outs retain their positions relative to the committed baseline; crossing-based settlement adds a baseline-order commitment but does not claim to prove true arrival or candidate completeness.
 - Positive TLA creates a Funding Leg, while negative TLA creates a transaction-level Supply Leg.
+- No deployed blockchain execution market pays a participant to accept a later position.
+- A discount for waiting and a payment for yielding are different instruments, and only the second requires a committed baseline.
 - Timeboost sells an express-lane right but does not create this paid flexibility side.
 - TLA can reduce the return to latency investment for relative ordering after candidate admission.
 - The out-of-protocol path can test the central market claims at lower coordination cost; it does not replace the in-protocol research program for Ethereum or Arbitrum.
@@ -733,7 +741,8 @@ Secondary design, implementation, cross-block, and cross-layer questions are mai
 - that the committed baseline proves truthful receipt times or candidate-set completeness;
 - that TLA eliminates the race to enter a candidate block;
 - that monetary bidding is inherently fairer than latency competition;
-- that negative supply will be deep enough to clear; or
+- that negative supply will be deep enough to clear;
+- that demand-response or denied-boarding mechanisms transfer to a chain, beyond showing that a paid flexibility side clears where the entitlement is settled first; or
 - that Arbitrum, Robinhood, or Timeboost operators intend to adopt TLM.
 
 ---
@@ -777,6 +786,9 @@ The distinction between an early out-of-protocol deployment and a later in-proto
 - ETHGas. **Our Technology: Overview** (external blockspace market: inclusion and execution preconfirmations, micro-intervals, and announced base-fee products). https://docs.ethgas.com/
 - ETHGas. **Blockspace Futures Market launch.** PRNewswire, 19 December 2025. https://www.prnewswire.com/news-releases/ethgas-debuts-ethereums-blockspace-futures-market-with-800m-of-commitments-and-12m-seed-round-led-by-polychain-capital-302646868.html
 - ETHGas and ether.fi. **Institutional blockspace markets, three-year validator commitment.** The Block, April 2026. https://www.theblock.co/post/397457/etherfi-3-billion-eth-validator-liquidity-ethgas-three-years
+- US Federal Energy Regulatory Commission. **Order No. 745, Demand Response Compensation in Organized Wholesale Energy Markets** (payment for measured curtailment against a customer baseline). 2011.
+- US Department of Transportation. **14 CFR Part 250, Oversales** (denied-boarding compensation to a passenger holding a confirmed reservation who accepts later transport). Cited for the entitlement structure in sec. 1.3, not as a market design.
+- IETF. **RFC 8622, A Lower-Effort Per-Hop Behavior (LE PHB).** 2019. (Yielding traffic marked without compensation; the discount-without-payment case in sec. 1.3.)
 - DefiLlama. **Ethereum chain TVL.** https://defillama.com/chain/ethereum
 - DefiLlama. **Base, Arbitrum, Robinhood Chain, OP Mainnet, Starknet, Mantle, and Linea chain TVL pages.** https://defillama.com/chains
 - L2BEAT. **Ethereum L2 value secured.** https://l2beat.com/scaling/summary
@@ -785,7 +797,7 @@ The distinction between an early out-of-protocol deployment and a later in-proto
 - TLM Research Program. **RN-02: Protocol-Visible Temporal Abstraction.**
 - TLM Research Program. **RN-04: Temporal Service Architecture.**
 - TLM Research Program. **RN-05: Supply-side Heterogeneity and Temporal Granularity.**
-- TLM Research Program. **RN-06: Monad—A Temporal-Liquidity Analysis.**
+- TLM Research Program. **RN-06: Monad, A Temporal-Liquidity Analysis.**
 - TLM Research Program. **RN-09: Chain Virtualization in TLM.**
 - TLM Research Program. **RN-12: Temporal Liquidity Market Mechanism Design.**
 - TLM Research Program. **RN-13 Part II: Capacity and Welfare in Blockchain Execution Systems.**
