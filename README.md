@@ -128,3 +128,13 @@ docs/
 ## Contributing
 
 TLM is an open research project. Critique, discussion, and alternative or competing approaches are welcome — especially from distributed systems, networking, mechanism and market design, and financial economics. The primary question is not whether a particular mechanism should be adopted, but whether **protocol-visible temporal characteristics of demand** are a worthwhile direction for decentralized execution markets — and, if so, what the right abstraction and the binding impossibilities are.
+
+---
+
+## Licensing
+
+The notes are published for reading, citation and critique. They are not published for reuse.
+
+Material in this repository is **all rights reserved** (see [`LICENSE`](LICENSE)). You may read it and cite it with attribution. Reproduction, modification, redistribution and commercial implementation require prior written permission, and no patent licence is granted or implied.
+
+Questions about permissions: danguo01@gmail.com

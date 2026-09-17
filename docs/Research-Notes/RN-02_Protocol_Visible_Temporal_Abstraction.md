@@ -2,9 +2,9 @@
 id: RN-02
 title: "Protocol-visible Temporal Abstraction"
 version: "0.4"
-status: "Public draft - research note, offered in good faith for comment"
 program: "Temporal Liquidity Market (TLM)"
 date: "August 19, 2026"
+license: "All rights reserved"
 ---
 
 # RN-02 v0.4
@@ -14,7 +14,6 @@ date: "August 19, 2026"
 **Temporal Liquidity Market (TLM) Research Program**  
 **Research Note RN-02**  
 **Version:** 0.4  
-**Status:** Public draft - research note, offered in good faith for comment  
 **Date:** August 19, 2026
 
 ---
@@ -97,3 +96,14 @@ on extraction; and how a declaration is made credible by pricing rather than pol
 ## Closing
 
 RN-02 contributes an architectural stance rather than a finalized mechanism: the temporal characteristics of demand deserve treatment as first-class, protocol-visible information, exposed through coarse representations and priced at marked rates. Its sharpest form is not "temporal information is first-class" but a cost-benefit question: **which minimum credible descriptor yields a scheduling gain that exceeds its disclosure and extraction cost**, under adversarial, permissionless conditions. The note poses that question and the open problems around it (sec. 10); it does not claim to have answered them.
+
+---
+
+## Licence
+
+Copyright (c) 2026 Duanyang (Dan) Guo / TLM Research. All rights reserved.
+
+This note may be read, cited and quoted with attribution. Reproduction,
+redistribution or modification requires prior written permission.
+
+Enquiries: danguo01@gmail.com

@@ -3,9 +3,9 @@ id: RN-01
 title: "Temporal Execution Profiles (TEP)"
 subtitle: "A Demand-Side Communication Model for the Temporal Liquidity Market"
 version: "0.6"
-status: "Public draft - research note, offered in good faith for comment"
 program: "Temporal Liquidity Market (TLM)"
 date: "September 2, 2026"
+license: "All rights reserved"
 ---
 
 # RN-01 v0.6
@@ -17,7 +17,6 @@ date: "September 2, 2026"
 **Temporal Liquidity Market (TLM) Research Program**  
 **Research Note RN-01**  
 **Version:** 0.6  
-**Status:** Public draft - research note, offered in good faith for comment  
 **Date:** September 2, 2026
 
 ---
@@ -393,3 +392,13 @@ The central hypothesis of this work is intentionally modest:
 
 Stated more sharply, the question is not whether temporal information should be first-class but which **minimum sufficient descriptor** yields a scheduling gain that exceeds its disclosure, extraction, and complexity cost.
 
+---
+
+## Licence
+
+Copyright (c) 2026 Duanyang (Dan) Guo / TLM Research. All rights reserved.
+
+This note may be read, cited and quoted with attribution. Reproduction,
+redistribution or modification requires prior written permission.
+
+Enquiries: danguo01@gmail.com
