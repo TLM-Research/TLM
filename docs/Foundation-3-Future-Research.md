@@ -85,3 +85,14 @@ The Foundation began by naming the economically meaningful *temporal characteris
 The thesis is not one more variable but a **market**: one in which impatient demand takes temporal liquidity and patient, flexible demand provides it, clearing into a price of time. If it works, a blockchain can economically support a wider and more diverse set of projects.
 
 What the Foundation supplies is the conceptual framework, the research questions, the evaluation criteria, and the conditions under which the program may be confirmed, refined, or rejected. The argument has since carried through to the economics of the market (RN-10) and its formal foundation (RN-11). The protocol and market design that would realize it is next.
+
+---
+
+## Licence
+
+Copyright (c) 2026 Duanyang (Dan) Guo / TLM Research. All rights reserved.
+
+This note may be read, cited and quoted with attribution. Reproduction,
+redistribution or modification requires prior written permission.
+
+Enquiries: danguo01@gmail.com

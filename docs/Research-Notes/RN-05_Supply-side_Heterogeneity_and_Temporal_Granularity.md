@@ -2,9 +2,9 @@
 id: RN-05
 title: "Supply-side Heterogeneity and Temporal Granularity: A Quantum Lattice for Blockspace"
 version: "0.4"
-status: "Public draft - research note, offered in good faith for comment"
 program: "Temporal Liquidity Market (TLM)"
 date: "August 24, 2026"
+license: "All rights reserved"
 ---
 
 # RN-05 v0.4
@@ -16,7 +16,6 @@ date: "August 24, 2026"
 **Temporal Liquidity Market (TLM) Research Program**  
 **Research Note RN-05**  
 **Version:** 0.4  
-**Status:** Public draft - research note, offered in good faith for comment  
 **Date:** August 24, 2026
 
 ---
@@ -444,3 +443,14 @@ Three concessions are made deliberately. Preconfirmation research reached sub-sl
 - **The note does not claim to stop slot-time reduction (sec. 2.1, v0.2).** The EF strawmap contemplates 2s slots. Earlier framing implied otherwise.
 
 **31 August 2026.** This section replaces a Revision Note that ran the full draft sequence from v0.2. The withdrawals and qualifications above are what a reader needs; the record of what each draft added is kept in the programme's working files. No result, definition or claim is changed.
+
+---
+
+## Licence
+
+Copyright (c) 2026 Duanyang (Dan) Guo / TLM Research. All rights reserved.
+
+This note may be read, cited and quoted with attribution. Reproduction,
+redistribution or modification requires prior written permission.
+
+Enquiries: danguo01@gmail.com

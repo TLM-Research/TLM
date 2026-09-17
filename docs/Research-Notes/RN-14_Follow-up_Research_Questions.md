@@ -5,6 +5,7 @@ version: v0.1
 status: "Companion to RN-14. Working document, updated as questions are answered or reassigned."
 program: "Temporal Liquidity Market (TLM)"
 date: August 30, 2026
+license: "All rights reserved"
 ---
 
 # RN-14 Follow-up Research Questions
@@ -93,3 +94,14 @@ Two questions that appeared in earlier versions of RN-14 section 13 have proper 
 | 5. Recovery and its measurement | RN-06, RN-09, and a deployment note | Empirical and design |
 
 The three prerequisites for the mechanism work are questions 1.1, 1.2 and 2.1. Until the address gap survives cleaning, the cost-only explanation is tested, and temporal characteristics are observed rather than inferred, the demand-side case in RN-14 remains an argument for measurement rather than a finding.
+
+---
+
+## Licence
+
+Copyright (c) 2026 Duanyang (Dan) Guo / TLM Research. All rights reserved.
+
+This note may be read, cited and quoted with attribution. Reproduction,
+redistribution or modification requires prior written permission.
+
+Enquiries: danguo01@gmail.com

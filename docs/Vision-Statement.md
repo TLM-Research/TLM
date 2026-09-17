@@ -195,3 +195,14 @@ TLM extends that direction by asking whether the **temporal characteristics of d
 - Capponi, A. & Zhu, B. (2026). *Auctioning Time to Mitigate Latency Races: Theory and Evidence from Blockchains.* SSRN 6240079.
 - *The Express Lane to Spam and Centralization: An Empirical Analysis of Arbitrum's Timeboost.* arXiv:2509.22143.
 - Arbitrum Timeboost documentation. Offchain Labs.
+
+---
+
+## Licence
+
+Copyright (c) 2026 Duanyang (Dan) Guo / TLM Research. All rights reserved.
+
+This note may be read, cited and quoted with attribution. Reproduction,
+redistribution or modification requires prior written permission.
+
+Enquiries: danguo01@gmail.com

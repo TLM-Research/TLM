@@ -3,9 +3,9 @@ id: RN-11
 title: "The Term Structure and Allocation of Execution Capital in a Temporal Liquidity Market"
 subtitle: "A formal model -- the market curve of Part I and the allocation dual of Part II"
 version: "0.4.1"
-status: "Public draft. The formal center of the TLM program; stated, not solved."
 program: "Temporal Liquidity Market (TLM)"
 date: August 12, 2026
+license: "All rights reserved"
 ---
 
 # RN-11 -- The Term Structure and Allocation of Execution Capital in a Temporal Liquidity Market
@@ -363,3 +363,14 @@ Commit-reveal, threshold encryption, and timed commitments let a protocol fix a 
 ---
 
 *Changes from v0.2.* The note is reorganized and extended, and the mechanism is split out. **Part I** sets out the market term structure as the continuation of RN-10: the bond-to-fee mapping, the instrument space -- now including the two-sided fee swap (the fixed-rate payer buys cost certainty, the floating-rate payer supplies it, so the two camps meet as counterparties, sec. 2.4) and the swaption (sec. 2.5) -- and the no-arbitrage bootstrap. **Part II** is the new contribution: the execution-capital demand function with decay measured against a target (sec. 5), the two-camps partition by binding tightness, and the allocation and its dual (sec. 6); the borrowed machinery -- knapsack, optimal execution, order-fairness impossibility, cryptographic hiding -- is credited to short appendices (A-F) rather than re-derived. The central correction from v0.2: the allocation dual is a welfare benchmark on the value of capacity and is **not** identified with the market term structure -- whether the two coincide is left open (secs. 10-11). The concrete clearing mechanism, formerly folded in, is now the separate note **RN-12**.
+
+---
+
+## Licence
+
+Copyright (c) 2026 Duanyang (Dan) Guo / TLM Research. All rights reserved.
+
+This note may be read, cited and quoted with attribution. Reproduction,
+redistribution or modification requires prior written permission.
+
+Enquiries: danguo01@gmail.com

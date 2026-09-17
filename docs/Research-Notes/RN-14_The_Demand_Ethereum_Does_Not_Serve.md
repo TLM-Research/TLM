@@ -2,9 +2,9 @@
 id: RN-14
 title: "The Demand Ethereum Does Not Serve"
 version: "0.6"
-status: "Public draft - research note, offered in good faith for comment"
 program: "Temporal Liquidity Market (TLM)"
 date: "September 6, 2026"
+license: "All rights reserved"
 ---
 
 # RN-14 v0.6
@@ -16,7 +16,6 @@ date: "September 6, 2026"
 **Temporal Liquidity Market (TLM) Research Program**  
 **Research Note RN-14**  
 **Version:** 0.6  
-**Status:** Public draft - research note, offered in good faith for comment  
 **Date:** September 6, 2026
 
 ---
@@ -505,3 +504,14 @@ This note reads the pattern as a reason to test specialization by execution dema
 - Binance. *Binance Smart Chain launch*, announced April 2020, mainnet September 2020; EVM-compatible by design; renamed BNB Chain in 2022. Referenced in sec. 8.1.
 - Binance. *Web3 Wallet and exchange onboarding.* Reported user base above 300 million; commentary on BNB Chain growth tracking exchange recruitment (sec. 8.1). https://www.bnbchain.org
 - TLM Research Program. RN-01 (Temporal Execution Profiles); RN-02 (protocol-visible temporal abstraction); RN-03 (Hyperliquid case study, and the endogeneity caution of sec. 5); RN-04 (temporal execution services and the service-class portfolio); RN-05 (supply-side granularity and the quantum lattice); RN-06 (Monad, parallel execution); RN-09 (chain virtualization); RN-10 (economics of the temporal liquidity market, and the two-sided structure of sec. 8.3); RN-11 (the allocation problem and the term structure that prices it); RN-12 (mechanism design).
+
+---
+
+## Licence
+
+Copyright (c) 2026 Duanyang (Dan) Guo / TLM Research. All rights reserved.
+
+This note may be read, cited and quoted with attribution. Reproduction,
+redistribution or modification requires prior written permission.
+
+Enquiries: danguo01@gmail.com

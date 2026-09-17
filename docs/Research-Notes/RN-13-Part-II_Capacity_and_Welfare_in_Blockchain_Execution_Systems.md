@@ -3,11 +3,10 @@ id: RN-13-Part-II
 title: "Capacity and Welfare in Blockchain Execution Systems"
 subtitle: "A TLM Theory of Heterogeneous Temporal Demand and Mechanism Evaluation"
 version: "0.1"
-status: "Working draft - research note, offered in good faith for comment"
 program: "Temporal Liquidity Market (TLM)"
 date: "2026-09-06"
-license: "CC-BY-4.0"
 companion: "RN-13 Part I, Capacity Theory for Execution Systems: A Survey under a Temporal Liquidity Lens"
+license: "All rights reserved"
 ---
 
 # RN-13 Part II v0.1
@@ -17,7 +16,6 @@ companion: "RN-13 Part I, Capacity Theory for Execution Systems: A Survey under 
 ## A TLM Theory of Heterogeneous Temporal Demand and Mechanism Evaluation
 
 **Temporal Liquidity Market (TLM) Research Program**  
-**Status:** Working draft  
 **Companion:** *RN-13 Part I — Capacity Theory for Execution Systems: A Survey under a Temporal Liquidity Lens*  
 **Date:** 6 September 2026
 
@@ -868,3 +866,14 @@ The full literature treatment and transfer conditions appear in RN-13 Part I. Pr
 - Baruah, S. K., Mok, A. K., and Rosier, L. E. “Preemptively Scheduling Hard-Real-Time Sporadic Tasks on One Processor.” *Real-Time Systems*, 1990.
 - Kelly, F. P., Maulloo, A. K., and Tan, D. K. H. “Rate Control for Communication Networks.” *Journal of the Operational Research Society*, 1998.
 - Buterin, V. et al. *EIP-1559: Fee Market Change for ETH 1.0 Chain.* https://eips.ethereum.org/EIPS/eip-1559
+
+---
+
+## Licence
+
+Copyright (c) 2026 Duanyang (Dan) Guo / TLM Research. All rights reserved.
+
+This note may be read, cited and quoted with attribution. Reproduction,
+redistribution or modification requires prior written permission.
+
+Enquiries: danguo01@gmail.com

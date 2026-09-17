@@ -220,3 +220,14 @@ Future revisions of this document will include:
 - historical timeline of related ideas.
 
 This document is intended to remain the canonical literature map for the TLM project.
+
+---
+
+## Licence
+
+Copyright (c) 2026 Duanyang (Dan) Guo / TLM Research. All rights reserved.
+
+This note may be read, cited and quoted with attribution. Reproduction,
+redistribution or modification requires prior written permission.
+
+Enquiries: danguo01@gmail.com

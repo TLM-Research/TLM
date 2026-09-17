@@ -140,3 +140,14 @@ The Foundation Statement is the canonical reference for all concepts. Definition
 # Status
 
 The overall four-part architecture is intended to remain stable. Future revisions should evolve concepts and content while preserving this document's role as the constitutional framework of the TLM project.
+
+---
+
+## Licence
+
+Copyright (c) 2026 Duanyang (Dan) Guo / TLM Research. All rights reserved.
+
+This note may be read, cited and quoted with attribution. Reproduction,
+redistribution or modification requires prior written permission.
+
+Enquiries: danguo01@gmail.com

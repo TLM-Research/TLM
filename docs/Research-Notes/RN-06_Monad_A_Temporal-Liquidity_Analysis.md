@@ -1,6 +1,5 @@
 ---
 title: "RN-06, Monad Through the Temporal-Liquidity Lens: Motivation, Novelty, and Limits"
-status: "Canonical single version, public research note, offered in good faith for comment."
 version: "0.5"
 date: August 12, 2026 (revised 10 September 2026)
 spirit: >
@@ -12,6 +11,7 @@ sourcing: >
   Facts verified July 2026 against Monad's documentation (primary) and reputable secondary
   sources; where a claim rests on secondary sources it is flagged. Primary-source pointers
   and corrections welcome.
+license: "All rights reserved"
 ---
 
 # RN-06, Monad Through the Temporal-Liquidity Lens
@@ -265,3 +265,14 @@ Two things make this an agenda rather than a wish:
 [8] Control/data-plane decoupling lineage, GMPLS (generalized MPLS control plane over heterogeneous switching); SDN (ONF, control/forwarding-plane separation); P4 (programmable data planes enforcing QoS at line rate); SRv6 / segment routing (stateless, in-header, source-routed policy); 5G network slicing over SDN/NFV. *(Surveys: "5G network slicing using SDN and NFV," Computer Networks / arXiv:1912.02802; P4 network-slicing and SRv6 literature.)*
 
 *Sourcing note: primary Monad documentation is cited where available; claims resting on secondary sources are marked. Corrections and primary-source pointers are welcome.*
+
+---
+
+## Licence
+
+Copyright (c) 2026 Duanyang (Dan) Guo / TLM Research. All rights reserved.
+
+This note may be read, cited and quoted with attribution. Reproduction,
+redistribution or modification requires prior written permission.
+
+Enquiries: danguo01@gmail.com

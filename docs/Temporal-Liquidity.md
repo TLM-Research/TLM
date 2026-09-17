@@ -119,3 +119,14 @@ Time-differentiated demand is not new; the novelty is the permissionless, advers
 # Summary
 
 Temporal Liquidity is the **umbrella** for the economically meaningful temporal characteristics of execution demand - delay tolerance (with its deadline and decay parameters), predictability, execution priority, execution windows and deadlines, and continuity. Rather than prescribing mechanisms, TLM first identifies these characteristics, investigates appropriate representations, and only then explores decentralized mechanisms that might coordinate them. It is the starting point of the research program, not its conclusion.
+
+---
+
+## Licence
+
+Copyright (c) 2026 Duanyang (Dan) Guo / TLM Research. All rights reserved.
+
+This note may be read, cited and quoted with attribution. Reproduction,
+redistribution or modification requires prior written permission.
+
+Enquiries: danguo01@gmail.com

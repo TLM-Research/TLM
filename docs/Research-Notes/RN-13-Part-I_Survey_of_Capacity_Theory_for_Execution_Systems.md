@@ -3,10 +3,10 @@ id: RN-13
 title: "Capacity Theory for Execution Systems: A Survey under a Temporal Liquidity Lens"
 subtitle: "What each result assumes about demand, what transfers to blockchain execution, and what the open agenda is"
 version: "1.0"
-status: "Public draft - survey note, offered in good faith for comment"
 replaces: "RN-13, withdrawn 1 September 2026"
 program: "Temporal Liquidity Market (TLM)"
 date: "September 3, 2026"
+license: "All rights reserved"
 ---
 
 # RN-13 v1.0
@@ -18,7 +18,6 @@ date: "September 3, 2026"
 **Temporal Liquidity Market (TLM) Research Program**  
 **Research Note RN-13, survey**  
 **Version:** 1.0  
-**Status:** Public draft - survey note, offered in good faith for comment  
 **Replaces:** the note withdrawn 1 September 2026  
 **Date:** 3 September 2026
 
@@ -913,3 +912,14 @@ material moves between documents. Gaps are intentional.
 [19] J.-Y. Le Boudec and P. Thiran, *Network Calculus: A Theory of Deterministic Queuing Systems for the Internet*, Springer LNCS 2050, 2001.
 
 [21] T. M. Cover, A. El Gamal, and M. Salehi, "Multiple Access Channels with Arbitrarily Correlated Sources," *IEEE Transactions on Information Theory*, vol. IT-26, no. 6, pp. 648-657, 1980. DOI: 10.1109/TIT.1980.1056273.
+
+---
+
+## Licence
+
+Copyright (c) 2026 Duanyang (Dan) Guo / TLM Research. All rights reserved.
+
+This note may be read, cited and quoted with attribution. Reproduction,
+redistribution or modification requires prior written permission.
+
+Enquiries: danguo01@gmail.com

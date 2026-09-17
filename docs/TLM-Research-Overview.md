@@ -74,3 +74,14 @@ I would especially value feedback from researchers in **networking and distribut
 [12] Application-sovereignty exits: dYdX, *Announcing dYdX Chain* (2023); Hyperliquid (sovereign L1 perpetuals DEX); Aevo (off-chain matching with on-chain settlement).
 
 [13] Monad - high-performance, EVM-equivalent Layer-1. https://docs.monad.xyz
+
+---
+
+## Licence
+
+Copyright (c) 2026 Duanyang (Dan) Guo / TLM Research. All rights reserved.
+
+This note may be read, cited and quoted with attribution. Reproduction,
+redistribution or modification requires prior written permission.
+
+Enquiries: danguo01@gmail.com

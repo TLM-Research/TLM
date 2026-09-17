@@ -2,9 +2,9 @@
 id: RN-08
 title: "Modern Blockchains Through the Lens of TLM in a 3-layer Architecture: Common Components, Differentiated Features, and the Case for Decoupling Execution from Control"
 version: "0.5"
-status: "Public draft, offered in good faith for comment"
 program: "Temporal Liquidity Market (TLM)"
 date: August 12, 2026
+license: "All rights reserved"
 ---
 
 # RN-08 - Modern Blockchains Through the Lens of TLM in a 3-layer Architecture
@@ -240,3 +240,14 @@ Condensed; several items are shared with RN-07 sec. 8.
 [5] EIP-1559 - Fee Market Change for ETH 1.0 Chain. https://eips.ethereum.org/EIPS/eip-1559
 
 *Editorial note: descriptions of deployed systems reflect publicly documented architecture as of July 2026; Monad and Hyperliquid facts are verified in RN-06 and RN-03.*
+
+---
+
+## Licence
+
+Copyright (c) 2026 Duanyang (Dan) Guo / TLM Research. All rights reserved.
+
+This note may be read, cited and quoted with attribution. Reproduction,
+redistribution or modification requires prior written permission.
+
+Enquiries: danguo01@gmail.com

@@ -65,3 +65,14 @@ The underlying intuition is not new. Scheduling theory has long studied deadline
 TLM's contribution is to investigate whether these ideas can be adapted to **permissionless decentralized execution markets**, where incentive compatibility, strategic behavior, and protocol neutrality become first-order constraints. It also builds on Ethereum research - EIP-1559, PBS, ePBS, execution markets, future execution rights, empirical studies of transaction delay, and tiered transaction-fee mechanisms (Kiayias et al., 2023, which price the urgency dimension and which TLM generalizes) - seeking to understand this work through the common lens of temporal demand rather than to replace it.
 
 The standalone `Related-Work` document is the canonical map of these literatures and carries the specific inherited-or-challenged results and citations. Later parts of the Foundation examine whether protocol-visible temporal information provides measurable benefits for decentralized scheduling and market coordination.
+
+---
+
+## Licence
+
+Copyright (c) 2026 Duanyang (Dan) Guo / TLM Research. All rights reserved.
+
+This note may be read, cited and quoted with attribution. Reproduction,
+redistribution or modification requires prior written permission.
+
+Enquiries: danguo01@gmail.com

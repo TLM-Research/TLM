@@ -2,13 +2,13 @@
 id: RN-07
 title: "A Layered Control Architecture for Temporal Liquidity: Multi-Timescale Control for Blockchain Execution Markets"
 version: "0.2"
-status: "Public draft - research note, offered in good faith for comment"
 program: "Temporal Liquidity Market (TLM)"
 date: August 12, 2026
 sourcing: >
   Networking precedents verified July 2026 against the O-RAN literature (Polese et al.,
   IEEE COMST 2023) and the multi-timescale optimization-decomposition line. Corrections
   and primary-source pointers welcome.
+license: "All rights reserved"
 ---
 
 # RN-07 - A Layered Control Architecture for Temporal Liquidity
@@ -182,3 +182,14 @@ proposes no representation, no substrate and no mechanism.
 [7] TLM Research Notes: RN-01 (Temporal Execution Profiles), RN-02 (Protocol-visible Temporal Abstraction), RN-04 (Temporal Execution Services), RN-05 (Supply-side Heterogeneity and Temporal Granularity), RN-06 (Monad Through the Temporal-Liquidity Lens).
 
 *Sourcing note: networking precedents cited to the survey/primary literature; corrections and primary-source pointers welcome.*
+
+---
+
+## Licence
+
+Copyright (c) 2026 Duanyang (Dan) Guo / TLM Research. All rights reserved.
+
+This note may be read, cited and quoted with attribution. Reproduction,
+redistribution or modification requires prior written permission.
+
+Enquiries: danguo01@gmail.com

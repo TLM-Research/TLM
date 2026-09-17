@@ -1,9 +1,9 @@
 ---
 id: RN-09
 title: "Chain Virtualization: A Conceptual Frame for Diversified Project Types on a Shared Fast L1"
-status: "Public draft - conceptual research note, offered in good faith for comment"
 program: "Temporal Liquidity Market (TLM)"
 date: August 12, 2026
+license: "All rights reserved"
 ---
 
 # RN-09 - Chain Virtualization
@@ -125,3 +125,14 @@ The question shifts from "how many Layer-1 chains should exist?" to "how much so
 ---
 
 *Changes from v0.3.* Synthesis folded into the opening (§1 Theme and boundary); prior-art trimmed to one section (§6) with a situational-fit-and-lessons table. Mechanism claims removed throughout: the note is explicitly conceptual, and how virtualization is realized - including whether a DiffServ-style class model is used at all - is deferred to a planned mechanism note (§7). "Traffic class" and DiffServ are framed as borrowed intuition, not a chosen design. Scope and complementarity with L2 and Cosmos retained from v0.3. References condensed; [8] still needs a primary data source.
+
+---
+
+## Licence
+
+Copyright (c) 2026 Duanyang (Dan) Guo / TLM Research. All rights reserved.
+
+This note may be read, cited and quoted with attribution. Reproduction,
+redistribution or modification requires prior written permission.
+
+Enquiries: danguo01@gmail.com

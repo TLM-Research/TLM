@@ -76,3 +76,14 @@ Making more information protocol-visible does **not** automatically improve mark
 > **Which economically meaningful temporal information should become protocol-visible, under what guarantees, and with what tradeoffs?**
 
 The concrete representations this implies - transaction-level and stream-level temporal profiles - are developed in the Research Notes before being folded back into the Foundation, so that this document is not pinned to terminology still in flux.
+
+---
+
+## Licence
+
+Copyright (c) 2026 Duanyang (Dan) Guo / TLM Research. All rights reserved.
+
+This note may be read, cited and quoted with attribution. Reproduction,
+redistribution or modification requires prior written permission.
+
+Enquiries: danguo01@gmail.com

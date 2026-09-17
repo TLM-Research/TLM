@@ -2,9 +2,10 @@
 id: RN-10
 title: "The Economics of the Temporal Liquidity Market: How TLM Expands the Blockchain Economy"
 version: "0.6"
-status: "Concept note - the economics of the TLM program. Public draft, circulated for external review and comment."
+status: "Concept note. The economics of the TLM program."
 program: "Temporal Liquidity Market (TLM)"
 date: "August 12, 2026"
+license: "All rights reserved"
 ---
 
 # RN-10 - The Economics of the Temporal Liquidity Market
@@ -642,3 +643,14 @@ This note is circulated for comment. Feedback is welcome on anything, but these 
 *Note: sec. 10 (monetary / high-frequency-finance lens) is exploratory and interdisciplinary; its claims are posed as open questions, and its analogy is bounded by the disanalogies stated in the text.*
 
 ---
+
+---
+
+## Licence
+
+Copyright (c) 2026 Duanyang (Dan) Guo / TLM Research. All rights reserved.
+
+This note may be read, cited and quoted with attribution. Reproduction,
+redistribution or modification requires prior written permission.
+
+Enquiries: danguo01@gmail.com
