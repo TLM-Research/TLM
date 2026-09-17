@@ -6,7 +6,7 @@ version: "0.7"
 status: "Working note - framework and roadmap. Conceptual; the specification is RN-33."
 program: "Temporal Liquidity Market (TLM)"
 date: "2026-09-10"
-license: "CC-BY-4.0"
+license: "All rights reserved"
 ---
 
 # RN-26 v0.7
@@ -330,3 +330,17 @@ The simulator of sec. 10 is therefore built for RN-33 and used by all three.
 - Milionis, J. & Heimbach, L., Category Labs. **Redesigning a Base Fee for Monad.** 10 October 2025. https://www.category.xyz/blogs/redesigning-a-base-fee-for-monad
 - Monad Developer Documentation. **Gas Pricing.** https://docs.monad.xyz/developer-essentials/gas-pricing
 - Category Labs. **Monad Initial Specification Proposal, Version 2.0.1.** https://category-labs.github.io/category-research/monad-initial-spec-proposal.pdf
+
+---
+
+## Licence
+
+Copyright (c) 2026 Duanyang (Dan) Guo / TLM Research. All rights reserved.
+
+This note may be read, cited and quoted with attribution. Reproduction,
+redistribution or modification requires prior written permission.
+
+No licence is granted under any patent, whether by this publication or
+otherwise, except under a separate written agreement.
+
+Enquiries: danguo01@gmail.com
