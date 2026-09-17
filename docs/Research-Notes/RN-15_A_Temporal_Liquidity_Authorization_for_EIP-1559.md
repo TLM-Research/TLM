@@ -3,10 +3,9 @@ id: RN-15
 title: "A Temporal Liquidity Authorization for EIP-1559"
 subtitle: "Making the base fee a midpoint rather than a floor"
 version: "2.9"
-status: "Public draft - research note, offered in good faith for comment"
 program: "Temporal Liquidity Market (TLM)"
 date: "2026-09-15"
-license: "CC-BY-4.0"
+license: "All rights reserved"
 ---
 
 # RN-15 v2.9
@@ -18,11 +17,8 @@ license: "CC-BY-4.0"
 **Temporal Liquidity Market (TLM) Research Program**  
 **Research Note RN-15**  
 **Version:** 2.9  
-**Status:** Public draft - research note, offered in good faith for comment.  
 **Scope:** One slot, one existing block, no new protocol state. No deferral instrument. The mechanism clears against Ethereum's scalar gas accounting
 **Date:** 15 September 2026  
-
-> **Licence.** CC BY 4.0, as with the rest of the research programme. If this mechanism is submitted as an Ethereum Improvement Proposal, the EIP will be written as a separate document under CC0, since EIP-1 requires every EIP to be in the public domain. This note is not that document and does not waive rights.
 
 ---
 
@@ -644,3 +640,18 @@ RN-14 poses the demand problem this note answers and identifies the base fee rat
 - NYSE. *Opening and Closing Auctions Fact Sheet* and *Imbalances* market data specification. https://www.nyse.com/market-data/real-time/imbalances
 - Clearing rule: `sims/rn15_tla.py`. Accounting figures: `sims/rn15_report.py`. Target-utilization model: `rn15_target_utilization_frontier.py`, with design and generated aggregate results published alongside this note.
 - TLM Research Notes: RN-01, RN-02, RN-05, RN-07, RN-10, RN-11, RN-13 Part II, RN-14, RN-16 and RN-17.
+
+---
+
+## Licence
+
+Copyright (c) 2026 Duanyang (Dan) Guo / TLM Research. All rights reserved.
+
+This note may be read, cited and quoted with attribution. Reproduction or
+redistribution of the document requires prior written permission.
+
+If this mechanism is submitted as an Ethereum Improvement Proposal, EIP-1
+requires that document to be in the public domain, and it would be dedicated
+under CC0 at submission.
+
+Enquiries: danguo01@gmail.com

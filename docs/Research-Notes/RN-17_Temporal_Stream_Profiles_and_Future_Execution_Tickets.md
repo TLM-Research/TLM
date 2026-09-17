@@ -5,6 +5,7 @@ version: "0.7"
 status: "Working draft - research agenda, not a protocol proposal"
 program: "Temporal Liquidity Market (TLM)"
 date: "September 15, 2026"
+license: "All rights reserved"
 ---
 
 # RN-17 v0.7
@@ -362,3 +363,18 @@ The horizon is set by the seller. Within the proposer lookahead, preconfirmation
 - R. F. Engle. **Autoregressive Conditional Heteroscedasticity with Estimates of the Variance of United Kingdom Inflation.** *Econometrica* 50(4), 1982.
 - R. F. Engle and J. R. Russell. **Autoregressive Conditional Duration: A New Model for Irregularly Spaced Transaction Data.** *Econometrica* 66(5), 1998.
 - TLM Research Program: RN-01 and RN-02 (TEP and TSP); RN-05 (temporal execution quanta, and preconfirmation comparison in sec. 7); RN-11 and RN-12 (allocation and mechanism design); RN-13 Part II (capacity and benchmarks); RN-14 (demand and venue choice); RN-15 (one-slot TLA); RN-16 (two-leg adjacent-slot TLR).
+
+---
+
+## Licence
+
+Copyright (c) 2026 Duanyang (Dan) Guo / TLM Research. All rights reserved.
+
+This note may be read, cited and quoted with attribution. Reproduction or
+redistribution of the document requires prior written permission.
+
+Should any part of this agenda later be submitted as an Ethereum Improvement
+Proposal, EIP-1 requires that document to be in the public domain, and it would
+be dedicated under CC0 at submission.
+
+Enquiries: danguo01@gmail.com

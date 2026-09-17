@@ -6,7 +6,7 @@ version: "1.1"
 status: "Working draft - mechanism specified, controller and simulation not yet run"
 program: "Temporal Liquidity Market (TLM)"
 date: "2026-09-15"
-license: "CC-BY-4.0"
+license: "All rights reserved"
 ---
 
 # RN-16 v1.1
@@ -292,3 +292,18 @@ The result sought is an outward movement of the target-utilization frontier at a
 - Ethereum Foundation. "Proof-of-stake." https://ethereum.org/developers/docs/consensus-mechanisms/pos/
 - ETHGas. *Out-of-protocol blockspace market: L2s and other buyers purchase L1 inclusion from validators; base-fee futures.* https://docs.ethgas.com/ ; validator commitment reported at https://www.theblock.co/post/397457/etherfi-3-billion-eth-validator-liquidity-ethgas-three-years
 - TLM Research Notes: RN-01, RN-02, RN-10, RN-11, RN-12, RN-13 Part II, RN-14, RN-15 and RN-17.
+
+---
+
+## Licence
+
+Copyright (c) 2026 Duanyang (Dan) Guo / TLM Research. All rights reserved.
+
+This note may be read, cited and quoted with attribution. Reproduction or
+redistribution of the document requires prior written permission.
+
+If this mechanism is submitted as an Ethereum Improvement Proposal, EIP-1
+requires that document to be in the public domain, and it would be dedicated
+under CC0 at submission.
+
+Enquiries: danguo01@gmail.com
