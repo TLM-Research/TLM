@@ -3,9 +3,9 @@ id: RN-12
 title: "The Temporal Liquidity Market: A Conceptual Mechanism Design"
 subtitle: "Trading temporal position against a neutral baseline"
 version: "2.3"
-status: "Public draft. A candidate mechanism for the problem RN-11 states; proposed, not adopted."
 program: "Temporal Liquidity Market (TLM)"
 date: "September 1, 2026"
+license: "All rights reserved"
 ---
 
 # RN-12 -- The Temporal Liquidity Market: A Conceptual Mechanism Design
@@ -364,3 +364,17 @@ The contribution is the shift the mechanism embodies: from a one-sided market in
 [15] Roughgarden, T. *Transaction Fee Mechanism Design.* arXiv:2106.01340; *JACM* 2024. (The impossibilities bounding truthful elicitation; sec. 5.)
 
 [16] Lamport, L. "Time, Clocks, and the Ordering of Events in a Distributed System." *Communications of the ACM* 21(7), 1978, 558-565. (The happens-before partial order and logical clocks; the absence of a global physical time in a distributed system. The quantum read as logical time, inter-quantum as a total logical order and intra-quantum as concurrent -- sec. 6.)
+
+---
+
+## Licence
+
+Copyright (c) 2026 Duanyang (Dan) Guo / TLM Research. All rights reserved.
+
+This note may be read, cited and quoted with attribution. Reproduction,
+redistribution or modification requires prior written permission.
+
+No licence is granted under any patent, whether by this publication or
+otherwise, except under a separate written agreement.
+
+Enquiries: danguo01@gmail.com

@@ -6,7 +6,7 @@ version: "0.4"
 status: "Working draft. Architecture and hypotheses. No encoding, no parameters, no pricing mechanism."
 program: "Temporal Liquidity Market (TLM)"
 date: "2026-09-11"
-license: "CC-BY-4.0"
+license: "All rights reserved"
 ---
 
 # RN-33 v0.4
@@ -497,3 +497,17 @@ Monad architecture. Each fact used above is pinned in sec. 2 to one of these and
 - Milionis, J. & Heimbach, L., Category Labs. **Redesigning a Base Fee for Monad.** October 2025. https://www.category.xyz/blogs/redesigning-a-base-fee-for-monad
 - Monad Developer Documentation. **Asynchronous Execution.** https://docs.monad.xyz/monad-arch/consensus/asynchronous-execution
 - Monad Developer Documentation. **Parallel Execution.** https://docs.monad.xyz/monad-arch/execution/parallel-execution
+
+---
+
+## Licence
+
+Copyright (c) 2026 Duanyang (Dan) Guo / TLM Research. All rights reserved.
+
+This note may be read, cited and quoted with attribution. Reproduction,
+redistribution or modification requires prior written permission.
+
+No licence is granted under any patent, whether by this publication or
+otherwise, except under a separate written agreement.
+
+Enquiries: danguo01@gmail.com
