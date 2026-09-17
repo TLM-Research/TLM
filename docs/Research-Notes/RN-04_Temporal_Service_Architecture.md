@@ -2,9 +2,9 @@
 id: RN-04
 title: "Temporal Execution Services: A Multi-Class Execution Architecture for Ethereum"
 version: "0.3"
-status: "Public draft - research note, offered in good faith for comment"
 program: "Temporal Liquidity Market (TLM)"
 date: "August 12, 2026"
+license: "All rights reserved"
 ---
 
 # RN-04: Temporal Execution Services
@@ -283,3 +283,17 @@ Ethereum does not need to become a uniformly faster blockchain. It may instead e
 [11] Capponi, A. & Zhu, B. *Auctioning Time to Mitigate Latency Races.* SSRN 6240079, 2026.
 [12] Monad documentation. https://docs.monad.xyz/ *(pending verification).*
 [13] "How Monad Works." Monad blog. https://blog.monad.xyz/blog/how-monad-works *(pending verification).*
+
+---
+
+## Licence
+
+Copyright (c) 2026 Duanyang (Dan) Guo / TLM Research. All rights reserved.
+
+This note may be read, cited and quoted with attribution. Reproduction,
+redistribution or modification requires prior written permission.
+
+No licence is granted under any patent, whether by this publication or
+otherwise, except under a separate written agreement.
+
+Enquiries: danguo01@gmail.com

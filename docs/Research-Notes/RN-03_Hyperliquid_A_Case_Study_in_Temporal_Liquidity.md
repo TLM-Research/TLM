@@ -2,9 +2,9 @@
 id: RN-03
 title: "Hyperliquid: A Case Study in Temporal Liquidity"
 version: "0.8"
-status: "Public Draft of Research Note"
 program: "Temporal Liquidity Market (TLM)"
 date: "September 15, 2026"
+license: "All rights reserved"
 ---
 
 # RN-03 v0.8
@@ -14,7 +14,6 @@ date: "September 15, 2026"
 **Temporal Liquidity Market (TLM) Research Program**  
 **Research Note RN-03**  
 **Version:** 0.8  
-**Status:** Public Draft of Research Note  
 **Date:** September 15, 2026
 
 ---
@@ -201,3 +200,14 @@ Hyperliquid exposes execution demand that price alone describes poorly: a sustai
 [13] Albers, J. "Level 4 Order Book Data from the Hyperliquid Exchange." SSRN Working Paper No. 6465720, 2026.
 
 [14] Hyperliquid. "Interacting with HyperCore" (HyperEVM read precompiles, CoreWriter system contract, CoreWriter action delay) and "Oracle." *Hyperliquid Documentation.* https://hyperliquid.gitbook.io/hyperliquid-docs/for-developers/hyperevm/interacting-with-hypercore *(verified July 2026).*
+
+---
+
+## Licence
+
+Copyright (c) 2026 Duanyang (Dan) Guo / TLM Research. All rights reserved.
+
+This note may be read, cited and quoted with attribution. Reproduction,
+redistribution or modification requires prior written permission.
+
+Enquiries: danguo01@gmail.com
