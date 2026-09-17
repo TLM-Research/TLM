@@ -6,7 +6,7 @@ version: "1.1"
 status: "External review draft - L2 research and deployment agenda"
 program: "Temporal Liquidity Market (TLM)"
 date: "2026-09-15"
-license: "CC-BY-4.0"
+license: "All rights reserved"
 ---
 
 # RN-25 v1.1: Temporal Liquidity Markets for Arbitrum Chains
@@ -89,7 +89,6 @@ RN-25 is an application of the existing TLM framework, not a separate L2 theory:
 | RN-13 Part II, *Capacity and Welfare in Blockchain Execution Systems* | evaluation requires more than transaction count or nominal throughput |
 | RN-15, *A Temporal Liquidity Authorization for EIP-1559* | signed TLA and block-local ordering and funding |
 | RN-16, *A Two-Leg Temporal Liquidity Reserve for EIP-1559* | Funding and Supply Legs remain separate across time |
-| RN-33, *Horizontal Temporal Service Classes for Monad* | an EVM-compatible L1 can expose temporal scheduling without copying Ethereum's exact mechanism |
 
 Ethereum remains the principal L1 research target. RN-15 asks whether EIP-1559 can be extended with a second temporal signal, and RN-16 asks whether that signal can improve inter-slot congestion control. Those proposals require careful review because Ethereum is mature, widely integrated, and economically consequential. A long adoption process is appropriate.
 
@@ -805,4 +804,17 @@ The distinction between an early out-of-protocol deployment and a later in-proto
 - TLM Research Program. **RN-15: A Temporal Liquidity Authorization for EIP-1559.**
 - TLM Research Program. **RN-16: A Two-Leg Temporal Liquidity Reserve for EIP-1559.**
 - TLM Research Program. **RN-17: Temporal Service Profiles and Future Execution Tickets.**
-- TLM Research Program. **RN-33: Horizontal Temporal Service Classes for Monad.**
+
+---
+
+## Licence
+
+Copyright (c) 2026 Duanyang (Dan) Guo / TLM Research. All rights reserved.
+
+This note may be read, cited and quoted with attribution. Reproduction,
+redistribution or modification requires prior written permission.
+
+No licence is granted under any patent, whether by this publication or
+otherwise, except under a separate written agreement.
+
+Enquiries: danguo01@gmail.com
