@@ -132,6 +132,7 @@ Let `R = sum of a_k`. Then:
 - **A consumer's own declaration does not set its own charge.** Its charge is set by the next density down.
 - **Taking a rank costs the displaced consumer's bid**: outranking a rival means paying the rival's density on one's own gas limit.
 - **No consumer pays more than it authorized**: `0 <= a_k <= c_k`.
+- **Early service is never free.** Charges depend on the bids and the consumer floor, not on provider funding. When no provider is funded (`S = 0`), selected consumers still pay their full charges and the whole amount is burned.
 - **No party gains from the surplus.** Burning it removes the builder's reason to insert fake consumer bids, the consumers' reason to inflate declarations to recover it, and a provider's reason to exist only to absorb it.
 - **Validators can recompute every charge** from the signed declarations, the gas limits, `K_C`, the base fee and `beta`, by repeating the selection over the eligible transactions in the block.
 
