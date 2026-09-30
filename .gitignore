@@ -27,3 +27,75 @@ _Corpus-Review-Summary.md
 *~
 \#*\#
 .\#*
+
+# review files (case variants)
+*_REVIEW.md
+*_Review.md
+*_REVIEW_*.md
+
+# --- private: never publish ---
+# superseded CC-BY licence text; the root LICENSE governs
+docs/LICENSE
+# IP strategy, licensing policy, disclosure decisions
+docs/IP-and-Disclosure-Guide.md
+docs/LICENSING.md
+# collaboration scoping: names third parties, candid assessments, pre-agreement
+docs/Collaboration-*.md
+# internal working context / agent handoff
+docs/PROJECT_CONTEXT.md
+PROJECT_CONTEXT*.md
+AGENTS.md
+CLAUDE.md
+# forum post drafts
+docs/Ethresearch-Post-*.md
+
+# --- unpublished mechanism notes: hold pending IP review ---
+docs/Research-Notes/RN-18_*.md
+docs/Research-Notes/RN-19_*.md
+docs/Research-Notes/RN-20_*.md
+docs/Research-Notes/RN-21_*.md
+docs/Research-Notes/RN-22_*
+docs/Research-Notes/RN-23_*.md
+docs/Research-Notes/RN-24_*.md
+docs/Research-Notes/RN-27_*.md
+docs/Research-Notes/RN-28_*.md
+docs/Research-Notes/RN-29_*.md
+docs/Research-Notes/RN-30_*.md
+docs/Research-Notes/RN-31_*.md
+docs/Research-Notes/RN-32_*.md
+docs/Research-Notes/RN-34_*.md
+docs/Research-Notes/RN-35_*.md
+docs/Research-Notes/RN-Flare-*.md
+docs/Research-Notes/TLM-Foundational-Note-*.md
+docs/Research-Notes/TLM_Research_Note_*.md
+# duplicate canonical (tracked copy uses EIP_1559)
+docs/Research-Notes/RN-16_A_Two-Leg_Temporal_Liquidity_Reserve_for_EIP-1559.md
+
+# --- new implementation code: hold pending IP review ---
+sims/rn16_*.py
+sims/rn22_*.py
+sims/tests/
+sims/results/
+sims/note_lint.py
+sims/prose_check.py
+
+# --- outreach, correspondence, internal review ---
+docs/Reply*.md
+docs/TLM_Programme_*.pptx
+docs/TLM_Programme_*.pdf
+docs/TLM-Project-Summary-for-Review.md
+
+# --- working artifacts ---
+docs/Research-Notes/Claude outputs/
+docs/Research-Notes/tlm_codex/
+docs/Research-Notes/figures_1.md
+*.keep
+
+# RN-36: hold until the reservation rule is chosen and severity measured
+docs/Research-Notes/RN-36_*.md
+
+# --- private notes, never publish ---
+docs/Research-Notes/RN-25_*
+docs/Research-Notes/RN-37_*
+sims/
+sims/
