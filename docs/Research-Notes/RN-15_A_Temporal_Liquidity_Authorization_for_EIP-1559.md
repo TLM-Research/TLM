@@ -364,20 +364,13 @@ RN-12 gives the general two-sided mechanism. RN-16 carries temporal-liquidity fu
 
 ## Revision note
 
-*Substantive changes only.*
+**Version 3.4** (5 October 2026), against v3.1:
 
-**Version 3.4** (5 October 2026)
+- **Settlement is pay-as-bid** (sec. 3). v3.1 charged each selected consumer the next bid below it, so a builder could insert a bid of its own and raise another consumer's charge. Each selected consumer now pays its own signed `TLA`.
+- **Consumer selection uses gas used** (sec. 2.2), so a large gas limit no longer takes allowance that the transaction does not use.
+- **Providers have a fee-cap floor and a tip cap** (sec. 2.4), so a builder that inserts its own provider loses on it.
 
-- **Pay-as-bid settlement** (sec. 3). A selected consumer pays its signed positive `TLA`, an unselected consumer pays no temporal charge, and the one-slot surplus is burned. No bid sets another consumer's charge. This replaces the second-price settlement of v3.0 and v3.1 (sec. 3.5).
-- **Gas used on the consumer side** (sec. 2.2). Consumer density, eligibility, allowance and rank use realized gas. Gas limits remain EIP-1559 validity and liability bounds.
-- **A provider fee-cap floor and a tip cap** (sec. 2.4): `nu * b <= m_i < b` and `p_i <= min(max_priority_fee_i, (1 - eta) * m_i)`. A builder's own provider loses at least `eta * nu * b` per gas.
-- **The scope of the incentive claim** (sec. 3.2, 5): what holds for inserted providers and consumer bids, the residual-funding case with its bound, and that MMIC is not claimed.
-
-**Versions 3.0 and 3.1** (29 and 30 September 2026)
-
-These versions withdrew the proportional consumer settlement and the band ordering of v2.x. They introduced what v3.4 keeps. For consumers: selection by authorization density under a consumer allowance, a consumer floor, and completion within an early region `E`. For providers: a start after `E`, reference-preserving admission with a provider-gas allowance, separate metering, and the link between the consumer allowance and funded provider gas. Their second-price settlement is replaced in v3.4. The settlement rules of v2.x, v3.0 and v3.1 should not be relied on.
-
-Earlier versions are in the repository history.
+Earlier versions are in the repository history. Their settlement rules are withdrawn.
 
 ---
 
